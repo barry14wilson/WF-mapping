@@ -131,11 +131,12 @@ export const handler = async (event) => {
 };
 
 function jsonResponse(statusCode, body) {
+  const cacheable = statusCode >= 200 && statusCode < 300;
   return {
     statusCode,
     headers: {
       'Content-Type': 'application/json',
-      'Cache-Control': 'public, max-age=60',
+      'Cache-Control': cacheable ? 'public, max-age=60' : 'no-store',
       'Access-Control-Allow-Origin': '*',
     },
     body: JSON.stringify(body),

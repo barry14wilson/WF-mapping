@@ -13,7 +13,7 @@
 
 import { cellToBoundary, polygonToCells, latLngToCell } from 'h3-js';
 
-import { getSupabase } from '../../lib/supabase.js';
+import { getSql } from '../../lib/db.js';
 import { colourFor } from '../../lib/bands.js';
 
 const ALLOWED_RES = new Set([7, 9, 11]);
@@ -101,18 +101,32 @@ export const handler = async (event) => {
 
   const bandFilter = qs.bands ? qs.bands.split(',').map((s) => s.trim()).filter(Boolean) : null;
 
-  const supabase = getSupabase();
-  let query = supabase
-    .from('h3_safety_scores')
-    .select('h3_index, resolution, score, band')
-    .eq('resolution', resolution)
-    .in('h3_index', cells);
-  if (bandFilter?.length) query = query.in('band', bandFilter);
+  let rows;
+  try {
+    const sql = getSql();
+    if (bandFilter?.length) {
+      rows = await sql.query(
+        `select h3_index, resolution, score, band
+         from h3_safety_scores
+         where resolution = $1
+           and h3_index = any($2::text[])
+           and band = any($3::text[])`,
+        [resolution, cells, bandFilter],
+      );
+    } else {
+      rows = await sql.query(
+        `select h3_index, resolution, score, band
+         from h3_safety_scores
+         where resolution = $1
+           and h3_index = any($2::text[])`,
+        [resolution, cells],
+      );
+    }
+  } catch (err) {
+    return jsonResponse(500, { error: err.message });
+  }
 
-  const { data, error } = await query;
-  if (error) return jsonResponse(500, { error: error.message });
-
-  const features = (data || []).map(cellToFeature);
+  const features = rows.map(cellToFeature);
   return jsonResponse(200, { type: 'FeatureCollection', features });
 };
 

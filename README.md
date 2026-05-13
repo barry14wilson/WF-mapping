@@ -10,7 +10,7 @@ This repo also contains the standalone single-file prototype (`wiley-fox-uk-prot
 
 | Phase | Status | Notes |
 | ----- | ------ | ----- |
-| 1 — Schema & DB setup (Supabase) | done | `supabase/migrations/`. |
+| 1 — Schema & DB setup (Neon Postgres) | done | `supabase/migrations/` — folder name is historical; the SQL is plain Postgres and runs on Neon. |
 | 2 — Normalisation schema | done | Severity maps per source in `lib/normalise.js`. |
 | 3 — Connectors (9) | done | UK + US verified against live APIs; international connectors written against published API shapes, may need parser tweaks once you run them. |
 | 4 — Scoring engine | done | `scoring/scoring-engine.js`. |
@@ -30,11 +30,13 @@ npm install
 
 # 2. Configure env.
 cp .env.example .env
-# fill in: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, FBI_API_KEY,
-# ACLED_API_KEY, ACLED_EMAIL.
+# fill in: DATABASE_URL (Neon pooled connection),
+# FBI_API_KEY, ACLED_API_KEY, ACLED_EMAIL.
 
 # 3. Apply schema.
-#    supabase db push   (or paste supabase/migrations/*.sql into the SQL editor)
+#    Paste supabase/migrations/20260513000000_initial_schema.sql into
+#    the Neon SQL editor, OR run via psql:
+#    psql "$DATABASE_URL" -f supabase/migrations/20260513000000_initial_schema.sql
 
 # 4. Dry-run.
 DRY_RUN=1 npm run connector:uk
@@ -61,10 +63,10 @@ npx netlify dev
 ├── package.json
 ├── netlify.toml                       function schedules + /api redirects
 ├── .env.example
-├── supabase/migrations/
+├── supabase/migrations/               (folder name kept; plain Postgres SQL)
 │   └── 20260513000000_initial_schema.sql
 ├── lib/
-│   ├── supabase.js                    client + DRY_RUN helper
+│   ├── db.js                          Neon client (sql template tag) + DRY_RUN helper
 │   ├── h3.js                          lat/lng → H3 r7/r9/r11
 │   ├── normalise.js                   severity buckets per source
 │   ├── upsert.js                      batched idempotent upsert helper
@@ -189,7 +191,7 @@ The suggested waypoint is the centroid of the nearest green/amber neighbour cell
 npm test
 ```
 
-29 tests across normalisers, H3 indexing, the JSON-stat 2.0 parser, the scoring engine, the UK Police connector, and both HTTP endpoints. No external test deps — uses Node's built-in `node:test` and `node:assert`. Connector and endpoint tests stub Supabase via the `__setClientForTests` seam in `lib/supabase.js`; the UK connector test additionally mocks `fetch`. See `test/_utils.js`.
+29 tests across normalisers, H3 indexing, the JSON-stat 2.0 parser, the scoring engine, the UK Police connector, and both HTTP endpoints. No external test deps — uses Node's built-in `node:test` and `node:assert`. Tests stub the SQL client via the `__setSqlForTests` seam in `lib/db.js`; the UK connector test additionally mocks `fetch`. See `test/_utils.js`.
 
 ---
 

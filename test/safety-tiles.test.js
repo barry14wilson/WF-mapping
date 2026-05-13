@@ -1,18 +1,17 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-
 import { latLngToCell } from 'h3-js';
 
 import { handler } from '../netlify/functions/safety-tiles.js';
-import { __setClientForTests } from '../lib/supabase.js';
-import { makeMockSupabase } from './_utils.js';
+import { __setSqlForTests } from '../lib/db.js';
+import { makeMockSql } from './_utils.js';
 
 function call(qs) {
   return handler({ queryStringParameters: qs });
 }
 
 test('safety-tiles rejects requests without bbox or h3', async () => {
-  __setClientForTests(makeMockSupabase({}));
+  __setSqlForTests(makeMockSql({}));
   const res = await call({});
   assert.equal(res.statusCode, 400);
   const body = JSON.parse(res.body);
@@ -20,23 +19,22 @@ test('safety-tiles rejects requests without bbox or h3', async () => {
 });
 
 test('safety-tiles rejects an invalid resolution', async () => {
-  __setClientForTests(makeMockSupabase({}));
+  __setSqlForTests(makeMockSql({}));
   const res = await call({ bbox: '-0.5,51.3,0.3,51.7', resolution: '12' });
   assert.equal(res.statusCode, 400);
 });
 
 test('safety-tiles returns a FeatureCollection from h3 cells', async () => {
-  // Compute a real H3 cell at runtime so cellToBoundary has a valid input.
   const realCell = latLngToCell(51.5074, -0.1278, 9);
   const fakeRow = {
     h3_index: realCell,
     resolution: 9,
-    score: 42.5,
+    score: '42.50',
     band: 'amber',
   };
 
-  __setClientForTests(makeMockSupabase({
-    'h3_safety_scores:select': () => ({ data: [fakeRow], error: null }),
+  __setSqlForTests(makeMockSql({
+    'h3_safety_scores': () => [fakeRow],
   }));
 
   const res = await call({ h3: fakeRow.h3_index, resolution: '9' });
@@ -55,10 +53,7 @@ test('safety-tiles returns a FeatureCollection from h3 cells', async () => {
 });
 
 test('safety-tiles parses bbox in any corner order', async () => {
-  __setClientForTests(makeMockSupabase({
-    'h3_safety_scores:select': () => ({ data: [], error: null }),
-  }));
-  // Lng-first or lat-first should both end up normalised to a valid box.
+  __setSqlForTests(makeMockSql({ 'h3_safety_scores': () => [] }));
   const res = await call({ bbox: '0.3,51.7,-0.5,51.3', resolution: '7' });
   assert.equal(res.statusCode, 200);
   const body = JSON.parse(res.body);
@@ -66,7 +61,7 @@ test('safety-tiles parses bbox in any corner order', async () => {
 });
 
 test('safety-tiles returns empty FeatureCollection when no h3 / bbox cells', async () => {
-  __setClientForTests(makeMockSupabase({}));
+  __setSqlForTests(makeMockSql({}));
   const res = await call({ h3: '   ' });
   assert.equal(res.statusCode, 200);
   const body = JSON.parse(res.body);

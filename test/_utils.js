@@ -1,65 +1,44 @@
 // Test helpers — kept deliberately tiny.
 //
-// makeMockSupabase builds a chainable stub that records every call and
-// returns whatever the test pre-loaded for a given (table, op) pair.
+// makeMockSql builds a callable that mimics @neondatabase/serverless's
+// `neon()` return: callable both as a tagged template and via .query().
 //
 // Example:
-//   const supabase = makeMockSupabase({
-//     'crime_incidents:select': () => ({ data: [...], error: null }),
-//     'h3_safety_scores:upsert': () => ({ count: 2, error: null }),
+//   const sql = makeMockSql({
+//     'select count(*)': () => [{ count: 3 }],
+//     'insert into pipeline_logs': () => [],
 //   });
-//   __setClientForTests(supabase);
+//   __setSqlForTests(sql);
 
-export function makeMockSupabase(handlers = {}) {
+export function makeMockSql(handlers = {}) {
   const calls = [];
 
-  function builder(table) {
-    const state = { table, op: null, args: [] };
-
-    const proxy = {
-      _state: state,
-      select(...a) { state.op = 'select'; state.args.push(['select', a]); return proxy; },
-      eq(...a)     { state.args.push(['eq', a]); return proxy; },
-      not(...a)    { state.args.push(['not', a]); return proxy; },
-      in(...a)     { state.args.push(['in', a]); return proxy; },
-      range(...a)  { state.args.push(['range', a]); return proxy; },
-      upsert(rows, opts) {
-        state.op = 'upsert';
-        state.args.push(['upsert', [rows, opts]]);
-        return resolve();
-      },
-      insert(rows) {
-        state.op = 'insert';
-        state.args.push(['insert', [rows]]);
-        return resolve();
-      },
-      // Awaiting the builder triggers the configured select handler.
-      then(onFulfilled, onRejected) {
-        return resolve().then(onFulfilled, onRejected);
-      },
-    };
-
-    function resolve() {
-      calls.push({ table, op: state.op, args: state.args });
-      const key = `${table}:${state.op}`;
-      const handler = handlers[key];
-      const result = handler
-        ? handler({ table, op: state.op, args: state.args })
-        : { data: [], count: 0, error: null };
-      return Promise.resolve(result);
-    }
-
-    return proxy;
+  function pickHandler(text) {
+    const lower = text.toLowerCase();
+    const match = Object.keys(handlers).find((k) => lower.includes(k.toLowerCase()));
+    return match ? handlers[match] : null;
   }
 
-  return {
-    from(table) { return builder(table); },
-    __calls: calls,
+  async function run(text, params) {
+    calls.push({ text, params });
+    const h = pickHandler(text);
+    return h ? await h({ text, params }) : [];
+  }
+
+  // Tagged-template callable: sql`select ...`
+  const tag = async (strings, ...values) => {
+    const text = String.raw({ raw: strings }, ...values.map((_, i) => `$${i + 1}`));
+    return run(text, values);
   };
+
+  // .query(text, params) form.
+  tag.query = (text, params) => run(text, params || []);
+  tag.__calls = calls;
+
+  return tag;
 }
 
-// Replace globalThis.fetch with a function that returns the queued
-// responses in order. Each entry is { ok, status, json, text }.
+// Replace globalThis.fetch with a function that returns queued responses.
 export function mockFetch(responses) {
   const queue = [...responses];
   const calls = [];

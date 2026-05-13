@@ -12,7 +12,8 @@
 
 import 'dotenv/config';
 
-import { getSupabase, isDryRun } from '../lib/supabase.js';
+import { isDryRun } from '../lib/db.js';
+import { upsertIncidents } from '../lib/upsert.js';
 import { indexLatLng } from '../lib/h3.js';
 import { categoriseFBI } from '../lib/normalise.js';
 import { logPipelineRun } from '../lib/pipeline-log.js';
@@ -113,23 +114,6 @@ function buildRow({ agency, offense, count, year }) {
   };
 }
 
-async function upsertBatch(rows) {
-  if (rows.length === 0) return 0;
-  if (isDryRun()) {
-    console.log(`[dry-run] would upsert ${rows.length} rows; sample:`, rows[0]);
-    return rows.length;
-  }
-  const { error, count } = await getSupabase()
-    .from('crime_incidents')
-    .upsert(rows, {
-      onConflict: 'source_api,source_record_id',
-      count: 'exact',
-      ignoreDuplicates: false,
-    });
-  if (error) throw error;
-  return count ?? rows.length;
-}
-
 export async function run({ states, years } = {}) {
   const targetStates = states || parseListEnv('US_STATES', DEFAULT_STATES);
   const targetYears =
@@ -167,9 +151,7 @@ export async function run({ states, years } = {}) {
             .map((t) => buildRow({ agency, offense: t.offense, count: t.count, year }))
             .filter((r) => r !== null);
 
-          for (let i = 0; i < rows.length; i += BATCH_SIZE) {
-            inserted += await upsertBatch(rows.slice(i, i + BATCH_SIZE));
-          }
+          inserted += await upsertIncidents(rows, { batchSize: BATCH_SIZE });
         } catch (err) {
           const msg = `${agency.ori} ${year}: ${err.message}`;
           console.error(`[us-fbi] ${msg}`);

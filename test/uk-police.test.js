@@ -2,8 +2,8 @@ import { test, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
 
 import { run } from '../connectors/uk-police.js';
-import { __setClientForTests } from '../lib/supabase.js';
-import { makeMockSupabase, mockFetch, restoreFetch } from './_utils.js';
+import { __setSqlForTests } from '../lib/db.js';
+import { makeMockSql, mockFetch, restoreFetch } from './_utils.js';
 
 const SAMPLE_CRIMES = [
   {
@@ -42,22 +42,15 @@ test('uk-police connector normalises and upserts in dry-run', async () => {
   process.env.DRY_RUN = '1';
 
   mockFetch([
-    { json: { date: '2026-02-01' } },     // crime-last-updated
-    { json: SAMPLE_CRIMES },              // London
+    { json: { date: '2026-02-01' } },
+    { json: SAMPLE_CRIMES },
   ]);
-
-  // DRY_RUN skips writes, but pipeline_logs still goes through the
-  // stubbed client — provide a no-op handler.
-  const supabase = makeMockSupabase({
-    'pipeline_logs:insert': () => ({ error: null }),
-  });
-  __setClientForTests(supabase);
+  __setSqlForTests(makeMockSql({}));
 
   const result = await run({ areas: [{ name: 'London', lat: 51.5074, lng: -0.1278 }] });
 
   assert.equal(result.fetched, SAMPLE_CRIMES.length, 'fetched count from API');
-  // Two valid rows make it past normalisation (one has bad lat).
-  assert.equal(result.inserted, 2, 'two rows upserted');
+  assert.equal(result.inserted, 2, 'two valid rows upserted (third has bad lat)');
   assert.equal(result.errors.length, 0);
 });
 
@@ -65,13 +58,11 @@ test('uk-police gracefully tolerates an area failing', async () => {
   process.env.DRY_RUN = '1';
 
   mockFetch([
-    { json: { date: '2026-02-01' } },                          // crime-last-updated
-    { ok: false, status: 503, json: { error: 'too busy' } },   // London (fails)
-    { json: SAMPLE_CRIMES.slice(0, 1) },                       // Manchester (succeeds)
+    { json: { date: '2026-02-01' } },
+    { ok: false, status: 503, json: { error: 'too busy' } },
+    { json: SAMPLE_CRIMES.slice(0, 1) },
   ]);
-  __setClientForTests(makeMockSupabase({
-    'pipeline_logs:insert': () => ({ error: null }),
-  }));
+  __setSqlForTests(makeMockSql({}));
 
   const result = await run({
     areas: [

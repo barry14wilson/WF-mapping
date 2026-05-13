@@ -9,10 +9,11 @@
 import 'dotenv/config';
 import crypto from 'node:crypto';
 
-import { getSupabase, isDryRun } from '../lib/supabase.js';
+import { isDryRun } from '../lib/db.js';
 import { indexLatLng } from '../lib/h3.js';
 import { categoriseUK } from '../lib/normalise.js';
 import { logPipelineRun } from '../lib/pipeline-log.js';
+import { upsertIncidents } from '../lib/upsert.js';
 
 const SOURCE_API = 'uk-police';
 const SOURCE_COUNTRY = 'GB';
@@ -106,22 +107,6 @@ function normaliseRecord(raw) {
   };
 }
 
-async function upsertBatch(rows) {
-  if (rows.length === 0) return 0;
-  if (isDryRun()) {
-    console.log(`[dry-run] would upsert ${rows.length} rows; sample:`, rows[0]);
-    return rows.length;
-  }
-  const { error, count } = await getSupabase()
-    .from('crime_incidents')
-    .upsert(rows, {
-      onConflict: 'source_api,source_record_id',
-      count: 'exact',
-      ignoreDuplicates: false,
-    });
-  if (error) throw error;
-  return count ?? rows.length;
-}
 
 export async function run({ date, areas } = {}) {
   const targetDate = date || (await fetchLatestAvailableMonth());
@@ -144,10 +129,7 @@ export async function run({ date, areas } = {}) {
         .map(normaliseRecord)
         .filter((r) => r !== null);
 
-      for (let i = 0; i < rows.length; i += BATCH_SIZE) {
-        const batch = rows.slice(i, i + BATCH_SIZE);
-        inserted += await upsertBatch(batch);
-      }
+      inserted += await upsertIncidents(rows, { batchSize: BATCH_SIZE });
 
       console.log(
         `[uk-police] ${area.name ?? `${area.lat},${area.lng}`} ` +

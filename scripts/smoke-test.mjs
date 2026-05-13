@@ -1,7 +1,7 @@
 // Live end-to-end smoke test.
 //
-// Requires SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY in .env (or shell) and
-// the migration applied to the target project.
+// Requires DATABASE_URL in .env (or shell) — a Neon pooled connection
+// string — and the migration applied to that database.
 //
 // What it does:
 //   1. Runs the UK Police connector for London-only (small, fast).
@@ -27,11 +27,8 @@ const fail = (msg, err) => {
 };
 
 function requireEnv() {
-  const missing = [];
-  if (!process.env.SUPABASE_URL) missing.push('SUPABASE_URL');
-  if (!process.env.SUPABASE_SERVICE_ROLE_KEY) missing.push('SUPABASE_SERVICE_ROLE_KEY');
-  if (missing.length) {
-    fail(`Missing env vars: ${missing.join(', ')}. Copy .env.example → .env first.`);
+  if (!process.env.DATABASE_URL) {
+    fail('Missing DATABASE_URL. Copy .env.example → .env first.');
   }
 }
 
@@ -84,7 +81,7 @@ async function step3Query() {
 async function main() {
   requireEnv();
   log(`Wiley Fox pipeline smoke test\n${DIVIDER}`);
-  log(`Supabase: ${process.env.SUPABASE_URL}`);
+  log(`Neon DB: ${process.env.DATABASE_URL.replace(/:[^@]*@/, ':***@')}`);
 
   try {
     await step1Ingest();

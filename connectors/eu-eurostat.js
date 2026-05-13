@@ -15,6 +15,7 @@ import { categoriseICCS } from '../lib/normalise.js';
 import { logPipelineRun } from '../lib/pipeline-log.js';
 import { upsertIncidents } from '../lib/upsert.js';
 import { COUNTRIES } from '../lib/country-data.js';
+import { iterJsonStat } from '../lib/jsonstat.js';
 
 const SOURCE_API = 'eu-eurostat';
 const BASE =
@@ -34,39 +35,6 @@ function parseListEnv(name, fallback) {
 function defaultYears() {
   const y = new Date().getUTCFullYear();
   return [y - 3, y - 2];
-}
-
-// JSON-stat 2.0 has a flat `value` map keyed by the linearised position
-// across `dimension` sizes. This decodes it into an iterable of
-// { dim1, dim2, ..., value } objects.
-function* iterJsonStat(payload) {
-  const dimNames = payload.id;
-  const sizes = payload.size;
-  const dimIndices = dimNames.map((name) => {
-    const cat = payload.dimension[name].category;
-    // category.index can be an object {code: pos} or an array [code,...].
-    if (Array.isArray(cat.index)) return cat.index;
-    return Object.entries(cat.index)
-      .sort((a, b) => a[1] - b[1])
-      .map(([code]) => code);
-  });
-
-  const total = sizes.reduce((a, b) => a * b, 1);
-  const values = payload.value || {};
-
-  for (let i = 0; i < total; i++) {
-    const v = values[i];
-    if (v == null) continue;
-    let rem = i;
-    const row = { value: Number(v) };
-    for (let d = sizes.length - 1; d >= 0; d--) {
-      const dimSize = sizes[d];
-      const pos = rem % dimSize;
-      rem = Math.floor(rem / dimSize);
-      row[dimNames[d]] = dimIndices[d][pos];
-    }
-    yield row;
-  }
 }
 
 async function fetchEurostat({ countries, years }) {

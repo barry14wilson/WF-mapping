@@ -17,7 +17,8 @@
     "connector:unodc": "node connectors/unodc-global.js",
     "connector:wb": "node connectors/worldbank-global.js",
     "connector:acled": "node connectors/acled-conflict.js",
-    "score": "node scoring/scoring-engine.js"
+    "score": "node scoring/scoring-engine.js",
+    "test": "node --test"
   },
   "dependencies": {
     "@netlify/functions": "^2.8.0",

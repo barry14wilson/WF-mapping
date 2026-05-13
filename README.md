@@ -181,6 +181,16 @@ The suggested waypoint is the centroid of the nearest green/amber neighbour cell
 
 ---
 
+## Tests
+
+```bash
+npm test
+```
+
+29 tests across normalisers, H3 indexing, the JSON-stat 2.0 parser, the scoring engine, the UK Police connector, and both HTTP endpoints. No external test deps — uses Node's built-in `node:test` and `node:assert`. Connector and endpoint tests stub Supabase via the `__setClientForTests` seam in `lib/supabase.js`; the UK connector test additionally mocks `fetch`. See `test/_utils.js`.
+
+---
+
 ## Conventions
 
 - **All API keys via env vars** — never hardcoded. See `.env.example`.

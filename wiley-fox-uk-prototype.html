@@ -1,0 +1,1011 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Wiley Fox — UK Safety Map (Prototype)</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" />
+<style>
+  :root{
+    --orange:#FF7B14;
+    --orange-dark:#E2620A;
+    --sage:#AABA9F;
+    --cream:#E5EBD3;
+    --cream-light:#F2F4E5;
+    --charcoal:#232323;
+    --charcoal-soft:#3a3a3a;
+    --r1:#D7263D; --r2:#F46036; --r3:#FFC857; --r4:#A4C957; --r5:#3FA34D;
+    --shadow:0 8px 24px rgba(35,35,35,.08);
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;font-family:'Inter',system-ui,-apple-system,sans-serif;color:var(--charcoal);background:var(--cream-light)}
+  h1,h2,h3,.serif{font-family:'Fraunces',Georgia,serif;font-weight:600;letter-spacing:-.01em}
+  .app{display:grid;grid-template-columns:380px 1fr;height:100vh}
+  @media (max-width:900px){.app{grid-template-columns:1fr;grid-template-rows:auto 1fr}}
+
+  /* Sidebar */
+  .sidebar{background:#fff;border-right:1px solid rgba(35,35,35,.08);overflow-y:auto;display:flex;flex-direction:column}
+  .brand{padding:22px 24px 16px;border-bottom:1px solid rgba(35,35,35,.06);display:flex;align-items:center;gap:12px}
+  .logo{width:38px;height:38px;border-radius:50%;background:var(--orange);display:grid;place-items:center;color:#fff;font-weight:800;font-family:'Fraunces',serif}
+  .brand h1{font-size:18px;margin:0;line-height:1.1}
+  .brand small{display:block;color:var(--charcoal-soft);font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-family:'Inter',sans-serif;font-weight:500}
+  .section{padding:18px 24px;border-bottom:1px solid rgba(35,35,35,.06)}
+  .section h2{font-size:14px;margin:0 0 10px;text-transform:uppercase;letter-spacing:.08em;color:var(--charcoal-soft);font-family:'Inter',sans-serif;font-weight:600}
+  .city-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .city{padding:10px 12px;border:1px solid rgba(35,35,35,.1);border-radius:10px;background:var(--cream-light);cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;text-align:left}
+  .city:hover{border-color:var(--orange);background:#fff}
+  .city.active{background:var(--orange);color:#fff;border-color:var(--orange)}
+  .search-row{display:flex;gap:8px}
+  .search-row input{flex:1;padding:10px 12px;border:1px solid rgba(35,35,35,.15);border-radius:10px;font-family:inherit;font-size:13px;background:var(--cream-light)}
+  .search-row input:focus{outline:none;border-color:var(--orange);background:#fff}
+  .search-row button{padding:10px 14px;border:none;border-radius:10px;background:var(--charcoal);color:#fff;cursor:pointer;font-weight:500;font-size:13px}
+  .search-row button:hover{background:var(--charcoal-soft)}
+
+  /* Rating */
+  .rating-card{padding:24px;background:linear-gradient(135deg,var(--cream) 0%,var(--cream-light) 100%);border-radius:var(--radius);margin:0 24px}
+  .rating-card .label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--charcoal-soft);font-weight:600}
+  .rating-card .city-name{font-family:'Fraunces',serif;font-size:22px;font-weight:600;margin:4px 0 14px}
+  .rating-display{display:flex;align-items:center;gap:14px}
+  .rating-orb{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:'Fraunces',serif;font-size:30px;font-weight:700;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+  .rating-info .rating-num{font-size:14px;font-weight:600}
+  .rating-info .rating-tag{font-size:12px;color:var(--charcoal-soft);margin-top:2px}
+  .rating-bar{margin-top:14px;height:6px;border-radius:3px;background:linear-gradient(90deg,var(--r1),var(--r2),var(--r3),var(--r4),var(--r5));position:relative}
+  .rating-bar .marker{position:absolute;top:-3px;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--charcoal);transform:translateX(-50%);transition:left .4s}
+  .scale-row{display:flex;justify-content:space-between;font-size:10px;margin-top:4px;color:var(--charcoal-soft);font-weight:500}
+
+  /* Categories */
+  .cat-list{display:flex;flex-direction:column;gap:6px}
+  .cat-row{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--cream-light);border-radius:8px}
+  .cat-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  .cat-name{flex:1;font-size:13px;font-weight:500}
+  .cat-count{font-size:13px;font-weight:600;color:var(--charcoal-soft);font-variant-numeric:tabular-nums}
+
+  /* Map */
+  .map-wrap{position:relative}
+  #map{position:absolute;inset:0}
+  .map-overlay{position:absolute;top:16px;left:16px;background:#fff;padding:10px 14px;border-radius:10px;box-shadow:var(--shadow);font-size:12px;color:var(--charcoal-soft);max-width:260px}
+  .map-overlay strong{color:var(--charcoal);display:block;margin-bottom:2px;font-size:13px}
+  .map-legend{position:absolute;bottom:24px;right:16px;background:#fff;padding:12px 14px;border-radius:10px;box-shadow:var(--shadow);font-size:11px}
+  .map-legend .title{font-weight:600;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--charcoal-soft);margin-bottom:8px}
+  .legend-row{display:flex;align-items:center;gap:8px;margin:4px 0}
+  .legend-dot{width:10px;height:10px;border-radius:50%}
+  .source-pill{position:absolute;bottom:24px;left:16px;background:rgba(255,255,255,.95);padding:8px 12px;border-radius:8px;box-shadow:var(--shadow);font-size:11px;color:var(--charcoal-soft)}
+  .source-pill a{color:var(--orange);text-decoration:none}
+  .source-pill a:hover{text-decoration:underline}
+
+  /* States */
+  .empty-state{padding:24px;text-align:center;color:var(--charcoal-soft);font-size:13px}
+  .empty-state .ico{font-size:32px;margin-bottom:10px;opacity:.6}
+  .loading{padding:18px 24px;color:var(--charcoal-soft);font-size:13px;display:flex;align-items:center;gap:10px}
+  .spinner{width:14px;height:14px;border:2px solid var(--cream);border-top-color:var(--orange);border-radius:50%;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .warning{padding:10px 14px;background:#FFF4E0;border-left:3px solid var(--r3);font-size:12px;border-radius:0 8px 8px 0;margin:12px 24px}
+
+  /* Hotels */
+  .hotel-card{display:flex;gap:12px;padding:12px;background:var(--cream-light);border-radius:10px;margin-bottom:8px;text-decoration:none;color:inherit;transition:all .15s;border:1px solid transparent}
+  .hotel-card:hover{border-color:var(--orange);background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+  .hotel-thumb{width:56px;height:56px;border-radius:8px;background:linear-gradient(135deg,var(--sage),var(--cream));display:grid;place-items:center;flex-shrink:0;font-size:22px}
+  .hotel-meta{flex:1;min-width:0}
+  .hotel-name{font-family:'Fraunces',serif;font-weight:600;font-size:14px;line-height:1.2;margin-bottom:4px}
+  .hotel-line{font-size:11px;color:var(--charcoal-soft);display:flex;gap:6px;align-items:center}
+  .hotel-stars{color:var(--orange);letter-spacing:1px}
+  .booking-cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;background:var(--charcoal);color:#fff;border:none;border-radius:10px;font-weight:600;font-size:13px;cursor:pointer;text-decoration:none;margin-top:10px;transition:background .15s}
+  .booking-cta:hover{background:var(--orange)}
+  .demo-tag{display:inline-block;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--charcoal-soft);background:#fff;padding:2px 6px;border-radius:4px;font-weight:600;margin-left:6px;border:1px solid rgba(35,35,35,.1)}
+
+  /* Travel guide button */
+  .guide-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:calc(100% - 48px);margin:14px 24px 0;padding:13px;background:var(--orange);color:#fff;border:none;border-radius:10px;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit;letter-spacing:.02em;transition:background .15s;box-shadow:0 4px 12px rgba(255,123,20,.25)}
+  .guide-btn:hover{background:var(--orange-dark)}
+  .guide-btn svg{width:14px;height:14px}
+
+  /* Footer */
+  .foot{padding:14px 24px;font-size:11px;color:var(--charcoal-soft);background:var(--cream-light);border-top:1px solid rgba(35,35,35,.06);margin-top:auto}
+  .foot strong{color:var(--charcoal)}
+
+  /* Side detail panel */
+  .panel-section{padding:18px 24px}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+  .meta-tile{padding:10px;background:var(--cream-light);border-radius:8px}
+  .meta-tile .v{font-family:'Fraunces',serif;font-size:18px;font-weight:600}
+  .meta-tile .l{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--charcoal-soft);font-weight:600;margin-top:2px}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">WF</div>
+      <div>
+        <h1>Wiley Fox</h1>
+        <small>UK Safety Map · Prototype</small>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Search a city</h2>
+      <div class="search-row" style="margin-bottom:10px">
+        <input id="searchInput" type="text" placeholder="e.g. Brighton, York…" />
+        <button id="searchBtn">Go</button>
+      </div>
+      <div class="city-grid" id="cityGrid"></div>
+    </div>
+
+    <div id="ratingHost"></div>
+
+    <div id="catsHost"></div>
+
+    <div id="hotelsHost"></div>
+
+    <div class="foot">
+      <strong>Source:</strong> data.police.uk (UK Home Office) · Updated monthly · England, Wales &amp; Northern Ireland only.
+      <br><br>Wiley Fox rating is a relative density score for prototype demo only — not a definitive safety judgement.
+    </div>
+  </aside>
+
+  <main class="map-wrap">
+    <div id="map"></div>
+    <div class="map-overlay">
+      <strong>Click a city to load crime data</strong>
+      Or click anywhere on the map to fetch the latest month for that point.
+    </div>
+    <div class="map-legend">
+      <div class="title">Wiley Fox rating</div>
+      <div class="legend-row"><span class="legend-dot" style="background:var(--r5)"></span> 5 · Safest</div>
+      <div class="legend-row"><span class="legend-dot" style="background:var(--r4)"></span> 4</div>
+      <div class="legend-row"><span class="legend-dot" style="background:var(--r3)"></span> 3</div>
+      <div class="legend-row"><span class="legend-dot" style="background:var(--r2)"></span> 2</div>
+      <div class="legend-row"><span class="legend-dot" style="background:var(--r1)"></span> 1 · Highest crime</div>
+    </div>
+    <div class="source-pill">
+      Data: <a href="https://data.police.uk" target="_blank" rel="noopener">data.police.uk</a> · Map © OpenStreetMap
+    </div>
+  </main>
+</div>
+
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script>
+/* ------------------------------------------------------------------ *
+ * Wiley Fox UK Safety Map — Prototype
+ * Single-file HTML reference for the dev team.
+ * Live data: https://data.police.uk/docs/
+ * ------------------------------------------------------------------ */
+
+// --- Config ----------------------------------------------------------
+const POLICE_API = 'https://data.police.uk/api';
+
+// Booking.com affiliate — replace AID with your live affiliate ID once approved
+// Apply: https://partners.booking.com  (affiliate marketing programme)
+const BOOKING_AFFILIATE_ID = 'YOUR_AID_HERE'; // <-- DEV: replace with real AID
+const bookingSearchUrl = (city) =>
+  `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(city + ', United Kingdom')}&aid=${BOOKING_AFFILIATE_ID}`;
+
+// Sample featured stays per city — REPLACE WITH BOOKING.COM DEMAND API IN PROD
+// For prototype demonstration only.
+const SAMPLE_HOTELS = {
+  'London':     [{ name: 'The Hoxton, Holborn',          stars: 4, area: 'Bloomsbury' },
+                 { name: 'citizenM Tower of London',      stars: 4, area: 'City' },
+                 { name: 'The Resident Kensington',       stars: 4, area: 'Kensington' }],
+  'Manchester': [{ name: 'King Street Townhouse',        stars: 5, area: 'City Centre' },
+                 { name: 'Native Manchester',             stars: 4, area: 'Ducie Street' },
+                 { name: 'Stock Exchange Hotel',          stars: 5, area: 'St Ann Square' }],
+  'Birmingham': [{ name: 'Hyatt Regency Birmingham',     stars: 4, area: 'Broad Street' },
+                 { name: 'The Grand Hotel Birmingham',    stars: 5, area: 'Colmore Row' },
+                 { name: 'Hotel Indigo Birmingham',       stars: 4, area: 'City Centre' }],
+  'Liverpool':  [{ name: 'Titanic Hotel Liverpool',      stars: 4, area: 'Stanley Dock' },
+                 { name: 'Hope Street Hotel',             stars: 4, area: 'Georgian Quarter' },
+                 { name: 'INNSiDE Liverpool',             stars: 4, area: 'Old Hall Street' }],
+  'Leeds':      [{ name: 'Dakota Leeds',                  stars: 4, area: 'City Centre' },
+                 { name: 'The Queens Hotel',              stars: 4, area: 'City Square' },
+                 { name: 'Quebecs Luxury Apartments',     stars: 4, area: 'Park Square' }],
+  'Bristol':    [{ name: 'The Bristol Hotel',             stars: 4, area: 'Harbourside' },
+                 { name: 'Hotel du Vin Bristol',          stars: 4, area: 'Sugar House' },
+                 { name: 'Brooks Guesthouse',             stars: 3, area: 'St Nicholas' }],
+  'Newcastle':  [{ name: 'Malmaison Newcastle',          stars: 4, area: 'Quayside' },
+                 { name: 'Hotel du Vin Newcastle',        stars: 4, area: 'City Road' },
+                 { name: 'Crowne Plaza Newcastle',        stars: 4, area: 'Stephenson Quarter' }],
+  'Cardiff':    [{ name: 'voco St. David\'s Cardiff',    stars: 5, area: 'Cardiff Bay' },
+                 { name: 'Park Plaza Cardiff',            stars: 4, area: 'Greyfriars' },
+                 { name: 'Hotel Indigo Cardiff',          stars: 4, area: 'Dominions Way' }],
+  'Belfast':    [{ name: 'The Merchant Hotel',            stars: 5, area: 'Cathedral Quarter' },
+                 { name: 'Bullitt Hotel',                 stars: 4, area: 'Church Lane' },
+                 { name: 'Grand Central Hotel',           stars: 4, area: 'Bedford Street' }],
+  'Brighton':   [{ name: 'The Grand Brighton',            stars: 4, area: 'Seafront' },
+                 { name: 'Hotel du Vin Brighton',         stars: 4, area: 'Ship Street' },
+                 { name: 'Artist Residence Brighton',     stars: 4, area: 'Regency Square' }],
+};
+
+// --- Curated city guides (extracted from existing Travel Guide docx) ---
+// London is the flagship — content lifted from London_Travel_Guide.docx.
+// Add other cities here as their guides are produced.
+const CITY_GUIDES = {
+  'London': {
+    tagline: 'Safety · Transport · Families · Crime Data 2023–25',
+    intro: "One of the world's great capitals, London rewards every kind of traveller. Two thousand years of history sit alongside world-class museums, royal palaces, riverside walks and a food scene drawn from every corner of the planet — and most of the best stuff is free.",
+    intro2: "Straddling the River Thames, London is a city of distinct villages — each borough with its own character, pace and personality. Whether you're after the polish of Kensington, the buzz of Shoreditch, or the leafy calm of Richmond, there's a corner of London for every kind of trip.",
+    headlineStats: [
+      { v: '123.3', l: 'Violent offences per 100k', s: 'England & Wales · 2023 (UNODC)' },
+      { v: '−45%', l: 'Decline since 2008 peak', s: 'Long-term trend downward' },
+      { v: '10/33', l: 'Safest London boroughs', s: 'Ideal for visitors' },
+    ],
+    headlineCopy: "According to the UN Office on Drugs and Crime (UNODC), England and Wales recorded 123.3 violent offences per 100,000 population in 2023 — a 45% decline from the 2008 peak. Within London, crime is highly borough-specific: outer residential boroughs consistently record the lowest crime rates, while central tourist hotspots show concentrated street crime.",
+    safest: [
+      ['1','74/1k','Richmond upon Thames','Safest borough overall · score 84/100'],
+      ['2','62/1k','Kingston upon Thames','Very low crime · relaxed suburban feel'],
+      ['3','61/1k','Sutton','Peaceful · lowest reoffending rate in London'],
+      ['4','63/1k','Bexley','Low burglary · consistently below UK average'],
+      ['5','67/1k','Merton','Wimbledon home · popular family borough'],
+      ['6','68/1k','Barnet','Popular north London borough · good transport'],
+      ['7','70/1k','Bromley','Safe outer south-east borough · leafy feel'],
+      ['8','71/1k','Harrow','Family-friendly · excellent local schools'],
+      ['9','72/1k','Havering','Quiet east London · low footfall'],
+      ['10','Best central','Kensington & Chelsea','Best central option for visitors · high police presence'],
+    ],
+    avoid: [
+      ['1','281/1k','Westminster','Highest crime rate in London · pickpocketing hotspot around Oxford Street, Leicester Square & Piccadilly Circus'],
+      ['2','165/1k','Camden','Street crime & drug activity · worst around Camden Market & Kentish Town late at night'],
+      ['3','162/1k','Southwark','Elevated crime around Elephant & Castle · improving but caution advised after dark'],
+      ['4','155/1k','Hackney','Higher street robbery rates · stay alert in Dalston & Hackney Central'],
+      ['5','150/1k','Lambeth','Street robbery in Brixton & Stockwell · avoid late-night travel alone'],
+    ],
+    transport: [
+      { area: "King's Cross",          lines: '6 Tube lines + Eurostar terminal', note: "London's most connected hub — Eurostar to Paris/Brussels in under 2½ hours" },
+      { area: 'Waterloo / South Bank', lines: 'Jubilee · Bakerloo · Northern',     note: 'London Eye, Tate Modern, Royal Festival Hall — all walkable' },
+      { area: 'Westminster',           lines: 'District · Circle · Jubilee',       note: "Big Ben, Houses of Parliament & St James's Park on your doorstep" },
+      { area: 'South Kensington',      lines: 'Piccadilly · District · Circle',    note: 'Walk to Natural History, Science & V&A museums (all free)' },
+      { area: 'Covent Garden',         lines: 'Piccadilly Line',                   note: 'Theatre, markets & the West End — all within walking distance' },
+    ],
+    familyHotels: [
+      { rank: '1', name: 'The Rubens at the Palace',  area: 'Victoria',         note: 'Kids eat free · Director of Fun programme · opposite Buckingham Palace' },
+      { rank: '2', name: 'Park Plaza County Hall',     area: 'South Bank',       note: 'Family packages · free breakfast included · steps from London Eye' },
+      { rank: '3', name: 'The Ampersand Hotel',        area: 'South Kensington', note: 'Near 3 free museums · themed afternoon tea for kids' },
+      { rank: '4', name: 'Shangri-La at The Shard',    area: 'London Bridge',    note: '360° city views · infinity pool · luxury family suites' },
+      { rank: '5', name: 'Great Scotland Yard Hotel',  area: 'Westminster',      note: 'Historic landmark · super-central · kid-friendly afternoon tea' },
+    ],
+    familyActivities: [
+      { rank: '1', name: 'Natural History Museum',  price: 'FREE ENTRY',     note: 'Dinosaurs, blue whale & Darwin Centre — loved by all ages' },
+      { rank: '2', name: 'The London Eye',          price: 'From £33/adult', note: '135m views over London · pre-book to skip queues' },
+      { rank: '3', name: 'Tower of London',          price: 'From £33/adult', note: 'Crown Jewels, Beefeaters & 1,000 years of history' },
+      { rank: '4', name: 'Science Museum',           price: 'FREE ENTRY',     note: 'Space, robots & tech — fully interactive for all ages' },
+      { rank: '5', name: 'SEA LIFE London Aquarium', price: 'From £27/child', note: 'Penguins, sharks & touch pools right next to the Eye' },
+    ],
+    safetyTips: [
+      'Stay aware on the Tube and in crowded tourist areas — pickpocketing is the most common issue for visitors.',
+      'Keep bags zipped and phones out of sight on busy streets, particularly around Oxford Street, Camden and Leicester Square.',
+      "London's black cabs (licensed taxis) and Uber are both safe and regulated. Avoid unlicensed minicabs.",
+      'Emergency services: dial 999 (police, fire, ambulance). Non-emergency police: 101.',
+      'The NHS provides emergency healthcare free of charge to all visitors at A&E departments.',
+    ],
+    sourcesNote: 'Crime data sourced from UNODC Global Crime Database 2023, Metropolitan Police Borough Statistics 2024–25 and ONS Crime Survey for England & Wales.',
+  },
+};
+
+const DEFAULT_CITIES = [
+  { name: 'London',     lat: 51.5074, lng: -0.1278 },
+  { name: 'Manchester', lat: 53.4808, lng: -2.2426 },
+  { name: 'Birmingham', lat: 52.4862, lng: -1.8904 },
+  { name: 'Liverpool',  lat: 53.4084, lng: -2.9916 },
+  { name: 'Leeds',      lat: 53.8008, lng: -1.5491 },
+  { name: 'Bristol',    lat: 51.4545, lng: -2.5879 },
+  { name: 'Newcastle',  lat: 54.9783, lng: -1.6178 },
+  { name: 'Cardiff',    lat: 51.4816, lng: -3.1791 },
+  { name: 'Belfast',    lat: 54.5973, lng: -5.9301 },
+  { name: 'Brighton',   lat: 50.8225, lng: -0.1372 },
+];
+
+// Crime category → colour mapping for pins
+const CAT_COLOR = {
+  'violent-crime':            '#D7263D',
+  'robbery':                  '#E03B4B',
+  'possession-of-weapons':    '#A30B26',
+  'burglary':                 '#F46036',
+  'theft-from-the-person':    '#FF7B14',
+  'other-theft':              '#FFA053',
+  'shoplifting':              '#FFC857',
+  'bicycle-theft':            '#E0B040',
+  'vehicle-crime':            '#B07DCC',
+  'criminal-damage-arson':    '#D86B8A',
+  'drugs':                    '#7C5295',
+  'public-order':             '#5B8DEF',
+  'anti-social-behaviour':    '#3FA3A3',
+  'other-crime':              '#888',
+};
+const CAT_LABEL = {
+  'violent-crime':         'Violence & sexual offences',
+  'robbery':               'Robbery',
+  'possession-of-weapons': 'Possession of weapons',
+  'burglary':              'Burglary',
+  'theft-from-the-person': 'Theft from the person',
+  'other-theft':           'Other theft',
+  'shoplifting':           'Shoplifting',
+  'bicycle-theft':         'Bicycle theft',
+  'vehicle-crime':         'Vehicle crime',
+  'criminal-damage-arson': 'Criminal damage & arson',
+  'drugs':                 'Drugs',
+  'public-order':          'Public order',
+  'anti-social-behaviour': 'Anti-social behaviour',
+  'other-crime':           'Other crime',
+};
+
+// --- Map -------------------------------------------------------------
+const map = new maplibregl.Map({
+  container: 'map',
+  style: {
+    version: 8,
+    sources: {
+      basemap: {
+        type: 'raster',
+        // Carto Voyager — free, no API key, generous rate limit, designed for product UIs.
+        // Replace with self-hosted vector tiles in production.
+        tiles: [
+          'https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
+          'https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
+          'https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
+          'https://d.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
+        ],
+        tileSize: 256,
+        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+      },
+    },
+    layers: [{ id: 'basemap', type: 'raster', source: 'basemap' }],
+  },
+  center: [-2.5, 54.0], // Centre of UK
+  zoom: 5.4,
+});
+map.addControl(new maplibregl.NavigationControl(), 'top-right');
+
+// Suppress noisy tile-load console errors (transient network blips).
+map.on('error', (e) => {
+  // Only log real issues, ignore individual tile failures.
+  if (e && e.error && /tile/i.test(String(e.error.message || ''))) return;
+  console.warn('[map]', e && e.error ? e.error.message : e);
+});
+
+let activeCityName = null;
+let lastDataMonth = null;
+
+// --- City buttons ----------------------------------------------------
+const cityGrid = document.getElementById('cityGrid');
+DEFAULT_CITIES.forEach(c => {
+  const btn = document.createElement('button');
+  btn.className = 'city';
+  btn.textContent = c.name;
+  btn.dataset.lat = c.lat;
+  btn.dataset.lng = c.lng;
+  btn.dataset.name = c.name;
+  btn.onclick = () => loadCity(c.name, c.lat, c.lng);
+  cityGrid.appendChild(btn);
+});
+
+// --- Search ----------------------------------------------------------
+document.getElementById('searchBtn').onclick = handleSearch;
+document.getElementById('searchInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') handleSearch();
+});
+async function handleSearch() {
+  const q = document.getElementById('searchInput').value.trim();
+  if (!q) return;
+  // Use Nominatim (OSM) for geocoding — free, no key. Production should rate-limit / cache.
+  const r = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q + ', UK')}&format=json&limit=1`);
+  const j = await r.json();
+  if (!j.length) { alert('Place not found in the UK — try a city or town name.'); return; }
+  loadCity(q, parseFloat(j[0].lat), parseFloat(j[0].lon));
+}
+
+// --- Map click -------------------------------------------------------
+// Only fetch a new area if the click missed all crime pins/clusters.
+map.on('click', e => {
+  const hits = map.queryRenderedFeatures(e.point, {
+    layers: ['clusters', 'unclustered'].filter(l => map.getLayer(l)),
+  });
+  if (hits.length > 0) return; // let the layer-specific handlers deal with it
+  loadCity(
+    `Point (${e.lngLat.lat.toFixed(3)}, ${e.lngLat.lng.toFixed(3)})`,
+    e.lngLat.lat,
+    e.lngLat.lng
+  );
+});
+
+// --- Fetch helper with retry + clear errors -------------------------
+async function fetchJSON(url, { retries = 2, delay = 600 } = {}) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const r = await fetch(url, { headers: { 'Accept': 'application/json' } });
+      if (r.status === 503) {
+        // data.police.uk returns 503 when a query would exceed 10,000 results
+        throw new Error('AREA_TOO_BUSY');
+      }
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return await r.json();
+    } catch (err) {
+      if (attempt === retries) throw err;
+      await new Promise(res => setTimeout(res, delay * (attempt + 1)));
+    }
+  }
+}
+
+// --- Core: load a city ----------------------------------------------
+let loadToken = 0;
+async function loadCity(name, lat, lng) {
+  const myToken = ++loadToken; // ignore stale responses if user clicks again quickly
+  activeCityName = name;
+  document.querySelectorAll('.city').forEach(b => {
+    b.classList.toggle('active', b.dataset.name === name);
+  });
+  showLoading();
+  map.flyTo({ center: [lng, lat], zoom: 12.5, duration: 1200 });
+
+  try {
+    const monthInfo = await fetchJSON(`${POLICE_API}/crime-last-updated`);
+    if (myToken !== loadToken) return;
+    const month = monthInfo.date.slice(0, 7); // YYYY-MM
+    lastDataMonth = month;
+
+    const crimes = await fetchJSON(
+      `${POLICE_API}/crimes-street/all-crime?lat=${lat}&lng=${lng}&date=${month}`
+    );
+    if (myToken !== loadToken) return;
+
+    if (!Array.isArray(crimes)) throw new Error('UNEXPECTED_RESPONSE');
+    renderCity(name, lat, lng, crimes, month);
+  } catch (err) {
+    if (myToken !== loadToken) return; // a newer click superseded this one
+    console.warn('[loadCity]', err);
+    showError(err.message || String(err));
+  }
+}
+
+// --- Wiley Fox rating algorithm (prototype) -------------------------
+// Density-based: crimes per km² in the API's ~1-mile (1.6km) radius circle.
+// Area = π × 1.6² ≈ 8.04 km²
+// Severity weighting bumps violent/weapons crimes higher.
+const SEVERITY = {
+  'violent-crime': 3, 'robbery': 3, 'possession-of-weapons': 3,
+  'burglary': 2, 'theft-from-the-person': 2, 'drugs': 2,
+  'criminal-damage-arson': 1.5, 'vehicle-crime': 1.5,
+  'other-theft': 1, 'shoplifting': 1, 'bicycle-theft': 1,
+  'public-order': 1, 'anti-social-behaviour': 0.8, 'other-crime': 1,
+};
+const AREA_KM2 = Math.PI * 1.6 * 1.6;
+
+function calculateWFRating(crimes) {
+  if (!crimes.length) return { score: 5, weighted: 0, raw: 0 };
+  let weighted = 0;
+  for (const c of crimes) weighted += (SEVERITY[c.category] || 1);
+  const weightedDensity = weighted / AREA_KM2; // weighted crimes per km²
+
+  // Empirically calibrated thresholds (tune with real-world benchmarking)
+  // Higher density = lower rating
+  let score;
+  if (weightedDensity < 25) score = 5;
+  else if (weightedDensity < 75) score = 4;
+  else if (weightedDensity < 200) score = 3;
+  else if (weightedDensity < 400) score = 2;
+  else score = 1;
+
+  return { score, weighted: Math.round(weighted), raw: crimes.length, density: weightedDensity.toFixed(1) };
+}
+
+const RATING_TAGS = {
+  5: ['Very safe',     'var(--r5)'],
+  4: ['Generally safe','var(--r4)'],
+  3: ['Stay aware',    'var(--r3)'],
+  2: ['Caution',       'var(--r2)'],
+  1: ['High caution',  'var(--r1)'],
+};
+
+// --- Rendering -------------------------------------------------------
+function renderCity(name, lat, lng, crimes, month) {
+  // Crime breakdown by category
+  const counts = {};
+  for (const c of crimes) counts[c.category] = (counts[c.category] || 0) + 1;
+  const sortedCats = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
+  const rating = calculateWFRating(crimes);
+
+  // --- Rating card
+  const ratingHost = document.getElementById('ratingHost');
+  const [tag, color] = RATING_TAGS[rating.score];
+  const markerLeft = ((rating.score - 1) / 4) * 100;
+
+  let dataWarn = '';
+  if (crimes.length === 0) {
+    dataWarn = `<div class="warning"><strong>No data returned.</strong> Either this is genuinely a low-crime period, the area is outside England/Wales/NI (Scotland uses a separate system), or the local force hasn't submitted. Try another month or location.</div>`;
+  } else if (crimes.length < 30 && rating.score === 5) {
+    dataWarn = `<div class="warning"><strong>Sparse data.</strong> The local police force may have under-submitted this month. Rating shown is provisional.</div>`;
+  }
+
+  ratingHost.innerHTML = `
+    <div class="section" style="padding-top:20px;padding-bottom:20px">
+      <div class="rating-card">
+        <div class="label">Wiley Fox rating</div>
+        <div class="city-name">${escapeHtml(name)}</div>
+        <div class="rating-display">
+          <div class="rating-orb" style="background:${color}">${rating.score}</div>
+          <div class="rating-info">
+            <div class="rating-num">${tag}</div>
+            <div class="rating-tag">${rating.raw.toLocaleString()} recorded crimes · ${month}</div>
+          </div>
+        </div>
+        <div class="rating-bar"><div class="marker" style="left:${markerLeft}%"></div></div>
+        <div class="scale-row"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+      </div>
+      ${dataWarn}
+      <div class="meta-grid" style="margin:14px 24px 0">
+        <div class="meta-tile"><div class="v">${rating.raw.toLocaleString()}</div><div class="l">Crimes recorded</div></div>
+        <div class="meta-tile"><div class="v">${rating.density || 0}</div><div class="l">Weighted /km²</div></div>
+      </div>
+      <button class="guide-btn" id="guideBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download travel guide
+      </button>
+    </div>
+  `;
+  // Wire up the guide button
+  const gb = document.getElementById('guideBtn');
+  if (gb) gb.onclick = () => generateTravelGuide(name, lat, lng, crimes, month, rating, sortedCats);
+
+  // --- Categories
+  const catsHost = document.getElementById('catsHost');
+  if (sortedCats.length) {
+    catsHost.innerHTML = `
+      <div class="section">
+        <h2>Crime breakdown</h2>
+        <div class="cat-list">
+          ${sortedCats.slice(0, 8).map(([cat, n]) => `
+            <div class="cat-row">
+              <span class="cat-dot" style="background:${CAT_COLOR[cat] || '#888'}"></span>
+              <span class="cat-name">${CAT_LABEL[cat] || cat}</span>
+              <span class="cat-count">${n.toLocaleString()}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  } else {
+    catsHost.innerHTML = '';
+  }
+
+  // --- Hotels (Booking.com referral)
+  renderHotels(name);
+
+  // --- Plot points on map (sample if huge)
+  const points = crimes.slice(0, 2500); // safety cap for the demo
+  const features = points.map(c => ({
+    type: 'Feature',
+    properties: {
+      category: c.category,
+      label: CAT_LABEL[c.category] || c.category,
+      color: CAT_COLOR[c.category] || '#888',
+      street: (c.location && c.location.street && c.location.street.name) || 'Unknown',
+      month: c.month,
+    },
+    geometry: {
+      type: 'Point',
+      coordinates: [parseFloat(c.location.longitude), parseFloat(c.location.latitude)],
+    },
+  }));
+
+  const geojson = { type: 'FeatureCollection', features };
+  plotCrimes(geojson);
+}
+
+// --- Map plotting (waits for style load, defensive) -----------------
+let crimePopupsInitialised = false;
+function plotCrimes(geojson) {
+  // Wait until the map style is fully loaded before touching sources/layers.
+  if (!map.isStyleLoaded()) {
+    map.once('load', () => plotCrimes(geojson));
+    return;
+  }
+  try {
+    if (map.getSource('crimes')) {
+      map.getSource('crimes').setData(geojson);
+    } else {
+      map.addSource('crimes', {
+        type: 'geojson',
+        data: geojson,
+        cluster: true,
+        clusterMaxZoom: 14,
+        clusterRadius: 40,
+      });
+      map.addLayer({
+        id: 'clusters',
+        type: 'circle',
+        source: 'crimes',
+        filter: ['has', 'point_count'],
+        paint: {
+          'circle-color': [
+            'step', ['get', 'point_count'],
+            '#3FA34D', 50,
+            '#FFC857', 200,
+            '#F46036', 500,
+            '#D7263D',
+          ],
+          'circle-radius': ['step', ['get', 'point_count'], 18, 50, 24, 200, 30, 500, 36],
+          'circle-stroke-color': '#fff',
+          'circle-stroke-width': 2.5,
+          'circle-opacity': 0.85,
+        },
+      });
+      // Inner contrast ring on clusters (acts as a cleaner number badge backdrop)
+      map.addLayer({
+        id: 'cluster-inner',
+        type: 'circle',
+        source: 'crimes',
+        filter: ['has', 'point_count'],
+        paint: {
+          'circle-color': '#fff',
+          'circle-radius': ['step', ['get', 'point_count'], 9, 50, 12, 200, 15, 500, 18],
+          'circle-opacity': 0.95,
+        },
+      });
+      map.addLayer({
+        id: 'unclustered',
+        type: 'circle',
+        source: 'crimes',
+        filter: ['!', ['has', 'point_count']],
+        paint: {
+          'circle-color': ['get', 'color'],
+          'circle-radius': 6,
+          'circle-stroke-color': '#fff',
+          'circle-stroke-width': 1.5,
+          'circle-opacity': 0.85,
+        },
+      });
+
+      if (!crimePopupsInitialised) {
+        crimePopupsInitialised = true;
+        map.on('click', 'unclustered', e => {
+          const f = e.features[0];
+          const p = f.properties;
+          new maplibregl.Popup({ closeButton: true })
+            .setLngLat(f.geometry.coordinates)
+            .setHTML(`<div style="font-family:Inter,sans-serif;padding:4px"><strong style="color:${p.color}">${p.label}</strong><br><span style="font-size:12px;color:#666">${p.street}</span><br><span style="font-size:11px;color:#999">${p.month}</span></div>`)
+            .addTo(map);
+        });
+        map.on('click', 'clusters', e => {
+          const f = e.features[0];
+          const clusterId = f.properties.cluster_id;
+          map.getSource('crimes').getClusterExpansionZoom(clusterId, (err, zoom) => {
+            if (err) return;
+            map.easeTo({ center: f.geometry.coordinates, zoom });
+          });
+        });
+        map.on('mouseenter', 'unclustered', () => map.getCanvas().style.cursor = 'pointer');
+        map.on('mouseleave', 'unclustered', () => map.getCanvas().style.cursor = '');
+        map.on('mouseenter', 'clusters', () => map.getCanvas().style.cursor = 'pointer');
+        map.on('mouseleave', 'clusters', () => map.getCanvas().style.cursor = '');
+      }
+    }
+  } catch (err) {
+    console.error('[plotCrimes] Failed to add layers:', err);
+    // Schedule a retry once the style is fully ready
+    setTimeout(() => plotCrimes(geojson), 500);
+  }
+}
+
+// --- Hotels (Booking.com referrals) ---------------------------------
+function renderHotels(cityName) {
+  const host = document.getElementById('hotelsHost');
+  // Match against known city, otherwise fall back to a generic CTA
+  const key = Object.keys(SAMPLE_HOTELS).find(c => cityName.toLowerCase().includes(c.toLowerCase()));
+  const hotels = key ? SAMPLE_HOTELS[key] : [];
+  const stars = n => '★'.repeat(n) + '☆'.repeat(5 - n);
+
+  host.innerHTML = `
+    <div class="section">
+      <h2>Stay safely <span class="demo-tag">Demo data</span></h2>
+      ${hotels.map(h => `
+        <a class="hotel-card" href="${bookingSearchUrl(h.name)}" target="_blank" rel="noopener sponsored">
+          <div class="hotel-thumb">🏨</div>
+          <div class="hotel-meta">
+            <div class="hotel-name">${escapeHtml(h.name)}</div>
+            <div class="hotel-line"><span class="hotel-stars">${stars(h.stars)}</span> · ${escapeHtml(h.area)}</div>
+          </div>
+        </a>
+      `).join('')}
+      <a class="booking-cta" href="${bookingSearchUrl(cityName)}" target="_blank" rel="noopener sponsored">
+        See all hotels in ${escapeHtml(cityName)} →
+      </a>
+      <div style="font-size:10px;color:var(--charcoal-soft);margin-top:8px;line-height:1.4">
+        Powered by Booking.com. Wiley Fox earns a referral commission on completed bookings.
+      </div>
+    </div>
+  `;
+}
+
+// --- Travel guide generator -----------------------------------------
+function generateTravelGuide(name, lat, lng, crimes, month, rating, sortedCats) {
+  const guideKey = Object.keys(CITY_GUIDES).find(c => name.toLowerCase().includes(c.toLowerCase()));
+  const guide = guideKey ? CITY_GUIDES[guideKey] : null;
+  const hotelKey = Object.keys(SAMPLE_HOTELS).find(c => name.toLowerCase().includes(c.toLowerCase()));
+  const hotels = hotelKey ? SAMPLE_HOTELS[hotelKey] : [];
+  const [tag] = RATING_TAGS[rating.score];
+
+  const ratingHex = { 5:'#3FA34D', 4:'#A4C957', 3:'#FFC857', 2:'#F46036', 1:'#D7263D' }[rating.score];
+  const monthLabel = new Date(month + '-01').toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+
+  // Build top-streets list (top 5 most reported streets in this query)
+  const streetCounts = {};
+  for (const c of crimes) {
+    const s = c.location && c.location.street && c.location.street.name;
+    if (s && s !== 'On or near') streetCounts[s] = (streetCounts[s] || 0) + 1;
+  }
+  const topStreets = Object.entries(streetCounts).sort((a,b) => b[1]-a[1]).slice(0,5);
+
+  const safetyTips = (guide && guide.safetyTips) || [
+    'Keep valuables out of sight in busy tourist areas — pickpocketing is the most common offence in UK city centres.',
+    'In nightlife districts, stay with your group and pre-book licensed taxis or use Uber/Bolt rather than hailing on the street.',
+    'Avoid leaving bags unattended in restaurants, on the Tube, or on intercity trains.',
+    'If you drive, never leave anything visible in the car — vehicle crime is concentrated in unmonitored car parks.',
+    'In emergencies dial 999. For non-emergencies dial 101 (police) or 111 (NHS).',
+  ];
+
+  // Curated section — only renders if we have rich content for this city (London)
+  const curatedHTML = guide ? `
+    <div class="hero-strip">
+      <div class="hero-strip-inner">
+        <div class="hero-stat-grid">
+          ${guide.headlineStats.map(s => `
+            <div class="hero-stat">
+              <div class="hero-v">${escapeHtml(s.v)}</div>
+              <div class="hero-l">${escapeHtml(s.l)}</div>
+              <div class="hero-s">${escapeHtml(s.s)}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+
+    <h2>${escapeHtml(name)}</h2>
+    <p class="lede">${escapeHtml(guide.intro)}</p>
+    <p style="font-size:14px;color:#3a3a3a;margin-bottom:14px">${escapeHtml(guide.intro2)}</p>
+
+    <h2>Safety &amp; crime data</h2>
+    <p style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#3a3a3a;font-weight:600;margin-bottom:10px">UNODC Global Data · England &amp; Wales · Updated 2023–25</p>
+    <p style="font-size:14px;color:#3a3a3a;margin-bottom:14px">${escapeHtml(guide.headlineCopy)}</p>
+
+    <h2>Safest 10 areas to stay</h2>
+    <p style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#3a3a3a;font-weight:600;margin-bottom:10px">Ranked by crime rate per 1,000 residents · Met Police &amp; ONS 2024–25</p>
+    ${guide.safest.map(([rank, score, area, note]) => `
+      <div class="rank-row safe">
+        <div class="rank-num">${escapeHtml(rank)}</div>
+        <div class="rank-score">${escapeHtml(score)}</div>
+        <div class="rank-area">
+          <div class="rank-name">${escapeHtml(area)}</div>
+          <div class="rank-note">${escapeHtml(note)}</div>
+        </div>
+      </div>
+    `).join('')}
+
+    <h2>Top 5 areas to avoid</h2>
+    <p style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#3a3a3a;font-weight:600;margin-bottom:10px">Ranked by crime rate per 1,000 residents · Met Police &amp; ONS 2024–25</p>
+    ${guide.avoid.map(([rank, score, area, note]) => `
+      <div class="rank-row avoid">
+        <div class="rank-num">${escapeHtml(rank)}</div>
+        <div class="rank-score">${escapeHtml(score)}</div>
+        <div class="rank-area">
+          <div class="rank-name">${escapeHtml(area)}</div>
+          <div class="rank-note">${escapeHtml(note)}</div>
+        </div>
+      </div>
+    `).join('')}
+
+    <h2>Best for public transport</h2>
+    <p style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#3a3a3a;font-weight:600;margin-bottom:10px">Top areas with excellent Tube &amp; rail connections</p>
+    ${guide.transport.map(t => `
+      <div class="hotel-row">
+        <div>
+          <div class="name">${escapeHtml(t.area)}</div>
+          <div class="area">${escapeHtml(t.lines)}</div>
+        </div>
+        <div style="font-size:11px;color:#3a3a3a;text-align:right;max-width:55%">${escapeHtml(t.note)}</div>
+      </div>
+    `).join('')}
+
+    <h2>${escapeHtml(name)} for families — top 5 hotels</h2>
+    ${guide.familyHotels.map(h => `
+      <div class="hotel-row">
+        <div>
+          <div class="name"><span class="rank-pill">${escapeHtml(h.rank)}</span> ${escapeHtml(h.name)}</div>
+          <div class="area">${escapeHtml(h.area)} · ${escapeHtml(h.note)}</div>
+        </div>
+        <a class="book-link" href="${bookingSearchUrl(h.name)}" target="_blank" rel="noopener sponsored">Check rates →</a>
+      </div>
+    `).join('')}
+
+    <h2>Top 5 family activities</h2>
+    ${guide.familyActivities.map(a => `
+      <div class="hotel-row">
+        <div>
+          <div class="name"><span class="rank-pill">${escapeHtml(a.rank)}</span> ${escapeHtml(a.name)}</div>
+          <div class="area">${escapeHtml(a.note)}</div>
+        </div>
+        <div style="font-size:11px;color:#FF7B14;font-weight:700;letter-spacing:.04em;text-transform:uppercase">${escapeHtml(a.price)}</div>
+      </div>
+    `).join('')}
+  ` : `
+    <h2>The lay of the land</h2>
+    <p class="lede">${escapeHtml(name)} carries a Wiley Fox safety rating of ${rating.score}/5 — ${tag.toLowerCase()}. This guide is built from live ${monthLabel} police data to help you plan around recorded crime hotspots, not to discourage your visit.</p>
+  `;
+
+  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"/>
+<title>Wiley Fox Travel Guide — ${escapeHtml(name)}</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 18mm; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;color:#232323;background:#fff;line-height:1.5}
+  .page{max-width:780px;margin:0 auto;padding:24px}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;letter-spacing:-.01em;line-height:1.1}
+  h1{font-size:64px;margin-bottom:6px;letter-spacing:-.02em}
+  h2{font-size:22px;margin:32px 0 8px;padding-bottom:6px;border-bottom:2px solid #E5EBD3;text-transform:uppercase;letter-spacing:.04em;font-size:18px;font-family:'Inter',sans-serif;font-weight:700;color:#232323}
+  h3{font-size:16px;margin-bottom:6px}
+  .cover{background:linear-gradient(135deg,#E5EBD3 0%,#F2F4E5 100%);padding:64px 48px 56px;border-radius:14px;margin-bottom:24px;page-break-after:always;position:relative;overflow:hidden;min-height:560px}
+  .cover::before{content:'';position:absolute;top:-100px;right:-100px;width:340px;height:340px;border-radius:50%;background:rgba(255,123,20,.1)}
+  .cover::after{content:'';position:absolute;bottom:-80px;left:-80px;width:220px;height:220px;border-radius:50%;background:rgba(170,186,159,.25)}
+  .brand-line{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:#3a3a3a;font-weight:700;margin-bottom:6px;position:relative}
+  .brand-line.big{font-size:13px;letter-spacing:.36em;font-family:'Fraunces',serif;font-weight:600;color:#FF7B14}
+  .brand-mark{display:inline-flex;align-items:center;gap:12px;margin-bottom:36px;position:relative}
+  .logo{width:44px;height:44px;border-radius:50%;background:#FF7B14;color:#fff;display:grid;place-items:center;font-family:'Fraunces',serif;font-weight:800;font-size:16px;box-shadow:0 4px 12px rgba(255,123,20,.3)}
+  .cover-title-block{position:relative}
+  .tagline{font-family:'Fraunces',serif;font-size:14px;color:#3a3a3a;margin-top:8px;letter-spacing:.04em;font-weight:500;position:relative}
+  .url{position:absolute;bottom:48px;left:48px;font-size:11px;letter-spacing:.16em;color:#3a3a3a;font-weight:600}
+  .rating-cover{display:flex;align-items:center;gap:20px;margin-top:48px;position:relative}
+  .orb{width:90px;height:90px;border-radius:50%;background:${ratingHex};color:#fff;display:grid;place-items:center;font-family:'Fraunces',serif;font-size:48px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+  .rating-side h3{font-family:'Fraunces',serif;font-size:22px}
+  .rating-side .meta{font-size:13px;color:#3a3a3a;margin-top:4px}
+  .lede{font-family:'Fraunces',serif;font-size:18px;color:#3a3a3a;line-height:1.55;margin-bottom:14px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+  .tile{background:#F2F4E5;border-radius:10px;padding:14px}
+  .tile .l{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#3a3a3a;font-weight:600}
+  .tile .v{font-family:'Fraunces',serif;font-size:24px;font-weight:600;margin-top:2px}
+  .hero-strip{background:#232323;color:#fff;border-radius:14px;padding:20px;margin:0 0 14px}
+  .hero-stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .hero-stat{padding:0 6px;border-right:1px solid rgba(255,255,255,.15)}
+  .hero-stat:last-child{border-right:0}
+  .hero-v{font-family:'Fraunces',serif;font-size:32px;font-weight:700;color:#FF7B14;line-height:1}
+  .hero-l{font-size:13px;font-weight:600;margin-top:4px}
+  .hero-s{font-size:10px;letter-spacing:.06em;color:rgba(255,255,255,.65);margin-top:3px;text-transform:uppercase;font-weight:500}
+  .cat-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed rgba(35,35,35,.1)}
+  .cat-row:last-child{border-bottom:0}
+  .cat-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  .cat-name{flex:1;font-size:13px;font-weight:500}
+  .cat-count{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
+  .rank-row{display:grid;grid-template-columns:32px 64px 1fr;gap:14px;align-items:center;padding:10px 12px;border-radius:8px;margin-bottom:6px;background:#F2F4E5;border-left:3px solid #AABA9F}
+  .rank-row.avoid{border-left-color:#D7263D;background:#FFF1F0}
+  .rank-num{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:#FF7B14}
+  .rank-row.avoid .rank-num{color:#D7263D}
+  .rank-score{font-family:'Fraunces',serif;font-size:13px;font-weight:600;color:#3a3a3a;text-align:center}
+  .rank-name{font-family:'Fraunces',serif;font-weight:600;font-size:14px}
+  .rank-note{font-size:11px;color:#3a3a3a;margin-top:2px;line-height:1.4}
+  .rank-pill{display:inline-block;background:#FF7B14;color:#fff;font-family:'Fraunces',serif;font-weight:700;font-size:11px;width:20px;height:20px;border-radius:50%;text-align:center;line-height:20px;margin-right:4px}
+  .hotel-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px dashed rgba(35,35,35,.1);gap:14px}
+  .hotel-row:last-child{border-bottom:0}
+  .hotel-row .name{font-family:'Fraunces',serif;font-weight:600;font-size:15px}
+  .hotel-row .area{font-size:12px;color:#3a3a3a;margin-top:2px}
+  .hotel-row .stars{color:#FF7B14}
+  .book-link{font-size:11px;color:#FF7B14;text-decoration:none;font-weight:700;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+  .book-link:hover{text-decoration:underline}
+  ul{padding-left:20px}
+  li{margin:8px 0;font-size:14px}
+  .live-section{background:#FFF4E0;border-left:3px solid #FF7B14;padding:18px 20px;border-radius:0 10px 10px 0;margin:24px 0}
+  .live-section h2{margin-top:0;border-bottom-color:rgba(255,123,20,.2)}
+  .live-tag{display:inline-block;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#fff;background:#FF7B14;padding:3px 8px;border-radius:4px;font-weight:700;margin-left:8px;vertical-align:middle}
+  .footer{margin-top:48px;padding-top:20px;border-top:1px solid #E5EBD3;font-size:11px;color:#3a3a3a;line-height:1.55}
+  .disclaimer{background:#FFF4E0;border-left:3px solid #FFC857;padding:12px 14px;border-radius:0 8px 8px 0;font-size:12px;margin:14px 0;color:#3a3a3a}
+  .print-btn{position:fixed;top:20px;right:20px;background:#FF7B14;color:#fff;border:none;padding:12px 20px;border-radius:10px;font-family:inherit;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(255,123,20,.3);z-index:1000}
+  .print-btn:hover{background:#E2620A}
+  @media print { .print-btn { display:none } .cover { page-break-after:always } .live-section{page-break-inside:avoid} }
+</style>
+</head><body>
+<button class="print-btn" onclick="window.print()">📥 Save as PDF</button>
+<div class="page">
+
+  <div class="cover">
+    <div class="brand-mark"><div class="logo">WF</div><div><div class="brand-line">The Wiley Fox</div><div class="brand-line big">Travel Guides</div></div></div>
+    <div class="cover-title-block">
+      <h1>${escapeHtml(name)}</h1>
+      <div class="tagline">${escapeHtml((guide && guide.tagline) || `UK Safety Briefing · ${monthLabel}`)}</div>
+    </div>
+    <div class="rating-cover">
+      <div class="orb">${rating.score}</div>
+      <div class="rating-side">
+        <h3>Wiley Fox rating: ${tag}</h3>
+        <div class="meta">${rating.raw.toLocaleString()} crimes recorded within a 1-mile radius · weighted density ${rating.density}/km² · ${monthLabel}</div>
+      </div>
+    </div>
+    <div class="url">thewileyfox.com</div>
+  </div>
+
+  ${curatedHTML}
+
+  <div class="live-section">
+    <h2>Right now in ${escapeHtml(name)} <span class="live-tag">Live data</span></h2>
+    <p style="font-size:13px;color:#3a3a3a;margin-bottom:12px">Pulled live from data.police.uk for the most recent reporting period: <strong>${monthLabel}</strong>. ${rating.raw.toLocaleString()} offences recorded within a 1-mile radius of the search point.</p>
+    <h3 style="margin:14px 0 6px;font-size:14px">Most-reported offences</h3>
+    ${sortedCats.slice(0, 8).map(([cat, n]) => `
+      <div class="cat-row">
+        <span class="cat-dot" style="background:${CAT_COLOR[cat] || '#888'}"></span>
+        <span class="cat-name">${CAT_LABEL[cat] || cat}</span>
+        <span class="cat-count">${n.toLocaleString()}</span>
+      </div>
+    `).join('')}
+    ${topStreets.length ? `
+      <h3 style="margin:18px 0 6px;font-size:14px">Streets with most recorded incidents</h3>
+      <ul>${topStreets.map(([s, n]) => `<li><strong>${escapeHtml(s)}</strong> — ${n} recorded ${n === 1 ? 'incident' : 'incidents'}</li>`).join('')}</ul>
+    ` : ''}
+  </div>
+
+  ${!guide ? `
+    <h2>Stay safely</h2>
+    <p style="font-size:13px;color:#3a3a3a;margin-bottom:14px">Featured stays in or near ${escapeHtml(name)}. Click any hotel name for live availability on Booking.com.</p>
+    ${hotels.length ? hotels.map(h => `
+      <div class="hotel-row">
+        <div>
+          <div class="name">${escapeHtml(h.name)}</div>
+          <div class="area"><span class="stars">${'★'.repeat(h.stars)}${'☆'.repeat(5 - h.stars)}</span> · ${escapeHtml(h.area)}</div>
+        </div>
+        <a class="book-link" href="${bookingSearchUrl(h.name)}" target="_blank" rel="noopener sponsored">Check rates →</a>
+      </div>
+    `).join('') : ''}
+  ` : ''}
+
+  <div style="margin:18px 0"><a class="book-link" href="${bookingSearchUrl(name)}" target="_blank" rel="noopener sponsored">See all hotels in ${escapeHtml(name)} on Booking.com →</a></div>
+
+  <h2>Safety tips for visitors</h2>
+  <ul>${safetyTips.map(t => `<li>${escapeHtml(t)}</li>`).join('')}</ul>
+
+  <div class="disclaimer"><strong>Reading the rating.</strong> The Wiley Fox rating is calculated from recorded police crime density within a 1-mile radius, weighted by offence severity. It is a relative indicator and not a definitive safety judgement. Always exercise normal travel awareness.</div>
+
+  <div class="footer">
+    <strong>Sources:</strong> ${guide ? escapeHtml(guide.sourcesNote) + ' Live data from data.police.uk under the Open Government Licence v3.0.' : 'Crime data from data.police.uk under the Open Government Licence v3.0.'} Hotel data via Booking.com (referral partner). Brand and editorial © Wiley Fox.<br><br>
+    <strong>Disclaimer:</strong> The Wiley Fox rating is provided as guidance only, calculated from publicly available crime data. It is not a substitute for official travel advice from gov.uk or your home country's foreign office. Travel responsibly.<br><br>
+    Generated ${new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} · Wiley Fox UK Safety Map · thewileyfox.com
+  </div>
+</div>
+</body></html>`;
+
+  const w = window.open('', '_blank');
+  if (!w) { alert('Pop-up blocked. Allow pop-ups for this page to download the travel guide.'); return; }
+  w.document.open();
+  w.document.write(html);
+  w.document.close();
+}
+
+function showLoading() {
+  document.getElementById('ratingHost').innerHTML = '<div class="loading"><span class="spinner"></span> Pulling data from data.police.uk…</div>';
+  document.getElementById('catsHost').innerHTML = '';
+}
+function showError(msg) {
+  let friendly = '';
+  if (msg === 'AREA_TOO_BUSY') {
+    friendly = 'This area has too many crimes to display in a single query (over 10,000). Zoom in or pick a smaller area.';
+  } else if (msg === 'UNEXPECTED_RESPONSE') {
+    friendly = 'data.police.uk returned an unexpected response. The service is occasionally intermittent — please retry.';
+  } else if (/Failed to fetch|NetworkError/i.test(msg)) {
+    friendly = 'Network request blocked. If you opened this file directly (file://), some browsers block API calls. Run it through a local server (see the dev handoff doc) or open it from a hosted URL.';
+  } else {
+    friendly = 'data.police.uk is temporarily unavailable. Please retry in a moment or try another city.';
+  }
+  document.getElementById('ratingHost').innerHTML =
+    `<div class="warning" style="margin:18px 24px"><strong>Couldn't load data.</strong> ${friendly}<br><span style="opacity:.6;font-size:11px">Technical: ${escapeHtml(msg)}</span></div>`;
+  document.getElementById('catsHost').innerHTML = '';
+  document.getElementById('hotelsHost').innerHTML = '';
+}
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// --- Boot ------------------------------------------------------------
+document.getElementById('ratingHost').innerHTML = `
+  <div class="empty-state">
+    <div class="ico">🦊</div>
+    <strong>Pick a city</strong> or click anywhere on the UK map to see live crime data and the Wiley Fox safety rating.
+  </div>
+`;
+</script>
+</body>
+</html>

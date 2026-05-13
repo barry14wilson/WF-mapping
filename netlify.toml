@@ -1,0 +1,46 @@
+[build]
+  functions = "netlify/functions"
+  publish   = "."
+
+# --- HTTP endpoints (consumed by the map & route APIs) --------------------
+[[redirects]]
+  from = "/api/safety-tiles"
+  to   = "/.netlify/functions/safety-tiles"
+  status = 200
+
+[[redirects]]
+  from = "/api/route-safety-check"
+  to   = "/.netlify/functions/route-safety-check"
+  status = 200
+
+# --- Scheduled ingest cadence (per Phase 5 spec) --------------------------
+# UK + Mexico        — daily
+# US, EU, AU, CA     — weekly
+# UNODC, WB, ACLED   — monthly
+
+[functions."scheduled-uk"]
+  schedule = "@daily"
+
+[functions."scheduled-mx"]
+  schedule = "@daily"
+
+[functions."scheduled-us"]
+  schedule = "@weekly"
+
+[functions."scheduled-eu"]
+  schedule = "@weekly"
+
+[functions."scheduled-au"]
+  schedule = "@weekly"
+
+[functions."scheduled-ca"]
+  schedule = "@weekly"
+
+[functions."scheduled-unodc"]
+  schedule = "@monthly"
+
+[functions."scheduled-worldbank"]
+  schedule = "@monthly"
+
+[functions."scheduled-acled"]
+  schedule = "@monthly"

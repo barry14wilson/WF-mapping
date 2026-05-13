@@ -9,10 +9,20 @@
   },
   "scripts": {
     "connector:uk": "node connectors/uk-police.js",
-    "connector:us": "node connectors/us-fbi.js"
+    "connector:us": "node connectors/us-fbi.js",
+    "connector:eu": "node connectors/eu-eurostat.js",
+    "connector:au": "node connectors/australia-abs.js",
+    "connector:ca": "node connectors/canada-statcan.js",
+    "connector:mx": "node connectors/mexico-hoyodecrimen.js",
+    "connector:unodc": "node connectors/unodc-global.js",
+    "connector:wb": "node connectors/worldbank-global.js",
+    "connector:acled": "node connectors/acled-conflict.js",
+    "score": "node scoring/scoring-engine.js"
   },
   "dependencies": {
+    "@netlify/functions": "^2.8.0",
     "@supabase/supabase-js": "^2.45.0",
+    "@turf/turf": "^7.1.0",
     "dotenv": "^16.4.5",
     "h3-js": "^4.1.0"
   }

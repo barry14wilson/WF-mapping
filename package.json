@@ -18,7 +18,8 @@
     "connector:wb": "node connectors/worldbank-global.js",
     "connector:acled": "node connectors/acled-conflict.js",
     "score": "node scoring/scoring-engine.js",
-    "test": "node --test"
+    "smoke": "node scripts/smoke-test.mjs",
+    "test": "node --test test/*.test.js"
   },
   "dependencies": {
     "@netlify/functions": "^2.8.0",

@@ -20,6 +20,8 @@ This repo also contains the standalone single-file prototype (`wiley-fox-uk-prot
 
 ---
 
+> For getting this live (Supabase + Netlify + verification curl) see **[DEPLOY.md](./DEPLOY.md)**. The fastest path: `cp .env.example .env`, fill in Supabase keys, then `npm install && npm run smoke`.
+
 ## Quick start
 
 ```bash

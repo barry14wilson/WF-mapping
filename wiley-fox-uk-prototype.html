@@ -157,6 +157,12 @@
       <div class="legend-row"><span class="legend-dot" style="background:var(--r3)"></span> 3</div>
       <div class="legend-row"><span class="legend-dot" style="background:var(--r2)"></span> 2</div>
       <div class="legend-row"><span class="legend-dot" style="background:var(--r1)"></span> 1 · Highest crime</div>
+      <div style="height:1px;background:rgba(35,35,35,.08);margin:10px -2px 8px"></div>
+      <div class="title" style="margin-bottom:6px">Hex band</div>
+      <div class="legend-row"><span class="legend-dot" style="background:#2ECC71"></span> Green · safest</div>
+      <div class="legend-row"><span class="legend-dot" style="background:#F39C12"></span> Amber</div>
+      <div class="legend-row"><span class="legend-dot" style="background:#E74C3C"></span> Red</div>
+      <div class="legend-row"><span class="legend-dot" style="background:#8E44AD"></span> Purple · highest</div>
     </div>
     <div class="source-pill">
       Data: <a href="https://data.police.uk" target="_blank" rel="noopener">data.police.uk</a> · Map © OpenStreetMap
@@ -362,6 +368,107 @@ map.on('error', (e) => {
   console.warn('[map]', e && e.error ? e.error.message : e);
 });
 
+// --- Wiley Fox safety-tiles overlay ---------------------------------
+// Hex polygons fed by the pipeline's /api/safety-tiles endpoint.
+// Sits underneath the data.police.uk dot clusters so both views coexist:
+// hexes give the broad heat-map context, dots give the street-level detail.
+const WF_API_BASE = 'https://wiley-fox.netlify.app';
+const WF_MIN_ZOOM_FOR_TILES = 6;   // skip API call when zoomed out further than this
+const WF_TILE_DEBOUNCE_MS = 300;
+
+function resolutionForZoom(z) {
+  if (z < 10) return 7;   // ~5 km² hex, city rollup
+  if (z < 13) return 9;   // ~0.1 km² hex, neighbourhood
+  return 11;              // ~2150 m² hex, street segment
+}
+
+function initSafetyTilesLayer() {
+  if (!map.isStyleLoaded()) { map.once('load', initSafetyTilesLayer); return; }
+  if (map.getSource('safety-tiles')) return;
+  map.addSource('safety-tiles', {
+    type: 'geojson',
+    data: { type: 'FeatureCollection', features: [] },
+  });
+  map.addLayer({
+    id: 'safety-fill',
+    type: 'fill',
+    source: 'safety-tiles',
+    paint: {
+      'fill-color': ['coalesce', ['get', 'color'], '#888888'],
+      'fill-opacity': 0.28,
+    },
+  });
+  map.addLayer({
+    id: 'safety-outline',
+    type: 'line',
+    source: 'safety-tiles',
+    paint: {
+      'line-color': ['coalesce', ['get', 'color'], '#888888'],
+      'line-width': 1,
+      'line-opacity': 0.55,
+    },
+  });
+  // Click a hex → popup with band + score.
+  map.on('click', 'safety-fill', e => {
+    const f = e.features[0];
+    const p = f.properties || {};
+    const band = (p.band || '').toString();
+    new maplibregl.Popup({ closeButton: true })
+      .setLngLat(e.lngLat)
+      .setHTML(
+        `<div style="font-family:Inter,sans-serif;padding:4px;min-width:160px">
+           <strong style="color:${p.color}">${band.toUpperCase()}</strong>
+           <div style="font-size:12px;color:#666;margin-top:2px">Wiley Fox score: ${Number(p.score).toFixed(1)} / 100</div>
+           <div style="font-size:11px;color:#999;margin-top:2px">H3 r${p.resolution}</div>
+         </div>`,
+      )
+      .addTo(map);
+  });
+  map.on('mouseenter', 'safety-fill', () => { map.getCanvas().style.cursor = 'pointer'; });
+  map.on('mouseleave', 'safety-fill', () => { map.getCanvas().style.cursor = ''; });
+}
+
+let safetyTilesTimer = null;
+let safetyTilesAbortController = null;
+
+async function refreshSafetyTiles() {
+  if (!map.isStyleLoaded()) return;
+  initSafetyTilesLayer();
+  if (map.getZoom() < WF_MIN_ZOOM_FOR_TILES) {
+    map.getSource('safety-tiles')?.setData({ type: 'FeatureCollection', features: [] });
+    return;
+  }
+  const b = map.getBounds();
+  const bbox = [b.getWest(), b.getSouth(), b.getEast(), b.getNorth()]
+    .map(n => n.toFixed(4))
+    .join(',');
+  const resolution = resolutionForZoom(map.getZoom());
+
+  if (safetyTilesAbortController) safetyTilesAbortController.abort();
+  safetyTilesAbortController = new AbortController();
+
+  try {
+    const url = `${WF_API_BASE}/api/safety-tiles?bbox=${bbox}&resolution=${resolution}`;
+    const r = await fetch(url, {
+      headers: { 'Accept': 'application/json' },
+      signal: safetyTilesAbortController.signal,
+    });
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const geojson = await r.json();
+    if (geojson && geojson.features && map.getSource('safety-tiles')) {
+      map.getSource('safety-tiles').setData(geojson);
+    }
+  } catch (err) {
+    if (err.name !== 'AbortError') console.warn('[safety-tiles]', err.message);
+  }
+}
+
+map.on('moveend', () => {
+  clearTimeout(safetyTilesTimer);
+  safetyTilesTimer = setTimeout(refreshSafetyTiles, WF_TILE_DEBOUNCE_MS);
+});
+map.on('load', refreshSafetyTiles);
+
 let activeCityName = null;
 let lastDataMonth = null;
 
@@ -394,10 +501,10 @@ async function handleSearch() {
 }
 
 // --- Map click -------------------------------------------------------
-// Only fetch a new area if the click missed all crime pins/clusters.
+// Only fetch a new area if the click missed all crime pins/clusters/hexes.
 map.on('click', e => {
   const hits = map.queryRenderedFeatures(e.point, {
-    layers: ['clusters', 'unclustered'].filter(l => map.getLayer(l)),
+    layers: ['clusters', 'unclustered', 'safety-fill'].filter(l => map.getLayer(l)),
   });
   if (hits.length > 0) return; // let the layer-specific handlers deal with it
   loadCity(

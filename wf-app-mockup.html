@@ -235,6 +235,55 @@
   .cat-count{font-size:13px;font-weight:700;color:var(--charcoal)}
   .area-cta{margin:0 16px 16px;padding:14px;background:var(--orange);color:#fff;border:none;border-radius:14px;font-weight:700;font-size:14px;width:calc(100% - 32px)}
 
+  /* Area hex map */
+  .area-map-wrap{position:relative;flex:1;background:linear-gradient(180deg,#E7EDD9 0%,#DCE6CB 100%);overflow:hidden}
+  .area-map-wrap::before{content:"";position:absolute;inset:0;background-image:
+    linear-gradient(rgba(255,255,255,.35) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.35) 1px,transparent 1px);
+    background-size:30px 30px}
+  .area-map-wrap .road{position:absolute;background:#fff;height:5px;border-radius:2px;opacity:.85}
+  .hex-svg{position:absolute;inset:0;width:100%;height:100%}
+  .hex-svg polygon{stroke:#fff;stroke-width:1.5;opacity:.78;transition:opacity .2s}
+  .hex-svg polygon:hover{opacity:1;stroke-width:2}
+  .area-chip{position:absolute;top:14px;left:14px;background:#fff;padding:8px 12px;border-radius:10px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(0,0,0,.08);z-index:5}
+  .area-chip .dot{width:8px;height:8px;border-radius:50%;background:var(--orange)}
+  .hex-legend{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.96);padding:10px 12px;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,.08);z-index:5;font-size:10px}
+  .hex-legend .l-title{font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-bottom:6px;font-size:9px}
+  .hex-legend .l-row{display:flex;align-items:center;gap:6px;margin:3px 0;font-weight:600;color:var(--charcoal)}
+  .hex-legend .l-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+  .area-summary{background:#fff;border-top:1px solid var(--line);padding:16px 18px 22px;box-shadow:0 -6px 16px rgba(0,0,0,.04);z-index:3}
+  .area-summary .as-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .area-summary .as-orb{width:54px;height:54px;border-radius:14px;display:grid;place-items:center;color:#fff;font-family:'Fraunces',serif;font-size:24px;font-weight:700;flex-shrink:0}
+  .area-summary .as-text{flex:1;min-width:0}
+  .area-summary .as-lbl{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:700}
+  .area-summary .as-name{font-family:'Fraunces',serif;font-size:20px;font-weight:700;margin-top:2px;line-height:1.1}
+  .area-summary .as-meta{font-size:12px;color:var(--charcoal-soft);margin-top:3px}
+  .area-summary .as-cta{width:100%;padding:13px;background:var(--charcoal);color:#fff;border:none;border-radius:12px;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;gap:8px}
+  .area-summary .as-cta svg{width:14px;height:14px}
+
+  /* Tag detail */
+  .tag-detail-hero{display:flex;flex-direction:column;align-items:center;padding:18px 20px 6px}
+  .tag-detail-hero .av{width:96px;height:96px;border-radius:50%;background:var(--orange-soft);color:var(--orange);display:grid;place-items:center}
+  .tag-detail-hero .av svg{width:48px;height:48px}
+  .tag-detail-hero .nm{font-family:'Fraunces',serif;font-weight:700;font-size:24px;margin-top:14px}
+  .tag-detail-hero .pills{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;justify-content:center}
+  .tag-detail-hero .pill{font-size:11px;font-weight:700;padding:5px 12px;border-radius:8px;letter-spacing:.05em}
+  .tag-detail-hero .pill.type{background:var(--orange-soft);color:var(--orange-dark)}
+  .tag-detail-hero .pill.lost{background:var(--red-soft);color:var(--red);text-transform:uppercase}
+  .qr-card{margin:16px 16px 0;background:#FFF;border:1.5px solid var(--orange-soft);border-radius:16px;padding:18px 16px;text-align:center}
+  .qr-card .qr-type{display:inline-block;font-size:11px;font-weight:700;padding:5px 12px;border-radius:8px;background:var(--orange-soft);color:var(--orange-dark);margin-bottom:12px}
+  .qr-card .qr-img{width:160px;height:160px;margin:0 auto;border-radius:10px;background:#fff;padding:8px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+  .qr-card .qr-id{font-family:'Inter',monospace;font-weight:700;color:var(--orange);font-size:14px;letter-spacing:.08em;margin-top:12px}
+  .qr-card .qr-help{font-size:11px;color:var(--mute);margin-top:4px}
+  .qr-card .qr-fields{margin-top:16px;border-top:1px solid var(--line);padding-top:14px;text-align:left}
+  .qr-field{margin-bottom:10px}
+  .qr-field .l{font-size:11px;color:var(--mute);font-weight:500}
+  .qr-field .v{font-size:13px;color:var(--charcoal);margin-top:2px;font-weight:500}
+  .tag-report-btn{margin:14px 16px 8px;padding:15px;width:calc(100% - 32px);background:var(--red);color:#fff;border:none;border-radius:14px;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 8px 20px rgba(233,75,75,.3)}
+  .tag-report-btn svg{width:18px;height:18px}
+  .tag-secondary-btn{margin:0 16px 6px;padding:13px;width:calc(100% - 32px);background:var(--cream-light);color:var(--charcoal);border:none;border-radius:14px;font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px}
+  .tag-secondary-btn svg{width:16px;height:16px}
+
   /* My Tags */
   .tag-card{margin:10px 16px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;gap:12px;align-items:center}
   .tag-avatar{width:48px;height:48px;border-radius:50%;background:var(--orange-soft);color:var(--orange);display:grid;place-items:center}
@@ -308,7 +357,8 @@
       <li data-jump="alert-detail"><b>6.</b> Reply to an alert (message thread)</li>
       <li data-jump="map"><b>7.</b> SOS → family + nearby (2-mile radius)</li>
       <li data-jump="profile"><b>8.</b> Load SOS user — clear flow</li>
-      <li data-jump="area"><b>9.</b> Area search (e.g. Camden) → safety rating 1–5 + stats</li>
+      <li data-jump="area"><b>9.</b> Area search (e.g. Camden) → hex safety map + detailed report</li>
+      <li data-jump="tag-detail"><b>10.</b> Tag detail → Report Missing Person broadcast</li>
     </ol>
   </aside>
 
@@ -755,16 +805,58 @@
           </div>
         </section>
 
-        <!-- ========== AREA / SEARCH RESULT (Camden) ========== -->
+        <!-- ========== AREA SEARCH RESULT — MAP + HEX OVERLAY ========== -->
         <section class="view" data-view="area">
           <div class="status-bar"><span>14:53</span><div class="right"><span>WF</span><span>5G</span><span>48%</span></div></div>
           <div class="app-header">
             <button class="back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="#232323" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
             <h2>Camden</h2>
+            <div class="spacer"></div>
+            <button class="action" style="background:var(--cream-light);color:var(--charcoal)">Filter</button>
+          </div>
+          <div class="area-map-wrap">
+            <div class="road" style="top:18%;left:0;width:78%;transform:rotate(-6deg)"></div>
+            <div class="road" style="top:42%;left:10%;width:90%;transform:rotate(4deg)"></div>
+            <div class="road" style="top:68%;left:0;width:70%;transform:rotate(-3deg)"></div>
+            <div class="road" style="top:0;left:38%;width:5px;height:100%"></div>
+            <div class="road" style="top:0;left:72%;width:5px;height:100%;transform:rotate(8deg)"></div>
+            <svg class="hex-svg" id="hexMap" viewBox="0 0 320 400" preserveAspectRatio="xMidYMid slice"></svg>
+            <div class="area-chip"><span class="dot"></span>Camden, NW1</div>
+            <div class="hex-legend">
+              <div class="l-title">Safety</div>
+              <div class="l-row"><span class="l-dot" style="background:#2ECC71"></span>Safe</div>
+              <div class="l-row"><span class="l-dot" style="background:#F39C12"></span>Caution</div>
+              <div class="l-row"><span class="l-dot" style="background:#E74C3C"></span>Not safe</div>
+              <div class="l-row"><span class="l-dot" style="background:#8E44AD"></span>Avoid</div>
+            </div>
+          </div>
+          <div class="area-summary">
+            <div class="as-row">
+              <div class="as-orb" style="background:#E74C3C">2</div>
+              <div class="as-text">
+                <div class="as-lbl">Wiley Fox Safety Rating</div>
+                <div class="as-name">Not safe — caution advised</div>
+                <div class="as-meta">3,420 crimes/mo · above London average</div>
+              </div>
+            </div>
+            <button class="as-cta" data-go="area-detail">
+              See detailed safety report
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+        </section>
+
+        <!-- ========== AREA DETAILED REPORT ========== -->
+        <section class="view" data-view="area-detail">
+          <div class="status-bar"><span>14:54</span><div class="right"><span>WF</span><span>5G</span><span>48%</span></div></div>
+          <div class="app-header">
+            <button class="back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="#232323" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <h2>Safety Report</h2>
           </div>
           <div class="view-body">
             <div class="area-hero">
               <div class="breadcrumb">LONDON · NW1</div>
+              <h3>Camden</h3>
               <div class="sub">Borough of Camden · ~210k residents · last 12 months of crime data</div>
             </div>
             <div class="rating-card">
@@ -793,7 +885,7 @@
               <div class="cat-row"><div class="cat-dot" style="background:#A4C957"></div><div class="cat-name">Vehicle crime</div><div class="cat-count">287</div></div>
               <div class="cat-row"><div class="cat-dot" style="background:#3FA34D"></div><div class="cat-name">Burglary</div><div class="cat-count">198</div></div>
             </div>
-            <button class="area-cta" onclick="toast('Opening on map…')">Review on map</button>
+            <button class="area-cta" data-back>Back to map</button>
           </div>
         </section>
 
@@ -824,15 +916,15 @@
             <button class="action">+ Register</button>
           </div>
           <div class="view-body">
-            <div class="tag-card">
+            <button class="tag-card" data-go="tag-detail" style="width:calc(100% - 32px);text-align:left;font:inherit;color:inherit;cursor:pointer">
               <div class="tag-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0113 0"/></svg></div>
               <div class="tag-meta">
-                <div class="tag-name">Emma</div>
+                <div class="tag-name">Barry</div>
                 <div class="tag-type">Person</div>
                 <div class="tag-id">DNYL4XZ6</div>
               </div>
               <div class="tag-status">Lost</div>
-            </div>
+            </button>
           </div>
           <button class="fab-plus" data-go="addpin">+</button>
           <button class="fab-sos" data-go="sos"><div class="ic">!</div><span>SOS</span></button>
@@ -842,6 +934,79 @@
             <button class="nav-item active" data-go="tags"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/></svg>My Tags</button>
             <button class="nav-item" data-go="alerts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>Alerts</button>
           </nav>
+        </section>
+
+        <!-- ========== TAG DETAIL ========== -->
+        <section class="view" data-view="tag-detail">
+          <div class="status-bar"><span>14:49</span><div class="right"><span>WF</span><span>5G</span><span>49%</span></div></div>
+          <div class="app-header">
+            <button class="back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="#232323" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <h2>Tag Details</h2>
+          </div>
+          <div class="view-body" style="padding-bottom:140px">
+            <div class="tag-detail-hero">
+              <div class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0113 0"/></svg></div>
+              <div class="nm">Barry</div>
+              <div class="pills">
+                <span class="pill type">Person</span>
+                <span class="pill lost">Marked as Lost</span>
+              </div>
+            </div>
+            <div class="qr-card">
+              <span class="qr-type">Person</span>
+              <div class="qr-img">
+                <svg viewBox="0 0 100 100" width="100%" height="100%" shape-rendering="crispEdges">
+                  <rect width="100" height="100" fill="#fff"/>
+                  <g fill="#000">
+                    <rect x="5" y="5" width="22" height="22"/>
+                    <rect x="9" y="9" width="14" height="14" fill="#fff"/>
+                    <rect x="13" y="13" width="6" height="6"/>
+                    <rect x="73" y="5" width="22" height="22"/>
+                    <rect x="77" y="9" width="14" height="14" fill="#fff"/>
+                    <rect x="81" y="13" width="6" height="6"/>
+                    <rect x="5" y="73" width="22" height="22"/>
+                    <rect x="9" y="77" width="14" height="14" fill="#fff"/>
+                    <rect x="13" y="81" width="6" height="6"/>
+                    <rect x="32" y="5" width="4" height="4"/><rect x="40" y="5" width="4" height="4"/><rect x="48" y="9" width="4" height="4"/><rect x="56" y="5" width="4" height="4"/><rect x="60" y="13" width="4" height="4"/>
+                    <rect x="32" y="13" width="4" height="4"/><rect x="36" y="17" width="4" height="4"/><rect x="44" y="13" width="4" height="4"/><rect x="52" y="17" width="4" height="4"/><rect x="60" y="21" width="4" height="4"/>
+                    <rect x="32" y="21" width="4" height="4"/><rect x="40" y="21" width="4" height="4"/><rect x="48" y="21" width="4" height="4"/><rect x="56" y="25" width="4" height="4"/>
+                    <rect x="5" y="32" width="4" height="4"/><rect x="13" y="32" width="4" height="4"/><rect x="21" y="36" width="4" height="4"/><rect x="32" y="32" width="4" height="4"/><rect x="40" y="36" width="4" height="4"/><rect x="48" y="32" width="4" height="4"/><rect x="56" y="36" width="4" height="4"/><rect x="64" y="32" width="4" height="4"/><rect x="72" y="36" width="4" height="4"/><rect x="80" y="32" width="4" height="4"/><rect x="88" y="36" width="4" height="4"/>
+                    <rect x="9" y="40" width="4" height="4"/><rect x="17" y="44" width="4" height="4"/><rect x="25" y="40" width="4" height="4"/><rect x="36" y="44" width="4" height="4"/><rect x="44" y="40" width="4" height="4"/><rect x="52" y="44" width="4" height="4"/><rect x="60" y="40" width="4" height="4"/><rect x="68" y="44" width="4" height="4"/><rect x="76" y="40" width="4" height="4"/><rect x="84" y="44" width="4" height="4"/><rect x="92" y="40" width="4" height="4"/>
+                    <rect x="5" y="48" width="4" height="4"/><rect x="13" y="52" width="4" height="4"/><rect x="21" y="48" width="4" height="4"/><rect x="29" y="52" width="4" height="4"/><rect x="40" y="48" width="4" height="4"/><rect x="48" y="52" width="4" height="4"/><rect x="56" y="48" width="4" height="4"/><rect x="64" y="52" width="4" height="4"/><rect x="72" y="48" width="4" height="4"/><rect x="80" y="52" width="4" height="4"/><rect x="88" y="48" width="4" height="4"/>
+                    <rect x="9" y="56" width="4" height="4"/><rect x="17" y="60" width="4" height="4"/><rect x="25" y="56" width="4" height="4"/><rect x="36" y="60" width="4" height="4"/><rect x="44" y="56" width="4" height="4"/><rect x="52" y="60" width="4" height="4"/><rect x="60" y="56" width="4" height="4"/><rect x="68" y="60" width="4" height="4"/><rect x="76" y="56" width="4" height="4"/><rect x="84" y="60" width="4" height="4"/><rect x="92" y="56" width="4" height="4"/>
+                    <rect x="5" y="64" width="4" height="4"/><rect x="13" y="68" width="4" height="4"/><rect x="21" y="64" width="4" height="4"/><rect x="32" y="68" width="4" height="4"/><rect x="40" y="64" width="4" height="4"/><rect x="48" y="68" width="4" height="4"/><rect x="56" y="64" width="4" height="4"/><rect x="64" y="68" width="4" height="4"/><rect x="72" y="64" width="4" height="4"/><rect x="80" y="68" width="4" height="4"/><rect x="88" y="64" width="4" height="4"/>
+                    <rect x="32" y="73" width="4" height="4"/><rect x="40" y="77" width="4" height="4"/><rect x="48" y="73" width="4" height="4"/><rect x="56" y="77" width="4" height="4"/><rect x="60" y="81" width="4" height="4"/>
+                    <rect x="36" y="85" width="4" height="4"/><rect x="44" y="89" width="4" height="4"/><rect x="52" y="85" width="4" height="4"/><rect x="60" y="89" width="4" height="4"/>
+                    <rect x="32" y="93" width="4" height="4"/><rect x="40" y="93" width="4" height="4"/><rect x="48" y="93" width="4" height="4"/><rect x="56" y="93" width="4" height="4"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="qr-id">DNYL4XZ6</div>
+              <div class="qr-help">Scan to help return this item</div>
+              <div class="qr-fields">
+                <div class="qr-field">
+                  <div class="l">Contact Email</div>
+                  <div class="v">barry14wilson@gmail.com</div>
+                </div>
+                <div class="qr-field">
+                  <div class="l">Registered</div>
+                  <div class="v">07/06/2026</div>
+                </div>
+              </div>
+            </div>
+            <button class="tag-report-btn" data-go="lost">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+              Report Missing Person
+            </button>
+            <button class="tag-secondary-btn" onclick="toast('Status updated to Safe')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+              Mark as Found
+            </button>
+            <button class="tag-secondary-btn" onclick="toast('Sharing tag link…')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>
+              Share Tag Link
+            </button>
+          </div>
         </section>
 
         <!-- ========== SOS SHEET ========== -->
@@ -878,7 +1043,8 @@
     <div class="note" data-for="alert-detail"><b><span class="num">6</span> Reply to alert</b>Alert detail screen shows a message thread with the reporter so finders can share info ("I just saw them at…"). Standard chat input at bottom.</div>
     <div class="note" data-for="map"><b><span class="num">7</span> SOS targeting</b>SOS goes to Family Group <b>and</b> users in a 2-mile radius — same broadcast pattern as a missing person. Modal shows both audiences before sending.</div>
     <div class="note" data-for="sos-contact"><b><span class="num">8</span> Load / change SOS user</b>Dedicated screen lists family members with a radio-style pick. Selected member becomes primary SOS contact (priority call/SMS).</div>
-    <div class="note" data-for="area"><b><span class="num">9</span> Area search results</b>Typing an area (e.g. "Camden") in the map search returns an area sheet with the existing Wiley Fox 1–5 safety rating, monthly crime count, category breakdown, and a "Review on map" CTA. Reuses the prototype rating logic.</div>
+    <div class="note" data-for="area"><b><span class="num">9</span> Area search → hex safety map</b>Typing an area (e.g. "Camden") drops the user on a map of that area with a hex-cell overlay coloured by safety band — <b>green</b> safe, <b>amber</b> caution, <b>red</b> not safe, <b>purple</b> avoid. Bottom summary panel shows the overall 1–5 rating and a "See detailed safety report" CTA that opens the existing breakdown view. Hex colours map to the pipeline bands in CLAUDE.md.</div>
+    <div class="note" data-for="tag-detail"><b><span class="num">10</span> Tag Detail → Report Missing Person</b>Tap a tag in My Tags → opens the tag's detail screen (avatar, QR, ID, contact, registered date). New big red <b>Report Missing Person</b> CTA at the bottom — same broadcast flow as the SOS, pushing the report with the tag's photo to every Wiley Fox user within 2 miles.</div>
   </aside>
 </div>
 
@@ -974,6 +1140,65 @@
     inp.value = '';
     list.parentElement.scrollTop = list.parentElement.scrollHeight;
   }
+
+  // Hex safety map renderer (Camden)
+  function renderHexMap(){
+    const svg = document.getElementById('hexMap');
+    if (!svg) return;
+    const W = 320, H = 400;
+    const r = 22;                 // hex radius (centre → vertex)
+    const hexW = Math.sqrt(3) * r;
+    const hexH = 2 * r;
+    const vSpacing = hexH * 0.75;
+    const cols = Math.ceil(W / hexW) + 1;
+    const rows = Math.ceil(H / vSpacing) + 1;
+
+    // Camden = high-crime: weighted toward red/purple/amber, with a few green pockets
+    const bands = [
+      { color:'#2ECC71', label:'safe' },
+      { color:'#F39C12', label:'caution' },
+      { color:'#E74C3C', label:'notsafe' },
+      { color:'#8E44AD', label:'avoid' }
+    ];
+    // Hot-spot centres (high danger near transport hubs / market)
+    const hotspots = [ {x:140,y:140}, {x:220,y:230}, {x:90,y:300} ];
+    function dangerAt(x,y){
+      // distance to nearest hotspot, normalised
+      let min = Infinity;
+      for (const h of hotspots){
+        const d = Math.hypot(x-h.x, y-h.y);
+        if (d < min) min = d;
+      }
+      // 0 (hot) → 1 (far). Invert and add noise.
+      const d = Math.max(0, Math.min(1, 1 - min / 220));
+      const noise = (Math.sin(x*0.13 + y*0.17) + 1) * 0.18;
+      return Math.max(0, Math.min(1, d + noise - 0.1));
+    }
+    function bandFor(score){
+      if (score > 0.78) return bands[3];   // purple
+      if (score > 0.55) return bands[2];   // red
+      if (score > 0.30) return bands[1];   // amber
+      return bands[0];                      // green
+    }
+
+    let parts = [];
+    for (let row = 0; row < rows; row++){
+      for (let col = 0; col < cols; col++){
+        const cx = col * hexW + ((row % 2) ? hexW/2 : 0);
+        const cy = row * vSpacing + r;
+        if (cx < -hexW || cy < -hexH || cx > W + hexW || cy > H + hexH) continue;
+        const pts = [];
+        for (let i = 0; i < 6; i++){
+          const ang = Math.PI / 3 * i - Math.PI / 2;
+          pts.push((cx + r * Math.cos(ang)).toFixed(1) + ',' + (cy + r * Math.sin(ang)).toFixed(1));
+        }
+        const b = bandFor(dangerAt(cx, cy));
+        parts.push(`<polygon points="${pts.join(' ')}" fill="${b.color}" data-band="${b.label}"/>`);
+      }
+    }
+    svg.innerHTML = parts.join('');
+  }
+  renderHexMap();
 
   // Camden search
   document.getElementById('mapSearch').addEventListener('keydown', e => {

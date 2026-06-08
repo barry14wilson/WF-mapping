@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Wiley Fox — App Mockup for Dev Brief</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" />
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 <style>
   :root{
     --orange:#FF7B14;
@@ -236,15 +238,13 @@
   .area-cta{margin:0 16px 16px;padding:14px;background:var(--orange);color:#fff;border:none;border-radius:14px;font-weight:700;font-size:14px;width:calc(100% - 32px)}
 
   /* Area hex map */
-  .area-map-wrap{position:relative;flex:1;background:linear-gradient(180deg,#E7EDD9 0%,#DCE6CB 100%);overflow:hidden}
-  .area-map-wrap::before{content:"";position:absolute;inset:0;background-image:
-    linear-gradient(rgba(255,255,255,.35) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.35) 1px,transparent 1px);
-    background-size:30px 30px}
-  .area-map-wrap .road{position:absolute;background:#fff;height:5px;border-radius:2px;opacity:.85}
-  .hex-svg{position:absolute;inset:0;width:100%;height:100%}
-  .hex-svg polygon{stroke:#fff;stroke-width:1.5;opacity:.78;transition:opacity .2s}
-  .hex-svg polygon:hover{opacity:1;stroke-width:2}
+  .area-map-wrap{position:relative;flex:1;background:#E7EDD9;overflow:hidden}
+  .area-map-wrap .area-map{position:absolute;inset:0}
+  .area-map-wrap .area-map .maplibregl-ctrl-attrib{font-size:9px;background:rgba(255,255,255,.7)}
+  .area-map-wrap .area-map .maplibregl-ctrl-bottom-left,
+  .area-map-wrap .area-map .maplibregl-ctrl-bottom-right{display:none}
+  .hex-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+  .hex-svg polygon{stroke:rgba(255,255,255,.6);stroke-width:1;opacity:.55;transition:opacity .2s;mix-blend-mode:multiply}
   .area-chip{position:absolute;top:14px;left:14px;background:#fff;padding:8px 12px;border-radius:10px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(0,0,0,.08);z-index:5}
   .area-chip .dot{width:8px;height:8px;border-radius:50%;background:var(--orange)}
   .hex-legend{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.96);padding:10px 12px;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,.08);z-index:5;font-size:10px}
@@ -815,11 +815,7 @@
             <button class="action" style="background:var(--cream-light);color:var(--charcoal)">Filter</button>
           </div>
           <div class="area-map-wrap">
-            <div class="road" style="top:18%;left:0;width:78%;transform:rotate(-6deg)"></div>
-            <div class="road" style="top:42%;left:10%;width:90%;transform:rotate(4deg)"></div>
-            <div class="road" style="top:68%;left:0;width:70%;transform:rotate(-3deg)"></div>
-            <div class="road" style="top:0;left:38%;width:5px;height:100%"></div>
-            <div class="road" style="top:0;left:72%;width:5px;height:100%;transform:rotate(8deg)"></div>
+            <div class="area-map" id="areaMap"></div>
             <svg class="hex-svg" id="hexMap" viewBox="0 0 320 400" preserveAspectRatio="xMidYMid slice"></svg>
             <div class="area-chip"><span class="dot"></span>Camden, NW1</div>
             <div class="hex-legend">
@@ -1062,6 +1058,7 @@
     if (next) next.classList.add('active');
     if (navStack[navStack.length-1] !== view) navStack.push(view);
     highlightNote(view);
+    if (view === 'area') ensureAreaMap();
   }
   function back(){
     if (navStack.length <= 1) return;
@@ -1139,6 +1136,42 @@
     list.appendChild(m);
     inp.value = '';
     list.parentElement.scrollTop = list.parentElement.scrollHeight;
+  }
+
+  // Real Camden map (MapLibre + CARTO Voyager, no API key needed)
+  let areaMap = null, areaMapInit = false;
+  function ensureAreaMap(){
+    if (areaMap) { setTimeout(() => areaMap.resize(), 60); return; }
+    if (areaMapInit || typeof maplibregl === 'undefined') return;
+    areaMapInit = true;
+    requestAnimationFrame(() => {
+      areaMap = new maplibregl.Map({
+        container: 'areaMap',
+        style: {
+          version: 8,
+          sources: {
+            basemap: {
+              type: 'raster',
+              tiles: [
+                'https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
+                'https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
+                'https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
+                'https://d.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png'
+              ],
+              tileSize: 256,
+              attribution: '© OSM · CARTO'
+            }
+          },
+          layers: [{ id:'basemap', type:'raster', source:'basemap' }]
+        },
+        center: [-0.1426, 51.5390],   // Camden Town
+        zoom: 14.2,
+        attributionControl: { compact: true }
+      });
+      areaMap.on('error', e => {
+        if (e && e.error && /tile/i.test(String(e.error.message || ''))) return;
+      });
+    });
   }
 
   // Hex safety map renderer (Camden)

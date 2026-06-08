@@ -1,0 +1,993 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Wiley Fox — App Mockup for Dev Brief</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --orange:#FF7B14;
+    --orange-dark:#E2620A;
+    --orange-soft:#FFE9D6;
+    --sage:#AABA9F;
+    --cream:#E5EBD3;
+    --cream-light:#F2F4E5;
+    --charcoal:#232323;
+    --charcoal-soft:#3a3a3a;
+    --mute:#8a8a8a;
+    --line:#ECECEC;
+    --red:#E94B4B;
+    --red-dark:#C13C3C;
+    --red-soft:#FDECEC;
+    --purple:#6A3FB4;
+    --green:#3FA34D;
+    --r1:#D7263D; --r2:#F46036; --r3:#FFC857; --r4:#A4C957; --r5:#3FA34D;
+    --note:#FFF6B2;
+    --note-border:#E5C84B;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%;font-family:'Inter',system-ui,-apple-system,sans-serif;color:var(--charcoal);background:linear-gradient(135deg,#F2F4E5 0%,#E5EBD3 100%)}
+  h1,h2,h3,.serif{font-family:'Fraunces',Georgia,serif;font-weight:600;letter-spacing:-.01em}
+  button{font-family:inherit;cursor:pointer}
+  input,textarea{font-family:inherit}
+
+  /* Page layout: phone + side rail with dev notes */
+  .page{display:grid;grid-template-columns:1fr 360px 1fr;gap:32px;padding:40px 24px;min-height:100vh;align-items:start}
+  @media (max-width:1100px){.page{grid-template-columns:1fr;justify-items:center}}
+
+  /* Header strip */
+  .brief{max-width:380px;background:#fff;border-radius:18px;padding:22px;box-shadow:0 12px 32px rgba(35,35,35,.08);position:sticky;top:24px}
+  .brief h1{margin:0 0 6px;font-size:22px}
+  .brief .tag{display:inline-block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);font-weight:700;margin-bottom:8px}
+  .brief p{margin:0 0 14px;font-size:13px;color:var(--charcoal-soft);line-height:1.5}
+  .brief ol{margin:0;padding-left:18px;font-size:12px;color:var(--charcoal-soft);line-height:1.6}
+  .brief ol li{margin-bottom:4px;cursor:pointer}
+  .brief ol li:hover{color:var(--orange)}
+  .brief ol li b{color:var(--charcoal)}
+
+  /* Phone frame */
+  .phone-wrap{display:flex;flex-direction:column;align-items:center;gap:14px}
+  .phone{width:360px;height:740px;background:#111;border-radius:42px;padding:10px;box-shadow:0 24px 60px rgba(35,35,35,.25);position:relative}
+  .screen{width:100%;height:100%;background:#fff;border-radius:34px;overflow:hidden;position:relative}
+  .notch{position:absolute;top:14px;left:50%;transform:translateX(-50%);width:90px;height:22px;background:#111;border-radius:14px;z-index:50}
+
+  .status-bar{display:flex;justify-content:space-between;align-items:center;padding:14px 22px 6px;font-size:11px;color:var(--charcoal);font-weight:600}
+  .status-bar .right{display:flex;gap:6px;align-items:center}
+  .status-bar .right span{font-size:10px}
+
+  /* App header */
+  .app-header{display:flex;align-items:center;gap:10px;padding:14px 20px 10px}
+  .app-header .back{width:32px;height:32px;border-radius:50%;background:var(--cream-light);display:grid;place-items:center;border:none}
+  .app-header .back svg{width:18px;height:18px}
+  .app-header .fox{width:26px;height:30px}
+  .app-header h2{margin:0;font-size:22px;font-family:'Fraunces',serif;font-weight:700}
+  .app-header .spacer{flex:1}
+  .app-header .action{font-size:13px;padding:8px 14px;background:var(--orange-soft);border:none;color:var(--orange-dark);border-radius:10px;font-weight:600}
+
+  /* Bottom nav */
+  .bottom-nav{position:absolute;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 8px 18px;z-index:20}
+  .nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0;background:none;border:none;color:var(--mute);font-size:10px;font-weight:600}
+  .nav-item.active{color:var(--orange)}
+  .nav-item svg{width:22px;height:22px}
+
+  /* Floating action buttons */
+  .fab-plus{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);width:56px;height:56px;border-radius:50%;background:var(--orange);border:4px solid #fff;color:#fff;font-size:28px;line-height:1;display:grid;place-items:center;z-index:25;box-shadow:0 8px 20px rgba(255,123,20,.35)}
+  .fab-sos{position:absolute;bottom:90px;right:16px;width:60px;height:60px;border-radius:50%;background:var(--red);color:#fff;font-size:11px;font-weight:700;letter-spacing:.05em;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;z-index:24;box-shadow:0 8px 20px rgba(233,75,75,.35)}
+  .fab-sos .ic{width:18px;height:18px;border-radius:50%;background:#fff;color:var(--red);display:grid;place-items:center;font-size:12px;font-weight:700}
+
+  /* Screens */
+  .view{position:absolute;inset:0;display:none;flex-direction:column;background:#fff}
+  .view.active{display:flex}
+  .view-body{flex:1;overflow-y:auto;padding-bottom:120px}
+
+  /* Map view */
+  .map-area{position:relative;flex:1;background:linear-gradient(180deg,#E7EDD9 0%,#DCE6CB 100%)}
+  .map-area::before{content:"";position:absolute;inset:0;background-image:
+    linear-gradient(rgba(255,255,255,.4) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.4) 1px,transparent 1px);
+    background-size:40px 40px}
+  .map-roads{position:absolute;inset:0;pointer-events:none}
+  .map-roads .road{position:absolute;background:#fff;border-radius:2px}
+  .map-dot{position:absolute;width:14px;height:14px;border-radius:50%;background:#3D7DFF;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.2);top:48%;left:50%;transform:translate(-50%,-50%)}
+  .search-bar{position:absolute;top:62px;left:64px;right:14px;background:#fff;padding:10px 14px;border-radius:14px;display:flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(0,0,0,.08);z-index:5}
+  .search-bar input{flex:1;border:none;outline:none;font-size:13px;background:transparent}
+  .avatar-btn{position:absolute;top:62px;left:14px;width:42px;height:42px;border-radius:12px;background:var(--purple);color:#fff;font-weight:700;display:grid;place-items:center;z-index:5;border:none;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+  .filter-chips{position:absolute;top:118px;left:14px;right:14px;display:flex;gap:8px;overflow-x:auto;z-index:5;padding-bottom:6px}
+  .filter-chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;padding:8px 14px;background:#fff;border-radius:20px;font-size:12px;font-weight:600;border:none;display:flex;align-items:center;gap:6px;box-shadow:0 2px 6px rgba(0,0,0,.06);color:var(--charcoal)}
+  .chip.active{background:var(--orange);color:#fff}
+  .chip svg{width:14px;height:14px}
+  .map-fab-compass{position:absolute;bottom:200px;left:14px;width:44px;height:44px;border-radius:12px;background:#fff;display:grid;place-items:center;border:none;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+  .map-fab-shield{position:absolute;bottom:200px;right:14px;width:44px;height:44px;border-radius:12px;background:#fff;display:grid;place-items:center;border:none;box-shadow:0 4px 12px rgba(0,0,0,.08);color:var(--green)}
+
+  /* Profile view */
+  .profile-card{display:flex;flex-direction:column;align-items:center;padding:24px 20px 8px}
+  .profile-avatar{width:108px;height:108px;border-radius:50%;background:var(--purple);color:#fff;font-size:46px;font-weight:700;display:grid;place-items:center;position:relative;font-family:'Fraunces',serif}
+  .profile-avatar .pen{position:absolute;bottom:4px;right:4px;width:30px;height:30px;border-radius:50%;background:var(--orange);display:grid;place-items:center;border:2px solid #fff}
+  .profile-avatar .pen svg{width:14px;height:14px;color:#fff}
+  .profile-name{font-family:'Fraunces',serif;font-weight:700;font-size:22px;margin:16px 0 2px}
+  .profile-email{font-size:13px;color:var(--mute)}
+
+  .row-card{margin:14px 16px;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .row{display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line);gap:12px;text-decoration:none;color:inherit;background:none;border-left:none;border-right:none;border-top:none;width:100%;text-align:left;font:inherit;font-size:14px}
+  .row:last-child{border-bottom:none}
+  .row .lbl{flex:1;font-weight:500}
+  .row .val{color:var(--mute);font-size:13px}
+  .row .val.good{color:var(--green);font-weight:600}
+  .row .val.warn{color:var(--orange-dark);font-weight:600}
+  .row .chev{color:var(--mute)}
+  .row .icon{width:36px;height:36px;border-radius:10px;background:var(--cream-light);display:grid;place-items:center;flex-shrink:0;color:var(--orange)}
+  .row .icon svg{width:18px;height:18px}
+
+  .section-title{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:700;margin:18px 24px 4px}
+
+  .signout-btn{margin:18px 16px 24px;padding:14px;background:transparent;border:1.5px solid var(--red-soft);color:var(--red);border-radius:14px;font-weight:600;font-size:14px;width:calc(100% - 32px)}
+
+  /* Modal / sheet */
+  .sheet-bg{position:absolute;inset:0;background:rgba(0,0,0,.4);z-index:40;display:none;align-items:center;justify-content:center;padding:24px}
+  .sheet-bg.active{display:flex}
+  .sheet{background:#fff;border-radius:22px;padding:24px 22px;width:100%;max-width:300px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+  .sheet.bottom{align-self:flex-end;border-radius:22px 22px 0 0;max-width:none;width:100%;padding:18px 18px 28px}
+  .sheet-bg.bottom{align-items:flex-end;padding:0}
+  .sheet .ico-circle{width:64px;height:64px;border-radius:50%;background:var(--red-soft);display:grid;place-items:center;margin:0 auto 14px}
+  .sheet .ico-circle.green{background:#E5F4E7}
+  .sheet .ico-circle.orange{background:var(--orange-soft)}
+  .sheet h3{margin:0 0 10px;font-size:19px;text-align:center;font-family:'Fraunces',serif}
+  .sheet p{margin:0 0 18px;font-size:13px;color:var(--charcoal-soft);text-align:center;line-height:1.5}
+  .sheet .primary{width:100%;padding:14px;background:var(--red);color:#fff;border:none;border-radius:14px;font-weight:700;font-size:14px;margin-bottom:8px}
+  .sheet .primary.orange{background:var(--orange)}
+  .sheet .secondary{width:100%;padding:12px;background:transparent;border:none;color:var(--mute);font-weight:600;font-size:14px}
+  .sheet .radius-info{background:var(--cream-light);border-radius:12px;padding:12px;margin-bottom:14px;font-size:12px;color:var(--charcoal-soft);text-align:left;display:flex;gap:10px;align-items:flex-start}
+  .sheet .radius-info svg{width:18px;height:18px;flex-shrink:0;color:var(--orange);margin-top:1px}
+  .sheet .radius-info b{color:var(--charcoal);display:block;margin-bottom:3px;font-size:12px}
+
+  /* Forms */
+  .field{padding:0 20px;margin-bottom:14px}
+  .field label{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:700;margin-bottom:6px}
+  .field input,.field textarea,.field select{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font-size:14px;background:#fff;outline:none}
+  .field input:focus,.field textarea:focus{border-color:var(--orange)}
+  .field textarea{resize:none;min-height:80px}
+  .field .helper{font-size:11px;color:var(--mute);margin-top:6px}
+  .type-row{display:flex;gap:8px;padding:0 20px;margin-bottom:16px;overflow-x:auto}
+  .type-row::-webkit-scrollbar{display:none}
+  .type-btn{flex-shrink:0;padding:10px 16px;border:1px solid var(--line);background:#fff;border-radius:24px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--charcoal)}
+  .type-btn.active{background:var(--orange);color:#fff;border-color:var(--orange)}
+  .type-btn svg{width:14px;height:14px}
+  .submit-bar{position:absolute;bottom:88px;left:14px;right:84px;z-index:23}
+  .submit-bar button{width:100%;padding:15px;background:var(--orange);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;box-shadow:0 8px 20px rgba(255,123,20,.3)}
+  .submit-bar.full{right:14px}
+
+  /* Image upload */
+  .img-upload{margin:0 20px 14px;border:1.5px dashed var(--line);border-radius:14px;padding:20px;text-align:center;background:var(--cream-light);position:relative}
+  .img-upload.has-img{padding:0;border:none;background:none}
+  .img-upload .ic{width:48px;height:48px;border-radius:50%;background:var(--orange-soft);display:grid;place-items:center;margin:0 auto 10px;color:var(--orange)}
+  .img-upload p{margin:0;font-size:13px;color:var(--charcoal-soft);font-weight:500}
+  .img-upload .sub{font-size:11px;color:var(--mute);margin-top:3px}
+  .img-preview{width:100%;height:160px;object-fit:cover;border-radius:14px;display:block}
+  .img-placeholder{width:100%;height:160px;background:linear-gradient(135deg,var(--cream),var(--sage));border-radius:14px;display:grid;place-items:center;color:#fff;font-size:48px;font-family:'Fraunces',serif;font-weight:700}
+
+  /* Alerts list */
+  .alert-card{margin:10px 16px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;gap:12px;cursor:pointer;text-align:left;width:calc(100% - 32px);font:inherit;color:inherit}
+  .alert-card.urgent{border-color:var(--red);background:#FFF6F6}
+  .alert-thumb{width:56px;height:56px;border-radius:12px;flex-shrink:0;display:grid;place-items:center;color:#fff;font-weight:700;font-family:'Fraunces',serif;font-size:22px}
+  .alert-thumb.sos{background:var(--red)}
+  .alert-thumb.missing{background:linear-gradient(135deg,var(--purple),#9466D4)}
+  .alert-thumb.crime{background:var(--orange)}
+  .alert-thumb.event{background:var(--sage)}
+  .alert-meta{flex:1;min-width:0}
+  .alert-title{font-weight:700;font-size:14px;margin-bottom:3px;display:flex;align-items:center;gap:6px}
+  .alert-title .pill{font-size:9px;background:var(--red);color:#fff;padding:2px 6px;border-radius:4px;letter-spacing:.05em;text-transform:uppercase;font-weight:700}
+  .alert-title .pill.missing{background:var(--purple)}
+  .alert-snippet{font-size:12px;color:var(--charcoal-soft);line-height:1.4;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .alert-info{font-size:11px;color:var(--mute);display:flex;align-items:center;gap:8px}
+  .alert-info .dot{width:3px;height:3px;background:var(--mute);border-radius:50%}
+
+  /* Alert detail */
+  .alert-hero{padding:0 20px}
+  .alert-hero .pill-row{display:flex;gap:6px;margin-bottom:10px}
+  .alert-hero .pill{font-size:10px;padding:4px 8px;border-radius:6px;background:var(--purple);color:#fff;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+  .alert-hero .pill.distance{background:var(--cream);color:var(--charcoal)}
+  .alert-hero h3{margin:0 0 8px;font-size:20px;font-family:'Fraunces',serif}
+  .alert-hero .meta{font-size:12px;color:var(--mute);margin-bottom:14px}
+  .alert-hero img,.alert-hero .img-fallback{width:100%;height:200px;object-fit:cover;border-radius:14px;margin-bottom:14px}
+  .alert-hero .img-fallback{background:linear-gradient(135deg,var(--purple),#9466D4);display:grid;place-items:center;color:#fff;font-family:'Fraunces',serif;font-size:64px;font-weight:700}
+  .alert-hero .desc{font-size:13px;line-height:1.6;color:var(--charcoal-soft);margin-bottom:18px}
+  .alert-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 20px 14px}
+  .alert-actions button{padding:12px;border-radius:12px;font-size:13px;font-weight:600;border:none;display:flex;align-items:center;justify-content:center;gap:6px}
+  .alert-actions .primary{background:var(--orange);color:#fff}
+  .alert-actions .secondary{background:var(--cream-light);color:var(--charcoal)}
+  .alert-actions svg{width:16px;height:16px}
+
+  /* Message thread */
+  .msg-list{padding:8px 16px;display:flex;flex-direction:column;gap:8px}
+  .msg{max-width:80%;padding:10px 14px;border-radius:16px;font-size:13px;line-height:1.4}
+  .msg.them{background:var(--cream-light);align-self:flex-start;border-bottom-left-radius:4px}
+  .msg.me{background:var(--orange);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+  .msg-input-bar{position:absolute;bottom:0;left:0;right:0;padding:10px 12px 22px;background:#fff;border-top:1px solid var(--line);display:flex;gap:8px;align-items:center;z-index:30}
+  .msg-input-bar input{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:22px;font-size:13px;outline:none;background:var(--cream-light)}
+  .msg-input-bar button{width:42px;height:42px;border-radius:50%;background:var(--orange);color:#fff;border:none;display:grid;place-items:center}
+  .msg-input-bar button svg{width:18px;height:18px}
+
+  /* Search results (Camden) */
+  .area-hero{padding:18px 20px 10px}
+  .area-hero .breadcrumb{font-size:11px;color:var(--mute);margin-bottom:6px;letter-spacing:.05em}
+  .area-hero h3{margin:0;font-size:26px;font-family:'Fraunces',serif}
+  .area-hero .sub{font-size:13px;color:var(--charcoal-soft);margin-top:4px}
+  .rating-card{margin:14px 16px;padding:20px;background:linear-gradient(135deg,var(--cream),var(--cream-light));border-radius:16px}
+  .rating-row{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+  .rating-orb{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:'Fraunces',serif;font-size:30px;font-weight:700;box-shadow:0 4px 12px rgba(0,0,0,.15);flex-shrink:0}
+  .rating-text{flex:1}
+  .rating-text .lbl{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:700}
+  .rating-text .val{font-family:'Fraunces',serif;font-size:18px;font-weight:600;margin-top:2px}
+  .rating-text .tag{font-size:12px;color:var(--charcoal-soft);margin-top:2px}
+  .rating-bar{height:6px;border-radius:3px;background:linear-gradient(90deg,var(--r1),var(--r2),var(--r3),var(--r4),var(--r5));position:relative;margin-top:6px}
+  .rating-bar .marker{position:absolute;top:-4px;width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid var(--charcoal);transform:translateX(-50%)}
+  .scale-row{display:flex;justify-content:space-between;font-size:10px;margin-top:6px;color:var(--mute);font-weight:600}
+  .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 16px;margin-bottom:14px}
+  .stat-tile{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
+  .stat-tile .v{font-family:'Fraunces',serif;font-size:22px;font-weight:700}
+  .stat-tile .l{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:700;margin-top:2px}
+  .cat-list{padding:0 16px;display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+  .cat-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--cream-light);border-radius:10px}
+  .cat-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  .cat-name{flex:1;font-size:13px;font-weight:500}
+  .cat-count{font-size:13px;font-weight:700;color:var(--charcoal)}
+  .area-cta{margin:0 16px 16px;padding:14px;background:var(--orange);color:#fff;border:none;border-radius:14px;font-weight:700;font-size:14px;width:calc(100% - 32px)}
+
+  /* My Tags */
+  .tag-card{margin:10px 16px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;gap:12px;align-items:center}
+  .tag-avatar{width:48px;height:48px;border-radius:50%;background:var(--orange-soft);color:var(--orange);display:grid;place-items:center}
+  .tag-avatar svg{width:24px;height:24px}
+  .tag-meta{flex:1}
+  .tag-name{font-weight:700;font-size:15px}
+  .tag-type{font-size:12px;color:var(--mute)}
+  .tag-id{font-size:12px;color:var(--orange);font-weight:600;margin-top:2px;letter-spacing:.05em}
+  .tag-status{font-size:10px;font-weight:700;padding:4px 8px;border-radius:6px;background:var(--red-soft);color:var(--red);letter-spacing:.05em;text-transform:uppercase}
+
+  /* Lost child broadcast confirm */
+  .broadcast-anim{padding:30px 20px;text-align:center}
+  .broadcast-anim .pulse{width:120px;height:120px;border-radius:50%;background:var(--purple);color:#fff;display:grid;place-items:center;margin:0 auto 18px;position:relative;animation:pulse 2s infinite}
+  .broadcast-anim .pulse::before,.broadcast-anim .pulse::after{content:"";position:absolute;inset:-12px;border-radius:50%;border:2px solid var(--purple);opacity:0;animation:ring 2s infinite}
+  .broadcast-anim .pulse::after{animation-delay:.6s}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  @keyframes ring{0%{transform:scale(.95);opacity:.7}100%{transform:scale(1.4);opacity:0}}
+  .broadcast-anim svg{width:50px;height:50px}
+  .broadcast-anim h3{margin:0 0 8px;font-size:20px;font-family:'Fraunces',serif}
+  .broadcast-anim p{margin:0 auto 20px;font-size:13px;color:var(--charcoal-soft);line-height:1.5;max-width:260px}
+  .broadcast-anim .stats{display:flex;justify-content:space-around;background:var(--cream-light);border-radius:12px;padding:12px;margin:0 20px}
+  .broadcast-anim .stat-num{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--purple)}
+  .broadcast-anim .stat-lbl{font-size:10px;color:var(--mute);text-transform:uppercase;letter-spacing:.05em;font-weight:700;margin-top:2px}
+
+  /* Family group screen */
+  .family-empty{text-align:center;padding:40px 30px}
+  .family-empty .ic{width:80px;height:80px;border-radius:50%;background:var(--orange-soft);color:var(--orange);display:grid;place-items:center;margin:0 auto 16px}
+  .family-empty .ic svg{width:36px;height:36px}
+  .family-empty h3{margin:0 0 8px;font-size:18px;font-family:'Fraunces',serif}
+  .family-empty p{margin:0 auto 20px;font-size:13px;color:var(--charcoal-soft);max-width:240px;line-height:1.5}
+  .family-empty button{padding:13px 22px;background:var(--orange);color:#fff;border:none;border-radius:12px;font-weight:700;font-size:14px}
+  .family-list{padding:8px 16px}
+  .member-card{display:flex;align-items:center;gap:12px;padding:14px;background:#fff;border:1px solid var(--line);border-radius:14px;margin-bottom:8px}
+  .member-avatar{width:44px;height:44px;border-radius:50%;color:#fff;font-weight:700;font-family:'Fraunces',serif;font-size:18px;display:grid;place-items:center;flex-shrink:0}
+  .member-info{flex:1;min-width:0}
+  .member-name{font-weight:600;font-size:14px}
+  .member-role{font-size:11px;color:var(--mute);margin-top:2px}
+  .member-role.sos{color:var(--red);font-weight:600}
+  .member-remove{background:none;border:none;color:var(--mute);padding:6px}
+  .add-member{margin:12px 16px 0;padding:14px;background:var(--cream-light);border:1.5px dashed var(--line);border-radius:14px;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--orange);font-weight:600;font-size:14px;width:calc(100% - 32px)}
+
+  /* Dev rail */
+  .notes-rail{max-width:340px;position:sticky;top:24px}
+  .note{background:var(--note);border-left:4px solid var(--note-border);padding:14px 16px;border-radius:0 12px 12px 0;margin-bottom:12px;font-size:12px;color:#5c4500;line-height:1.5;box-shadow:0 4px 12px rgba(229,200,75,.15);transition:transform .2s}
+  .note.highlight{transform:translateX(-6px);box-shadow:0 8px 20px rgba(229,200,75,.35)}
+  .note b{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;color:#7a5d00}
+  .note .num{display:inline-block;width:18px;height:18px;background:#5c4500;color:var(--note);border-radius:50%;text-align:center;line-height:18px;font-size:11px;font-weight:700;margin-right:6px}
+
+  /* Toast */
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--charcoal);color:#fff;padding:12px 18px;border-radius:12px;font-size:13px;z-index:200;transition:transform .3s;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+
+  /* Scrollbars in screens */
+  .view-body::-webkit-scrollbar{width:0}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- LEFT: Brief card -->
+  <aside class="brief">
+    <div class="tag">For Dev · Mockup</div>
+    <h1>Wiley Fox app — changes required</h1>
+    <p>Clickable mockup. The phone shows the requested changes wired up so you can see the intent. Tap items in the list to jump to the screen.</p>
+    <ol>
+      <li data-jump="profile"><b>1.</b> Family group + assign SOS contact (on Profile)</li>
+      <li data-jump="profile"><b>2.</b> Add phone number (currently broken)</li>
+      <li data-jump="addpin"><b>3.</b> Back button on every secondary screen</li>
+      <li data-jump="lost"><b>4.</b> Lost-child report → broadcast with image to WF network</li>
+      <li data-jump="alerts"><b>5.</b> Alerts tab crashes — fix &amp; show list</li>
+      <li data-jump="alert-detail"><b>6.</b> Reply to an alert (message thread)</li>
+      <li data-jump="map"><b>7.</b> SOS → family + nearby (2-mile radius)</li>
+      <li data-jump="profile"><b>8.</b> Load SOS user — clear flow</li>
+      <li data-jump="area"><b>9.</b> Area search (e.g. Camden) → safety rating 1–5 + stats</li>
+    </ol>
+  </aside>
+
+  <!-- CENTER: Phone -->
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen" id="screen">
+
+        <!-- ========== MAP VIEW ========== -->
+        <section class="view active" data-view="map">
+          <div class="status-bar">
+            <span>14:48</span>
+            <div class="right"><span>WF</span><span>5G</span><span>50%</span></div>
+          </div>
+          <div class="map-area">
+            <div class="map-roads">
+              <div class="road" style="top:40%;left:10%;width:60%;height:6px;transform:rotate(-8deg)"></div>
+              <div class="road" style="top:55%;left:30%;width:50%;height:5px;transform:rotate(12deg)"></div>
+              <div class="road" style="top:70%;left:20%;width:5px;height:30%"></div>
+              <div class="road" style="top:25%;left:65%;width:5px;height:35%"></div>
+            </div>
+            <button class="avatar-btn" data-go="profile" title="Profile">B</button>
+            <div class="search-bar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#8a8a8a" stroke-width="2" width="16" height="16"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              <input id="mapSearch" placeholder="Search places, areas…" autocomplete="off" />
+            </div>
+            <div class="filter-chips">
+              <button class="chip active">All</button>
+              <button class="chip"><svg viewBox="0 0 24 24" fill="#E94B4B" stroke="none" width="14" height="14"><path d="M3 17h2v-7l3-5h8l3 5v7h2v2h-3v-1H6v1H3v-2zm3-7h12l-2-3H8l-2 3zm2 7a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm10 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/></svg>Traffic</button>
+              <button class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="#3D7DFF" stroke-width="2" width="14" height="14"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>Construction</button>
+              <button class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="#3D7DFF" stroke-width="2" width="14" height="14"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Event</button>
+            </div>
+            <div class="map-dot"></div>
+            <button class="map-fab-compass" title="My location">
+              <svg viewBox="0 0 24 24" fill="#FF7B14" width="20" height="20"><path d="M12 2L8 22l4-3 4 3z"/></svg>
+            </button>
+            <button class="map-fab-shield" data-go="area" title="Area safety">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z"/></svg>
+            </button>
+          </div>
+          <button class="fab-plus" data-go="addpin">+</button>
+          <button class="fab-sos" data-go="sos">
+            <div class="ic">!</div>
+            <span>SOS</span>
+          </button>
+          <nav class="bottom-nav">
+            <button class="nav-item active" data-go="map">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6v16l7-3 8 3 7-3V3l-7 3-8-3-7 3z"/><path d="M8 3v18M16 6v18"/></svg>
+              Map
+            </button>
+            <button class="nav-item" data-go="scan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h3M20 7V4h-3M4 17v3h3M20 17v3h-3"/></svg>
+              Scan
+            </button>
+            <button class="nav-item" data-go="tags">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><circle cx="7" cy="7" r="1.5" fill="currentColor"/></svg>
+              My Tags
+            </button>
+            <button class="nav-item" data-go="alerts">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>
+              Alerts
+            </button>
+          </nav>
+        </section>
+
+        <!-- ========== PROFILE ========== -->
+        <section class="view" data-view="profile">
+          <div class="status-bar"><span>14:48</span><div class="right"><span>WF</span><span>5G</span><span>50%</span></div></div>
+          <div class="app-header">
+            <button class="back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="#232323" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <img class="fox" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 50'><path d='M5 12 L15 5 L20 15 L25 5 L35 12 L32 35 Q20 48 8 35 Z' fill='%23E2620A'/><circle cx='14' cy='20' r='2' fill='%23232323'/><circle cx='26' cy='20' r='2' fill='%23232323'/></svg>" alt="">
+            <h2>Profile</h2>
+            <div class="spacer"></div>
+            <button class="action">Edit</button>
+          </div>
+          <div class="view-body">
+            <div class="profile-card">
+              <div class="profile-avatar">B
+                <div class="pen"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+              </div>
+              <div class="profile-name">Barry Wilson</div>
+              <div class="profile-email">barry14wilson@gmail.com</div>
+            </div>
+
+            <div class="section-title">Safety Network</div>
+            <div class="row-card">
+              <button class="row" data-go="family">
+                <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+                <div class="lbl">Family Group<div style="font-size:11px;color:var(--mute);font-weight:400;margin-top:2px">3 members</div></div>
+                <span class="val good">Active</span>
+                <span class="chev">›</span>
+              </button>
+              <button class="row" data-go="sos-contact">
+                <div class="icon" style="background:#FDECEC;color:#E94B4B"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.37 1.9.72 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0122 16.92z"/></svg></div>
+                <div class="lbl">SOS Contact<div style="font-size:11px;color:var(--mute);font-weight:400;margin-top:2px">Sarah Wilson (Wife)</div></div>
+                <span class="chev">›</span>
+              </button>
+            </div>
+
+            <div class="section-title">Account</div>
+            <div class="row-card">
+              <button class="row" data-go="phone">
+                <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.37 1.9.72 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0122 16.92z"/></svg></div>
+                <div class="lbl">Phone Number</div>
+                <span class="val warn" id="phoneVal">Add</span>
+                <span class="chev">›</span>
+              </button>
+              <div class="row">
+                <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+                <div class="lbl">Plan</div>
+                <span class="val">Free</span>
+                <span class="chev">›</span>
+              </div>
+              <div class="row">
+                <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+                <div class="lbl">Email Verified</div>
+                <span class="val good">Yes</span>
+              </div>
+              <div class="row">
+                <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0113 0"/></svg></div>
+                <div class="lbl">User ID</div>
+                <span class="val">942754b1…</span>
+              </div>
+            </div>
+            <button class="signout-btn">Sign Out</button>
+          </div>
+          <button class="fab-plus" data-go="addpin">+</button>
+          <button class="fab-sos" data-go="sos"><div class="ic">!</div><span>SOS</span></button>
+          <nav class="bottom-nav">
+            <button class="nav-item" data-go="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6v16l7-3 8 3 7-3V3l-7 3-8-3-7 3z"/><path d="M8 3v18M16 6v18"/></svg>Map</button>
+            <button class="nav-item" data-go="scan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h3M20 7V4h-3M4 17v3h3M20 17v3h-3"/></svg>Scan</button>
+            <button class="nav-item" data-go="tags"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/></svg>My Tags</button>
+            <button class="nav-item" data-go="alerts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>Alerts</button>
+          </nav>
+        </section>
+
+        <!-- ========== FAMILY GROUP ========== -->
+        <section class="view" data-view="family">
+          <div class="status-bar"><span>14:49</span><div class="right"><span>WF</span><span>5G</span><span>50%</span></div></div>
+          <div class="app-header">
+            <button class="back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="#232323" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <h2>Family Group</h2>
+          </div>
+          <div class="view-body">
+            <div style="padding:0 20px 14px;font-size:13px;color:var(--charcoal-soft);line-height:1.5">Members receive your SOS instantly and can see your live location during an emergency.</div>
+            <div class="family-list">
+              <div class="member-card">
+                <div class="member-avatar" style="background:#9466D4">S</div>
+                <div class="member-info">
+                  <div class="member-name">Sarah Wilson</div>
+                  <div class="member-role sos">Primary SOS · Wife</div>
+                </div>
+                <button class="member-remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6M5 6l1 14a2 2 0 002 2h8a2 2 0 002-2l1-14"/></svg></button>
+              </div>
+              <div class="member-card">
+                <div class="member-avatar" style="background:#3FA34D">E</div>
+                <div class="member-info">
+                  <div class="member-name">Emma Wilson</div>
+                  <div class="member-role">Daughter · 14</div>
+                </div>
+                <button class="member-remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6M5 6l1 14a2 2 0 002 2h8a2 2 0 002-2l1-14"/></svg></button>
+              </div>
+              <div class="member-card">
+                <div class="member-avatar" style="background:#FF7B14">J</div>
+                <div class="member-info">
+                  <div class="member-name">James Wilson</div>
+                  <div class="member-role">Brother</div>
+                </div>
+                <button class="member-remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6M5 6l1 14a2 2 0 002 2h8a2 2 0 002-2l1-14"/></svg></button>
+              </div>
+            </div>
+            <button class="add-member" onclick="toast('Open contact picker / invite by SMS')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+              Add a member
+            </button>
+          </div>
+        </section>
+
+        <!-- ========== SOS CONTACT PICKER ========== -->
+        <section class="view" data-view="sos-contact">
+          <div class="status-bar"><span>14:49</span><div class="right"><span>WF</span><span>5G</span><span>50%</span></div></div>
+          <div class="app-header">
+            <button class="back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="#232323" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <h2>SOS Contact</h2>
+          </div>
+          <div class="view-body">
+            <div style="padding:0 20px 14px;font-size:13px;color:var(--charcoal-soft);line-height:1.5">Pick one person from your family group as the primary SOS contact — they get a priority call &amp; SMS as well as the in-app alert.</div>
+            <div class="family-list">
+              <button class="member-card" style="width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer" onclick="pickSOS(this,'Sarah')">
+                <div class="member-avatar" style="background:#9466D4">S</div>
+                <div class="member-info">
+                  <div class="member-name">Sarah Wilson</div>
+                  <div class="member-role">Wife · +44 7700 900123</div>
+                </div>
+                <div class="sos-pick" style="width:22px;height:22px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="14" height="14"><path d="M20 6L9 17l-5-5"/></svg></div>
+              </button>
+              <button class="member-card" style="width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer" onclick="pickSOS(this,'Emma')">
+                <div class="member-avatar" style="background:#3FA34D">E</div>
+                <div class="member-info">
+                  <div class="member-name">Emma Wilson</div>
+                  <div class="member-role">Daughter</div>
+                </div>
+                <div class="sos-pick" style="width:22px;height:22px;border-radius:50%;border:2px solid var(--line)"></div>
+              </button>
+              <button class="member-card" style="width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer" onclick="pickSOS(this,'James')">
+                <div class="member-avatar" style="background:#FF7B14">J</div>
+                <div class="member-info">
+                  <div class="member-name">James Wilson</div>
+                  <div class="member-role">Brother · +44 7700 900456</div>
+                </div>
+                <div class="sos-pick" style="width:22px;height:22px;border-radius:50%;border:2px solid var(--line)"></div>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== PHONE NUMBER ========== -->
+        <section class="view" data-view="phone">
+          <div class="status-bar"><span>14:49</span><div class="right"><span>WF</span><span>5G</span><span>50%</span></div></div>
+          <div class="app-header">
+            <button class="back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="#232323" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <h2>Phone Number</h2>
+          </div>
+          <div class="view-body">
+            <div style="padding:14px 20px 18px;font-size:13px;color:var(--charcoal-soft);line-height:1.5">We'll send an SMS verification code. Your number is only used for SOS dispatch.</div>
+            <div class="field">
+              <label>Country</label>
+              <select><option>United Kingdom (+44)</option><option>Ireland (+353)</option><option>United States (+1)</option></select>
+            </div>
+            <div class="field">
+              <label>Mobile number</label>
+              <input id="phoneInput" type="tel" placeholder="7700 900123" value="">
+              <div class="helper">Standard SMS rates apply during verification.</div>
+            </div>
+            <div style="padding:0 20px">
+              <button style="width:100%;padding:14px;background:var(--orange);color:#fff;border:none;border-radius:14px;font-weight:700;font-size:14px" onclick="savePhone()">Send verification code</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== ADD PIN ========== -->
+        <section class="view" data-view="addpin">
+          <div class="status-bar"><span>14:48</span><div class="right"><span>WF</span><span>5G</span><span>49%</span></div></div>
+          <div class="app-header">
+            <button class="back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="#232323" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <h2>Add a Pin</h2>
+          </div>
+          <div class="view-body">
+            <div style="padding:0 20px 12px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:700">Type</div>
+            <div class="type-row">
+              <button class="type-btn active"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 17h2v-7l3-5h8l3 5v7h2v2h-3v-1H6v1H3v-2z"/></svg>Traffic</button>
+              <button class="type-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6"/></svg>Construction</button>
+              <button class="type-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4"/></svg>Event</button>
+              <button class="type-btn" data-go="lost" style="background:#FDECEC;border-color:#F4B4B4;color:#C13C3C">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg>
+                Missing Person
+              </button>
+            </div>
+            <div class="field">
+              <label>Title *</label>
+              <input placeholder="Brief description of the situation">
+            </div>
+            <div class="field">
+              <label>Details (optional)</label>
+              <textarea placeholder="Additional details…"></textarea>
+            </div>
+            <div class="field">
+              <label>Location</label>
+              <input value="GPS: 51.25088, -0.95265" readonly>
+            </div>
+          </div>
+          <div class="submit-bar">
+            <button onclick="toast('Pin added')">Add Pin</button>
+          </div>
+          <button class="fab-sos" data-go="sos"><div class="ic">!</div><span>SOS</span></button>
+        </section>
+
+        <!-- ========== LOST CHILD REPORT ========== -->
+        <section class="view" data-view="lost">
+          <div class="status-bar"><span>14:50</span><div class="right"><span>WF</span><span>5G</span><span>49%</span></div></div>
+          <div class="app-header">
+            <button class="back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="#232323" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <h2>Report Missing</h2>
+          </div>
+          <div class="view-body">
+            <div style="margin:0 20px 14px;padding:12px 14px;background:#F2E8FB;border-radius:12px;font-size:12px;color:#5B3A91;line-height:1.5;display:flex;gap:10px;align-items:flex-start">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="flex-shrink:0;margin-top:1px"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+              <div><b>Broadcast to network</b> — every Wiley Fox user near your location will receive a push notification with this report and image.</div>
+            </div>
+            <div class="field">
+              <label>Photo *</label>
+            </div>
+            <div class="img-upload has-img" id="lostImg" onclick="this.classList.toggle('has-img')">
+              <div class="img-placeholder">EW</div>
+            </div>
+            <div class="field">
+              <label>Name *</label>
+              <input value="Emma Wilson" placeholder="Full name">
+            </div>
+            <div class="field" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <div><label>Age</label><input value="14" type="number"></div>
+              <div><label>Last seen</label><input value="20 min ago" readonly></div>
+            </div>
+            <div class="field">
+              <label>Description (clothing, height, etc.)</label>
+              <textarea>Blue school uniform, navy backpack, white trainers. ~5'2", brown hair tied back.</textarea>
+            </div>
+            <div class="field">
+              <label>Last seen location</label>
+              <input value="Camden High St, London NW1" readonly>
+            </div>
+            <div style="padding:0 20px;margin-bottom:14px;font-size:12px;color:var(--charcoal-soft);line-height:1.5">
+              <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer">
+                <input type="checkbox" checked style="margin-top:3px">
+                <span>Also notify local police (auto-fill 101 report)</span>
+              </label>
+            </div>
+          </div>
+          <div class="submit-bar full">
+            <button style="background:var(--purple)" onclick="goto('broadcast')">Broadcast Missing Person Alert</button>
+          </div>
+        </section>
+
+        <!-- ========== BROADCAST CONFIRMATION ========== -->
+        <section class="view" data-view="broadcast">
+          <div class="status-bar"><span>14:50</span><div class="right"><span>WF</span><span>5G</span><span>49%</span></div></div>
+          <div class="app-header">
+            <button class="back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="#232323" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <h2>Broadcast Sent</h2>
+          </div>
+          <div class="view-body">
+            <div class="broadcast-anim">
+              <div class="pulse">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+              </div>
+              <h3>Alert is live across the network</h3>
+              <p>Every Wiley Fox user within range has been pinged. The alert will also appear in their "Alerts in your area" feed.</p>
+              <div class="stats">
+                <div><div class="stat-num">847</div><div class="stat-lbl">Users notified</div></div>
+                <div><div class="stat-num">2.0 mi</div><div class="stat-lbl">Radius</div></div>
+                <div><div class="stat-num">Live</div><div class="stat-lbl">Status</div></div>
+              </div>
+              <div style="padding:24px 20px 0">
+                <button style="width:100%;padding:13px;background:var(--charcoal);color:#fff;border:none;border-radius:14px;font-weight:600;font-size:14px" data-go="alerts">View alert in feed</button>
+                <button style="width:100%;padding:12px;background:transparent;border:none;color:var(--mute);font-weight:600;font-size:13px;margin-top:6px" data-go="map">Back to map</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== ALERTS LIST ========== -->
+        <section class="view" data-view="alerts">
+          <div class="status-bar"><span>14:51</span><div class="right"><span>WF</span><span>5G</span><span>49%</span></div></div>
+          <div class="app-header">
+            <button class="back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="#232323" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <h2>Alerts</h2>
+            <div class="spacer"></div>
+            <button class="action" style="background:var(--cream-light);color:var(--charcoal)">Filter</button>
+          </div>
+          <div class="view-body">
+            <div style="padding:8px 16px 0;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:700">In your area · 2 mi</div>
+            <button class="alert-card urgent" data-go="alert-detail">
+              <div class="alert-thumb missing">EW</div>
+              <div class="alert-meta">
+                <div class="alert-title">Missing: Emma Wilson, 14 <span class="pill missing">Missing</span></div>
+                <div class="alert-snippet">Blue school uniform, navy backpack. Last seen Camden High St.</div>
+                <div class="alert-info"><span>0.4 mi away</span><span class="dot"></span><span>1 min ago</span></div>
+              </div>
+            </button>
+            <button class="alert-card urgent" onclick="toast('Open SOS detail')">
+              <div class="alert-thumb sos">!</div>
+              <div class="alert-meta">
+                <div class="alert-title">SOS from nearby user <span class="pill">SOS</span></div>
+                <div class="alert-snippet">A Wiley Fox user has triggered an emergency SOS within 2 miles of you.</div>
+                <div class="alert-info"><span>1.2 mi away</span><span class="dot"></span><span>4 min ago</span></div>
+              </div>
+            </button>
+            <button class="alert-card" onclick="toast('Open crime alert')">
+              <div class="alert-thumb crime">!</div>
+              <div class="alert-meta">
+                <div class="alert-title">Anti-social behaviour reported</div>
+                <div class="alert-snippet">Group disturbance reported on Camden Lock Pl. Police informed.</div>
+                <div class="alert-info"><span>0.8 mi away</span><span class="dot"></span><span>22 min ago</span></div>
+              </div>
+            </button>
+            <button class="alert-card" onclick="toast('Open event alert')">
+              <div class="alert-thumb event">M</div>
+              <div class="alert-meta">
+                <div class="alert-title">Camden Market — pickpocket warning</div>
+                <div class="alert-snippet">Increased pickpocket reports near stalls 22–40 today.</div>
+                <div class="alert-info"><span>0.5 mi away</span><span class="dot"></span><span>1 hr ago</span></div>
+              </div>
+            </button>
+          </div>
+          <button class="fab-plus" data-go="addpin">+</button>
+          <button class="fab-sos" data-go="sos"><div class="ic">!</div><span>SOS</span></button>
+          <nav class="bottom-nav">
+            <button class="nav-item" data-go="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6v16l7-3 8 3 7-3V3l-7 3-8-3-7 3z"/><path d="M8 3v18M16 6v18"/></svg>Map</button>
+            <button class="nav-item" data-go="scan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h3M20 7V4h-3M4 17v3h3M20 17v3h-3"/></svg>Scan</button>
+            <button class="nav-item" data-go="tags"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/></svg>My Tags</button>
+            <button class="nav-item active" data-go="alerts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>Alerts</button>
+          </nav>
+        </section>
+
+        <!-- ========== ALERT DETAIL + REPLY ========== -->
+        <section class="view" data-view="alert-detail">
+          <div class="status-bar"><span>14:52</span><div class="right"><span>WF</span><span>5G</span><span>49%</span></div></div>
+          <div class="app-header">
+            <button class="back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="#232323" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <h2>Alert</h2>
+          </div>
+          <div class="view-body" style="padding-bottom:90px">
+            <div class="alert-hero">
+              <div class="pill-row">
+                <span class="pill">Missing Person</span>
+                <span class="pill distance">0.4 mi away</span>
+              </div>
+              <h3>Emma Wilson, 14</h3>
+              <div class="meta">Reported 1 min ago by Barry W. · Camden High St NW1</div>
+              <div class="img-fallback">EW</div>
+              <div class="desc">Blue school uniform, navy backpack, white trainers. Approximately 5'2", brown hair tied back in a ponytail. Last seen leaving Camden High Street tube station heading north.</div>
+            </div>
+            <div class="alert-actions">
+              <button class="primary" onclick="toast('Reporting sighting…')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                I've seen them
+              </button>
+              <button class="secondary" onclick="toast('Sharing alert…')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>
+                Share
+              </button>
+            </div>
+            <div style="padding:6px 20px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:700">Messages with reporter</div>
+            <div class="msg-list" id="msgList">
+              <div class="msg them">Thank you for looking out. Any info please send here.</div>
+              <div class="msg me">Just heading down to Camden Lock now to help look.</div>
+              <div class="msg them">Thank you so much 🙏</div>
+            </div>
+          </div>
+          <div class="msg-input-bar">
+            <input id="msgInput" placeholder="Type a message…">
+            <button onclick="sendMsg()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+          </div>
+        </section>
+
+        <!-- ========== AREA / SEARCH RESULT (Camden) ========== -->
+        <section class="view" data-view="area">
+          <div class="status-bar"><span>14:53</span><div class="right"><span>WF</span><span>5G</span><span>48%</span></div></div>
+          <div class="app-header">
+            <button class="back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="#232323" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <h2>Camden</h2>
+          </div>
+          <div class="view-body">
+            <div class="area-hero">
+              <div class="breadcrumb">LONDON · NW1</div>
+              <div class="sub">Borough of Camden · ~210k residents · last 12 months of crime data</div>
+            </div>
+            <div class="rating-card">
+              <div class="rating-row">
+                <div class="rating-orb" style="background:#F46036">2</div>
+                <div class="rating-text">
+                  <div class="lbl">Wiley Fox Safety Rating</div>
+                  <div class="val">High crime area</div>
+                  <div class="tag">Above London average · Stay aware after dark</div>
+                </div>
+              </div>
+              <div class="rating-bar"><div class="marker" style="left:30%"></div></div>
+              <div class="scale-row"><span>Highest crime</span><span>Safest</span></div>
+            </div>
+            <div class="stats-grid">
+              <div class="stat-tile"><div class="v">3,420</div><div class="l">Crimes / month</div></div>
+              <div class="stat-tile"><div class="v">28%</div><div class="l">Anti-social</div></div>
+              <div class="stat-tile"><div class="v">19%</div><div class="l">Theft</div></div>
+              <div class="stat-tile"><div class="v">12%</div><div class="l">Violent</div></div>
+            </div>
+            <div style="padding:0 16px 8px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:700">Crime breakdown</div>
+            <div class="cat-list">
+              <div class="cat-row"><div class="cat-dot" style="background:#D7263D"></div><div class="cat-name">Anti-social behaviour</div><div class="cat-count">958</div></div>
+              <div class="cat-row"><div class="cat-dot" style="background:#F46036"></div><div class="cat-name">Theft from person</div><div class="cat-count">651</div></div>
+              <div class="cat-row"><div class="cat-dot" style="background:#FFC857"></div><div class="cat-name">Violence &amp; sexual offences</div><div class="cat-count">410</div></div>
+              <div class="cat-row"><div class="cat-dot" style="background:#A4C957"></div><div class="cat-name">Vehicle crime</div><div class="cat-count">287</div></div>
+              <div class="cat-row"><div class="cat-dot" style="background:#3FA34D"></div><div class="cat-name">Burglary</div><div class="cat-count">198</div></div>
+            </div>
+            <button class="area-cta" onclick="toast('Opening on map…')">Review on map</button>
+          </div>
+        </section>
+
+        <!-- ========== SCAN / TAGS (placeholders) ========== -->
+        <section class="view" data-view="scan">
+          <div class="status-bar"><span>14:48</span><div class="right"><span>WF</span><span>5G</span><span>50%</span></div></div>
+          <div class="app-header">
+            <button class="back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="#232323" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <h2>Scan a tag</h2>
+          </div>
+          <div class="view-body" style="display:grid;place-items:center;text-align:center;padding:40px 30px">
+            <div style="width:220px;height:220px;border-radius:24px;background:var(--cream-light);position:relative;display:grid;place-items:center;color:var(--mute);font-size:13px">
+              <div style="position:absolute;top:-2px;left:-2px;width:30px;height:30px;border-top:3px solid var(--orange);border-left:3px solid var(--orange);border-radius:8px 0 0 0"></div>
+              <div style="position:absolute;top:-2px;right:-2px;width:30px;height:30px;border-top:3px solid var(--orange);border-right:3px solid var(--orange);border-radius:0 8px 0 0"></div>
+              <div style="position:absolute;bottom:-2px;left:-2px;width:30px;height:30px;border-bottom:3px solid var(--orange);border-left:3px solid var(--orange);border-radius:0 0 0 8px"></div>
+              <div style="position:absolute;bottom:-2px;right:-2px;width:30px;height:30px;border-bottom:3px solid var(--orange);border-right:3px solid var(--orange);border-radius:0 0 8px 0"></div>
+              Point camera at a Wiley Fox tag
+            </div>
+          </div>
+        </section>
+
+        <section class="view" data-view="tags">
+          <div class="status-bar"><span>14:49</span><div class="right"><span>WF</span><span>5G</span><span>49%</span></div></div>
+          <div class="app-header">
+            <button class="back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="#232323" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <h2>My Tags</h2>
+            <div class="spacer"></div>
+            <button class="action">+ Register</button>
+          </div>
+          <div class="view-body">
+            <div class="tag-card">
+              <div class="tag-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0113 0"/></svg></div>
+              <div class="tag-meta">
+                <div class="tag-name">Emma</div>
+                <div class="tag-type">Person</div>
+                <div class="tag-id">DNYL4XZ6</div>
+              </div>
+              <div class="tag-status">Lost</div>
+            </div>
+          </div>
+          <button class="fab-plus" data-go="addpin">+</button>
+          <button class="fab-sos" data-go="sos"><div class="ic">!</div><span>SOS</span></button>
+          <nav class="bottom-nav">
+            <button class="nav-item" data-go="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6v16l7-3 8 3 7-3V3l-7 3-8-3-7 3z"/></svg>Map</button>
+            <button class="nav-item" data-go="scan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h3M20 7V4h-3M4 17v3h3M20 17v3h-3"/></svg>Scan</button>
+            <button class="nav-item active" data-go="tags"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/></svg>My Tags</button>
+            <button class="nav-item" data-go="alerts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>Alerts</button>
+          </nav>
+        </section>
+
+        <!-- ========== SOS SHEET ========== -->
+        <div class="sheet-bg" id="sosSheet">
+          <div class="sheet">
+            <div class="ico-circle"><svg viewBox="0 0 24 24" fill="#E94B4B" width="32" height="32"><circle cx="12" cy="12" r="10"/><path d="M12 7v6M12 17h.01" stroke="white" stroke-width="2.5" fill="none"/></svg></div>
+            <h3>Send Emergency SOS?</h3>
+            <p>This alerts your family group <b>and</b> Wiley Fox users within 2 miles with your live GPS location.</p>
+            <div class="radius-info">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              <div><b>Family Group (3)</b>Sarah, Emma, James get a call + SMS</div>
+            </div>
+            <div class="radius-info">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+              <div><b>Nearby (~480 users in range)</b>Push notification + pin on their map</div>
+            </div>
+            <button class="primary" onclick="closeSheet();toast('SOS sent — help is on the way')">Send SOS Now</button>
+            <button class="secondary" onclick="closeSheet()">Cancel</button>
+          </div>
+        </div>
+
+      </div><!-- /screen -->
+    </div><!-- /phone -->
+    <div style="font-size:12px;color:var(--mute);text-align:center;max-width:320px">Tap anywhere in the phone — buttons, nav, SOS, +, Camden search — to explore the flow.</div>
+  </div>
+
+  <!-- RIGHT: Dev notes -->
+  <aside class="notes-rail">
+    <div class="note" data-for="profile"><b><span class="num">1</span> Profile · Safety Network</b>New section on Profile with two rows: <i>Family Group</i> (manage members) and <i>SOS Contact</i> (pick one as primary). Family Group screen lists members with role labels; add-member button opens contacts/SMS invite.</div>
+    <div class="note" data-for="profile"><b><span class="num">2</span> Phone Number row</b>Tappable row that opens a phone-entry screen (country code + number + verify CTA). Currently the row doesn't open anything.</div>
+    <div class="note" data-for="any"><b><span class="num">3</span> Back button</b>Every secondary screen has a chevron-back in the top-left. Returns to previous view. Hardware back also goes back, never closes the app.</div>
+    <div class="note" data-for="lost"><b><span class="num">4</span> Missing Person flow</b>Add a fourth pin type "Missing Person" (red). Opens dedicated form with required photo, name, age, description, location. On submit, alert is pushed to every WF user in radius and appears in their Alerts feed with image.</div>
+    <div class="note" data-for="alerts"><b><span class="num">5</span> Alerts tab — fix crash</b>Currently the Alerts tab errors. Should render the in-area feed (missing persons, nearby SOS, crime, events) with thumbnail, snippet, distance, age.</div>
+    <div class="note" data-for="alert-detail"><b><span class="num">6</span> Reply to alert</b>Alert detail screen shows a message thread with the reporter so finders can share info ("I just saw them at…"). Standard chat input at bottom.</div>
+    <div class="note" data-for="map"><b><span class="num">7</span> SOS targeting</b>SOS goes to Family Group <b>and</b> users in a 2-mile radius — same broadcast pattern as a missing person. Modal shows both audiences before sending.</div>
+    <div class="note" data-for="sos-contact"><b><span class="num">8</span> Load / change SOS user</b>Dedicated screen lists family members with a radio-style pick. Selected member becomes primary SOS contact (priority call/SMS).</div>
+    <div class="note" data-for="area"><b><span class="num">9</span> Area search results</b>Typing an area (e.g. "Camden") in the map search returns an area sheet with the existing Wiley Fox 1–5 safety rating, monthly crime count, category breakdown, and a "Review on map" CTA. Reuses the prototype rating logic.</div>
+  </aside>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const screen = document.getElementById('screen');
+  const navStack = ['map'];
+
+  function goto(view){
+    const cur = document.querySelector('.view.active');
+    if (cur && cur.dataset.view === view) return;
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    const next = document.querySelector(`.view[data-view="${view}"]`);
+    if (next) next.classList.add('active');
+    if (navStack[navStack.length-1] !== view) navStack.push(view);
+    highlightNote(view);
+  }
+  function back(){
+    if (navStack.length <= 1) return;
+    navStack.pop();
+    const prev = navStack[navStack.length-1];
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.querySelector(`.view[data-view="${prev}"]`).classList.add('active');
+    highlightNote(prev);
+  }
+  function highlightNote(view){
+    document.querySelectorAll('.note').forEach(n => n.classList.remove('highlight'));
+    document.querySelectorAll(`.note[data-for="${view}"]`).forEach(n => n.classList.add('highlight'));
+  }
+
+  // Click delegation
+  document.addEventListener('click', e => {
+    const goEl = e.target.closest('[data-go]');
+    if (goEl) {
+      const target = goEl.dataset.go;
+      if (target === 'sos') { document.getElementById('sosSheet').classList.add('active'); return; }
+      goto(target);
+      return;
+    }
+    if (e.target.closest('[data-back]')) { back(); return; }
+    const jumpEl = e.target.closest('[data-jump]');
+    if (jumpEl) { goto(jumpEl.dataset.jump); }
+  });
+
+  function closeSheet(){ document.getElementById('sosSheet').classList.remove('active'); }
+
+  // Toast
+  let toastTimer;
+  function toast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  // Phone save
+  function savePhone(){
+    const val = document.getElementById('phoneInput').value.trim();
+    if (!val) { toast('Enter a phone number'); return; }
+    document.getElementById('phoneVal').textContent = '+44 ' + val;
+    document.getElementById('phoneVal').classList.remove('warn');
+    document.getElementById('phoneVal').classList.add('good');
+    toast('Code sent — number saved');
+    back();
+  }
+
+  // SOS picker
+  function pickSOS(card, name){
+    document.querySelectorAll('.sos-pick').forEach(p => {
+      p.style.background = 'transparent';
+      p.style.border = '2px solid var(--line)';
+      p.innerHTML = '';
+    });
+    const pick = card.querySelector('.sos-pick');
+    pick.style.background = 'var(--orange)';
+    pick.style.border = 'none';
+    pick.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" width="14" height="14"><path d="M20 6L9 17l-5-5"/></svg>';
+    toast(name + ' set as SOS contact');
+  }
+
+  // Message send
+  function sendMsg(){
+    const inp = document.getElementById('msgInput');
+    const txt = inp.value.trim();
+    if (!txt) return;
+    const list = document.getElementById('msgList');
+    const m = document.createElement('div');
+    m.className = 'msg me';
+    m.textContent = txt;
+    list.appendChild(m);
+    inp.value = '';
+    list.parentElement.scrollTop = list.parentElement.scrollHeight;
+  }
+
+  // Camden search
+  document.getElementById('mapSearch').addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      const v = e.target.value.trim().toLowerCase();
+      if (v.includes('camden') || v.includes('london') || v) {
+        goto('area');
+        e.target.value = '';
+      }
+    }
+  });
+  document.getElementById('mapSearch').addEventListener('focus', e => {
+    setTimeout(() => toast('Try typing "Camden" + Enter'), 300);
+  });
+</script>
+</body>
+</html>

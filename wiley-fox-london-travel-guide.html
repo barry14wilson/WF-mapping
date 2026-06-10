@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Wiley Fox · London &amp; Camden Travel Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --orange:#FF7B14;
+    --orange-dark:#E2620A;
+    --orange-soft:#FFE9D6;
+    --sage:#AABA9F;
+    --cream:#E5EBD3;
+    --cream-light:#F2F4E5;
+    --charcoal:#232323;
+    --charcoal-soft:#3a3a3a;
+    --mute:#8a8a8a;
+    --line:#ECECEC;
+    --r1:#D7263D; --r2:#F46036; --r3:#FFC857; --r4:#A4C957; --r5:#3FA34D;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;font-family:'Inter',system-ui,-apple-system,sans-serif;color:var(--charcoal);background:var(--cream-light);line-height:1.55}
+  h1,h2,h3,h4,.serif{font-family:'Fraunces',Georgia,serif;font-weight:600;letter-spacing:-.01em}
+
+  .wrap{max-width:880px;margin:0 auto;padding:0 24px 80px}
+
+  /* Hero */
+  .hero{padding:48px 24px 36px;background:linear-gradient(135deg,#E5EBD3 0%,#F2F4E5 100%);border-bottom:1px solid rgba(35,35,35,.06)}
+  .hero-inner{max-width:880px;margin:0 auto}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+  .logo{width:38px;height:38px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;font-weight:800;font-family:'Fraunces',serif}
+  .brand-name{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .hero h1{font-size:46px;margin:0 0 10px;line-height:1.05;letter-spacing:-.02em}
+  .hero .tag{font-size:13px;color:var(--charcoal-soft);font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+  .hero .meta{margin-top:18px;display:flex;flex-wrap:wrap;gap:18px;font-size:12px;color:var(--charcoal-soft)}
+  .hero .meta b{color:var(--charcoal);font-weight:600}
+
+  /* Section */
+  section{padding:38px 0;border-bottom:1px solid var(--line)}
+  section:last-of-type{border-bottom:none}
+  section .label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);font-weight:700;margin-bottom:8px}
+  section h2{font-size:30px;margin:0 0 14px;line-height:1.15}
+  section p{font-size:15px;color:var(--charcoal-soft);margin:0 0 14px}
+  section p.intro{font-size:16px;color:var(--charcoal);font-weight:500}
+
+  /* Headline stats */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0 8px}
+  .stat{padding:20px;background:#fff;border:1px solid var(--line);border-radius:14px}
+  .stat .v{font-family:'Fraunces',serif;font-size:34px;font-weight:700;line-height:1;color:var(--orange-dark)}
+  .stat .l{font-size:12px;font-weight:600;margin-top:6px;color:var(--charcoal)}
+  .stat .s{font-size:11px;color:var(--mute);margin-top:3px;line-height:1.4}
+
+  /* Camden callout */
+  .camden-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;margin:8px 0 14px;border-left:6px solid #F46036}
+  .camden-card .rating-row{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+  .rating-orb{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:'Fraunces',serif;font-size:30px;font-weight:700;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+  .rating-text .lbl{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:700}
+  .rating-text .val{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-top:2px}
+  .rating-bar{margin-top:14px;height:6px;border-radius:3px;background:linear-gradient(90deg,var(--r1),var(--r2),var(--r3),var(--r4),var(--r5));position:relative}
+  .rating-bar .marker{position:absolute;top:-3px;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--charcoal);left:30%;transform:translateX(-50%)}
+  .scale-row{display:flex;justify-content:space-between;font-size:10px;margin-top:6px;color:var(--mute);font-weight:600}
+
+  /* Tables */
+  .data-table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:14px;overflow:hidden;border:1px solid var(--line);margin-top:8px}
+  .data-table th{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);text-align:left;padding:12px 16px;background:var(--cream-light);border-bottom:1px solid var(--line)}
+  .data-table td{padding:14px 16px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:top}
+  .data-table tr:last-child td{border-bottom:none}
+  .data-table .rank{font-family:'Fraunces',serif;font-weight:700;color:var(--orange);font-size:18px;width:40px}
+  .data-table .num{font-family:'Fraunces',serif;font-weight:600;font-size:14px;color:var(--charcoal);white-space:nowrap}
+  .data-table .name{font-weight:600;color:var(--charcoal)}
+  .data-table .note{color:var(--charcoal-soft);font-size:13px}
+
+  /* Tips list */
+  .tips{display:grid;gap:10px;margin-top:8px}
+  .tip{display:flex;gap:14px;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:12px}
+  .tip-ic{width:30px;height:30px;border-radius:50%;background:var(--orange-soft);color:var(--orange);display:grid;place-items:center;flex-shrink:0;font-weight:700;font-family:'Fraunces',serif}
+  .tip-text{font-size:14px;line-height:1.5}
+
+  /* Hotels / activities */
+  .hotel-grid,.activity-grid{display:grid;gap:10px;margin-top:8px}
+  .hotel-card,.activity-card{display:flex;gap:14px;padding:16px;background:#fff;border:1px solid var(--line);border-radius:12px;align-items:flex-start}
+  .hc-rank{font-family:'Fraunces',serif;font-weight:700;color:var(--orange);font-size:22px;width:32px;flex-shrink:0}
+  .hc-body{flex:1}
+  .hc-name{font-weight:700;font-size:15px;margin-bottom:2px}
+  .hc-area{font-size:12px;color:var(--orange-dark);font-weight:600;letter-spacing:.02em}
+  .hc-note{font-size:13px;color:var(--charcoal-soft);margin-top:4px;line-height:1.5}
+  .hc-price{font-size:11px;font-weight:700;background:var(--cream);color:var(--charcoal);padding:4px 8px;border-radius:6px;margin-left:auto;flex-shrink:0;letter-spacing:.04em;text-transform:uppercase}
+  .hc-price.free{background:#E5F4E7;color:#1F7A30}
+
+  /* Footer */
+  .source-box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;font-size:12px;color:var(--charcoal-soft);line-height:1.6;margin-top:20px}
+  .source-box b{color:var(--charcoal);display:block;margin-bottom:4px;font-size:13px}
+
+  footer{padding:30px 24px;text-align:center;color:var(--mute);font-size:12px;background:var(--cream-light);border-top:1px solid var(--line);margin-top:40px}
+  footer .fox{color:var(--orange);font-weight:700}
+
+  /* Print */
+  @media print{
+    body{background:#fff}
+    .hero{background:#fff;border-bottom:2px solid var(--orange)}
+    section{page-break-inside:avoid;border:none;padding:22px 0}
+    .stat,.tip,.hotel-card,.activity-card,.camden-card{box-shadow:none;border:1px solid #ddd}
+    .data-table{box-shadow:none}
+    footer{background:#fff}
+  }
+  @media (max-width:640px){
+    .hero h1{font-size:34px}
+    section h2{font-size:24px}
+    .stats{grid-template-columns:1fr}
+    .data-table th,.data-table td{padding:10px 12px;font-size:13px}
+    .hc-price{margin-left:0;margin-top:6px}
+    .hotel-card,.activity-card{flex-wrap:wrap}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="brand">
+      <div class="logo">WF</div>
+      <div>
+        <div class="brand-name">Wiley Fox · Travel Guide</div>
+      </div>
+    </div>
+    <div class="tag">Safety · Transport · Families · Crime Data 2023–25</div>
+    <h1>London &amp; Camden — the honest traveller's guide</h1>
+    <div class="meta">
+      <span><b>Region:</b> Greater London</span>
+      <span><b>Highlighted area:</b> Camden, NW1</span>
+      <span><b>Data updated:</b> June 2026</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section>
+    <div class="label">Introduction</div>
+    <h2>Why London — and what to know first</h2>
+    <p class="intro">One of the world's great capitals, London rewards every kind of traveller. Two thousand years of history sit alongside world-class museums, royal palaces, riverside walks and a food scene drawn from every corner of the planet — and most of the best stuff is free.</p>
+    <p>Straddling the River Thames, London is a city of distinct villages — each borough with its own character, pace and personality. Whether you're after the polish of Kensington, the buzz of Shoreditch, or the leafy calm of Richmond, there's a corner of London for every kind of trip.</p>
+  </section>
+
+  <section>
+    <div class="label">Crime in context</div>
+    <h2>How safe is London, really?</h2>
+    <div class="stats">
+      <div class="stat"><div class="v">123.3</div><div class="l">Violent offences per 100k</div><div class="s">England &amp; Wales · 2023 (UNODC)</div></div>
+      <div class="stat"><div class="v">−45%</div><div class="l">Decline since 2008 peak</div><div class="s">Long-term trend downward</div></div>
+      <div class="stat"><div class="v">10 / 33</div><div class="l">Safest London boroughs</div><div class="s">Ideal for visitors</div></div>
+    </div>
+    <p style="margin-top:20px">According to the UN Office on Drugs and Crime (UNODC), England and Wales recorded 123.3 violent offences per 100,000 population in 2023 — a 45% decline from the 2008 peak. Within London, crime is highly borough-specific: outer residential boroughs consistently record the lowest crime rates, while central tourist hotspots show concentrated street crime.</p>
+  </section>
+
+  <section>
+    <div class="label">Spotlight</div>
+    <h2>Camden, NW1 — what to expect</h2>
+    <div class="camden-card">
+      <div class="rating-row">
+        <div class="rating-orb" style="background:#F46036">2</div>
+        <div class="rating-text">
+          <div class="lbl">Wiley Fox Safety Rating</div>
+          <div class="val">High crime area · caution advised</div>
+          <div style="font-size:13px;color:var(--charcoal-soft);margin-top:4px">~3,420 crimes/month · above London average</div>
+        </div>
+      </div>
+      <div class="rating-bar"><div class="marker"></div></div>
+      <div class="scale-row"><span>Highest crime</span><span>Safest</span></div>
+    </div>
+    <p>Camden is one of London's most-visited areas — Camden Market, Regent's Canal, the music venues, the food halls. It's also one of the higher-crime boroughs in central London, with street crime and drug activity most concentrated around Camden High Street, Camden Lock and Kentish Town late at night.</p>
+    <p><b>The honest take:</b> Camden is absolutely worth visiting. During the day and early evening the market and canal are lively and safe — keep your bag closed, phone out of sight, and treat it like any busy tourist hub. After 10pm, stick to well-lit main routes (Camden High Street, Parkway) and take a licensed cab back rather than walking long stretches alone.</p>
+    <p><b>Where to base yourself if Camden isn't for you:</b> Kensington &amp; Chelsea is the safest central borough for visitors. South Bank, Victoria and Bloomsbury are also good central, low-friction bases.</p>
+  </section>
+
+  <section>
+    <div class="label">Safest boroughs</div>
+    <h2>The 10 safest London boroughs</h2>
+    <table class="data-table">
+      <thead><tr><th>#</th><th>Crime rate</th><th>Borough</th><th>Why it stands out</th></tr></thead>
+      <tbody>
+        <tr><td class="rank">1</td><td class="num">74 / 1k</td><td class="name">Richmond upon Thames</td><td class="note">Safest borough overall · score 84/100</td></tr>
+        <tr><td class="rank">2</td><td class="num">62 / 1k</td><td class="name">Kingston upon Thames</td><td class="note">Very low crime · relaxed suburban feel</td></tr>
+        <tr><td class="rank">3</td><td class="num">61 / 1k</td><td class="name">Sutton</td><td class="note">Peaceful · lowest reoffending rate in London</td></tr>
+        <tr><td class="rank">4</td><td class="num">63 / 1k</td><td class="name">Bexley</td><td class="note">Low burglary · consistently below UK average</td></tr>
+        <tr><td class="rank">5</td><td class="num">67 / 1k</td><td class="name">Merton</td><td class="note">Wimbledon home · popular family borough</td></tr>
+        <tr><td class="rank">6</td><td class="num">68 / 1k</td><td class="name">Barnet</td><td class="note">Popular north London borough · good transport</td></tr>
+        <tr><td class="rank">7</td><td class="num">70 / 1k</td><td class="name">Bromley</td><td class="note">Safe outer south-east borough · leafy feel</td></tr>
+        <tr><td class="rank">8</td><td class="num">71 / 1k</td><td class="name">Harrow</td><td class="note">Family-friendly · excellent local schools</td></tr>
+        <tr><td class="rank">9</td><td class="num">72 / 1k</td><td class="name">Havering</td><td class="note">Quiet east London · low footfall</td></tr>
+        <tr><td class="rank">10</td><td class="num">Best central</td><td class="name">Kensington &amp; Chelsea</td><td class="note">Best central option for visitors · high police presence</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <div class="label">Higher-risk boroughs</div>
+    <h2>5 boroughs that need more care</h2>
+    <p>Not "avoid" — most have brilliant things to see and eat. Just plan your timing and your route home.</p>
+    <table class="data-table">
+      <thead><tr><th>#</th><th>Crime rate</th><th>Borough</th><th>Where to be careful</th></tr></thead>
+      <tbody>
+        <tr><td class="rank">1</td><td class="num">281 / 1k</td><td class="name">Westminster</td><td class="note">Highest crime rate in London · pickpocketing hotspot around Oxford Street, Leicester Square &amp; Piccadilly Circus</td></tr>
+        <tr><td class="rank">2</td><td class="num">165 / 1k</td><td class="name">Camden</td><td class="note">Street crime &amp; drug activity · worst around Camden Market &amp; Kentish Town late at night</td></tr>
+        <tr><td class="rank">3</td><td class="num">162 / 1k</td><td class="name">Southwark</td><td class="note">Elevated crime around Elephant &amp; Castle · improving but caution advised after dark</td></tr>
+        <tr><td class="rank">4</td><td class="num">155 / 1k</td><td class="name">Hackney</td><td class="note">Higher street robbery rates · stay alert in Dalston &amp; Hackney Central</td></tr>
+        <tr><td class="rank">5</td><td class="num">150 / 1k</td><td class="name">Lambeth</td><td class="note">Street robbery in Brixton &amp; Stockwell · avoid late-night travel alone</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <div class="label">Getting around</div>
+    <h2>Where to base yourself for the best transport</h2>
+    <table class="data-table">
+      <thead><tr><th>Area</th><th>Lines</th><th>Why it works</th></tr></thead>
+      <tbody>
+        <tr><td class="name">King's Cross</td><td class="num">6 Tube lines + Eurostar</td><td class="note">London's most connected hub — Eurostar to Paris/Brussels in under 2½ hours</td></tr>
+        <tr><td class="name">Waterloo / South Bank</td><td class="num">Jubilee · Bakerloo · Northern</td><td class="note">London Eye, Tate Modern, Royal Festival Hall — all walkable</td></tr>
+        <tr><td class="name">Westminster</td><td class="num">District · Circle · Jubilee</td><td class="note">Big Ben, Houses of Parliament &amp; St James's Park on your doorstep</td></tr>
+        <tr><td class="name">South Kensington</td><td class="num">Piccadilly · District · Circle</td><td class="note">Walk to Natural History, Science &amp; V&amp;A museums (all free)</td></tr>
+        <tr><td class="name">Covent Garden</td><td class="num">Piccadilly Line</td><td class="note">Theatre, markets &amp; the West End — all within walking distance</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <div class="label">Family-friendly stays</div>
+    <h2>5 hotels that get families right</h2>
+    <div class="hotel-grid">
+      <div class="hotel-card"><div class="hc-rank">1</div><div class="hc-body"><div class="hc-name">The Rubens at the Palace</div><div class="hc-area">Victoria</div><div class="hc-note">Kids eat free · Director of Fun programme · opposite Buckingham Palace</div></div></div>
+      <div class="hotel-card"><div class="hc-rank">2</div><div class="hc-body"><div class="hc-name">Park Plaza County Hall</div><div class="hc-area">South Bank</div><div class="hc-note">Family packages · free breakfast included · steps from London Eye</div></div></div>
+      <div class="hotel-card"><div class="hc-rank">3</div><div class="hc-body"><div class="hc-name">The Ampersand Hotel</div><div class="hc-area">South Kensington</div><div class="hc-note">Near 3 free museums · themed afternoon tea for kids</div></div></div>
+      <div class="hotel-card"><div class="hc-rank">4</div><div class="hc-body"><div class="hc-name">Shangri-La at The Shard</div><div class="hc-area">London Bridge</div><div class="hc-note">360° city views · infinity pool · luxury family suites</div></div></div>
+      <div class="hotel-card"><div class="hc-rank">5</div><div class="hc-body"><div class="hc-name">Great Scotland Yard Hotel</div><div class="hc-area">Westminster</div><div class="hc-note">Historic landmark · super-central · kid-friendly afternoon tea</div></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="label">Things to do</div>
+    <h2>Family activities — including 2 free ones</h2>
+    <div class="activity-grid">
+      <div class="activity-card"><div class="hc-rank">1</div><div class="hc-body"><div class="hc-name">Natural History Museum</div><div class="hc-note">Dinosaurs, blue whale &amp; Darwin Centre — loved by all ages</div></div><span class="hc-price free">Free entry</span></div>
+      <div class="activity-card"><div class="hc-rank">2</div><div class="hc-body"><div class="hc-name">The London Eye</div><div class="hc-note">135m views over London · pre-book to skip queues</div></div><span class="hc-price">From £33/adult</span></div>
+      <div class="activity-card"><div class="hc-rank">3</div><div class="hc-body"><div class="hc-name">Tower of London</div><div class="hc-note">Crown Jewels, Beefeaters &amp; 1,000 years of history</div></div><span class="hc-price">From £33/adult</span></div>
+      <div class="activity-card"><div class="hc-rank">4</div><div class="hc-body"><div class="hc-name">Science Museum</div><div class="hc-note">Space, robots &amp; tech — fully interactive for all ages</div></div><span class="hc-price free">Free entry</span></div>
+      <div class="activity-card"><div class="hc-rank">5</div><div class="hc-body"><div class="hc-name">SEA LIFE London Aquarium</div><div class="hc-note">Penguins, sharks &amp; touch pools right next to the Eye</div></div><span class="hc-price">From £27/child</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="label">Practical safety</div>
+    <h2>Five tips that will save you a bad day</h2>
+    <div class="tips">
+      <div class="tip"><div class="tip-ic">1</div><div class="tip-text">Stay aware on the Tube and in crowded tourist areas — pickpocketing is the most common issue for visitors.</div></div>
+      <div class="tip"><div class="tip-ic">2</div><div class="tip-text">Keep bags zipped and phones out of sight on busy streets, particularly around Oxford Street, Camden and Leicester Square.</div></div>
+      <div class="tip"><div class="tip-ic">3</div><div class="tip-text">London's black cabs (licensed taxis) and Uber are both safe and regulated. Avoid unlicensed minicabs.</div></div>
+      <div class="tip"><div class="tip-ic">4</div><div class="tip-text">Emergency services: dial <b>999</b> (police, fire, ambulance). Non-emergency police: <b>101</b>.</div></div>
+      <div class="tip"><div class="tip-ic">5</div><div class="tip-text">The NHS provides emergency healthcare free of charge to all visitors at A&amp;E departments.</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="label">Sources &amp; methodology</div>
+    <h2>Where this data comes from</h2>
+    <div class="source-box">
+      <b>Crime statistics</b>
+      Sourced from the UNODC Global Crime Database (2023), Metropolitan Police Borough Statistics (2024–25) and the ONS Crime Survey for England &amp; Wales. Borough-level rates are normalised per 1,000 residents to allow fair comparison across boroughs of different sizes.
+    </div>
+    <div class="source-box">
+      <b>Wiley Fox Safety Rating</b>
+      A 1–5 score derived from monthly crime density (data.police.uk street-level data), weighted by severity. 5 = safest, 1 = highest crime. Hex-cell colour bands on the in-app map use percentile thresholds (70th / 85th / 95th) for green / amber / red / purple respectively.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div><span class="fox">Wiley Fox</span> — Travel safely. Travel well.</div>
+  <div style="margin-top:6px">© Wiley Fox · Prototype travel guide · Data current to June 2026</div>
+</footer>
+
+</body>
+</html>

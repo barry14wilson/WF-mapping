@@ -284,6 +284,51 @@
   .tag-secondary-btn{margin:0 16px 6px;padding:13px;width:calc(100% - 32px);background:var(--cream-light);color:var(--charcoal);border:none;border-radius:14px;font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px}
   .tag-secondary-btn svg{width:16px;height:16px}
 
+  /* Onboarding / sign-up flow */
+  .onboard{display:flex;flex-direction:column;height:100%}
+  .onboard-body{flex:1;overflow-y:auto;padding:0 22px 20px}
+  .onboard-top{padding:26px 22px 4px;text-align:center}
+  .onboard-fox{width:54px;height:60px;margin:0 auto}
+  .onboard h3{font-family:'Fraunces',serif;font-size:24px;font-weight:700;margin:14px 0 8px;text-align:center;line-height:1.15}
+  .onboard .lead{font-size:13px;color:var(--charcoal-soft);line-height:1.55;text-align:center;margin:0 auto 18px;max-width:280px}
+  .steps-preview{display:flex;flex-direction:column;gap:10px;margin:6px 0 4px}
+  .step-prev{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--cream-light);border-radius:12px}
+  .step-prev .n{width:26px;height:26px;border-radius:50%;background:var(--orange);color:#fff;font-weight:700;font-size:13px;display:grid;place-items:center;flex-shrink:0;font-family:'Fraunces',serif}
+  .step-prev .t{font-size:13px;font-weight:600}
+  .step-prev .t span{display:block;font-size:11px;font-weight:400;color:var(--mute);margin-top:1px}
+  .progress-dots{display:flex;gap:6px;justify-content:center;padding:14px 0 4px}
+  .progress-dots .d{width:7px;height:7px;border-radius:50%;background:var(--line)}
+  .progress-dots .d.on{background:var(--orange);width:20px;border-radius:4px}
+  .onboard-foot{padding:14px 22px 26px;border-top:1px solid var(--line);background:#fff}
+  .onboard-foot .primary{width:100%;padding:15px;background:var(--orange);color:#fff;border:none;border-radius:14px;font-weight:700;font-size:15px;box-shadow:0 8px 20px rgba(255,123,20,.28)}
+  .onboard-foot .primary:disabled{opacity:.45;box-shadow:none}
+  .onboard-foot .skip{width:100%;padding:12px 0 0;background:none;border:none;color:var(--mute);font-weight:600;font-size:13px;text-align:center}
+  .draft-list{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+  .draft-row{display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid var(--line);border-radius:12px}
+  .draft-row.owner{background:var(--cream-light);border-style:dashed}
+  .draft-av{width:42px;height:42px;border-radius:50%;color:#fff;font-weight:700;font-family:'Fraunces',serif;font-size:17px;display:grid;place-items:center;flex-shrink:0}
+  .draft-info{flex:1;min-width:0}
+  .draft-name{font-weight:600;font-size:14px}
+  .draft-rel{font-size:11px;color:var(--mute);margin-top:1px}
+  .draft-x{background:none;border:none;color:var(--mute);padding:6px}
+  .draft-x svg{width:16px;height:16px}
+  .add-member-cta{margin-top:12px;width:100%;padding:13px;background:var(--cream-light);border:1.5px dashed var(--line);border-radius:12px;color:var(--orange);font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px}
+  .add-member-cta svg{width:18px;height:18px}
+  .quick-add{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .quick-add .qa{font-size:12px;padding:7px 12px;border-radius:18px;border:1px solid var(--line);background:#fff;color:var(--charcoal);font-weight:600}
+  .quick-add .qa:disabled{opacity:.4}
+  .gen-anim{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px}
+  .gen-anim .ring{width:110px;height:110px;border-radius:50%;border:4px solid var(--cream);border-top-color:var(--orange);animation:spin 1s linear infinite;margin-bottom:20px}
+  .gen-anim h3{margin:0 0 8px}
+  .gen-anim p{font-size:13px;color:var(--mute);max-width:240px;line-height:1.5}
+  .done-list{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+  .done-card{display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid var(--line);border-radius:14px}
+  .done-qr{width:50px;height:50px;border-radius:8px;background:#fff;border:1px solid var(--line);padding:3px;flex-shrink:0}
+  .done-info{flex:1;min-width:0}
+  .done-name{font-weight:700;font-size:14px}
+  .done-code{font-size:11px;color:var(--orange);font-weight:600;letter-spacing:.06em;margin-top:1px}
+  .done-ready{font-size:10px;font-weight:700;color:var(--green);background:#E5F4E7;padding:4px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.04em}
+
   /* My Tags */
   .tag-card{margin:10px 16px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;gap:12px;align-items:center}
   .tag-avatar{width:48px;height:48px;border-radius:50%;background:var(--orange-soft);color:var(--orange);display:grid;place-items:center}
@@ -359,6 +404,7 @@
       <li data-jump="profile"><b>8.</b> Load SOS user — clear flow</li>
       <li data-jump="area"><b>9.</b> Area search (e.g. Camden) → hex safety map + detailed report</li>
       <li data-jump="tag-detail"><b>10.</b> Tag detail → Report Missing Person broadcast</li>
+      <li data-jump="onboard-welcome"><b>11.</b> Sign-up → create family group → auto QR profiles</li>
     </ol>
   </aside>
 
@@ -448,7 +494,7 @@
             <div class="row-card">
               <button class="row" data-go="family">
                 <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
-                <div class="lbl">Family Group<div style="font-size:11px;color:var(--mute);font-weight:400;margin-top:2px">3 members</div></div>
+                <div class="lbl">Family Group<div style="font-size:11px;color:var(--mute);font-weight:400;margin-top:2px" id="familyCount">3 members</div></div>
                 <span class="val good">Active</span>
                 <span class="chev">›</span>
               </button>
@@ -504,36 +550,11 @@
             <h2>Family Group</h2>
           </div>
           <div class="view-body">
-            <div style="padding:0 20px 14px;font-size:13px;color:var(--charcoal-soft);line-height:1.5">Members receive your SOS instantly and can see your live location during an emergency.</div>
-            <div class="family-list">
-              <div class="member-card">
-                <div class="member-avatar" style="background:#9466D4">S</div>
-                <div class="member-info">
-                  <div class="member-name">Sarah Wilson</div>
-                  <div class="member-role sos">Primary SOS · Wife</div>
-                </div>
-                <button class="member-remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6M5 6l1 14a2 2 0 002 2h8a2 2 0 002-2l1-14"/></svg></button>
-              </div>
-              <div class="member-card">
-                <div class="member-avatar" style="background:#3FA34D">E</div>
-                <div class="member-info">
-                  <div class="member-name">Emma Wilson</div>
-                  <div class="member-role">Daughter · 14</div>
-                </div>
-                <button class="member-remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6M5 6l1 14a2 2 0 002 2h8a2 2 0 002-2l1-14"/></svg></button>
-              </div>
-              <div class="member-card">
-                <div class="member-avatar" style="background:#FF7B14">J</div>
-                <div class="member-info">
-                  <div class="member-name">James Wilson</div>
-                  <div class="member-role">Brother</div>
-                </div>
-                <button class="member-remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6M5 6l1 14a2 2 0 002 2h8a2 2 0 002-2l1-14"/></svg></button>
-              </div>
-            </div>
-            <button class="add-member" onclick="toast('Open contact picker / invite by SMS')">
+            <div style="padding:0 20px 14px;font-size:13px;color:var(--charcoal-soft);line-height:1.5">Members receive your SOS instantly and can see your live location during an emergency. Each member also has a QR safety profile in My Tags.</div>
+            <div class="family-list" id="familyMembers"></div>
+            <button class="add-member" data-go="onboard-welcome">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
-              Add a member
+              Add a member / set up group
             </button>
           </div>
         </section>
@@ -911,17 +932,7 @@
             <div class="spacer"></div>
             <button class="action">+ Register</button>
           </div>
-          <div class="view-body">
-            <button class="tag-card" data-go="tag-detail" style="width:calc(100% - 32px);text-align:left;font:inherit;color:inherit;cursor:pointer">
-              <div class="tag-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0113 0"/></svg></div>
-              <div class="tag-meta">
-                <div class="tag-name">Barry</div>
-                <div class="tag-type">Person</div>
-                <div class="tag-id">DNYL4XZ6</div>
-              </div>
-              <div class="tag-status">Lost</div>
-            </button>
-          </div>
+          <div class="view-body" id="tagsList"></div>
           <button class="fab-plus" data-go="addpin">+</button>
           <button class="fab-sos" data-go="sos"><div class="ic">!</div><span>SOS</span></button>
           <nav class="bottom-nav">
@@ -942,15 +953,15 @@
           <div class="view-body" style="padding-bottom:140px">
             <div class="tag-detail-hero">
               <div class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0113 0"/></svg></div>
-              <div class="nm">Barry</div>
+              <div class="nm" id="td-name">Barry</div>
               <div class="pills">
-                <span class="pill type">Person</span>
-                <span class="pill lost">Marked as Lost</span>
+                <span class="pill type" id="td-type">Person</span>
+                <span class="pill lost" id="td-lost">Marked as Lost</span>
               </div>
             </div>
             <div class="qr-card">
-              <span class="qr-type">Person</span>
-              <div class="qr-img">
+              <span class="qr-type" id="td-type2">Person</span>
+              <div class="qr-img" id="td-qr">
                 <svg viewBox="0 0 100 100" width="100%" height="100%" shape-rendering="crispEdges">
                   <rect width="100" height="100" fill="#fff"/>
                   <g fill="#000">
@@ -977,12 +988,12 @@
                   </g>
                 </svg>
               </div>
-              <div class="qr-id">DNYL4XZ6</div>
+              <div class="qr-id" id="td-id">DNYL4XZ6</div>
               <div class="qr-help">Scan to help return this item</div>
               <div class="qr-fields">
                 <div class="qr-field">
                   <div class="l">Contact Email</div>
-                  <div class="v">barry14wilson@gmail.com</div>
+                  <div class="v" id="td-email">barry14wilson@gmail.com</div>
                 </div>
                 <div class="qr-field">
                   <div class="l">Registered</div>
@@ -1004,6 +1015,131 @@
             </button>
           </div>
         </section>
+
+        <!-- ========== ONBOARDING · WELCOME ========== -->
+        <section class="view" data-view="onboard-welcome">
+          <div class="status-bar"><span>14:46</span><div class="right"><span>WF</span><span>5G</span><span>52%</span></div></div>
+          <div class="onboard">
+            <div class="onboard-body">
+              <div class="onboard-top">
+                <img class="onboard-fox" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 50'><path d='M5 12 L15 5 L20 15 L25 5 L35 12 L32 35 Q20 48 8 35 Z' fill='%23E2620A'/><circle cx='14' cy='20' r='2' fill='%23232323'/><circle cx='26' cy='20' r='2' fill='%23232323'/></svg>" alt="">
+                <h3>Welcome to Wiley Fox, Barry</h3>
+                <p class="lead">Account created. Let's set up your <b>Safety Network</b> — a family group so everyone can be alerted in an emergency, and each member gets their own QR safety profile.</p>
+              </div>
+              <div class="steps-preview">
+                <div class="step-prev"><div class="n">1</div><div class="t">Create your family group<span>Name it &amp; you're the owner</span></div></div>
+                <div class="step-prev"><div class="n">2</div><div class="t">Add your members<span>Partner, kids, parents, anyone</span></div></div>
+                <div class="step-prev"><div class="n">3</div><div class="t">Get QR safety profiles<span>Report missing or print as a tag</span></div></div>
+              </div>
+            </div>
+            <div class="onboard-foot">
+              <button class="primary" data-go="onboard-group">Create a family group</button>
+              <button class="skip" data-go="map">Skip for now</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== ONBOARDING · NAME GROUP ========== -->
+        <section class="view" data-view="onboard-group">
+          <div class="status-bar"><span>14:46</span><div class="right"><span>WF</span><span>5G</span><span>52%</span></div></div>
+          <div class="app-header">
+            <button class="back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="#232323" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <h2>Family Group</h2>
+          </div>
+          <div class="onboard">
+            <div class="progress-dots"><span class="d on"></span><span class="d"></span><span class="d"></span></div>
+            <div class="onboard-body">
+              <h3 style="text-align:left;margin-top:10px">Name your family group</h3>
+              <p class="lead" style="text-align:left;margin-left:0">This is how the group appears in everyone's app. You can change it later.</p>
+              <div class="field" style="padding:0">
+                <label>Group name</label>
+                <input id="groupName" value="The Wilsons" placeholder="e.g. The Wilsons">
+              </div>
+            </div>
+            <div class="onboard-foot">
+              <button class="primary" data-go="onboard-members">Continue</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== ONBOARDING · ADD MEMBERS ========== -->
+        <section class="view" data-view="onboard-members">
+          <div class="status-bar"><span>14:47</span><div class="right"><span>WF</span><span>5G</span><span>51%</span></div></div>
+          <div class="app-header">
+            <button class="back" data-back><svg viewBox="0 0 24 24" fill="none" stroke="#232323" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <h2>Add Members</h2>
+          </div>
+          <div class="onboard">
+            <div class="progress-dots"><span class="d on"></span><span class="d on"></span><span class="d"></span></div>
+            <div class="onboard-body">
+              <p class="lead" style="text-align:left;margin-left:0;margin-top:8px">Add everyone you want in <b id="grpNameEcho">The Wilsons</b>. Each person gets their own QR safety profile when you finish.</p>
+              <div class="draft-list" id="draftMembers"></div>
+              <button class="add-member-cta" onclick="openAddMember()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+                Add a member
+              </button>
+              <div style="font-size:11px;color:var(--mute);margin-top:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Quick add</div>
+              <div class="quick-add" id="quickAdd"></div>
+            </div>
+            <div class="onboard-foot">
+              <button class="primary" id="genBtn" data-go="onboard-generating">Create QR profiles</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== ONBOARDING · GENERATING ========== -->
+        <section class="view" data-view="onboard-generating">
+          <div class="status-bar"><span>14:47</span><div class="right"><span>WF</span><span>5G</span><span>51%</span></div></div>
+          <div class="onboard">
+            <div class="gen-anim">
+              <div class="ring"></div>
+              <h3>Creating QR safety profiles…</h3>
+              <p>Generating a unique, scannable profile for each member of your group.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== ONBOARDING · DONE ========== -->
+        <section class="view" data-view="onboard-done">
+          <div class="status-bar"><span>14:48</span><div class="right"><span>WF</span><span>5G</span><span>50%</span></div></div>
+          <div class="onboard">
+            <div class="onboard-body">
+              <div class="onboard-top">
+                <div style="width:64px;height:64px;border-radius:50%;background:#E5F4E7;display:grid;place-items:center;margin:0 auto">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#3FA34D" stroke-width="2.5" width="32" height="32"><path d="M20 6L9 17l-5-5"/></svg>
+                </div>
+                <h3><span id="doneGroupName">The Wilsons</span> is all set</h3>
+                <p class="lead">Every member now has a QR safety profile in <b>My Tags</b>. Print them as physical tags, or use one to report someone missing in seconds.</p>
+              </div>
+              <div class="done-list" id="doneMembers"></div>
+            </div>
+            <div class="onboard-foot">
+              <button class="primary" data-go="tags">View in My Tags</button>
+              <button class="skip" data-go="map">Go to map</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== ADD-MEMBER SHEET ========== -->
+        <div class="sheet-bg bottom" id="addMemberSheet">
+          <div class="sheet bottom">
+            <h3 style="text-align:left">Add a family member</h3>
+            <div class="field" style="padding:0;margin-bottom:10px">
+              <label>Name</label>
+              <input id="amName" placeholder="Full name">
+            </div>
+            <div class="field" style="padding:0;margin-bottom:10px">
+              <label>Relationship</label>
+              <input id="amRel" placeholder="e.g. Daughter, Partner">
+            </div>
+            <div class="field" style="padding:0;margin-bottom:16px">
+              <label>Age (optional)</label>
+              <input id="amAge" type="number" placeholder="e.g. 14">
+            </div>
+            <button class="primary orange" onclick="confirmAddMember()">Add to group</button>
+            <button class="secondary" onclick="document.getElementById('addMemberSheet').classList.remove('active')">Cancel</button>
+          </div>
+        </div>
 
         <!-- ========== SOS SHEET ========== -->
         <div class="sheet-bg" id="sosSheet">
@@ -1041,6 +1177,7 @@
     <div class="note" data-for="sos-contact"><b><span class="num">8</span> Load / change SOS user</b>Dedicated screen lists family members with a radio-style pick. Selected member becomes primary SOS contact (priority call/SMS).</div>
     <div class="note" data-for="area"><b><span class="num">9</span> Area search → hex safety map</b>Typing an area (e.g. "Camden") drops the user on a map of that area with a hex-cell overlay coloured by safety band — <b>green</b> safe, <b>amber</b> caution, <b>red</b> not safe, <b>purple</b> avoid. Bottom summary panel shows the overall 1–5 rating and a "See detailed safety report" CTA that opens the existing breakdown view. Hex colours map to the pipeline bands in CLAUDE.md.</div>
     <div class="note" data-for="tag-detail"><b><span class="num">10</span> Tag Detail → Report Missing Person</b>Tap a tag in My Tags → opens the tag's detail screen (avatar, QR, ID, contact, registered date). New big red <b>Report Missing Person</b> CTA at the bottom — same broadcast flow as the SOS, pushing the report with the tag's photo to every Wiley Fox user within 2 miles.</div>
+    <div class="note" data-for="onboard-welcome"><b><span class="num">11</span> Sign-up → family group → QR profiles</b>New step in onboarding after account creation: prompt the user to <b>create a family group</b>, name it, and add members. On finish, the app <b>auto-generates a unique QR safety profile for every member</b> — these land in My Tags and can be printed as physical tags or used to report that person missing. Try the quick-add chips, then "Create QR profiles" to watch them generate and populate My Tags.</div>
   </aside>
 </div>
 
@@ -1059,6 +1196,11 @@
     if (navStack[navStack.length-1] !== view) navStack.push(view);
     highlightNote(view);
     if (view === 'area') ensureAreaMap();
+    if (view === 'onboard-welcome') startOnboarding();
+    if (view === 'onboard-members') renderDraft();
+    if (view === 'onboard-generating') generateProfiles();
+    if (view === 'onboard-done') renderDoneList();
+    if (view === 'tags') renderTags();
   }
   function back(){
     if (navStack.length <= 1) return;
@@ -1246,6 +1388,211 @@
   document.getElementById('mapSearch').addEventListener('focus', e => {
     setTimeout(() => toast('Try typing "Camden" + Enter'), 300);
   });
+
+  /* ===================== FAMILY GROUP + QR PROFILES ===================== */
+  const OWNER_EMAIL = 'barry14wilson@gmail.com';
+  const PALETTE = ['#9466D4','#3FA34D','#FF7B14','#3D7DFF','#E94B4B','#16A085','#E2620A','#8E44AD'];
+
+  // Default existing-user state: a group already set up
+  let family = [
+    { name:'Barry', rel:'You',      age:'',   code:'DNYL4XZ6', owner:true, lost:true },
+    { name:'Sarah', rel:'Wife',     age:'',   code:'WX7K2QP4', sos:true },
+    { name:'Emma',  rel:'Daughter', age:'14', code:'EM4T9LZ2' },
+    { name:'James', rel:'Brother',  age:'',   code:'JW8N5RC6' }
+  ];
+  let groupName = 'The Wilsons';
+  let draft = [];            // members being built during onboarding
+
+  function initials(n){ return (n||'?').trim().charAt(0).toUpperCase(); }
+  function colorFor(i){ return PALETTE[i % PALETTE.length]; }
+  function genCode(){
+    const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let s = ''; for (let i=0;i<8;i++) s += A[Math.floor(Math.random()*A.length)];
+    return s;
+  }
+
+  // Deterministic QR-like SVG seeded by the tag code
+  function miniQR(seed){
+    let h = 0; for (const c of String(seed)) h = (h*31 + c.charCodeAt(0)) >>> 0;
+    const N = 11, cell = 100 / N;
+    function rnd(){ h = (h*1103515245 + 12345) >>> 0; return (h >>> 16) & 1; }
+    function finder(fx, fy){
+      const x = fx*cell, y = fy*cell, c = cell;
+      return `<rect x="${x}" y="${y}" width="${3*c}" height="${3*c}"/>`
+           + `<rect x="${x+0.55*c}" y="${y+0.55*c}" width="${1.9*c}" height="${1.9*c}" fill="#fff"/>`
+           + `<rect x="${x+1.1*c}" y="${y+1.1*c}" width="${0.8*c}" height="${0.8*c}"/>`;
+    }
+    let r = finder(0,0) + finder(N-3,0) + finder(0,N-3);
+    for (let y=0;y<N;y++) for (let x=0;x<N;x++){
+      if ((x<3&&y<3) || (x>N-4&&y<3) || (x<3&&y>N-4)) continue;
+      if (rnd()) r += `<rect x="${(x*cell).toFixed(2)}" y="${(y*cell).toFixed(2)}" width="${cell.toFixed(2)}" height="${cell.toFixed(2)}"/>`;
+    }
+    return `<svg viewBox="0 0 100 100" shape-rendering="crispEdges" width="100%" height="100%"><rect width="100" height="100" fill="#fff"/><g fill="#000">${r}</g></svg>`;
+  }
+
+  const personIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0113 0"/></svg>';
+
+  // --- My Tags list ---
+  function renderTags(){
+    const host = document.getElementById('tagsList');
+    if (!host) return;
+    host.innerHTML = family.map((m, i) => `
+      <button class="tag-card" data-tag="${i}" style="width:calc(100% - 32px);text-align:left;font:inherit;color:inherit;cursor:pointer">
+        <div class="tag-avatar" style="background:${m.owner?'var(--orange-soft)':colorFor(i)+'22'};color:${m.owner?'var(--orange)':colorFor(i)}">${m.owner?personIcon:initials(m.name)}</div>
+        <div class="tag-meta">
+          <div class="tag-name">${m.name}</div>
+          <div class="tag-type">Person${m.rel&&m.rel!=='You'?' · '+m.rel:''}</div>
+          <div class="tag-id">${m.code}</div>
+        </div>
+        ${m.lost?'<div class="tag-status">Lost</div>':'<span class="chev" style="color:var(--mute)">›</span>'}
+      </button>
+    `).join('');
+    host.querySelectorAll('[data-tag]').forEach(el => {
+      el.addEventListener('click', () => openTag(family[+el.dataset.tag]));
+    });
+  }
+
+  // --- Family Group screen ---
+  function renderFamilyScreen(){
+    const host = document.getElementById('familyMembers');
+    if (!host) return;
+    const members = family.filter(m => !m.owner);
+    host.innerHTML = members.map((m, i) => `
+      <div class="member-card">
+        <div class="member-avatar" style="background:${colorFor(i)}">${initials(m.name)}</div>
+        <div class="member-info">
+          <div class="member-name">${m.name} Wilson</div>
+          <div class="member-role${m.sos?' sos':''}">${m.sos?'Primary SOS · ':''}${m.rel}${m.age?' · '+m.age:''}</div>
+        </div>
+        <button class="member-remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6M5 6l1 14a2 2 0 002 2h8a2 2 0 002-2l1-14"/></svg></button>
+      </div>
+    `).join('');
+    updateCounts();
+  }
+
+  function updateCounts(){
+    const c = family.filter(m => !m.owner).length;
+    const el = document.getElementById('familyCount');
+    if (el) el.textContent = c + ' member' + (c===1?'':'s');
+  }
+
+  // --- Tag detail ---
+  function openTag(m, nav = true){
+    if (!m) return;
+    document.getElementById('td-name').textContent = m.name;
+    document.getElementById('td-type').textContent = 'Person';
+    document.getElementById('td-type2').textContent = 'Person';
+    document.getElementById('td-id').textContent = m.code;
+    document.getElementById('td-email').textContent = OWNER_EMAIL;
+    document.getElementById('td-qr').innerHTML = miniQR(m.code);
+    const lost = document.getElementById('td-lost');
+    lost.style.display = m.lost ? '' : 'none';
+    if (nav) goto('tag-detail');
+  }
+
+  /* ----- Onboarding flow ----- */
+  function startOnboarding(){
+    draft = [{ name:'Barry', rel:'You', age:'', owner:true }];
+    renderDraft();
+  }
+
+  function renderDraft(){
+    const host = document.getElementById('draftMembers');
+    if (!host) return;
+    document.getElementById('grpNameEcho').textContent =
+      (document.getElementById('groupName')?.value || groupName);
+    host.innerHTML = draft.map((m, i) => `
+      <div class="draft-row${m.owner?' owner':''}">
+        <div class="draft-av" style="background:${m.owner?'var(--orange)':colorFor(i)}">${initials(m.name)}</div>
+        <div class="draft-info">
+          <div class="draft-name">${m.name}${m.owner?' (you)':''}</div>
+          <div class="draft-rel">${m.rel}${m.age?' · '+m.age:''}</div>
+        </div>
+        ${m.owner?'<span style="font-size:11px;color:var(--mute);font-weight:600">Owner</span>'
+                 :`<button class="draft-x" onclick="removeDraft(${i})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>`}
+      </div>
+    `).join('');
+    renderQuickAdd();
+    const btn = document.getElementById('genBtn');
+    if (btn) btn.disabled = draft.length < 2;
+  }
+
+  const QUICK = [
+    { name:'Sarah', rel:'Wife' },
+    { name:'Emma',  rel:'Daughter', age:'14' },
+    { name:'James', rel:'Brother' },
+    { name:'Mum',   rel:'Parent' }
+  ];
+  function renderQuickAdd(){
+    const host = document.getElementById('quickAdd');
+    if (!host) return;
+    host.innerHTML = QUICK.map((q, i) => {
+      const added = draft.some(m => m.name === q.name);
+      return `<button class="qa" ${added?'disabled':''} onclick="quickAdd(${i})">+ ${q.name} · ${q.rel}</button>`;
+    }).join('');
+  }
+  function quickAdd(i){
+    const q = QUICK[i];
+    if (draft.some(m => m.name === q.name)) return;
+    draft.push({ ...q });
+    renderDraft();
+  }
+  function removeDraft(i){ draft.splice(i, 1); renderDraft(); }
+
+  function openAddMember(){
+    document.getElementById('amName').value = '';
+    document.getElementById('amRel').value = '';
+    document.getElementById('amAge').value = '';
+    document.getElementById('addMemberSheet').classList.add('active');
+  }
+  function confirmAddMember(){
+    const name = document.getElementById('amName').value.trim();
+    const rel  = document.getElementById('amRel').value.trim() || 'Family';
+    const age  = document.getElementById('amAge').value.trim();
+    if (!name){ toast('Enter a name'); return; }
+    draft.push({ name, rel, age });
+    document.getElementById('addMemberSheet').classList.remove('active');
+    renderDraft();
+  }
+
+  let genTimer;
+  function generateProfiles(){
+    // assign codes and commit the drafted group to the live family
+    family = draft.map(m => ({
+      ...m,
+      code: m.owner ? 'DNYL4XZ6' : genCode()
+    }));
+    groupName = document.getElementById('groupName')?.value || groupName;
+    renderTags();
+    renderFamilyScreen();
+    openTag(family[0], false);
+    clearTimeout(genTimer);
+    genTimer = setTimeout(() => {
+      const cur = document.querySelector('.view.active');
+      if (cur && cur.dataset.view === 'onboard-generating') goto('onboard-done');
+    }, 1700);
+  }
+
+  function renderDoneList(){
+    document.getElementById('doneGroupName').textContent = groupName;
+    const host = document.getElementById('doneMembers');
+    if (!host) return;
+    host.innerHTML = family.map(m => `
+      <div class="done-card">
+        <div class="done-qr">${miniQR(m.code)}</div>
+        <div class="done-info">
+          <div class="done-name">${m.name}${m.owner?' (you)':''}</div>
+          <div class="done-code">${m.code}</div>
+        </div>
+        <span class="done-ready">Profile ready</span>
+      </div>
+    `).join('');
+  }
+
+  // Initial render
+  renderTags();
+  renderFamilyScreen();
+  openTag(family[0], false);
 </script>
 </body>
 </html>

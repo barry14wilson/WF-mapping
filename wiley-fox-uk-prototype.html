@@ -256,12 +256,13 @@
       <div class="legend-row"><span class="legend-sq" style="background:#8E5BA6"></span> Avoid</div>
     </div>
     <div class="map-legend" id="globalLegend" style="display:none">
-      <div class="title">US Travel Advisory</div>
-      <div class="legend-row"><span class="legend-dot" style="background:#3FA34D"></span> Level 1 · Normal</div>
-      <div class="legend-row"><span class="legend-dot" style="background:#E8A020"></span> Level 2 · Caution</div>
-      <div class="legend-row"><span class="legend-dot" style="background:#E05C1A"></span> Level 3 · Reconsider</div>
-      <div class="legend-row"><span class="legend-dot" style="background:#D7263D"></span> Level 4 · Do Not Travel</div>
-      <div class="legend-row"><span class="legend-dot" style="background:#cccccc"></span> No advisory</div>
+      <div class="title">Wiley Fox Safety</div>
+      <div class="legend-row"><span class="legend-dot" style="background:#3FA34D"></span> 5 · Very safe</div>
+      <div class="legend-row"><span class="legend-dot" style="background:#A4C957"></span> 4 · Generally safe</div>
+      <div class="legend-row"><span class="legend-dot" style="background:#FFC857"></span> 3 · Stay aware</div>
+      <div class="legend-row"><span class="legend-dot" style="background:#F46036"></span> 2 · Caution</div>
+      <div class="legend-row"><span class="legend-dot" style="background:#D7263D"></span> 1 · High caution</div>
+      <div class="legend-row"><span class="legend-dot" style="background:rgba(200,200,200,0.5)"></span> No data</div>
     </div>
     <div class="source-pill" id="sourcePill">
       Data: <a href="https://data.police.uk" target="_blank" rel="noopener">data.police.uk</a> · Map © OpenStreetMap
@@ -2639,6 +2640,163 @@ function downloadGuideFile(html, cityName) {
 
 
 // =====================================================================
+const WB_HOMICIDE = {
+  // World Bank VC.IHR.PSRC.P5 — intentional homicides per 100,000 population
+  // Most-recent available year per country. Updated annually (no API key required).
+  // Source: api.worldbank.org/v2/country/all/indicator/VC.IHR.PSRC.P5?format=json
+  ABW:{r:1.93,d:"2014"},AFG:{r:4.03,d:"2021"},AGO:{r:4.1,d:"2016"},ALB:{r:2.29,d:"2022"},
+  AND:{r:0.0,d:"2019"},ARE:{r:0.47,d:"2020"},ARG:{r:5.1,d:"2022"},ARM:{r:1.33,d:"2022"},
+  ATG:{r:11.17,d:"2021"},AUS:{r:0.83,d:"2023"},AUT:{r:0.54,d:"2022"},AZE:{r:1.72,d:"2022"},
+  BDI:{r:5.93,d:"2022"},BEL:{r:1.54,d:"2022"},BEN:{r:1.5,d:"2018"},BFA:{r:0.84,d:"2016"},
+  BGD:{r:2.12,d:"2022"},BGR:{r:0.91,d:"2022"},BHR:{r:0.2,d:"2022"},BHS:{r:30.95,d:"2022"},
+  BIH:{r:1.05,d:"2022"},BLR:{r:2.54,d:"2022"},BLZ:{r:23.97,d:"2022"},BOL:{r:6.35,d:"2022"},
+  BRA:{r:22.38,d:"2023"},BRB:{r:9.77,d:"2022"},BRN:{r:0.41,d:"2022"},BTN:{r:1.45,d:"2020"},
+  BWA:{r:9.18,d:"2022"},CAF:{r:19.77,d:"2015"},CAN:{r:1.97,d:"2022"},CHE:{r:0.44,d:"2022"},
+  CHL:{r:4.47,d:"2022"},CHN:{r:0.53,d:"2022"},CIV:{r:3.02,d:"2022"},CMR:{r:8.1,d:"2015"},
+  COD:{r:13.56,d:"2020"},COG:{r:12.14,d:"2015"},COL:{r:25.94,d:"2022"},COM:{r:3.5,d:"2014"},
+  CPV:{r:9.41,d:"2022"},CRI:{r:8.63,d:"2022"},CYP:{r:0.97,d:"2022"},CZE:{r:0.61,d:"2022"},
+  DEU:{r:0.83,d:"2022"},DJI:{r:5.0,d:"2015"},DMA:{r:10.5,d:"2022"},DNK:{r:0.67,d:"2022"},
+  DOM:{r:11.3,d:"2022"},DZA:{r:1.59,d:"2022"},ECU:{r:26.03,d:"2022"},EGY:{r:0.47,d:"2022"},
+  ERI:{r:5.19,d:"2021"},ESP:{r:0.57,d:"2022"},EST:{r:1.53,d:"2022"},ETH:{r:7.57,d:"2019"},
+  FIN:{r:1.46,d:"2022"},FJI:{r:3.57,d:"2022"},FRA:{r:1.26,d:"2022"},FSM:{r:1.89,d:"2020"},
+  GAB:{r:6.47,d:"2015"},GBR:{r:1.2,d:"2022"},GEO:{r:1.92,d:"2022"},GHA:{r:1.68,d:"2022"},
+  GIN:{r:9.03,d:"2015"},GMB:{r:1.59,d:"2022"},GNB:{r:3.43,d:"2021"},GNQ:{r:7.22,d:"2015"},
+  GRC:{r:0.91,d:"2022"},GRD:{r:9.39,d:"2022"},GTM:{r:17.07,d:"2022"},GUY:{r:15.6,d:"2022"},
+  HND:{r:35.79,d:"2022"},HRV:{r:0.88,d:"2022"},HTI:{r:20.55,d:"2022"},HUN:{r:0.84,d:"2022"},
+  IDN:{r:3.39,d:"2022"},IND:{r:2.79,d:"2022"},IRL:{r:0.81,d:"2022"},IRN:{r:2.72,d:"2022"},
+  IRQ:{r:3.61,d:"2022"},ISL:{r:0.69,d:"2022"},ISR:{r:1.5,d:"2022"},ITA:{r:0.61,d:"2022"},
+  JAM:{r:49.44,d:"2023"},JOR:{r:1.6,d:"2022"},JPN:{r:0.23,d:"2023"},KAZ:{r:3.41,d:"2022"},
+  KEN:{r:4.94,d:"2022"},KGZ:{r:4.27,d:"2022"},KHM:{r:1.77,d:"2022"},KIR:{r:3.46,d:"2020"},
+  KNA:{r:64.16,d:"2023"},KOR:{r:0.56,d:"2023"},KWT:{r:0.26,d:"2022"},LAO:{r:1.16,d:"2022"},
+  LBN:{r:2.76,d:"2022"},LBR:{r:3.52,d:"2022"},LBY:{r:3.35,d:"2022"},LCA:{r:26.5,d:"2023"},
+  LIE:{r:0.0,d:"2019"},LKA:{r:1.81,d:"2022"},LSO:{r:28.9,d:"2022"},LTU:{r:2.44,d:"2022"},
+  LUX:{r:0.78,d:"2022"},LVA:{r:2.96,d:"2022"},MAR:{r:1.37,d:"2022"},MDA:{r:3.75,d:"2022"},
+  MDG:{r:7.06,d:"2022"},MDV:{r:2.18,d:"2022"},MEX:{r:27.08,d:"2022"},MKD:{r:1.21,d:"2022"},
+  MLI:{r:1.21,d:"2022"},MLT:{r:0.88,d:"2022"},MMR:{r:2.55,d:"2022"},MNG:{r:4.02,d:"2022"},
+  MOZ:{r:3.57,d:"2022"},MRT:{r:3.04,d:"2015"},MUS:{r:2.28,d:"2022"},MWI:{r:3.97,d:"2022"},
+  MYS:{r:1.5,d:"2022"},NAM:{r:12.63,d:"2022"},NER:{r:1.46,d:"2022"},NGA:{r:7.74,d:"2022"},
+  NIC:{r:7.06,d:"2022"},NLD:{r:0.89,d:"2022"},NOR:{r:0.47,d:"2022"},NPL:{r:2.49,d:"2022"},
+  NRU:{r:0.0,d:"2019"},NZL:{r:0.83,d:"2022"},OMN:{r:0.14,d:"2023"},PAK:{r:4.13,d:"2022"},
+  PAN:{r:13.51,d:"2022"},PER:{r:8.59,d:"2022"},PHL:{r:5.93,d:"2022"},PLW:{r:0.0,d:"2019"},
+  PNG:{r:9.56,d:"2022"},POL:{r:0.73,d:"2022"},PRT:{r:0.71,d:"2022"},PRY:{r:9.97,d:"2022"},
+  PSE:{r:2.93,d:"2022"},QAT:{r:0.07,d:"2022"},ROU:{r:1.53,d:"2022"},RUS:{r:7.3,d:"2022"},
+  RWA:{r:2.88,d:"2022"},SAU:{r:0.78,d:"2022"},SDN:{r:7.17,d:"2022"},SEN:{r:2.22,d:"2022"},
+  SGP:{r:0.07,d:"2023"},SLB:{r:1.81,d:"2022"},SLE:{r:1.79,d:"2022"},SLV:{r:7.8,d:"2022"},
+  SMR:{r:0.0,d:"2019"},SOM:{r:3.23,d:"2022"},SRB:{r:1.06,d:"2022"},SSD:{r:13.9,d:"2022"},
+  STP:{r:5.09,d:"2022"},SUR:{r:10.97,d:"2022"},SVK:{r:1.17,d:"2022"},SVN:{r:0.52,d:"2022"},
+  SWE:{r:1.11,d:"2022"},SWZ:{r:13.49,d:"2022"},SYC:{r:7.71,d:"2022"},SYR:{r:4.81,d:"2022"},
+  TCD:{r:3.64,d:"2015"},TGO:{r:2.02,d:"2022"},THA:{r:3.24,d:"2022"},TJK:{r:1.29,d:"2022"},
+  TKM:{r:3.65,d:"2022"},TLS:{r:3.85,d:"2022"},TON:{r:0.61,d:"2020"},TTO:{r:30.69,d:"2022"},
+  TUN:{r:1.2,d:"2022"},TUR:{r:2.72,d:"2022"},TUV:{r:0.0,d:"2019"},TZA:{r:5.42,d:"2022"},
+  UGA:{r:8.67,d:"2022"},UKR:{r:4.06,d:"2022"},URY:{r:11.22,d:"2022"},USA:{r:5.78,d:"2022"},
+  UZB:{r:1.89,d:"2022"},VCT:{r:51.32,d:"2023"},VEN:{r:40.16,d:"2022"},VNM:{r:1.51,d:"2022"},
+  VUT:{r:3.56,d:"2022"},WSM:{r:0.71,d:"2020"},YEM:{r:4.1,d:"2022"},ZAF:{r:43.72,d:"2022"},
+  ZMB:{r:5.2,d:"2015"},ZWE:{r:6.76,d:"2022"}
+};
+
+// ISO3 → Eurostat geo code (EU-27 + EEA neighbours)
+// ⚠️ API KEY NOT REQUIRED: Eurostat SDMX 2.1 is free and open
+// Base: https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/
+const EU_GEO = {
+  AUT:'AT',BEL:'BE',BGR:'BG',CYP:'CY',CZE:'CZ',DEU:'DE',DNK:'DK',ESP:'ES',
+  EST:'EE',FIN:'FI',FRA:'FR',GRC:'EL',HRV:'HR',HUN:'HU',IRL:'IE',ITA:'IT',
+  LTU:'LT',LUX:'LU',LVA:'LV',MLT:'MT',NLD:'NL',POL:'PL',PRT:'PT',ROU:'RO',
+  SVK:'SK',SVN:'SI',SWE:'SE',
+  // EEA/candidate
+  ISL:'IS',NOR:'NO',CHE:'CH',MKD:'MK',MNE:'ME',SRB:'RS',ALB:'AL',TUR:'TR'
+};
+
+// Convert World Bank homicide rate → WF 1–5 safety rating
+function homicideToWF(rate) {
+  if (rate === null || rate === undefined) return 0;
+  if (rate <  1.5) return 5; // Very safe  (Europe, Asia-Pacific)
+  if (rate <  4.0) return 4; // Safe        (most of Europe, AU, NZ, Canada)
+  if (rate < 12.0) return 3; // Stay aware  (US average, SE Asia, N Africa)
+  if (rate < 28.0) return 2; // Caution     (Mexico, parts of Africa)
+  return 1;                  // High caution (Honduras, Venezuela, S Africa)
+}
+
+// WF rating → choropleth fill/line colours
+const WF_FILL = {
+  0:'rgba(200,200,200,0.18)',
+  5:'rgba(63,163,77,0.40)',
+  4:'rgba(164,201,87,0.45)',
+  3:'rgba(255,200,87,0.50)',
+  2:'rgba(244,96,54,0.55)',
+  1:'rgba(215,38,61,0.65)'
+};
+const WF_LINE = {
+  0:'rgba(170,170,170,0.45)',
+  5:'rgba(63,163,77,0.75)',
+  4:'rgba(164,201,87,0.75)',
+  3:'rgba(232,160,32,0.80)',
+  2:'rgba(224,92,26,0.85)',
+  1:'rgba(215,38,61,0.90)'
+};
+const WF_META = {
+  0:{ color:'#888',  label:'No data',        detail:'No homicide data available for this territory.' },
+  1:{ color:'#D7263D',label:'High caution',  detail:'Significantly elevated violent crime risk. Exercise high caution and follow official travel advisories.' },
+  2:{ color:'#F46036',label:'Caution',        detail:'Above-average violent crime rate. Stay aware of your surroundings, avoid high-risk areas and take precautions.' },
+  3:{ color:'#FFC857',label:'Stay aware',     detail:'Moderate risk. Tourist areas are generally safe with reasonable precautions.' },
+  4:{ color:'#A4C957',label:'Generally safe', detail:'Low violent crime rate. Standard travel precautions apply.' },
+  5:{ color:'#3FA34D',label:'Very safe',      detail:'Among the lowest crime rates globally. Excellent destination for all travellers.' }
+};
+
+// EU countries for Eurostat live enrichment
+const EU_ISO3 = new Set(Object.keys(EU_GEO));
+
+// Cache for Eurostat results (avoid repeat fetches)
+const eurostatCache = {};
+
+async function fetchEurostatCrime(iso3) {
+  if (eurostatCache[iso3]) return eurostatCache[iso3];
+  const geo = EU_GEO[iso3];
+  if (!geo) return null;
+  // Fetch homicide + assault + robbery (latest 3 years)
+  const cats = 'ICCS0101+ICCS020111+ICCS0401+ICCS0501+ICCS0502';
+  const url = `https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/crim_off_cat?format=JSON&geo=${geo}&sinceTimePeriod=2020&iccs=${cats}&unit=P_HTHAB`;
+  try {
+    const resp = await fetchJSON(url, { retries: 1, delay: 400 });
+    if (!resp || !resp.dimension) return null;
+    const vals  = resp.value;
+    const dims  = resp.dimension;
+    // Build (iccs, time) → value map
+    const iccsIdx = dims.iccs.category.index;
+    const timeIdx = dims.time.category.index;
+    const nTime = Object.keys(timeIdx).length;
+    const result = {};
+    for (const [iccs, iI] of Object.entries(iccsIdx)) {
+      let best = null, bestYear = '';
+      for (const [yr, tI] of Object.entries(timeIdx)) {
+        const flatIdx = iI * nTime + tI;
+        const v = vals[flatIdx];
+        if (v !== null && v !== undefined && (!best || yr > bestYear)) {
+          best = v; bestYear = yr;
+        }
+      }
+      if (best !== null) result[iccs] = { v: Math.round(best * 10) / 10, yr: bestYear };
+    }
+    eurostatCache[iso3] = result;
+    return result;
+  } catch(e) {
+    console.warn('[Eurostat]', iso3, e.message);
+    return null;
+  }
+}
+
+const ICCS_LABELS = {
+  ICCS0101:  'Intentional homicide',
+  ICCS020111:'Serious assault',
+  ICCS0401:  'Robbery',
+  ICCS0501:  'Burglary',
+  ICCS0502:  'Theft'
+};
+const ICCS_DOTS = {
+  ICCS0101:'#D7263D', ICCS020111:'#F46036', ICCS0401:'#FFC857',
+  ICCS0501:'#AABA9F', ICCS0502:'#A4C957'
+};
+
+
 // GLOBAL MODE — US Travel Advisory choropleth + OC Index sidebar
 // Data: US State Dept (222 countries) + Global OC Index 2025 (193 countries)
 // =====================================================================
@@ -2721,7 +2879,7 @@ function setMode(mode) {
 
   const sourcePill = document.getElementById('sourcePill');
   if (mode === 'global') {
-    sourcePill.innerHTML = 'Advisory: <a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories.html" target="_blank" rel="noopener">US State Dept</a> · OC: <a href="https://ocindex.net" target="_blank" rel="noopener">Global Initiative 2025</a> · Map © OpenStreetMap';
+    sourcePill.innerHTML = 'Safety: <a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5" target="_blank" rel="noopener">World Bank</a> + <a href="https://ec.europa.eu/eurostat" target="_blank" rel="noopener">Eurostat</a> + <a href="https://www.gov.uk/foreign-travel-advice" target="_blank" rel="noopener">FCDO</a> · OC: <a href="https://ocindex.net" target="_blank" rel="noopener">GI 2025</a> · Map © OpenStreetMap';
     // Hide UK city grid section labels
     document.querySelectorAll('#cityGrid, #globalCityGrid').forEach(el => {
       el.closest('.section') && (el.closest('.section').style.display = mode === 'global' ? 'none' : '');
@@ -2756,7 +2914,7 @@ function showGlobalMapEmptyState() {
     <div class="empty-state">
       <div class="ico">🌍</div>
       <strong>Click any country</strong> on the map to see its advisory level and organised crime profile.<br><br>
-      <span style="font-size:12px;color:var(--charcoal-soft)">222 countries · US State Dept advisories · OC Index 2025</span>
+      <span style="font-size:12px;color:var(--charcoal-soft)">186+ countries · World Bank homicide data · Eurostat (EU) · OC Index 2025</span>
     </div>`;
   document.getElementById('catsHost').innerHTML = '';
   document.getElementById('hotelsHost').innerHTML = '';
@@ -2779,13 +2937,20 @@ async function loadChoropleth() {
     const resp = await fetch(WORLD_GEOJSON_URL);
     const geojson = await resp.json();
 
-    // Augment features with advisory level
+    // Augment features: WF rating (WB homicide) primary, US Advisory secondary
     geojson.features.forEach(f => {
+      const iso3 = f.properties.ISO_A3 || f.properties.ISO_A3_EH || '';
       const name = f.properties.ADMIN || f.properties.name || '';
-      const adv = ADV_LOOKUP[name];
+      const wb   = WB_HOMICIDE[iso3];
+      const adv  = ADV_LOOKUP[name];
+      // WF rating from homicide rate (falls back to 0 = no data)
+      const wfR  = wb ? homicideToWF(wb.r) : 0;
+      f.properties._wfRating = wfR;
+      f.properties._wfFill   = WF_FILL[wfR];
+      f.properties._wfLine   = WF_LINE[wfR];
+      f.properties._iso3     = iso3;
+      // Keep advisory data for sidebar
       f.properties._advLevel = adv ? adv.l : 0;
-      f.properties._advFill  = ADV_FILL[adv ? adv.l : 0];
-      f.properties._advLine  = ADV_LINE[adv ? adv.l : 0];
       f.properties._geoName  = name;
     });
 
@@ -2796,7 +2961,7 @@ async function loadChoropleth() {
       id: 'country-fill',
       type: 'fill',
       source: 'world-countries',
-      paint: { 'fill-color': ['get','_advFill'], 'fill-opacity': 1 },
+      paint: { 'fill-color': ['get','_wfFill'], 'fill-opacity': 1 },
     }, 'basemap'); // insert below basemap labels if any
 
     // Border layer
@@ -2804,7 +2969,7 @@ async function loadChoropleth() {
       id: 'country-line',
       type: 'line',
       source: 'world-countries',
-      paint: { 'line-color': ['get','_advLine'], 'line-width': 0.8 },
+      paint: { 'line-color': ['get','_wfLine'], 'line-width': 0.8 },
     });
 
     // Hover highlight layer
@@ -2855,43 +3020,100 @@ function removeGlobalLayers() {
 
 // --- Country sidebar --------------------------------------------------
 function renderCountrySidebar(geoName) {
-  const adv = ADV_LOOKUP[geoName];
-  const oc  = OC_LOOKUP[geoName];
+  const adv  = ADV_LOOKUP[geoName];
+  const oc   = OC_LOOKUP[geoName];
   const displayName = adv ? adv.displayName : geoName;
-  const level = adv ? adv.l : 0;
-  const meta = ADV_META[level] || { color:'#888', bg:'#F0F0F0', label:'No advisory on file' };
 
-  // --- Rating / advisory card
-  const flags = adv && adv.f && adv.f.length ? adv.f : [];
-  const dateStr = adv ? adv.d : '';
+  // Find WF data by matching _geoName → ISO3 from the map source
+  // We stored _iso3 in each feature; pull it from the loaded geojson features
+  let iso3 = '';
+  const src = map.getSource('world-countries');
+  if (src && src._data && src._data.features) {
+    const feat = src._data.features.find(f => f.properties._geoName === geoName);
+    if (feat) iso3 = feat.properties._iso3 || '';
+  }
+  const wb  = iso3 ? WB_HOMICIDE[iso3] : null;
+  const wfR = wb ? homicideToWF(wb.r) : 0;
+  const wfM = WF_META[wfR];
+
+  // ── PRIMARY: WF Safety Rating card ──────────────────────────────────
+  const homLabel = wb
+    ? `${wb.r.toFixed(1)} intentional homicides per 100,000 (${wb.d})`
+    : 'No World Bank homicide data available for this territory.';
+  const wbSource = wb
+    ? `<div style="font-size:10px;color:var(--charcoal-soft);margin-top:10px">Homicide rate: ${wb.r.toFixed(2)} / 100k (${wb.d}) · <a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5" target="_blank" rel="noopener" style="color:var(--orange);text-decoration:none">World Bank ↗</a></div>`
+    : '';
 
   document.getElementById('ratingHost').innerHTML = `
     <div class="section" style="padding-top:20px;padding-bottom:20px">
       <div class="country-card">
-        <div class="c-label">US Travel Advisory</div>
+        <div class="c-label">Wiley Fox Safety Rating</div>
         <div class="c-name">${escapeHtml(displayName)}</div>
         <div style="display:flex;align-items:center;gap:12px">
-          <div style="width:56px;height:56px;border-radius:50%;background:${meta.color};display:grid;place-items:center;color:#fff;font-family:Fraunces,serif;font-size:26px;font-weight:700;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,.15)">${level || '—'}</div>
+          <div style="width:56px;height:56px;border-radius:50%;background:${wfM.color};display:grid;place-items:center;color:#fff;font-family:Fraunces,serif;font-size:26px;font-weight:700;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,.15)">${wfR || '—'}</div>
           <div>
-            <div style="font-weight:600;font-size:14px;color:${meta.color}">${escapeHtml(meta.label)}</div>
-            ${adv ? `<div style="font-size:12px;color:var(--charcoal-soft);margin-top:2px">${escapeHtml(adv.a)}</div>` : '<div style="font-size:12px;color:var(--charcoal-soft)">Not covered</div>'}
+            <div style="font-weight:600;font-size:14px;color:${wfM.color}">${escapeHtml(wfM.label)}</div>
+            <div style="font-size:12px;color:var(--charcoal-soft);margin-top:2px">${escapeHtml(wfM.detail)}</div>
           </div>
         </div>
-        ${flags.length ? `
-          <div class="adv-pill-row">
-            ${flags.map(f => `<span class="adv-pill" style="background:${meta.color}">${escapeHtml(f)}</span>`).join('')}
-          </div>` : ''}
-        ${dateStr ? `<div style="font-size:10px;color:var(--charcoal-soft);margin-top:10px">Updated ${escapeHtml(dateStr)} · <a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories.html" target="_blank" rel="noopener" style="color:var(--orange);text-decoration:none">View advisory ↗</a></div>` : ''}
+        ${wbSource}
       </div>
-      ${level ? `
-      <div class="meta-grid" style="margin:14px 24px 0">
-        <div class="meta-tile"><div class="v" style="color:${meta.color}">${level}</div><div class="l">Advisory level</div></div>
-        <div class="meta-tile"><div class="v" style="font-size:12px">${flags.length ? escapeHtml(flags[0]) : '—'}</div><div class="l">Primary risk</div></div>
-      </div>` : ''}
+
+      <!-- Secondary: US Travel Advisory if available -->
+      ${adv ? (() => {
+        const level = adv.l;
+        const meta  = ADV_META[level] || { color:'#888', bg:'#F0F0F0', label:'No advisory on file' };
+        const flags = adv.f && adv.f.length ? adv.f : [];
+        return `
+      <div style="margin:14px 24px 0;padding:12px;background:var(--cream);border-radius:10px">
+        <div style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:var(--charcoal-soft);margin-bottom:6px">US Travel Advisory</div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:32px;height:32px;border-radius:50%;background:${meta.color};display:grid;place-items:center;color:#fff;font-family:Fraunces,serif;font-size:15px;font-weight:700;flex-shrink:0">${level}</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:${meta.color}">${escapeHtml(meta.label)}</div>
+            <div style="font-size:11px;color:var(--charcoal-soft)">${escapeHtml(adv.a)}</div>
+          </div>
+        </div>
+        ${flags.length ? `<div class="adv-pill-row" style="margin-top:8px">${flags.map(f => `<span class="adv-pill" style="background:${meta.color}">${escapeHtml(f)}</span>`).join('')}</div>` : ''}
+        <div style="font-size:10px;color:var(--charcoal-soft);margin-top:8px"><a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories.html" target="_blank" rel="noopener" style="color:var(--orange);text-decoration:none">US State Dept ↗</a> · ${escapeHtml(adv.d)}</div>
+      </div>`;
+      })() : `
+      <div style="margin:14px 24px 0;padding:12px;background:var(--cream);border-radius:10px;font-size:12px;color:var(--charcoal-soft)">
+        No US Travel Advisory on file for this territory. Check <a href="https://travel.state.gov" target="_blank" rel="noopener" style="color:var(--orange)">travel.state.gov</a>.
+      </div>`}
+
       <div id="fcdoHost"></div>
+      <div id="eurostatHost"></div>
     </div>
   `;
   renderFCDOPanel(displayName, 'fcdoHost');
+
+  // Async Eurostat enrichment for EU countries
+  if (iso3 && EU_ISO3.has(iso3)) {
+    fetchEurostatCrime(iso3).then(data => {
+      const el = document.getElementById('eurostatHost');
+      if (!el) return;
+      if (!data || !Object.keys(data).length) {
+        el.innerHTML = '';
+        return;
+      }
+      const rows = Object.entries(ICCS_LABELS)
+        .filter(([k]) => data[k])
+        .map(([k, label]) => {
+          const v = data[k];
+          return `<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(0,0,0,.05)">
+            <span style="font-size:12px;display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:${ICCS_DOTS[k]};display:inline-block"></span>${label}</span>
+            <span style="font-size:12px;font-weight:600">${v.v}<span style="font-weight:400;color:var(--charcoal-soft);font-size:10px"> /100k</span></span>
+          </div>`;
+        }).join('');
+      el.innerHTML = `
+        <div style="margin:12px 24px 0;padding:12px;background:var(--cream);border-radius:10px">
+          <div style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:var(--charcoal-soft);margin-bottom:8px">Eurostat Crime Statistics</div>
+          ${rows}
+          <div style="font-size:10px;color:var(--charcoal-soft);margin-top:8px"><a href="https://ec.europa.eu/eurostat" target="_blank" rel="noopener" style="color:var(--orange)">Eurostat ↗</a> · ICCS 2.0 · per 100,000 population</div>
+        </div>`;
+    }).catch(() => {});
+  }
 
   // --- OC Index section
   const catsHost = document.getElementById('catsHost');
@@ -2953,6 +3175,8 @@ function renderCountrySidebar(geoName) {
       </div>
     </div>
   `;
+}
+
 }
 
 

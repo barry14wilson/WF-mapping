@@ -2797,6 +2797,258 @@ const ICCS_DOTS = {
 };
 
 
+
+// ── GOVERNMENT ADVISORY CONSENSUS ────────────────────────────────────
+// Canada: live fetch from Global Affairs Canada open data (no key required)
+// Source: data.international.gc.ca/travel-voyage/index-alpha-eng.json
+const CA_ADV_URL = 'https://data.international.gc.ca/travel-voyage/index-alpha-eng.json';
+// Canada advisory-state: 0=normal, 1=caution, 2=avoid non-essential, 3=avoid all
+const CA_ADV_LABEL = {
+  0:'Exercise normal security precautions',
+  1:'Exercise a high degree of caution',
+  2:'Avoid non-essential travel',
+  3:'Avoid all travel'
+};
+const CA_ADV_COLOR = { 0:'#3FA34D', 1:'#E8A020', 2:'#E05C1A', 3:'#D7263D' };
+// Normalise Canada 0-3 → WF 1-4 scale
+const caToWF = l => l + 1;
+
+// Australia DFAT (smartraveller.gov.au) — static lookup, CORS-blocked from browser
+// Levels: 1=normal, 2=high caution, 3=reconsider, 4=do not travel
+// Last compiled: June 2026. Update periodically.
+const AUS_ADV = {
+  // Level 4 — Do not travel
+  AFG:4,BLR:4,CAF:4,COD:4,HTI:4,IRN:4,IRQ:4,LBY:4,MLI:4,PRK:4,
+  RUS:4,SOM:4,SSD:4,SDN:4,SYR:4,UKR:4,VEN:4,YEM:4,MMR:4,
+  // Level 3 — Reconsider your need to travel
+  BGD:3,BFA:3,CMR:3,TCD:3,ETH:3,GNB:3,HND:3,LBN:3,NER:3,
+  NGA:3,PAK:3,PNG:3,ZWE:3,COL:3,KEN:3,MOZ:3,PHL:3,PER:3,
+  // Level 2 — Exercise a high degree of caution
+  ALB:2,DZA:2,BRA:2,BOL:2,CMB:2,CUB:2,DOM:2,ECU:2,EGY:2,SLV:2,
+  FJI:2,GAB:2,GEO:2,GHA:2,GTM:2,IND:2,IDN:2,ISR:2,JAM:2,JOR:2,
+  KAZ:2,KGZ:2,MDG:2,MYS:2,MEX:2,MNE:2,MAR:2,NPL:2,OMN:2,PAN:2,
+  PRY:2,RWA:2,SRB:2,SEN:2,ZAF:2,TJK:2,TZA:2,TUN:2,TUR:2,TKM:2,
+  UGA:2,UZB:2,VNM:2,ZMB:2,MWI:2,NAM:2,CRI:2,MKD:2,XKX:2,LKA:2,
+  // Level 1 — Exercise normal safety precautions
+  ARG:1,AUS:1,AUT:1,BEL:1,BGR:1,KHM:1,CAN:1,CHL:1,CHN:1,HRV:1,
+  CYP:1,CZE:1,DNK:1,EST:1,FIN:1,FRA:1,DEU:1,GRC:1,HUN:1,ISL:1,
+  IRL:1,ITA:1,JPN:1,LVA:1,LTU:1,LUX:1,MLT:1,NLD:1,NZL:1,NOR:1,
+  POL:1,PRT:1,ROU:1,SGP:1,SVK:1,SVN:1,KOR:1,ESP:1,SWE:1,CHE:1,
+  THA:1,GBR:1,USA:1,URY:1,ARE:1,QAT:1,BHR:1,KWT:1,MUS:1,MCO:1,
+  LIE:1,AND:1,SMR:1,TWN:1,HKG:1,MAC:1,ISR:2 // override — Israel already set to 2 above
+};
+const AUS_ADV_LABEL = {
+  1:'Exercise normal safety precautions',
+  2:'Exercise a high degree of caution',
+  3:'Reconsider your need to travel',
+  4:'Do not travel'
+};
+const AUS_ADV_COLOR = { 1:'#3FA34D', 2:'#E8A020', 3:'#E05C1A', 4:'#D7263D' };
+
+// Canada advisory cache (filled at choropleth load time)
+let caAdvData = {}; // ISO2 → {advisory-state, eng:{advisory-text, url-slug}, date-published}
+let caAdvLoaded = false;
+
+async function loadCanadaAdvisories() {
+  if (caAdvLoaded) return;
+  try {
+    const d = await fetchJSON(CA_ADV_URL, { retries: 1, delay: 300 });
+    if (d && d.data) { caAdvData = d.data; caAdvLoaded = true; }
+  } catch(e) { console.warn('[Canada advisories]', e.message); }
+}
+
+// Build government advisory consensus panel HTML for sidebar
+function renderGovAdvisoryPanel(iso3, iso2, geoName) {
+  const rows = [];
+
+  // ── US State Dept ──────────────────────────────────────────────────
+  const adv = ADV_LOOKUP[geoName];
+  if (adv) {
+    const meta = ADV_META[adv.l] || {};
+    rows.push({ flag:'🇺🇸', govt:'US State Dept', level: adv.l, max:4,
+      label: meta.label || 'Level ' + adv.l, color: meta.color,
+      date: adv.d, url:'https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories.html' });
+  }
+
+  // ── Canada ─────────────────────────────────────────────────────────
+  const ca = iso2 ? caAdvData[iso2] : null;
+  if (ca) {
+    const lvl = ca['advisory-state'];
+    rows.push({ flag:'🇨🇦', govt:'Canada (GAC)', level: lvl + 1, max:4,
+      label: CA_ADV_LABEL[lvl] || 'Level ' + lvl, color: CA_ADV_COLOR[lvl],
+      date: ca['date-published'] ? ca['date-published'].date.slice(0,10) : '',
+      url:`https://travel.gc.ca/destinations/${ca.eng ? ca.eng['url-slug'] : ''}` });
+  }
+
+  // ── Australia DFAT ─────────────────────────────────────────────────
+  const ausLvl = AUS_ADV[iso3];
+  if (ausLvl) {
+    rows.push({ flag:'🇦🇺', govt:'Australia (DFAT)', level: ausLvl, max:4,
+      label: AUS_ADV_LABEL[ausLvl], color: AUS_ADV_COLOR[ausLvl],
+      date: 'Jun 2026', url:'https://www.smartraveller.gov.au/destinations' });
+  }
+
+  if (!rows.length) return '';
+
+  // Consensus: average of all normalised levels (1–4)
+  const avg = rows.reduce((s,r) => s + r.level, 0) / rows.length;
+  const consensusLevel = Math.round(avg);
+  const consensusMeta = ADV_META[consensusLevel] || ADV_META[0];
+
+  const rowsHtml = rows.map(r => `
+    <div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.05)">
+      <span style="font-size:18px;flex-shrink:0">${r.flag}</span>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:11px;font-weight:600;color:var(--charcoal)">${r.govt}</div>
+        <div style="font-size:10px;color:var(--charcoal-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escapeHtml(r.label)}</div>
+      </div>
+      <a href="${r.url}" target="_blank" rel="noopener" style="flex-shrink:0;padding:2px 8px;border-radius:6px;background:${r.color};color:#fff;font-size:10px;font-weight:700;text-decoration:none">${r.level}/${r.max}</a>
+    </div>`).join('');
+
+  return `
+    <div style="margin:12px 24px 0;padding:12px;background:var(--cream);border-radius:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:var(--charcoal-soft)">Government Advisories</div>
+        <div style="padding:2px 8px;border-radius:6px;background:${consensusMeta ? consensusMeta.color : '#888'};color:#fff;font-size:10px;font-weight:700">${rows.length} gov · avg ${avg.toFixed(1)}/4</div>
+      </div>
+      ${rowsHtml}
+      <div style="font-size:10px;color:var(--charcoal-soft);margin-top:8px">
+        Sources: <a href="https://travel.state.gov" target="_blank" rel="noopener" style="color:var(--orange)">US</a> · 
+        <a href="https://travel.gc.ca/travelling/advisories" target="_blank" rel="noopener" style="color:var(--orange)">CA</a> · 
+        <a href="https://www.smartraveller.gov.au" target="_blank" rel="noopener" style="color:var(--orange)">AUS</a>
+      </div>
+    </div>`;
+}
+
+
+
+// ── FBI CRIME DATA API (US cities) ───────────────────────────────────
+// ⚠️  API KEY REQUIRED: register free at https://api.data.gov/signup/
+// Once you have a key, replace the placeholder below.
+// Endpoint: https://api.usa.gov/crime/fbi/cde/
+const FBI_API_KEY = 'YOUR_FBI_API_KEY_HERE'; // ← paste your api.data.gov key
+const FBI_BASE    = 'https://api.usa.gov/crime/fbi/cde';
+const FBI_ENABLED = FBI_API_KEY !== 'YOUR_FBI_API_KEY_HERE';
+
+// US state name → FIPS abbreviation lookup (for FBI API state param)
+const US_STATE_ABBR = {
+  'Alabama':'AL','Alaska':'AK','Arizona':'AZ','Arkansas':'AR','California':'CA',
+  'Colorado':'CO','Connecticut':'CT','Delaware':'DE','Florida':'FL','Georgia':'GA',
+  'Hawaii':'HI','Idaho':'ID','Illinois':'IL','Indiana':'IN','Iowa':'IA',
+  'Kansas':'KS','Kentucky':'KY','Louisiana':'LA','Maine':'ME','Maryland':'MD',
+  'Massachusetts':'MA','Michigan':'MI','Minnesota':'MN','Mississippi':'MS',
+  'Missouri':'MO','Montana':'MT','Nebraska':'NE','Nevada':'NV','New Hampshire':'NH',
+  'New Jersey':'NJ','New Mexico':'NM','New York':'NY','North Carolina':'NC',
+  'North Dakota':'ND','Ohio':'OH','Oklahoma':'OK','Oregon':'OR','Pennsylvania':'PA',
+  'Rhode Island':'RI','South Carolina':'SC','South Dakota':'SD','Tennessee':'TN',
+  'Texas':'TX','Utah':'UT','Vermont':'VT','Virginia':'VA','Washington':'WA',
+  'West Virginia':'WV','Wisconsin':'WI','Wyoming':'WY','District of Columbia':'DC'
+};
+
+// FBI offense categories we care about (CDE endpoint names)
+const FBI_OFFENSES = [
+  { key:'violent-crime',      label:'Violent crime'    },
+  { key:'homicide',           label:'Homicide'         },
+  { key:'rape',               label:'Rape'             },
+  { key:'robbery',            label:'Robbery'          },
+  { key:'aggravated-assault', label:'Assault (aggravated)' },
+  { key:'property-crime',     label:'Property crime'   },
+  { key:'burglary',           label:'Burglary'         },
+  { key:'larceny',            label:'Theft (larceny)'  },
+  { key:'motor-vehicle-theft',label:'Motor vehicle theft' }
+];
+
+// FBI cache (stateAbbr → latest data)
+const fbiCache = {};
+
+async function fetchFBIState(stateAbbr) {
+  if (!FBI_ENABLED) return null;
+  if (fbiCache[stateAbbr]) return fbiCache[stateAbbr];
+  try {
+    // Fetch most recent year of state-level offense totals
+    const year = new Date().getFullYear() - 2; // FBI data lags ~2 years
+    const url = `${FBI_BASE}/summarized/state/${stateAbbr}/all-offenses/${year}/${year}?API_KEY=${FBI_API_KEY}`;
+    const d = await fetchJSON(url, { retries: 1, delay: 400 });
+    if (d && (d.data || Array.isArray(d))) {
+      const result = d.data || d;
+      fbiCache[stateAbbr] = result;
+      return result;
+    }
+  } catch(e) {
+    console.warn('[FBI]', stateAbbr, e.message);
+  }
+  return null;
+}
+
+// Render FBI crime panel into a target element
+async function renderFBIPanel(stateName, targetId) {
+  const el = document.getElementById(targetId);
+  if (!el) return;
+
+  if (!FBI_ENABLED) {
+    el.innerHTML = `
+      <div style="margin:12px 24px 0;padding:12px;background:var(--cream);border-radius:10px">
+        <div style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:var(--charcoal-soft);margin-bottom:6px">FBI Crime Data</div>
+        <div style="font-size:12px;color:var(--charcoal-soft)">
+          Add your free FBI API key to see state-level US crime statistics.
+          <a href="https://api.data.gov/signup/" target="_blank" rel="noopener" style="color:var(--orange);display:block;margin-top:4px">Get key at api.data.gov ↗</a>
+        </div>
+      </div>`;
+    return;
+  }
+
+  const abbr = US_STATE_ABBR[stateName];
+  if (!abbr) return;
+
+  el.innerHTML = `<div style="margin:12px 24px 0;padding:12px;background:var(--cream);border-radius:10px">
+    <div style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:var(--charcoal-soft);margin-bottom:6px">FBI Crime Data · ${stateName}</div>
+    <div style="font-size:12px;color:var(--charcoal-soft)">Loading…</div></div>`;
+
+  const data = await fetchFBIState(abbr);
+  if (!data || !data.length) {
+    el.innerHTML = '';
+    return;
+  }
+
+  // data is an array of {offense_name, offense_code, offense_count, ...}
+  const latest = data.reduce((acc, row) => {
+    if (!acc[row.offense_name] || row.data_year > acc[row.offense_name].year) {
+      acc[row.offense_name] = { count: row.offense_count || 0, year: row.data_year };
+    }
+    return acc;
+  }, {});
+
+  const maxVal = Math.max(...Object.values(latest).map(v => v.count || 0), 1);
+  const rows = FBI_OFFENSES
+    .filter(o => latest[o.label] || latest[o.key])
+    .map(o => {
+      const entry = latest[o.label] || latest[o.key];
+      if (!entry) return '';
+      const pct = Math.round((entry.count / maxVal) * 100);
+      const num = entry.count.toLocaleString();
+      return `<div style="margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:2px">
+          <span style="font-weight:500">${o.label}</span>
+          <span style="color:var(--charcoal-soft)">${num}</span>
+        </div>
+        <div style="height:4px;border-radius:2px;background:rgba(0,0,0,.08)">
+          <div style="height:100%;border-radius:2px;background:var(--orange);width:${pct}%"></div>
+        </div>
+      </div>`;
+    }).join('');
+
+  const yr = Object.values(latest)[0]?.year || '';
+  el.innerHTML = `
+    <div style="margin:12px 24px 0;padding:12px;background:var(--cream);border-radius:10px">
+      <div style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:var(--charcoal-soft);margin-bottom:8px">FBI Crime Data · ${escapeHtml(stateName)} ${yr}</div>
+      ${rows || '<div style="font-size:12px;color:var(--charcoal-soft)">No offense data found.</div>'}
+      <div style="font-size:10px;color:var(--charcoal-soft);margin-top:6px">
+        <a href="https://cde.ucr.cjis.gov" target="_blank" rel="noopener" style="color:var(--orange)">FBI Crime Data Explorer ↗</a>
+      </div>
+    </div>`;
+}
+
+
 // GLOBAL MODE — US Travel Advisory choropleth + OC Index sidebar
 // Data: US State Dept (222 countries) + Global OC Index 2025 (193 countries)
 // =====================================================================
@@ -2934,12 +3186,16 @@ async function loadChoropleth() {
   }
 
   try {
+    // Kick off Canada advisory fetch in parallel with GeoJSON load
+    loadCanadaAdvisories();
+
     const resp = await fetch(WORLD_GEOJSON_URL);
     const geojson = await resp.json();
 
     // Augment features: WF rating (WB homicide) primary, US Advisory secondary
     geojson.features.forEach(f => {
       const iso3 = f.properties.ISO_A3 || f.properties.ISO_A3_EH || '';
+      const iso2 = f.properties.ISO_A2  || f.properties.ISO_A2_EH  || '';
       const name = f.properties.ADMIN || f.properties.name || '';
       const wb   = WB_HOMICIDE[iso3];
       const adv  = ADV_LOOKUP[name];
@@ -2949,6 +3205,7 @@ async function loadChoropleth() {
       f.properties._wfFill   = WF_FILL[wfR];
       f.properties._wfLine   = WF_LINE[wfR];
       f.properties._iso3     = iso3;
+      f.properties._iso2     = iso2;
       // Keep advisory data for sidebar
       f.properties._advLevel = adv ? adv.l : 0;
       f.properties._geoName  = name;
@@ -3024,13 +3281,16 @@ function renderCountrySidebar(geoName) {
   const oc   = OC_LOOKUP[geoName];
   const displayName = adv ? adv.displayName : geoName;
 
-  // Find WF data by matching _geoName → ISO3 from the map source
-  // We stored _iso3 in each feature; pull it from the loaded geojson features
+  // Find WF data by matching _geoName → ISO3/ISO2 from the map source
   let iso3 = '';
+  let iso2 = '';
   const src = map.getSource('world-countries');
   if (src && src._data && src._data.features) {
     const feat = src._data.features.find(f => f.properties._geoName === geoName);
-    if (feat) iso3 = feat.properties._iso3 || '';
+    if (feat) {
+      iso3 = feat.properties._iso3 || '';
+      iso2 = feat.properties._iso2 || '';
+    }
   }
   const wb  = iso3 ? WB_HOMICIDE[iso3] : null;
   const wfR = wb ? homicideToWF(wb.r) : 0;
@@ -3082,11 +3342,16 @@ function renderCountrySidebar(geoName) {
         No US Travel Advisory on file for this territory. Check <a href="https://travel.state.gov" target="_blank" rel="noopener" style="color:var(--orange)">travel.state.gov</a>.
       </div>`}
 
+      <div id="govAdvHost"></div>
       <div id="fcdoHost"></div>
       <div id="eurostatHost"></div>
     </div>
   `;
   renderFCDOPanel(displayName, 'fcdoHost');
+
+  // Government advisory consensus panel (US + Canada live + AUS static)
+  const govEl = document.getElementById('govAdvHost');
+  if (govEl) govEl.innerHTML = renderGovAdvisoryPanel(iso3, iso2, geoName);
 
   // Async Eurostat enrichment for EU countries
   if (iso3 && EU_ISO3.has(iso3)) {
@@ -3160,6 +3425,17 @@ function renderCountrySidebar(geoName) {
       <div class="section">
         <div style="font-size:13px;color:var(--charcoal-soft);text-align:center;padding:8px 0">No OC Index data for this territory.</div>
       </div>`;
+  }
+
+  // ── FBI crime data for US states ────────────────────────────────────
+  // For the United States, show the FBI panel (needs API key)
+  // Also expose a fbiHost div so city-level US searches can populate it
+  if (iso3 === 'USA' || geoName === 'United States of America' || geoName === 'United States') {
+    // Add FBI host div below OC section if not already there
+    const fbiContainer = document.createElement('div');
+    fbiContainer.id = 'fbiHost';
+    catsHost.after(fbiContainer);
+    renderFBIPanel('United States', 'fbiHost');
   }
 
   // Hotels CTA for global

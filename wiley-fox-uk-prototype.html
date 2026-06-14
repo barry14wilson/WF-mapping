@@ -3216,75 +3216,69 @@ async function renderFBIPanel(stateName, targetId) {
 
 
 
-// ── POINTS OF INTEREST (OpenStreetMap / Overpass API) ───────────────────
-// Free, no API key. Returns tourist attractions, food, transport near a lat/lng.
-const OVERPASS_URL = 'https://overpass-api.de/api/interpreter';
+// ── POINTS OF INTEREST (Wikipedia Geosearch) ────────────────────────────
+// Wikipedia Geosearch — free, no API key, supports origin=* so works from file://
+// Returns Wikipedia-notable landmarks, museums, stations within radius of a city.
+const WP_GEO_URL = 'https://en.wikipedia.org/w/api.php';
 
-// POI category config
+// POI category config — classified by title keyword heuristics
 const POI_CATS = {
-  attraction: { label: 'Attractions', color: '#4A90D9', r: 6 },
-  historic:   { label: 'Historic',    color: '#AABA9F', r: 5 },
-  food:       { label: 'Food & Drink',color: '#FF7B14', r: 5 },
-  transport:  { label: 'Transport',   color: '#7B52AB', r: 6 },
+  museum:    { label: 'Museums',       color: '#4A90D9', r: 6 },
+  transport: { label: 'Transport',     color: '#7B52AB', r: 6 },
+  historic:  { label: 'Historic',      color: '#AABA9F', r: 5 },
+  park:      { label: 'Parks',         color: '#3FA34D', r: 5 },
+  landmark:  { label: 'Landmarks',     color: '#FF7B14', r: 6 },
+  place:     { label: 'Notable Places',color: '#4A90D9', r: 5 },
 };
 
 let poiVisible = false;
 let poiCityKey = null;
 const poiCache = {};
 
-function poiCategoryOf(el) {
-  const t = el.tags || {};
-  if (/^(station|halt)$/.test(t.railway) || t.public_transport === 'station' || t.aeroway === 'aerodrome') return 'transport';
-  if (/^(attraction|museum|gallery|viewpoint|artwork|information)$/.test(t.tourism)) return 'attraction';
-  if (/^(monument|memorial|castle|ruins|battlefield|archaeological_site)$/.test(t.historic)) return 'historic';
-  if (/^(restaurant|bar|cafe|pub|food_court|fast_food|biergarten)$/.test(t.amenity)) return 'food';
-  return null;
+function poiCategoryOf(title) {
+  const t = title.toLowerCase();
+  if (/museum|gallery|art centre|exhibition|aquarium|planetarium/.test(t)) return 'museum';
+  if (/station|underground|tube|airport|railway|terminal|metro|tram/.test(t)) return 'transport';
+  if (/cathedral|church|mosque|temple|abbey|synagogue|chapel|priory|minster/.test(t)) return 'historic';
+  if (/park|garden|common|heath|wood|forest|nature reserve/.test(t)) return 'park';
+  if (/palace|castle|tower|bridge|monument|memorial|statue|arch|square|hall|arena|stadium|theatre|theater|opera/.test(t)) return 'landmark';
+  return 'place';
 }
 
 async function fetchPOIs(lat, lng) {
   const key = `${lat.toFixed(3)},${lng.toFixed(3)}`;
   if (poiCache[key]) return poiCache[key];
 
-  const R = 4000; // metres radius for most categories
-  const Rf = 1500; // tighter radius for food (too many results otherwise)
-  const query = `[out:json][timeout:20];
-(
-  node["tourism"~"^(attraction|museum|gallery|viewpoint|artwork)$"](around:${R},${lat},${lng});
-  node["historic"~"^(monument|memorial|castle|ruins|battlefield)$"]["name"](around:${R},${lat},${lng});
-  node["amenity"~"^(restaurant|bar|cafe|pub|fast_food)$"]["name"](around:${Rf},${lat},${lng});
-  node["railway"~"^(station|halt)$"]["name"](around:${R},${lat},${lng});
-  node["public_transport"="station"]["name"](around:${R},${lat},${lng});
-  node["aeroway"="aerodrome"]["name"](around:${R * 4},${lat},${lng});
-);
-out body 80;`;
-
   try {
-    const resp = await fetch(OVERPASS_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: 'data=' + encodeURIComponent(query)
-    });
-    const data = await resp.json();
-    const elements = (data.elements || []).filter(el => el.lat && el.lon);
+    const url = WP_GEO_URL + '?action=query&list=geosearch'
+      + '&gscoord=' + lat + '%7C' + lng
+      + '&gsradius=5000&gslimit=40&format=json&origin=*';
 
-    // Deduplicate by name within same category, cap at 60 total
-    const seen = new Set();
+    const resp = await fetch(url, { headers: { Accept: 'application/json' } });
+    const data = await resp.json();
+    const places = (data.query?.geosearch || []);
+
+    // Filter out administrative/meta articles; cap at 40
+    const SKIP = /^(list of|history of|geography of|demographics|economy of|culture of|politics of|education in|transport in|\d{4} in)/i;
     const features = [];
-    for (const el of elements) {
-      if (features.length >= 60) break;
-      const cat = poiCategoryOf(el);
-      if (!cat) continue;
-      const nameKey = (el.tags?.name || '').toLowerCase() + '|' + cat;
-      if (seen.has(nameKey)) continue;
-      seen.add(nameKey);
+    const seen = new Set();
+
+    for (const p of places) {
+      if (features.length >= 40) break;
+      if (SKIP.test(p.title)) continue;
+      const key2 = p.title.toLowerCase();
+      if (seen.has(key2)) continue;
+      seen.add(key2);
+      const cat = poiCategoryOf(p.title);
       features.push({
         type: 'Feature',
-        geometry: { type: 'Point', coordinates: [el.lon, el.lat] },
+        geometry: { type: 'Point', coordinates: [p.lon, p.lat] },
         properties: {
-          name: el.tags?.name || 'Unnamed',
+          name: p.title,
           cat,
           color: POI_CATS[cat].color,
-          r: POI_CATS[cat].r
+          r: POI_CATS[cat].r,
+          url: 'https://en.wikipedia.org/?curid=' + p.pageid
         }
       });
     }
@@ -3335,11 +3329,12 @@ async function loadPOILayer(lat, lng) {
     new maplibregl.Popup({ closeButton: true, maxWidth: '200px', offset: 10 })
       .setLngLat(e.features[0].geometry.coordinates)
       .setHTML(`<div style="font-family:Inter,sans-serif;font-size:12px;line-height:1.4">
-        <div style="font-weight:700;margin-bottom:2px">${escapeHtml(p.name)}</div>
-        <div style="font-size:10px;color:#666;display:flex;align-items:center;gap:4px">
+        <div style="font-weight:700;margin-bottom:3px">${escapeHtml(p.name)}</div>
+        <div style="font-size:10px;color:#666;display:flex;align-items:center;gap:4px;margin-bottom:${p.url?'5px':'0'}">
           <span style="width:8px;height:8px;border-radius:50%;background:${p.color};display:inline-block"></span>
           ${escapeHtml(cfg.label || p.cat)}
         </div>
+        ${p.url ? `<a href="${p.url}" target="_blank" rel="noopener" style="font-size:10px;color:#FF7B14;text-decoration:none;font-weight:600">Wikipedia ↗</a>` : ''}
       </div>`)
       .addTo(map);
   });

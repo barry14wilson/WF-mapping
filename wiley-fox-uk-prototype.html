@@ -1693,6 +1693,14 @@ function renderCity(name, lat, lng, crimes, month) {
     catsHost.innerHTML = '';
   }
 
+  // --- Numbeo city-level index for UK cities
+  {
+    const ukNumHost = document.createElement('div');
+    ukNumHost.id = 'numbeoUKHost';
+    catsHost.after(ukNumHost);
+    renderNumbeoPanel(name, 'United Kingdom', 'numbeoUKHost');
+  }
+
   // --- Hotels (Booking.com referral)
   renderHotels(name);
 
@@ -3044,6 +3052,487 @@ async function renderFBIPanel(stateName, targetId) {
       ${rows || '<div style="font-size:12px;color:var(--charcoal-soft)">No offense data found.</div>'}
       <div style="font-size:10px;color:var(--charcoal-soft);margin-top:6px">
         <a href="https://cde.ucr.cjis.gov" target="_blank" rel="noopener" style="color:var(--orange)">FBI Crime Data Explorer ↗</a>
+      </div>
+    </div>`;
+}
+
+
+
+// ── NUMBEO CRIME INDEX ────────────────────────────────────────────────
+// Crowd-sourced city crime + safety index for 400 cities (0–100 scale)
+// Source: numbeo.com/crime/rankings.jsp — compiled June 2026
+// Higher crime index = more crime. Higher safety index = safer.
+const NUMBEO = {
+  "pietermaritzburg, south africa":[82.8,17.2],
+  "pretoria, south africa":[81.8,18.2],
+  "caracas, venezuela":[81.4,18.6],
+  "port moresby, papua new guinea":[81.3,18.7],
+  "johannesburg, south africa":[80.8,19.2],
+  "durban, south africa":[80.4,19.6],
+  "san pedro sula, honduras":[79.4,20.6],
+  "port elizabeth, south africa":[78.6,21.4],
+  "memphis, tn, united states":[78.5,21.5],
+  "salvador, brazil":[76.5,23.5],
+  "port of spain, trinidad and tobago":[76.4,23.6],
+  "fortaleza, brazil":[75.9,24.1],
+  "rio de janeiro, brazil":[75.2,24.8],
+  "recife, brazil":[74.9,25.1],
+  "guayaquil, ecuador":[74.4,25.6],
+  "cape town, south africa":[73.7,26.3],
+  "detroit, mi, united states":[72.8,27.2],
+  "cali, colombia":[72.0,28.0],
+  "baltimore, md, united states":[72.0,28.0],
+  "tijuana, mexico":[71.5,28.5],
+  "albuquerque, nm, united states":[70.9,29.1],
+  "porto alegre, brazil":[70.7,29.3],
+  "lima, peru":[70.2,29.8],
+  "saint louis, mo, united states":[70.0,30.0],
+  "sao paulo, brazil":[69.9,30.1],
+  "kingston, jamaica":[69.1,30.9],
+  "oakland, ca, united states":[68.9,31.1],
+  "lagos, nigeria":[68.8,31.2],
+  "damascus, syria":[68.2,31.8],
+  "windhoek, namibia":[67.6,32.4],
+  "new orleans, la, united states":[67.1,32.9],
+  "san juan, puerto rico":[67.1,32.9],
+  "santo domingo, dominican republic":[67.0,33.0],
+  "alice springs, australia":[66.9,33.1],
+  "mexico city, mexico":[66.8,33.2],
+  "marseille, france":[66.7,33.3],
+  "bogota, colombia":[66.7,33.3],
+  "rockhampton, australia":[66.3,33.7],
+  "milwaukee, wi, united states":[66.0,34.0],
+  "campinas, brazil":[65.8,34.2],
+  "chicago, il, united states":[65.5,34.5],
+  "philadelphia, pa, united states":[65.3,34.7],
+  "manila, philippines":[64.6,35.4],
+  "surrey, canada":[64.4,35.6],
+  "quezon city, philippines":[64.3,35.7],
+  "santiago, chile":[64.2,35.8],
+  "atlanta, ga, united states":[64.2,35.8],
+  "birmingham, united kingdom":[63.8,36.2],
+  "quito, ecuador":[63.5,36.5],
+  "houston, tx, united states":[63.2,36.8],
+  "lethbridge, ab, canada":[63.1,36.9],
+  "buenos aires, argentina":[63.0,37.0],
+  "darwin, australia":[62.9,37.1],
+  "coventry, united kingdom":[62.7,37.3],
+  "grenoble, france":[62.6,37.4],
+  "sudbury, canada":[62.5,37.5],
+  "guadalajara, mexico":[62.4,37.6],
+  "naples, italy":[62.3,37.7],
+  "dhaka, bangladesh":[62.2,37.8],
+  "cairns, australia":[62.1,37.9],
+  "kelowna, canada":[62.1,37.9],
+  "townsville, australia":[61.4,38.6],
+  "cordoba, argentina":[61.1,38.9],
+  "montpellier, france":[61.0,39.0],
+  "winnipeg, canada":[60.8,39.2],
+  "curitiba, brazil":[60.7,39.3],
+  "harare, zimbabwe":[60.7,39.3],
+  "san francisco, ca, united states":[60.6,39.4],
+  "indianapolis, in, united states":[60.6,39.4],
+  "brantford, canada":[60.5,39.5],
+  "sault ste. marie, canada":[60.3,39.7],
+  "oshawa, canada":[60.2,39.8],
+  "washington, dc, united states":[59.8,40.2],
+  "belo horizonte, brazil":[59.6,40.4],
+  "nairobi, kenya":[59.4,40.6],
+  "lyon, france":[59.3,40.7],
+  "kuala lumpur, malaysia":[59.1,40.9],
+  "delhi, india":[59.1,40.9],
+  "bradford, united kingdom":[59.0,41.0],
+  "brasilia, brazil":[58.7,41.3],
+  "nantes, france":[58.6,41.4],
+  "kansas city, mo, united states":[58.6,41.4],
+  "ghaziabad, india":[58.4,41.6],
+  "portland, or, united states":[58.3,41.7],
+  "liege, belgium":[58.3,41.7],
+  "puebla, mexico":[58.1,41.9],
+  "paris, france":[58.0,42.0],
+  "karachi, pakistan":[57.5,42.5],
+  "tehran, iran":[57.3,42.7],
+  "montevideo, uruguay":[56.5,43.5],
+  "asuncion, paraguay":[56.2,43.8],
+  "hamilton, canada":[56.2,43.8],
+  "manchester, united kingdom":[55.9,44.1],
+  "hamilton, new zealand":[55.9,44.1],
+  "san salvador, el salvador":[55.7,44.3],
+  "nice, france":[55.6,44.4],
+  "minneapolis, mn, united states":[55.6,44.4],
+  "san jose, costa rica":[55.6,44.4],
+  "london, united kingdom":[55.6,44.4],
+  "brampton, canada":[55.5,44.5],
+  "las vegas, nv, united states":[55.5,44.5],
+  "brussels, belgium":[55.4,44.6],
+  "seattle, wa, united states":[55.2,44.8],
+  "athens, greece":[55.2,44.8],
+  "odessa (odesa), ukraine":[55.2,44.8],
+  "noida, india":[55.1,44.9],
+  "ballarat, australia":[55.1,44.9],
+  "casablanca, morocco":[55.0,45.0],
+  "malmo, sweden":[55.0,45.0],
+  "cancun, mexico":[54.8,45.2],
+  "klang, malaysia":[54.8,45.2],
+  "jacksonville, fl, united states":[54.8,45.2],
+  "kamloops, canada":[54.8,45.2],
+  "tucson, az, united states":[54.7,45.3],
+  "amadora, portugal":[54.4,45.6],
+  "dublin, ireland":[54.2,45.8],
+  "los angeles, ca, united states":[54.1,45.9],
+  "gurgaon, india":[54.1,45.9],
+  "bangalore, india":[54.0,46.0],
+  "baghdad, iraq":[53.9,46.1],
+  "london, canada":[53.8,46.2],
+  "dnipro, ukraine":[53.7,46.3],
+  "medellin, colombia":[53.6,46.4],
+  "milan, italy":[53.5,46.5],
+  "regina, canada":[53.5,46.5],
+  "nanaimo, bc, canada":[53.5,46.5],
+  "miami, fl, united states":[53.3,46.7],
+  "almaty, kazakhstan":[53.1,46.9],
+  "phoenix, az, united states":[53.0,47.0],
+  "jakarta, indonesia":[52.8,47.2],
+  "nottingham, united kingdom":[52.7,47.3],
+  "thessaloniki, greece":[52.0,48.0],
+  "barcelona, spain":[51.9,48.1],
+  "turin, italy":[51.9,48.1],
+  "dallas, tx, united states":[51.7,48.3],
+  "rawalpindi, pakistan":[51.6,48.4],
+  "ulaanbaatar, mongolia":[51.5,48.5],
+  "new york, ny, united states":[51.1,48.9],
+  "algiers, algeria":[51.0,49.0],
+  "bali, indonesia":[51.0,49.0],
+  "lille, france":[51.0,49.0],
+  "drogheda, ireland":[50.6,49.4],
+  "phnom penh, cambodia":[50.6,49.4],
+  "auckland, new zealand":[50.5,49.5],
+  "cebu, philippines":[50.4,49.6],
+  "ho chi minh city, vietnam":[50.4,49.6],
+  "san miguel de allende, mexico":[50.0,50.0],
+  "cairo, egypt":[50.0,50.0],
+  "bari, italy":[49.9,50.1],
+  "minsk, belarus":[49.9,50.1],
+  "toulouse, france":[49.8,50.2],
+  "bordeaux, france":[49.8,50.2],
+  "addis ababa, ethiopia":[49.7,50.3],
+  "bilbao, spain":[49.5,50.5],
+  "moncton, canada":[49.5,50.5],
+  "columbus, oh, united states":[49.3,50.7],
+  "sacramento, ca, united states":[49.2,50.8],
+  "charlotte, nc, united states":[49.2,50.8],
+  "saskatoon, canada":[49.1,50.9],
+  "san antonio, tx, united states":[48.8,51.2],
+  "bologna, italy":[48.7,51.3],
+  "johor bahru, malaysia":[48.6,51.4],
+  "liverpool, united kingdom":[48.5,51.5],
+  "catania, italy":[48.5,51.5],
+  "tunis, tunisia":[48.5,51.5],
+  "indore, india":[48.2,51.8],
+  "monterrey, mexico":[48.1,51.9],
+  "raleigh, nc, united states":[48.0,52.0],
+  "istanbul, turkey":[48.0,52.0],
+  "orlando, fl, united states":[48.0,52.0],
+  "san jose, ca, united states":[48.0,52.0],
+  "belfast, united kingdom":[48.0,52.0],
+  "denver, co, united states":[48.0,52.0],
+  "newcastle, australia":[47.8,52.2],
+  "honolulu, hi, united states":[47.5,52.5],
+  "rome, italy":[47.3,52.7],
+  "st.catharines, canada":[47.3,52.7],
+  "kharkiv, ukraine":[47.2,52.8],
+  "gold coast, australia":[47.1,52.9],
+  "panama city, panama":[47.1,52.9],
+  "bremen, germany":[47.1,52.9],
+  "kolkata, india":[46.9,53.1],
+  "beirut, lebanon":[46.8,53.2],
+  "edmonton, canada":[46.8,53.2],
+  "stockholm, sweden":[46.5,53.5],
+  "windsor, canada":[46.5,53.5],
+  "florianopolis, brazil":[46.4,53.6],
+  "skopje, north macedonia":[46.1,53.9],
+  "pattaya, thailand":[45.9,54.1],
+  "gothenburg, sweden":[45.8,54.2],
+  "palermo, italy":[45.8,54.2],
+  "kiev (kyiv), ukraine":[45.5,54.5],
+  "lucknow (lakhnau), india":[45.5,54.5],
+  "cuenca, ecuador":[45.5,54.5],
+  "alexandria, egypt":[45.4,54.6],
+  "novosibirsk, russia":[45.3,54.7],
+  "glasgow, united kingdom":[45.2,54.8],
+  "leeds, united kingdom":[45.1,54.9],
+  "hanover, germany":[45.1,54.9],
+  "genoa, italy":[45.0,55.0],
+  "christchurch, new zealand":[44.9,55.1],
+  "cologne, germany":[44.7,55.3],
+  "kristiansand, norway":[44.6,55.4],
+  "berlin, germany":[44.5,55.5],
+  "frankfurt, germany":[44.5,55.5],
+  "tampa, fl, united states":[44.5,55.5],
+  "sarajevo, bosnia and herzegovina":[44.5,55.5],
+  "austin, tx, united states":[44.3,55.7],
+  "melbourne, australia":[44.2,55.8],
+  "mumbai, india":[44.1,55.9],
+  "mississauga, canada":[43.9,56.1],
+  "constanta, romania":[43.8,56.2],
+  "brooklyn, ny, united states":[43.7,56.3],
+  "limerick, ireland":[43.6,56.4],
+  "toronto, canada":[43.5,56.5],
+  "yekaterinburg, russia":[43.0,57.0],
+  "bristol, united kingdom":[43.0,57.0],
+  "kitchener, canada":[42.9,57.1],
+  "sheffield, united kingdom":[42.9,57.1],
+  "vaughan, canada":[42.8,57.2],
+  "vancouver, canada":[42.7,57.3],
+  "colombo, sri lanka":[42.6,57.4],
+  "hyderabad, india":[42.6,57.4],
+  "chandigarh, india":[42.4,57.6],
+  "perth, australia":[42.3,57.7],
+  "florence, italy":[42.1,57.9],
+  "leipzig, germany":[41.9,58.1],
+  "chisinau, moldova":[41.7,58.3],
+  "pune, india":[41.3,58.7],
+  "strasbourg, france":[40.8,59.2],
+  "craiova, romania":[40.5,59.5],
+  "chennai, india":[40.0,60.0],
+  "antwerp, belgium":[39.9,60.1],
+  "iloilo, philippines":[39.9,60.1],
+  "tirana, albania":[39.8,60.2],
+  "braga, portugal":[39.7,60.3],
+  "cardiff, united kingdom":[39.7,60.3],
+  "boston, ma, united states":[39.7,60.3],
+  "hamburg, germany":[39.7,60.3],
+  "san diego, ca, united states":[39.6,60.4],
+  "ankara, turkey":[39.5,60.5],
+  "victoria, canada":[39.4,60.6],
+  "newcastle upon tyne, united kingdom":[39.4,60.6],
+  "bonn, germany":[39.2,60.8],
+  "thiruvananthapuram, india":[39.0,61.0],
+  "halifax, canada":[39.0,61.0],
+  "brighton, united kingdom":[38.9,61.1],
+  "sofia, bulgaria":[38.8,61.2],
+  "limassol, cyprus":[38.7,61.3],
+  "kingston, canada":[38.7,61.3],
+  "pittsburgh, pa, united states":[38.6,61.4],
+  "novi sad, serbia":[38.6,61.4],
+  "boise, id, united states":[38.4,61.6],
+  "bangkok, thailand":[38.2,61.8],
+  "brisbane, australia":[38.2,61.8],
+  "makati, philippines":[38.1,61.9],
+  "calgary, canada":[37.8,62.2],
+  "queretaro (santiago de quer\u00e9taro), mexico":[37.8,62.2],
+  "belgrade, serbia":[37.8,62.2],
+  "lodz, poland":[37.7,62.3],
+  "saint petersburg, russia":[37.7,62.3],
+  "riga, latvia":[37.5,62.5],
+  "amman, jordan":[37.4,62.6],
+  "cork, ireland":[37.2,62.8],
+  "lviv, ukraine":[37.2,62.8],
+  "lahore, pakistan":[36.9,63.1],
+  "kathmandu, nepal":[36.7,63.3],
+  "aberdeen, united kingdom":[36.7,63.3],
+  "kaunas, lithuania":[36.6,63.4],
+  "madison, wi, united states":[36.5,63.5],
+  "navi mumbai, india":[36.5,63.5],
+  "cagliari, italy":[36.5,63.5],
+  "karlsruhe, germany":[36.5,63.5],
+  "jerusalem, israel":[36.0,64.0],
+  "irvine, ca, united states":[36.0,64.0],
+  "salt lake city, ut, united states":[35.9,64.1],
+  "palma de mallorca, spain":[35.7,64.3],
+  "seville (sevilla), spain":[35.4,64.6],
+  "moscow, russia":[35.2,64.8],
+  "havana, cuba":[35.1,64.9],
+  "valencia, spain":[34.7,65.3],
+  "jaipur, india":[34.7,65.3],
+  "varna, bulgaria":[34.4,65.6],
+  "oslo, norway":[34.4,65.6],
+  "hobart, australia":[34.0,66.0],
+  "sydney, australia":[34.0,66.0],
+  "alicante, spain":[34.0,66.0],
+  "puerto vallarta, mexico":[33.9,66.1],
+  "iasi, romania":[33.9,66.1],
+  "budapest, hungary":[33.9,66.1],
+  "rabat, morocco":[33.8,66.2],
+  "hanoi, vietnam":[33.8,66.2],
+  "porto, portugal":[33.4,66.6],
+  "surat, india":[33.4,66.6],
+  "wellington, new zealand":[33.3,66.7],
+  "adelaide, australia":[33.2,66.8],
+  "astana (nur-sultan), kazakhstan":[33.2,66.8],
+  "izmir, turkey":[33.2,66.8],
+  "guelph, canada":[33.1,66.9],
+  "osaka, japan":[33.0,67.0],
+  "montreal, canada":[32.8,67.2],
+  "dusseldorf, germany":[32.7,67.3],
+  "lisbon, portugal":[32.6,67.4],
+  "freiburg im breisgau, germany":[32.3,67.7],
+  "lund, sweden":[32.1,67.9],
+  "nicosia, cyprus":[32.0,68.0],
+  "ahmedabad, india":[31.5,68.5],
+  "islamabad, pakistan":[31.4,68.6],
+  "basel, switzerland":[31.4,68.6],
+  "gdansk, poland":[31.3,68.7],
+  "ottawa, canada":[31.0,69.0],
+  "malaga, spain":[31.0,69.0],
+  "galway, ireland":[30.9,69.1],
+  "san sebastian, spain":[30.5,69.5],
+  "bratislava, slovakia":[30.5,69.5],
+  "edinburgh, united kingdom":[30.4,69.6],
+  "vadodara, india":[30.4,69.6],
+  "vilnius, lithuania":[30.1,69.9],
+  "baku, azerbaijan":[30.1,69.9],
+  "split, croatia":[30.1,69.9],
+  "nuremberg, germany":[30.0,70.0],
+  "stuttgart, germany":[30.0,70.0],
+  "dresden, germany":[29.8,70.2],
+  "geneva, switzerland":[29.4,70.6],
+  "antalya, turkey":[29.3,70.7],
+  "penang, malaysia":[29.2,70.8],
+  "burlington, canada":[28.9,71.1],
+  "kuwait city, kuwait":[28.8,71.2],
+  "bursa, turkey":[28.7,71.3],
+  "madrid, spain":[28.7,71.3],
+  "guangzhou, china":[28.6,71.4],
+  "davao, philippines":[28.6,71.4],
+  "bucharest, romania":[28.5,71.5],
+  "vienna, austria":[28.4,71.6],
+  "canberra, australia":[28.2,71.8],
+  "lausanne, switzerland":[28.1,71.9],
+  "luxembourg, luxembourg":[27.9,72.1],
+  "nizhny novgorod, russia":[27.8,72.2],
+  "poznan, poland":[27.7,72.3],
+  "trieste, italy":[27.6,72.4],
+  "graz, austria":[27.2,72.8],
+  "shanghai, china":[26.5,73.5],
+  "tashkent, uzbekistan":[26.2,73.8],
+  "rotterdam, netherlands":[26.0,74.0],
+  "bern, switzerland":[25.9,74.1],
+  "tel aviv-yafo, israel":[25.9,74.1],
+  "oakville, canada":[25.9,74.1],
+  "amsterdam, netherlands":[25.7,74.3],
+  "copenhagen, denmark":[25.7,74.3],
+  "mangalore, india":[25.6,74.4],
+  "warsaw, poland":[25.4,74.6],
+  "timisoara, romania":[25.4,74.6],
+  "tbilisi, georgia":[25.4,74.6],
+  "helsinki, finland":[25.4,74.6],
+  "wroclaw, poland":[25.3,74.7],
+  "zaragoza (saragossa), spain":[25.2,74.8],
+  "beijing, china":[25.1,74.9],
+  "tokyo, japan":[25.1,74.9],
+  "brasov, romania":[25.1,74.9],
+  "stavanger, norway":[25.1,74.9],
+  "jeddah (jiddah), saudi arabia":[25.0,75.0],
+  "shenzhen, china":[24.9,75.1],
+  "eskisehir, turkey":[24.9,75.1],
+  "krakow (cracow), poland":[24.8,75.2],
+  "prague, czech republic":[24.8,75.2],
+  "seoul, south korea":[24.7,75.3],
+  "brno, czech republic":[24.6,75.4],
+  "riyadh, saudi arabia":[24.6,75.4],
+  "reykjavik, iceland":[24.0,76.0],
+  "bergen, norway":[23.8,76.2],
+  "gent, belgium":[23.8,76.2],
+  "merida, mexico":[23.7,76.3],
+  "rijeka, croatia":[23.5,76.5],
+  "zurich, switzerland":[23.4,76.6],
+  "singapore, singapore":[22.5,77.5],
+  "quebec city, canada":[22.4,77.6],
+  "cluj-napoca, romania":[22.4,77.6],
+  "yerevan, armenia":[22.2,77.8],
+  "chiang mai, thailand":[22.1,77.9],
+  "ljubljana, slovenia":[21.8,78.2],
+  "tallinn, estonia":[21.7,78.3],
+  "lugano, switzerland":[21.6,78.4],
+  "groningen, netherlands":[21.6,78.4],
+  "hong kong, hong kong (china)":[21.4,78.6],
+  "zagreb, croatia":[21.4,78.6],
+  "tartu, estonia":[21.3,78.7],
+  "munich, germany":[21.1,78.9],
+  "trondheim, norway":[21.1,78.9],
+  "utrecht, netherlands":[21.0,79.0],
+  "eindhoven, netherlands":[20.9,79.1],
+  "tampere, finland":[20.4,79.6],
+  "the hague (den haag), netherlands":[20.0,80.0],
+  "muscat, oman":[18.7,81.3],
+  "taipei, taiwan":[16.5,83.5],
+  "dubai, united arab emirates":[16.1,83.9],
+  "doha, qatar":[15.5,84.5],
+  "sharjah, united arab emirates":[15.5,84.5],
+  "ajman, united arab emirates":[13.5,86.5],
+  "ras al-khaimah, united arab emirates":[13.4,86.6],
+  "abu dhabi, united arab emirates":[11.1,88.9]
+};
+
+// Look up Numbeo data for a city name string
+// Returns {ci, si, label, color} or null
+function numbeoLookup(cityName, countryName) {
+  if (!cityName) return null;
+  const attempts = [
+    `${cityName}, ${countryName}`.toLowerCase(),
+    cityName.toLowerCase(),
+    // Common remaps
+    cityName.replace(/^Greater /i,'').toLowerCase() + (countryName ? ', ' + countryName.toLowerCase() : ''),
+  ];
+  for (const key of attempts) {
+    if (NUMBEO[key]) {
+      const [ci, si] = NUMBEO[key];
+      // Derive WF-style label from safety index (0–100)
+      const label = si >= 80 ? 'Very safe' : si >= 65 ? 'Generally safe'
+                  : si >= 50 ? 'Moderate'  : si >= 35 ? 'Caution' : 'High caution';
+      const color = si >= 80 ? '#3FA34D' : si >= 65 ? '#A4C957'
+                  : si >= 50 ? '#FFC857' : si >= 35 ? '#F46036' : '#D7263D';
+      return { ci, si, label, color, key };
+    }
+  }
+  return null;
+}
+
+// Render Numbeo panel into targetId element
+function renderNumbeoPanel(cityName, countryName, targetId) {
+  const el = document.getElementById(targetId);
+  if (!el) return;
+  const n = numbeoLookup(cityName, countryName);
+  if (!n) { el.innerHTML = ''; return; }
+
+  const ciBar = Math.round(n.ci);
+  const siBar = Math.round(n.si);
+
+  el.innerHTML = `
+    <div style="margin:12px 24px 0;padding:12px;background:var(--cream);border-radius:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:var(--charcoal-soft)">Numbeo Crime Index</div>
+        <a href="https://www.numbeo.com/crime/in/${encodeURIComponent(cityName.replace(/ /g,'-'))}" target="_blank" rel="noopener" style="font-size:10px;color:var(--orange);text-decoration:none">Full report ↗</a>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+        <div class="meta-tile">
+          <div class="v" style="color:#D7263D">${n.ci}</div>
+          <div class="l">Crime Index</div>
+        </div>
+        <div class="meta-tile">
+          <div class="v" style="color:${n.color}">${n.si}</div>
+          <div class="l">Safety Index</div>
+        </div>
+      </div>
+      <div style="margin-bottom:6px">
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:2px">
+          <span>Crime risk</span><span style="color:var(--charcoal-soft)">${ciBar}/100</span>
+        </div>
+        <div style="height:5px;border-radius:3px;background:rgba(0,0,0,.08)">
+          <div style="height:100%;border-radius:3px;background:#D7263D;width:${ciBar}%"></div>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:2px">
+          <span>Safety</span><span style="color:${n.color}">${siBar}/100 · ${n.label}</span>
+        </div>
+        <div style="height:5px;border-radius:3px;background:rgba(0,0,0,.08)">
+          <div style="height:100%;border-radius:3px;background:${n.color};width:${siBar}%"></div>
+        </div>
+      </div>
+      <div style="font-size:10px;color:var(--charcoal-soft);margin-top:8px">
+        Crowd-sourced · <a href="https://www.numbeo.com/crime/rankings.jsp" target="_blank" rel="noopener" style="color:var(--orange)">Numbeo 2026 rankings ↗</a>
       </div>
     </div>`;
 }

@@ -1207,7 +1207,7 @@ function renderUSCity(cityData, crimes, periodLabel) {
             <div class="rating-tag">${rating.raw.toLocaleString()} incidents · ${escapeHtml(periodLabel)}</div>
           </div>
         </div>
-        <div class="rating-bar">${ranked ? '<div class="marker" style="left:${markerLeft}%"></div>' : ''}</div>
+        <div class="rating-bar">${ranked ? `<div class="marker" style="left:${markerLeft}%"></div>` : ''}</div>
         <div class="scale-row"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
       </div>
       <div class="meta-grid" style="margin:14px 24px 0">
@@ -1218,7 +1218,7 @@ function renderUSCity(cityData, crimes, periodLabel) {
         See detailed safety report
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
-      ${cityData.context ? '<div class="warning" style="margin:12px 24px 0">${escapeHtml(cityData.context)}</div>' : ''}
+      ${cityData.context ? `<div class="warning" style="margin:12px 24px 0">${escapeHtml(cityData.context)}</div>` : ''}
       ${renderAdvisoryPanel(cityData.name)}
       ${GUIDE_LINKS[cityData.name] ? `
       <button class="guide-btn" id="guideBtn" onclick="window.open('${GUIDE_LINKS[cityData.name]}', '_blank')">
@@ -1815,7 +1815,7 @@ function renderCity(name, lat, lng, crimes, month) {
             <div class="rating-tag">${rating.raw.toLocaleString()} recorded incidents · ${month}</div>
           </div>
         </div>
-        <div class="rating-bar">${ranked ? '<div class="marker" style="left:${markerLeft}%"></div>' : ''}</div>
+        <div class="rating-bar">${ranked ? `<div class="marker" style="left:${markerLeft}%"></div>` : ''}</div>
         <div class="scale-row"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
       </div>
       ${dataWarn}
@@ -2024,7 +2024,7 @@ function plotCrimes(geojson, centerLat, centerLng) {
         map.on('click', 'hex-fill', e => {
           const p = e.features[0].properties;
           const detail = p.n > 0
-            ? `${Number(p.n).toLocaleString()} recorded incident${p.n == 1 ? '' : 's'} this month${p.top ? '<br><span style="font-size:11px;color:#999">Most common: ${p.top}</span>' : ''}`
+            ? `${Number(p.n).toLocaleString()} recorded incident${p.n == 1 ? '' : 's'} this month${p.top ? `<br><span style="font-size:11px;color:#999">Most common: ${p.top}</span>` : ''}`
             : 'No incidents recorded this month — not enough data to grade';
           new maplibregl.Popup({ closeButton: true })
             .setLngLat(e.lngLat)
@@ -2243,7 +2243,7 @@ function openSafetyReport() {
           <div class="rr-sub">${subline}</div>
         </div>
       </div>
-      <div class="rating-bar">${ranked ? '<div class="marker" style="left:${markerLeft}%"></div>' : ''}</div>
+      <div class="rating-bar">${ranked ? `<div class="marker" style="left:${markerLeft}%"></div>` : ''}</div>
       <div class="report-scale"><span>Highest incidents</span><span>Lowest incidents</span></div>
     </div>
 
@@ -3356,7 +3356,7 @@ async function loadPOILayer(lat, lng) {
           <span style="width:8px;height:8px;border-radius:50%;background:${p.color};display:inline-block"></span>
           ${escapeHtml(cfg.label || p.cat)}
         </div>
-        ${p.url ? '<a href="${p.url}" target="_blank" rel="noopener" style="font-size:10px;color:#FF7B14;text-decoration:none;font-weight:600">Wikipedia ↗</a>' : ''}
+        ${p.url ? `<a href="${p.url}" target="_blank" rel="noopener" style="font-size:10px;color:#FF7B14;text-decoration:none;font-weight:600">Wikipedia ↗</a>` : ''}
       </div>`)
       .addTo(map);
   });
@@ -3566,11 +3566,11 @@ function renderSafetyInsight(name, sortedCats, rating, hostId) {
     : 'high crime levels';
 
   const crimePhrase = sortedCats.length
-    ? `The leading recorded crime type is <strong style="color:var(--orange)">${escapeHtml(topLabel)}</strong>${top2Cat ? ', followed by ${escapeHtml(top2Label)}' : ''}.`
+    ? `The leading recorded crime type is <strong style="color:var(--orange)">${escapeHtml(topLabel)}</strong>${top2Cat ? `, followed by ${escapeHtml(top2Label)}` : ''}.`
     : 'Crime data is limited for this period.';
 
   const dataNotice = intel.dataNote
-    ? '<div style="font-size:10px;color:rgba(255,255,255,.45);margin-top:8px;font-style:italic">${escapeHtml(intel.dataNote)}</div>'
+    ? `<div style="font-size:10px;color:rgba(255,255,255,.45);margin-top:8px;font-style:italic">${escapeHtml(intel.dataNote)}</div>`
     : '';
 
   const safePills = intel.safe.slice(0, 5).map(a =>
@@ -3589,7 +3589,7 @@ function renderSafetyInsight(name, sortedCats, rating, hostId) {
     </div>
     <div class="insight-narrative">
       ${escapeHtml(intel.base)} This month shows ${escapeHtml(riskLevel)}.
-      ${crimePhrase} ${crimeCtx ? '<span style="color:rgba(255,255,255,.7)">${escapeHtml(crimeCtx)}</span>' : ''}
+      ${crimePhrase} ${crimeCtx ? `<span style="color:rgba(255,255,255,.7)">${escapeHtml(crimeCtx)}</span>` : ''}
     </div>
     <div class="insight-zones">
       <div class="insight-zone">
@@ -4571,10 +4571,10 @@ function renderCountrySidebar(geoName) {
 
   // ── PRIMARY: WF Safety Rating card ──────────────────────────────────
   const homLabel = wb
-    ? '${wb.r.toFixed(1)} intentional homicides per 100,000 (${wb.d})'
+    ? `${wb.r.toFixed(1)} intentional homicides per 100,000 (${wb.d})`
     : 'No World Bank homicide data available for this territory.';
   const wbSource = wb
-    ? '<div style="font-size:10px;color:var(--charcoal-soft);margin-top:10px">Homicide rate: ${wb.r.toFixed(2)} / 100k (${wb.d}) · <a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5" target="_blank" rel="noopener" style="color:var(--orange);text-decoration:none">World Bank ↗</a></div>'
+    ? `<div style="font-size:10px;color:var(--charcoal-soft);margin-top:10px">Homicide rate: ${wb.r.toFixed(2)} / 100k (${wb.d}) · <a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5" target="_blank" rel="noopener" style="color:var(--orange);text-decoration:none">World Bank ↗</a></div>`
     : '';
 
   document.getElementById('ratingHost').innerHTML = `

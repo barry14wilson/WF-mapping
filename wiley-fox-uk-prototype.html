@@ -222,6 +222,14 @@
   .wv-panel{font-size:12px;line-height:1.65;color:var(--charcoal);display:none}
   .wv-panel.active{display:block}
   .wv-loading{font-size:12px;color:var(--charcoal-soft);display:flex;align-items:center;gap:8px;padding:2px 0}
+  /* ── POI toggle + legend ── */
+  .poi-toggle-wrap{margin:12px 24px 0;display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--cream);border-radius:10px}
+  .poi-toggle-btn{display:flex;align-items:center;gap:7px;padding:6px 13px;border:1.5px solid rgba(35,35,35,.14);border-radius:20px;background:var(--cream-light);color:var(--charcoal);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap}
+  .poi-toggle-btn.active{background:var(--charcoal);color:#fff;border-color:var(--charcoal)}
+  .poi-toggle-btn svg{width:12px;height:12px;flex-shrink:0}
+  .poi-legend{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+  .poi-dot{display:inline-block;width:9px;height:9px;border-radius:50%;flex-shrink:0}
+  .poi-legend-item{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--charcoal-soft);font-weight:600}
   .rc-thanks{text-align:center;font-size:13px;font-weight:600;padding:12px 0 4px}
 </style>
 </head>
@@ -274,6 +282,8 @@
     <div id="catsHost"></div>
 
     <div id="wikivoyageHost"></div>
+
+    <div id="poiHost"></div>
 
     <div id="hotelsHost"></div>
 
@@ -1116,6 +1126,7 @@ async function loadUSCity(cityData) {
   document.getElementById('ratingHost').innerHTML = '<div class="loading"><span class="spinner"></span> Pulling live crime data…</div>';
   document.getElementById('catsHost').innerHTML = '';
   document.getElementById('wikivoyageHost').innerHTML = '';
+  document.getElementById('poiHost').innerHTML = '';
   document.getElementById('hotelsHost').innerHTML = '';
 
   try {
@@ -1547,6 +1558,7 @@ function renderGlobalCity(c) {
           </div>
         </div>`;
       renderWikivoyagePanel(c.name, 'wikivoyageHost');
+      if (c.lat && c.lng) renderPOIToggle(c.lat, c.lng, 'poiHost');
       renderHotels(c.name);
     } else {
       // Truly no data at all
@@ -1628,6 +1640,7 @@ function renderGlobalCity(c) {
   `;
 
   renderWikivoyagePanel(c.name, 'wikivoyageHost');
+  if (c.lat && c.lng) renderPOIToggle(c.lat, c.lng, 'poiHost');
   renderHotels(c.name);
 }
 
@@ -1836,6 +1849,9 @@ function renderCity(name, lat, lng, crimes, month) {
 
   // --- City guide (Wikivoyage)
   renderWikivoyagePanel(name, 'wikivoyageHost');
+
+  // --- Points of interest toggle
+  renderPOIToggle(lat, lng, 'poiHost');
 
   // --- Hotels (Booking.com referral)
   renderHotels(name);
@@ -3200,6 +3216,169 @@ async function renderFBIPanel(stateName, targetId) {
 
 
 
+// ── POINTS OF INTEREST (OpenStreetMap / Overpass API) ───────────────────
+// Free, no API key. Returns tourist attractions, food, transport near a lat/lng.
+const OVERPASS_URL = 'https://overpass-api.de/api/interpreter';
+
+// POI category config
+const POI_CATS = {
+  attraction: { label: 'Attractions', color: '#4A90D9', r: 6 },
+  historic:   { label: 'Historic',    color: '#AABA9F', r: 5 },
+  food:       { label: 'Food & Drink',color: '#FF7B14', r: 5 },
+  transport:  { label: 'Transport',   color: '#7B52AB', r: 6 },
+};
+
+let poiVisible = false;
+let poiCityKey = null;
+const poiCache = {};
+
+function poiCategoryOf(el) {
+  const t = el.tags || {};
+  if (/^(station|halt)$/.test(t.railway) || t.public_transport === 'station' || t.aeroway === 'aerodrome') return 'transport';
+  if (/^(attraction|museum|gallery|viewpoint|artwork|information)$/.test(t.tourism)) return 'attraction';
+  if (/^(monument|memorial|castle|ruins|battlefield|archaeological_site)$/.test(t.historic)) return 'historic';
+  if (/^(restaurant|bar|cafe|pub|food_court|fast_food|biergarten)$/.test(t.amenity)) return 'food';
+  return null;
+}
+
+async function fetchPOIs(lat, lng) {
+  const key = `${lat.toFixed(3)},${lng.toFixed(3)}`;
+  if (poiCache[key]) return poiCache[key];
+
+  const R = 4000; // metres radius for most categories
+  const Rf = 1500; // tighter radius for food (too many results otherwise)
+  const query = `[out:json][timeout:20];
+(
+  node["tourism"~"^(attraction|museum|gallery|viewpoint|artwork)$"](around:${R},${lat},${lng});
+  node["historic"~"^(monument|memorial|castle|ruins|battlefield)$"]["name"](around:${R},${lat},${lng});
+  node["amenity"~"^(restaurant|bar|cafe|pub|fast_food)$"]["name"](around:${Rf},${lat},${lng});
+  node["railway"~"^(station|halt)$"]["name"](around:${R},${lat},${lng});
+  node["public_transport"="station"]["name"](around:${R},${lat},${lng});
+  node["aeroway"="aerodrome"]["name"](around:${R * 4},${lat},${lng});
+);
+out body 80;`;
+
+  try {
+    const resp = await fetch(OVERPASS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'data=' + encodeURIComponent(query)
+    });
+    const data = await resp.json();
+    const elements = (data.elements || []).filter(el => el.lat && el.lon);
+
+    // Deduplicate by name within same category, cap at 60 total
+    const seen = new Set();
+    const features = [];
+    for (const el of elements) {
+      if (features.length >= 60) break;
+      const cat = poiCategoryOf(el);
+      if (!cat) continue;
+      const nameKey = (el.tags?.name || '').toLowerCase() + '|' + cat;
+      if (seen.has(nameKey)) continue;
+      seen.add(nameKey);
+      features.push({
+        type: 'Feature',
+        geometry: { type: 'Point', coordinates: [el.lon, el.lat] },
+        properties: {
+          name: el.tags?.name || 'Unnamed',
+          cat,
+          color: POI_CATS[cat].color,
+          r: POI_CATS[cat].r
+        }
+      });
+    }
+    poiCache[key] = features;
+    return features;
+  } catch(e) {
+    console.warn('[POI]', e.message);
+    return [];
+  }
+}
+
+function clearPOILayer() {
+  if (!map) return;
+  ['poi-labels','poi-circles'].forEach(id => { if (map.getLayer(id)) map.removeLayer(id); });
+  if (map.getSource('poi-source')) map.removeSource('poi-source');
+}
+
+async function loadPOILayer(lat, lng) {
+  clearPOILayer();
+  if (!lat || !lng) return;
+  const features = await fetchPOIs(lat, lng);
+  if (!features.length) return;
+
+  if (!map.isStyleLoaded()) { map.once('load', () => loadPOILayer(lat, lng)); return; }
+
+  map.addSource('poi-source', {
+    type: 'geojson',
+    data: { type: 'FeatureCollection', features }
+  });
+
+  map.addLayer({
+    id: 'poi-circles',
+    type: 'circle',
+    source: 'poi-source',
+    paint: {
+      'circle-color':        ['get', 'color'],
+      'circle-radius':       ['get', 'r'],
+      'circle-opacity':      0.9,
+      'circle-stroke-color': '#fff',
+      'circle-stroke-width': 1.5,
+    }
+  });
+
+  // Popup on click
+  map.on('click', 'poi-circles', e => {
+    const p = e.features[0].properties;
+    const cfg = POI_CATS[p.cat] || {};
+    new maplibregl.Popup({ closeButton: true, maxWidth: '200px', offset: 10 })
+      .setLngLat(e.features[0].geometry.coordinates)
+      .setHTML(`<div style="font-family:Inter,sans-serif;font-size:12px;line-height:1.4">
+        <div style="font-weight:700;margin-bottom:2px">${escapeHtml(p.name)}</div>
+        <div style="font-size:10px;color:#666;display:flex;align-items:center;gap:4px">
+          <span style="width:8px;height:8px;border-radius:50%;background:${p.color};display:inline-block"></span>
+          ${escapeHtml(cfg.label || p.cat)}
+        </div>
+      </div>`)
+      .addTo(map);
+  });
+  map.on('mouseenter', 'poi-circles', () => { map.getCanvas().style.cursor = 'pointer'; });
+  map.on('mouseleave', 'poi-circles', () => { map.getCanvas().style.cursor = ''; });
+}
+
+function togglePOIs(lat, lng) {
+  const btn = document.getElementById('poiToggleBtn');
+  if (poiVisible) {
+    clearPOILayer();
+    poiVisible = false;
+    if (btn) { btn.classList.remove('active'); btn.querySelector('.poi-btn-txt').textContent = 'Show Places'; }
+  } else {
+    loadPOILayer(lat, lng);
+    poiVisible = true;
+    if (btn) { btn.classList.add('active'); btn.querySelector('.poi-btn-txt').textContent = 'Hide Places'; }
+  }
+}
+
+function renderPOIToggle(lat, lng, hostId) {
+  const el = document.getElementById(hostId);
+  if (!el) return;
+  poiVisible = false; // reset state on new city
+  clearPOILayer();
+
+  const legendItems = Object.values(POI_CATS).map(c =>
+    `<span class="poi-legend-item"><span class="poi-dot" style="background:${c.color}"></span>${escapeHtml(c.label)}</span>`
+  ).join('');
+
+  el.innerHTML = `<div class="poi-toggle-wrap">
+    <button id="poiToggleBtn" class="poi-toggle-btn" onclick="togglePOIs(${lat},${lng})">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <span class="poi-btn-txt">Show Places</span>
+    </button>
+    <div class="poi-legend">${legendItems}</div>
+  </div>`;
+}
+
 // ── WIKIVOYAGE CITY GUIDE ─────────────────────────────────────────────
 // Free CC-BY-SA travel wiki. Fetches city overview, neighbourhoods,
 // eat/drink, sleep, and getting-around sections via MediaWiki API.
@@ -3938,6 +4117,7 @@ function setMode(mode) {
       </div>`;
     document.getElementById('catsHost').innerHTML = '';
     document.getElementById('wikivoyageHost').innerHTML = '';
+    document.getElementById('poiHost').innerHTML = '';
     document.getElementById('hotelsHost').innerHTML = '';
   }
 }
@@ -3959,6 +4139,8 @@ function hideBackBtn() {
 }
 
 function goBack() {
+  clearPOILayer();
+  poiVisible = false;
   hideBackBtn();
   // Clear search box
   const si = document.getElementById('searchInput');
@@ -3979,6 +4161,7 @@ function goBack() {
       </div>`;
     document.getElementById('catsHost').innerHTML = '';
     document.getElementById('wikivoyageHost').innerHTML = '';
+    document.getElementById('poiHost').innerHTML = '';
     document.getElementById('hotelsHost').innerHTML = '';
     map.flyTo({ center: [-2.0, 53.5], zoom: 5.5, duration: 700 });
   }
@@ -4028,6 +4211,7 @@ function showGlobalMapEmptyState() {
     </div>`;
   document.getElementById('catsHost').innerHTML = '';
   document.getElementById('wikivoyageHost').innerHTML = '';
+  document.getElementById('poiHost').innerHTML = '';
   document.getElementById('hotelsHost').innerHTML = '';
 }
 
@@ -4332,6 +4516,7 @@ function showError(msg) {
     `<div class="warning" style="margin:18px 24px"><strong>Couldn't load data.</strong> ${friendly}<br><span style="opacity:.6;font-size:11px">Technical: ${escapeHtml(msg)}</span></div>`;
   document.getElementById('catsHost').innerHTML = '';
   document.getElementById('wikivoyageHost').innerHTML = '';
+  document.getElementById('poiHost').innerHTML = '';
   document.getElementById('hotelsHost').innerHTML = '';
 }
 function escapeHtml(s) {

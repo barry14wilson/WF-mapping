@@ -111,8 +111,10 @@
   .guide-btn svg{width:14px;height:14px}
 
   /* Mode toggle */
-  .mode-toggle{display:flex;gap:0;margin:0 24px 16px;border-radius:10px;overflow:hidden;border:1.5px solid rgba(35,35,35,.12);background:var(--cream-light)}
-  .mode-btn{flex:1;padding:9px 10px;border:none;background:transparent;cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--charcoal-soft);transition:all .18s;display:flex;align-items:center;justify-content:center;gap:6px}
+  /* Mode toggle — sticky top nav strip */
+  .sidebar-top{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid rgba(35,35,35,.07)}
+  .mode-toggle{display:flex;gap:0;margin:10px 16px 10px;border-radius:10px;overflow:hidden;border:1.5px solid rgba(35,35,35,.15);background:var(--cream-light)}
+  .mode-btn{flex:1;padding:10px 8px;border:none;background:transparent;cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--charcoal-soft);transition:all .18s;display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
   .mode-btn.active{background:var(--charcoal);color:#fff}
   .mode-btn:first-child{border-right:1.5px solid rgba(35,35,35,.12)}
 
@@ -213,24 +215,25 @@
 <body>
 <div class="app">
   <aside class="sidebar">
-    <div class="brand">
-      <div class="logo">WF</div>
-      <div>
-        <h1>Wiley Fox</h1>
-        <small>Global Safety Map · Prototype</small>
+    <!-- Sticky top bar: brand + mode toggle — never scrolls away -->
+    <div class="sidebar-top">
+      <div class="brand">
+        <div class="logo">WF</div>
+        <div>
+          <h1>Wiley Fox</h1>
+          <small>Global Safety Map · Prototype</small>
+        </div>
       </div>
-    </div>
-
-    <!-- Mode toggle — always visible -->
-    <div class="mode-toggle" style="margin-top:14px">
-      <button class="mode-btn active" id="modeUK" onclick="setMode('uk')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/></svg>
-        UK · Live data
-      </button>
-      <button class="mode-btn" id="modeGlobal" onclick="setMode('global')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/></svg>
-        Global · 186 countries
-      </button>
+      <div class="mode-toggle">
+        <button class="mode-btn active" id="modeUK" onclick="setMode('uk')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/></svg>
+          UK · Live data
+        </button>
+        <button class="mode-btn" id="modeGlobal" onclick="setMode('global')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/></svg>
+          Global · 186 countries
+        </button>
+      </div>
     </div>
 
     <!-- Search bar — always visible, never hidden by mode changes -->

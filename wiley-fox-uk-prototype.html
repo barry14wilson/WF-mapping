@@ -42,6 +42,16 @@
   .search-row input:focus{outline:none;border-color:var(--orange);background:#fff}
   .search-row button{padding:10px 14px;border:none;border-radius:10px;background:var(--charcoal);color:#fff;cursor:pointer;font-weight:500;font-size:13px}
   .search-row button:hover{background:var(--charcoal-soft)}
+  /* Permanent search bar — never hidden */
+  .search-permanent{padding:14px 24px 10px;border-bottom:1px solid rgba(35,35,35,.06)}
+  .search-permanent .search-row{margin-bottom:0}
+  /* My location icon button */
+  #myLocationBtn{padding:10px 11px;border:none;border-radius:10px;background:var(--cream);color:var(--charcoal);cursor:pointer;font-size:13px;transition:all .15s;border:1.5px solid rgba(35,35,35,.12);flex-shrink:0}
+  #myLocationBtn:hover{background:var(--orange);color:#fff;border-color:var(--orange)}
+  /* Back button */
+  .back-btn{display:flex;align-items:center;gap:6px;margin-top:10px;padding:8px 12px;border:1.5px solid rgba(35,35,35,.12);border-radius:9px;background:var(--cream-light);color:var(--charcoal);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;width:100%}
+  .back-btn:hover{background:var(--cream);border-color:var(--charcoal)}
+  .back-btn svg{flex-shrink:0}
 
   /* Rating */
   .rating-card{padding:24px;background:linear-gradient(135deg,var(--cream) 0%,var(--cream-light) 100%);border-radius:var(--radius);margin:0 24px}
@@ -205,23 +215,32 @@
       </div>
     </div>
 
-    <div class="mode-toggle">
+    <!-- Mode toggle — always visible -->
+    <div class="mode-toggle" style="margin-top:14px">
       <button class="mode-btn active" id="modeUK" onclick="setMode('uk')">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/></svg>
         UK · Live data
       </button>
       <button class="mode-btn" id="modeGlobal" onclick="setMode('global')">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/></svg>
-        Global · 222 countries
+        Global · 186 countries
       </button>
     </div>
 
-    <div class="section">
-      <h2>Search anywhere</h2>
-      <div class="search-row" style="margin-bottom:10px">
-        <input id="searchInput" type="text" placeholder="e.g. Paris, Tokyo, Brighton…" />
+    <!-- Search bar — always visible, never hidden by mode changes -->
+    <div class="search-permanent">
+      <div class="search-row">
+        <input id="searchInput" type="text" placeholder="Search a city or country…" />
+        <button id="myLocationBtn" title="Use my location">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/></svg>
+        </button>
         <button id="searchBtn">Go</button>
       </div>
+      <div id="backBtnHost"></div>
+    </div>
+
+    <!-- City quick-select grids (hidden in global choropleth mode) -->
+    <div class="section" id="cityGridSection">
       <div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--charcoal-soft);font-weight:600;margin-bottom:6px">UK cities · live data</div>
       <div class="city-grid" id="cityGrid"></div>
       <div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--charcoal-soft);font-weight:600;margin-top:12px;margin-bottom:6px">Global cities · safety index</div>
@@ -923,7 +942,12 @@ DEFAULT_CITIES.forEach(c => {
   btn.dataset.lat = c.lat;
   btn.dataset.lng = c.lng;
   btn.dataset.name = c.name;
-  btn.onclick = () => loadCity(c.name, c.lat, c.lng);
+  btn.onclick = () => {
+    const gs = document.getElementById('cityGridSection');
+    if (gs) gs.style.display = 'none';
+    showBackBtn('← Back to city overview');
+    loadCity(c.name, c.lat, c.lng);
+  };
   cityGrid.appendChild(btn);
 });
 
@@ -947,6 +971,7 @@ document.getElementById('searchBtn').onclick = handleSearch;
 document.getElementById('searchInput').addEventListener('keydown', e => {
   if (e.key === 'Enter') handleSearch();
 });
+document.getElementById('myLocationBtn').addEventListener('click', handleMyLocation);
 async function handleSearch() {
   const q = document.getElementById('searchInput').value.trim();
   if (!q) return;
@@ -958,6 +983,10 @@ async function handleSearch() {
   );
   if (globalMatch) {
     document.querySelectorAll('.city').forEach(b => b.classList.remove('active'));
+    // Hide city grid, show back button
+    const gs = document.getElementById('cityGridSection');
+    if (gs) gs.style.display = 'none';
+    showBackBtn('← Back to city overview');
     loadGlobalCity(globalMatch);
     return;
   }
@@ -971,6 +1000,11 @@ async function handleSearch() {
 
   const lat = parseFloat(j[0].lat);
   const lng = parseFloat(j[0].lon);
+
+  // Hide city grid, show back button
+  const gs = document.getElementById('cityGridSection');
+  if (gs) gs.style.display = 'none';
+  showBackBtn('← Back to city overview');
 
   if (isUKCoords(lat, lng)) {
     loadCity(q, lat, lng);
@@ -1521,6 +1555,9 @@ async function fetchJSON(url, { retries = 2, delay = 600 } = {}) {
 
 // --- Core: load a city ----------------------------------------------
 let loadToken = 0;
+// Alias for My Location button
+async function loadCityByCoords(name, lat, lng) { return loadCity(name, lat, lng); }
+
 async function loadCity(name, lat, lng) {
   const myToken = ++loadToken; // ignore stale responses if user clicks again quickly
   activeCityName = name;
@@ -3615,16 +3652,17 @@ function setMode(mode) {
   currentMode = mode;
   document.getElementById('modeUK').classList.toggle('active', mode === 'uk');
   document.getElementById('modeGlobal').classList.toggle('active', mode === 'global');
-  document.getElementById('mapLegend').style.display   = mode === 'uk'     ? '' : 'none';
+  document.getElementById('mapLegend').style.display    = mode === 'uk'     ? '' : 'none';
   document.getElementById('globalLegend').style.display = mode === 'global' ? '' : 'none';
+
+  // City quick-select grid hides in global choropleth mode (search bar stays visible)
+  const gridSection = document.getElementById('cityGridSection');
+  if (gridSection) gridSection.style.display = mode === 'global' ? 'none' : '';
 
   const sourcePill = document.getElementById('sourcePill');
   if (mode === 'global') {
     sourcePill.innerHTML = 'Safety: <a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5" target="_blank" rel="noopener">World Bank</a> + <a href="https://ec.europa.eu/eurostat" target="_blank" rel="noopener">Eurostat</a> + <a href="https://www.gov.uk/foreign-travel-advice" target="_blank" rel="noopener">FCDO</a> · OC: <a href="https://ocindex.net" target="_blank" rel="noopener">GI 2025</a> · Map © OpenStreetMap';
-    // Hide UK city grid section labels
-    document.querySelectorAll('#cityGrid, #globalCityGrid').forEach(el => {
-      el.closest('.section') && (el.closest('.section').style.display = mode === 'global' ? 'none' : '');
-    });
+    hideBackBtn();
     showGlobalMapEmptyState();
     setHexVisibility(false);
     closeSafetyReport();
@@ -3632,12 +3670,10 @@ function setMode(mode) {
     map.flyTo({ center: [10, 20], zoom: 1.8, duration: 900 });
   } else {
     sourcePill.innerHTML = 'Data: <a href="https://data.police.uk" target="_blank" rel="noopener">data.police.uk</a> · Map © OpenStreetMap';
-    document.querySelectorAll('#cityGrid, #globalCityGrid').forEach(el => {
-      el.closest('.section') && (el.closest('.section').style.display = '');
-    });
+    hideBackBtn();
     removeGlobalLayers();
     setHexVisibility(true);
-    map.flyTo({ center: [15.0, 40.0], zoom: 3.2, duration: 900 });
+    map.flyTo({ center: [-2.0, 53.5], zoom: 5.5, duration: 900 });
     // Reset sidebar to default UK state
     document.getElementById('ratingHost').innerHTML = `
       <div class="empty-state">
@@ -3648,6 +3684,82 @@ function setMode(mode) {
     document.getElementById('catsHost').innerHTML = '';
     document.getElementById('hotelsHost').innerHTML = '';
   }
+}
+
+// ── Back button helpers ───────────────────────────────────────────────
+function showBackBtn(label) {
+  const host = document.getElementById('backBtnHost');
+  if (!host) return;
+  host.innerHTML = `
+    <button class="back-btn" onclick="goBack()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      ${label || 'Back to map overview'}
+    </button>`;
+}
+
+function hideBackBtn() {
+  const host = document.getElementById('backBtnHost');
+  if (host) host.innerHTML = '';
+}
+
+function goBack() {
+  hideBackBtn();
+  // Clear search box
+  const si = document.getElementById('searchInput');
+  if (si) si.value = '';
+  // Show city grids again
+  const gs = document.getElementById('cityGridSection');
+  if (gs) gs.style.display = '';
+  // Reset sidebar content
+  if (currentMode === 'global') {
+    showGlobalMapEmptyState();
+    map.flyTo({ center: [10, 20], zoom: 1.8, duration: 700 });
+  } else {
+    document.getElementById('ratingHost').innerHTML = `
+      <div class="empty-state">
+        <div class="ico">🦊</div>
+        <strong>Pick a city</strong> to see the Wiley Fox safety rating.<br><br>
+        <span style="font-size:12px;color:var(--charcoal-soft)">UK cities show live street-level crime data.<br>Global cities show country-level safety index.</span>
+      </div>`;
+    document.getElementById('catsHost').innerHTML = '';
+    document.getElementById('hotelsHost').innerHTML = '';
+    map.flyTo({ center: [-2.0, 53.5], zoom: 5.5, duration: 700 });
+  }
+}
+
+// ── My Location ───────────────────────────────────────────────────────
+function handleMyLocation() {
+  const btn = document.getElementById('myLocationBtn');
+  if (!navigator.geolocation) {
+    alert('Geolocation is not supported by your browser.');
+    return;
+  }
+  if (btn) { btn.style.opacity = '0.5'; btn.disabled = true; }
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      if (btn) { btn.style.opacity = ''; btn.disabled = false; }
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
+      // UK bounding box: lat 49.9–60.9, lng -8.2–1.8
+      const inUK = lat >= 49.9 && lat <= 60.9 && lng >= -8.2 && lng <= 1.8;
+      if (inUK) {
+        setMode('uk');
+        map.flyTo({ center: [lng, lat], zoom: 13, duration: 800 });
+        showBackBtn('Back to city overview');
+        showLoading();
+        loadCityByCoords('Your location', lat, lng);
+      } else {
+        setMode('global');
+        map.flyTo({ center: [lng, lat], zoom: 6, duration: 800 });
+        showBackBtn('Back to world overview');
+      }
+    },
+    err => {
+      if (btn) { btn.style.opacity = ''; btn.disabled = false; }
+      alert('Could not get your location. Please check your browser permissions.');
+    },
+    { timeout: 8000, maximumAge: 60000 }
+  );
 }
 
 function showGlobalMapEmptyState() {

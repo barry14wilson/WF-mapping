@@ -1575,6 +1575,7 @@ function renderGlobalCity(c) {
             Travellers should research specific neighbourhoods and check government advisories before visiting.
           </div>
         </div>`;
+      renderGlobalInsight(c, 'insightHost');
       renderWikivoyagePanel(c.name, 'wikivoyageHost');
       if (c.lat && c.lng) renderPOIToggle(c.lat, c.lng, 'poiHost');
       renderHotels(c.name);
@@ -1658,6 +1659,7 @@ function renderGlobalCity(c) {
     </div>
   `;
 
+  renderGlobalInsight(c, 'insightHost');
   renderWikivoyagePanel(c.name, 'wikivoyageHost');
   if (c.lat && c.lng) renderPOIToggle(c.lat, c.lng, 'poiHost');
   renderHotels(c.name);
@@ -3526,6 +3528,151 @@ const CITY_INTEL = {
   },
 };
 
+
+// ── Global city travel intelligence ──────────────────────────────────
+// Curated safe/alert areas + narrative for all GLOBAL_CITIES entries.
+// Keys match city names lowercased.
+const GLOBAL_INTEL = {
+  'paris': {
+    base: `Paris is overwhelmingly safe for tourists. Violent crime is rare; opportunistic pickpocketing at crowded attractions is the main concern.`,
+    safe:  [`Marais`, `Saint-Germain-des-Prés`, `Luxembourg Quarter`, `7th Arr. (Eiffel area)`],
+    alert: [`Around Gare du Nord (late night)`, `Les Halles / Châtelet`, `Barbès-Rochechouart`],
+    tip:   `Pickpocketing at the Eiffel Tower, Louvre and on the Métro is the primary risk — keep valuables zipped and bags front-facing.`
+  },
+  'barcelona': {
+    base: `Barcelona is generally safe but has the highest pickpocket rate of any European city. Stay alert in tourist corridors; violent crime against visitors is rare.`,
+    safe:  [`Eixample`, `Gràcia`, `Sarrià-Sant Gervasi`, `Barceloneta (daytime)`],
+    alert: [`La Rambla`, `Gothic Quarter (at night)`, `Raval`],
+    tip:   `La Rambla is one of Europe\'s top pickpocketing hotspots — never leave bags unattended at cafés and keep phones in pockets.`
+  },
+  'rome': {
+    base: `Rome is safe for tourists overall. Petty theft around major monuments and on crowded buses is the primary concern; violent crime towards visitors is rare.`,
+    safe:  [`Prati (Vatican area)`, `Trastevere (daytime)`, `Parioli`, `Aventino`],
+    alert: [`Termini station area`, `Colosseum surrounds (touts)`, `Piazza Navona at night`],
+    tip:   `Distraction theft at the Trevi Fountain, Colosseum and on buses (#40, #64) is common — keep bags in front and phones pocketed.`
+  },
+  'amsterdam': {
+    base: `Amsterdam is one of Europe\'s safer capitals. The Red Light District draws antisocial behaviour late at night but daytime visits are safe.`,
+    safe:  [`Museum Quarter`, `Jordaan`, `De Pijp`, `Vondelpark area`],
+    alert: [`Red Light District (late night)`, `Centraal Station surrounds`, `Leidseplein weekend nights`],
+    tip:   `Bicycle theft is extremely common — always double-lock rental bikes. Watch for bag snatchers around Centraal Station.`
+  },
+  'berlin': {
+    base: `Berlin is generally safe and tolerant. Petty theft is the main concern; the city\'s nightlife areas see higher antisocial behaviour late at night.`,
+    safe:  [`Prenzlauer Berg`, `Charlottenburg`, `Schöneberg`, `Mitte (daytime)`],
+    alert: [`Görlitzer Park (after dark)`, `Kottbusser Tor area`, `Alexanderplatz late night`],
+    tip:   `Görlitzer Park has open drug dealing after dark — avoid it at night. Keep phone and wallet secure on the U-Bahn during peak hours.`
+  },
+  'lisbon': {
+    base: `Lisbon is one of Western Europe\'s safest capitals. Petty theft on iconic tram routes and in tourist squares is the main issue.`,
+    safe:  [`Belém`, `Príncipe Real`, `Alfama (daytime)`, `Cascais (day trip)`],
+    alert: [`Mouraria at night`, `Intendente / Anjos after midnight`, `Rossio / Baixa late night`],
+    tip:   `Tram 28E is notorious for pickpockets — avoid carrying valuables on it or take it at off-peak times with bags in front.`
+  },
+  'vienna': {
+    base: `Vienna consistently ranks among the world\'s safest and most liveable cities. Tourist crime is low; violent incidents involving visitors are rare.`,
+    safe:  [`1st District (Innere Stadt)`, `Naschmarkt area`, `Prater (daytime)`, `Hietzing`],
+    alert: [`Westbahnhof late night`, `Praterstern area`, `Parts of the 15th district`],
+    tip:   `Vienna is extremely safe by European standards. Standard bag awareness in tourist areas is sufficient; Praterstern has some evening disorder.`
+  },
+  'istanbul': {
+    base: `Istanbul is safe for tourists in the main areas. Scams targeting visitors (fake guides, overcharging taxis, touts) are more common than violent crime.`,
+    safe:  [`Sultanahmet`, `Bebek`, `Nişantaşı`, `Kadıköy (Asian side)`],
+    alert: [`Tarlabaşı district`, `Aksaray area`, `Taksim Square weekend nights`],
+    tip:   `Carpet shop and restaurant touts in Sultanahmet are persistent — politely decline and walk on. Always confirm the taxi meter is running before travel.`
+  },
+  'new york': {
+    base: `New York City is at historic crime lows. The main tourist areas are very safe; standard big-city awareness is all that\'s needed.`,
+    safe:  [`Midtown`, `Upper West / East Side`, `Brooklyn Heights`, `DUMBO`, `Greenwich Village`],
+    alert: [`Parts of the South Bronx`, `East New York (Brooklyn)`, `Some subway stations late night`],
+    tip:   `NYC is dramatically safer than its 1980s reputation. Keep your phone out of sight on the subway and stay alert at night in unfamiliar neighbourhoods.`
+  },
+  'miami': {
+    base: `Miami\'s tourist areas are safe and well-policed. The city has pockets of elevated crime that visitors rarely need to enter.`,
+    safe:  [`South Beach (tourist strip)`, `Brickell`, `Coral Gables`, `Wynwood (daytime)`],
+    alert: [`Overtown`, `Liberty City`, `Little Haiti late night`],
+    tip:   `Never leave valuables visible in a parked car — smash-and-grab is common. Use rideshare rather than walking after dark in unfamiliar areas.`
+  },
+  'toronto': {
+    base: `Toronto is one of North America\'s safest major cities. Violent crime is low and major tourist areas are extremely well-patrolled.`,
+    safe:  [`Downtown Core`, `The Beaches`, `Distillery District`, `Kensington Market (daytime)`],
+    alert: [`Jane / Finch corridor`, `Parts of Regent Park`, `Moss Park area`],
+    tip:   `Toronto is very safe for tourists. Standard urban precautions apply — the waterfront and Downtown Core are particularly well-suited to walking at night.`
+  },
+  'mexico city': {
+    base: `Mexico City\'s tourist neighbourhoods are generally safe and vibrant. Stay within established areas; some peripheral districts have elevated violent crime.`,
+    safe:  [`Polanco`, `Condesa`, `Roma Norte`, `Coyoacán`, `San Ángel`],
+    alert: [`Centro Histórico at night`, `Tepito`, `Doctores`, `Iztapalapa`],
+    tip:   `Use Uber or official taxi apps rather than hailing cabs on the street. Keep your phone off the table at restaurants and avoid displaying jewellery.`
+  },
+  'tokyo': {
+    base: `Tokyo is extraordinarily safe by global standards. Violent crime against tourists is virtually unheard of; the city runs on trust and social order.`,
+    safe:  [`Shinjuku`, `Shibuya`, `Asakusa`, `Harajuku`, `Akihabara`],
+    alert: [`Kabukichō (late night)`, `Some Roppongi clubs`, `Ueno Park after midnight`],
+    tip:   `Tokyo is one of the world\'s safest cities — lost property is routinely handed in. The main risk in Kabukichō is overpriced bar tabs from street touts.`
+  },
+  'bangkok': {
+    base: `Bangkok is safe for tourists in the main areas. Scams — gem tours, fake attractions, overcharged tuk-tuks — are far more common than violent crime.`,
+    safe:  [`Silom`, `Sukhumvit (lower sois)`, `Sathorn`, `Riverside / Charoenkrung`],
+    alert: [`Pat Pong at night`, `Around Khao San Road late night`, `Gem store tour scams`],
+    tip:   `Tuk-tuk drivers offering free rides to a gem store or tailor are running a scam — always politely decline. Use metered taxis or the Grab app.`
+  },
+  'sydney': {
+    base: `Sydney is one of the world\'s safer major cities. Visitors\' main risk is ocean rip currents at beaches, not crime.`,
+    safe:  [`CBD`, `Darling Harbour`, `Bondi Beach (daytime)`, `Manly`, `The Rocks`],
+    alert: [`Kings Cross late night`, `Parts of Redfern`, `Some Parramatta areas`],
+    tip:   `Always swim between the flags at Bondi — rip currents are far more dangerous than any crime risk. Kings Cross has calmed considerably since 2014 lockout laws.`
+  },
+  'dubai': {
+    base: `Dubai is one of the world\'s safest cities for tourists. Crime rates are exceptionally low; visitors are more likely to encounter legal misunderstandings than criminal threats.`,
+    safe:  [`Downtown Dubai`, `JBR (Jumeirah Beach)`, `Dubai Marina`, `Palm Jumeirah`, `Old Dubai (Deira / Bur Dubai)`],
+    alert: [`Naif market area late night`, `Some Deira alleys after midnight`],
+    tip:   `Local laws are strict — alcohol is only permitted in licensed venues and public displays of affection can attract a fine. Dress modestly outside hotels and resorts.`
+  },
+  'singapore': {
+    base: `Singapore consistently ranks as the world\'s safest city. Violent crime is virtually non-existent; petty theft is rare.`,
+    safe:  [`Orchard Road`, `Marina Bay`, `Sentosa`, `Clarke Quay`, `Chinatown`],
+    alert: [`Geylang (late night, legal but rough)`],
+    tip:   `Singapore\'s strict laws make crime extremely rare. The main visitor issue is accidentally breaking rules — jaywalking, littering and chewing gum in public all carry fines.`
+  },
+  'bali': {
+    base: `Bali is generally safe for tourists. Petty theft and scams (overcharging, fake tour operators) are more common than violent crime.`,
+    safe:  [`Seminyak`, `Ubud`, `Nusa Dua`, `Canggu`, `Sanur`],
+    alert: [`Kuta late night`, `Some Legian alleys`, `Around ATMs in Kuta`],
+    tip:   `Bag snatching from motorbikes is the main risk — keep bags on the side away from the road. Use ATMs inside malls or banks rather than street machines.`
+  },
+  'cape town': {
+    base: `Cape Town has elevated crime compared to European cities but its tourist zones are well-policed. Common sense and avoiding certain areas after dark significantly reduces risk.`,
+    safe:  [`Waterfront (V&A)`, `Camps Bay`, `Green Point`, `Constantia`],
+    alert: [`Cape Flats`, `Greenmarket Square at night`, `Isolated hiking trails (go in groups)`, `Khayelitsha`],
+    tip:   `Never hike Table Mountain alone — go in groups or use a guide. Do not leave valuables in cars anywhere in the city. Use Uber rather than hailing street taxis.`
+  },
+  'marrakech': {
+    base: `Marrakech is safe for tourists in the main areas. Persistent touts and unofficial guides are the primary nuisance; violent crime targeting tourists is rare.`,
+    safe:  [`Gueliz (Nouvelle Ville)`, `Hivernage`, `Palmeraie`],
+    alert: [`Deep Medina alleys at night`, `Djemaa el-Fna square (touts)`, `Near tanneries (false guide area)`],
+    tip:   `Unsolicited guides who "just want to help" will expect payment — politely decline and follow your offline map. Agree prices before sitting at Djemaa el-Fna food stalls.`
+  },
+  'chicago': {
+    base: `Chicago\'s tourist areas are safe and vibrant. The city\'s crime reputation relates to specific residential districts that travellers rarely visit.`,
+    safe:  [`The Loop`, `River North`, `Magnificent Mile`, `Lincoln Park`, `Wicker Park`],
+    alert: [`South Side (away from Hyde Park)`, `West Garfield Park`, `Englewood`],
+    tip:   `The lakefront and downtown corridor are very safe. Elevated violent crime is concentrated in specific South and West Side neighbourhoods far from visitor areas.`
+  },
+  'san francisco': {
+    base: `San Francisco\'s tourist areas are generally safe but the city has visible social challenges around Civic Center and the Tenderloin.`,
+    safe:  [`Embarcadero`, `Fisherman\'s Wharf`, `North Beach`, `Noe Valley`, `Cole Valley`],
+    alert: [`Tenderloin`, `SOMA (parts)`, `Civic Center`, `Sixth Street corridor`],
+    tip:   `Never leave anything visible in a parked car — smash-and-grab is the city\'s top tourist crime. The Tenderloin (west of Union Square) has open drug use; navigate around it.`
+  },
+  'los angeles': {
+    base: `LA\'s tourist areas are generally safe. The city\'s sprawl means crime is uneven — upmarket westside areas are very safe while some east and south areas carry higher risk.`,
+    safe:  [`Santa Monica`, `Venice (daytime)`, `Beverly Hills`, `West Hollywood`, `Silver Lake`],
+    alert: [`Skid Row`, `Parts of Hollywood Blvd at night`, `Compton`, `Parts of Koreatown late night`],
+    tip:   `LA is a driving city for good reason — use rideshare after dark. Never leave valuables in a car, even for a moment.`
+  }
+};
+
 // Crime-type action tips (dynamic, shown when that crime is #1)
 const CRIME_ACTION = {
   'theft-from-the-person':     `Keep bags zipped and phones in pockets — especially in crowds and on public transport.`,
@@ -3549,7 +3696,35 @@ function renderSafetyInsight(name, sortedCats, rating, hostId) {
 
   const key = name.toLowerCase().split(',')[0].trim().replace(/\s+city$/i, '');
   const intel = CITY_INTEL[key];
-  if (!intel) { el.innerHTML = ''; return; }
+
+  // ── UK fallback: no curated intel — render from live data only ──────
+  if (!intel) {
+    const topCat   = sortedCats[0]?.[0] || '';
+    const top2Cat  = sortedCats[1]?.[0] || '';
+    const topLabel  = CAT_LABEL[topCat]  || topCat;
+    const top2Label = CAT_LABEL[top2Cat] || top2Cat;
+    const actionTip = CRIME_ACTION[topCat] || 'Stay aware of your surroundings and keep valuables secure.';
+    const riskLevel = !rating.ranked ? 'low recorded incidents'
+      : rating.score >= 5 ? 'very low crime levels'
+      : rating.score >= 4 ? 'relatively low crime'
+      : rating.score >= 3 ? 'moderate crime levels'
+      : rating.score >= 2 ? 'elevated crime levels'
+      : 'high crime levels';
+    const crimePhrase = sortedCats.length
+      ? `The leading recorded crime type is <strong style="color:var(--orange)">${escapeHtml(topLabel)}</strong>${top2Cat ? `, followed by ${escapeHtml(top2Label)}` : ''}.`
+      : 'Crime data is limited for this period.';
+    el.innerHTML = `<div class="insight-wrap">
+      <div class="insight-header">
+        <div class="insight-icon">🦊</div>
+        <div class="insight-title">Wiley Fox Travel Intelligence</div>
+      </div>
+      <div class="insight-narrative">
+        This month shows ${escapeHtml(riskLevel)}. ${crimePhrase}
+      </div>
+      <div class="insight-tip"><strong>Tip:</strong> ${escapeHtml(actionTip)}</div>
+    </div>`;
+    return;
+  }
 
   const topCat  = sortedCats[0]?.[0] || '';
   const top2Cat = sortedCats[1]?.[0] || '';
@@ -3606,6 +3781,50 @@ function renderSafetyInsight(name, sortedCats, rating, hostId) {
   </div>`;
 }
 
+
+// ── Global city Travel Intelligence card ────────────────────────────
+function renderGlobalInsight(c, hostId) {
+  const el = document.getElementById(hostId);
+  if (!el) return;
+
+  const key = c.name.toLowerCase().trim();
+  const intel = GLOBAL_INTEL[key];
+
+  // Fallback: use the city context field if no curated intel
+  const base = intel ? intel.base : (c.context || '');
+  const tip  = intel ? intel.tip  : 'Research specific neighbourhoods before travelling and check your government\'s current travel advisory.';
+
+  const safePills = intel ? intel.safe.map(a =>
+    `<div class="insight-area">● ${escapeHtml(a)}</div>`
+  ).join('') : '';
+  const alertPills = intel ? intel.alert.map(a =>
+    `<div class="insight-area">● ${escapeHtml(a)}</div>`
+  ).join('') : '';
+
+  const zonesHtml = (safePills || alertPills) ? `
+    <div class="insight-zones">
+      ${safePills ? `<div class="insight-zone">
+        <div class="insight-zone-label safe">Safer for tourists</div>
+        ${safePills}
+      </div>` : ''}
+      ${alertPills ? `<div class="insight-zone">
+        <div class="insight-zone-label alert">Stay alert</div>
+        ${alertPills}
+      </div>` : ''}
+    </div>` : '';
+
+  if (!base && !tip) { el.innerHTML = ''; return; }
+
+  el.innerHTML = `<div class="insight-wrap">
+    <div class="insight-header">
+      <div class="insight-icon">🦊</div>
+      <div class="insight-title">Wiley Fox Travel Intelligence</div>
+    </div>
+    <div class="insight-narrative">${escapeHtml(base)}</div>
+    ${zonesHtml}
+    <div class="insight-tip"><strong>Tip:</strong> ${escapeHtml(tip)}</div>
+  </div>`;
+}
 // ── WIKIVOYAGE CITY GUIDE ─────────────────────────────────────────────
 // Free CC-BY-SA travel wiki. Fetches city overview, neighbourhoods,
 // eat/drink, sleep, and getting-around sections via MediaWiki API.

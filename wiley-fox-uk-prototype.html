@@ -924,10 +924,19 @@ const map = new maplibregl.Map({
     },
     layers: [{ id: 'basemap', type: 'raster', source: 'basemap' }],
   },
-  center: [15.0, 40.0], // Europe-centred to show UK + global cities
-  zoom: 3.2,
+  center: [-2.0, 53.5], // UK-centred (default UK mode)
+  zoom: 5.5,
 });
 map.addControl(new maplibregl.NavigationControl(), 'top-right');
+
+// Pre-warm: fetch GeoJSON + Canada advisories in background so Global mode
+// is instant when the user clicks the toggle
+map.once('load', () => {
+  loadCanadaAdvisories().catch(() => {});
+  // Silently pre-fetch GeoJSON and cache it — loadChoropleth checks choroplethLoaded
+  // so this won't double-add layers; it just warms the browser cache
+  fetch(WORLD_GEOJSON_URL).catch(() => {});
+});
 
 // Suppress noisy tile-load console errors (transient network blips).
 map.on('error', (e) => {
@@ -3895,7 +3904,7 @@ async function loadChoropleth() {
       type: 'fill',
       source: 'world-countries',
       paint: { 'fill-color': ['get','_wfFill'], 'fill-opacity': 1 },
-    }, 'basemap'); // insert below basemap labels if any
+    }); // on top of raster basemap — fill colors are semi-transparent
 
     // Border layer
     map.addLayer({

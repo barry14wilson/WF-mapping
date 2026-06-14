@@ -1244,6 +1244,9 @@ function renderUSCity(cityData, crimes, periodLabel) {
     </div>
   ` : '';
 
+  renderGlobalInsight(cityData, 'insightHost');
+  renderWikivoyagePanel(cityData.name, 'wikivoyageHost');
+  if (cityData.lat && cityData.lng) renderPOIToggle(cityData.lat, cityData.lng, 'poiHost');
   renderHotels(cityData.name);
 
   const features = crimes.map(c => ({

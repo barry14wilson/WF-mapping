@@ -209,6 +209,19 @@
   .src-tip:hover::after{opacity:1}
   /* keep tooltip on screen at sidebar edges */
   .src-tip.tip-left::after{left:auto;right:0;transform:none}
+  /* ── Wikivoyage City Guide tabs ── */
+  .wv-wrap{margin:12px 24px 0;padding:14px;background:var(--cream);border-radius:10px}
+  .wv-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .wv-label{font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--charcoal-soft);display:flex;align-items:center;gap:0}
+  .wv-full-link{font-size:10px;color:var(--orange);text-decoration:none;font-weight:600}
+  .wv-full-link:hover{text-decoration:underline}
+  .wv-tabs{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+  .wv-tab{padding:4px 11px;border:1.5px solid rgba(35,35,35,.14);border-radius:20px;background:transparent;font-size:11px;font-weight:600;color:var(--charcoal-soft);cursor:pointer;font-family:Inter,sans-serif;transition:all .15s;white-space:nowrap}
+  .wv-tab.active{background:var(--charcoal);color:#fff;border-color:var(--charcoal)}
+  .wv-tab:hover:not(.active){background:var(--cream-light);border-color:rgba(35,35,35,.25)}
+  .wv-panel{font-size:12px;line-height:1.65;color:var(--charcoal);display:none}
+  .wv-panel.active{display:block}
+  .wv-loading{font-size:12px;color:var(--charcoal-soft);display:flex;align-items:center;gap:8px;padding:2px 0}
   .rc-thanks{text-align:center;font-size:13px;font-weight:600;padding:12px 0 4px}
 </style>
 </head>
@@ -259,6 +272,8 @@
     <div id="ratingHost"></div>
 
     <div id="catsHost"></div>
+
+    <div id="wikivoyageHost"></div>
 
     <div id="hotelsHost"></div>
 
@@ -1100,6 +1115,7 @@ async function loadUSCity(cityData) {
   if (map.getSource('crimes')) map.getSource('crimes').setData({ type: 'FeatureCollection', features: [] });
   document.getElementById('ratingHost').innerHTML = '<div class="loading"><span class="spinner"></span> Pulling live crime data…</div>';
   document.getElementById('catsHost').innerHTML = '';
+  document.getElementById('wikivoyageHost').innerHTML = '';
   document.getElementById('hotelsHost').innerHTML = '';
 
   try {
@@ -1530,6 +1546,7 @@ function renderGlobalCity(c) {
             Travellers should research specific neighbourhoods and check government advisories before visiting.
           </div>
         </div>`;
+      renderWikivoyagePanel(c.name, 'wikivoyageHost');
       renderHotels(c.name);
     } else {
       // Truly no data at all
@@ -1547,6 +1564,7 @@ function renderGlobalCity(c) {
           <div id="numbeoNoDataHost"></div>
         </div>`;
       catsHost.innerHTML = '';
+      document.getElementById('wikivoyageHost').innerHTML = '';
       hotelsHost.innerHTML = '';
       renderFCDOPanel(c.country || c.name, 'fcdoHost');
       renderNumbeoPanel(c.name, c.country || '', 'numbeoNoDataHost');
@@ -1609,6 +1627,7 @@ function renderGlobalCity(c) {
     </div>
   `;
 
+  renderWikivoyagePanel(c.name, 'wikivoyageHost');
   renderHotels(c.name);
 }
 
@@ -1814,6 +1833,9 @@ function renderCity(name, lat, lng, crimes, month) {
     catsHost.after(ukNumHost);
     renderNumbeoPanel(name, 'United Kingdom', 'numbeoUKHost');
   }
+
+  // --- City guide (Wikivoyage)
+  renderWikivoyagePanel(name, 'wikivoyageHost');
 
   // --- Hotels (Booking.com referral)
   renderHotels(name);
@@ -3178,6 +3200,152 @@ async function renderFBIPanel(stateName, targetId) {
 
 
 
+// ── WIKIVOYAGE CITY GUIDE ─────────────────────────────────────────────
+// Free CC-BY-SA travel wiki. Fetches city overview, neighbourhoods,
+// eat/drink, sleep, and getting-around sections via MediaWiki API.
+const WV_API = 'https://en.wikivoyage.org/w/api.php';
+const WV_LABELS = {
+  'understand':'Overview','neighbourhoods':'Areas','districts':'Areas',
+  'get around':'Getting Around','get in':'Getting There',
+  'see':'See & Do','do':'See & Do','eat':'Eat & Drink','drink':'Eat & Drink',
+  'buy':'Shopping','sleep':'Sleep','stay safe':'Safety Notes',
+  'go next':null,'connect':null,'respects':null,'cope':null
+};
+const WV_NAME_MAP = {
+  'your location':null,'new york':'New York City','nyc':'New York City',
+  'washington dc':'Washington, D.C.','washington d.c.':'Washington, D.C.',
+  'rio de janeiro':'Rio de Janeiro','sao paulo':'São Paulo',
+  'ho chi minh city':'Ho Chi Minh City','kuala lumpur':'Kuala Lumpur',
+  'tel aviv':'Tel Aviv','buenos aires':'Buenos Aires',
+  'new delhi':'New Delhi','cape town':'Cape Town',
+};
+const wvCache = {};
+
+async function fetchWikivoyage(cityName) {
+  if (!cityName) return null;
+  const norm = cityName.toLowerCase().trim();
+  if (Object.prototype.hasOwnProperty.call(wvCache, norm)) return wvCache[norm];
+  const title = Object.prototype.hasOwnProperty.call(WV_NAME_MAP, norm)
+    ? WV_NAME_MAP[norm] : cityName;
+  if (!title) { wvCache[norm] = null; return null; }
+
+  try {
+    const url = WV_API + '?action=parse&page=' + encodeURIComponent(title)
+      + '&prop=text%7Csections&format=json&origin=*';
+    const resp = await fetch(url, { headers: { Accept: 'application/json' } });
+    const data = await resp.json();
+    if (data.error || !data.parse) { wvCache[norm] = null; return null; }
+
+    // Parse HTML client-side for clean text
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(data.parse.text['*'], 'text/html');
+    doc.querySelectorAll('.mw-editsection,.reflist,.references,.toc,[class*="noprint"],.listing-metadata').forEach(el => el.remove());
+
+    // Intro: first paragraphs before any h2
+    const introParas = [];
+    const root = doc.querySelector('.mw-parser-output') || doc.body;
+    for (const child of root.children) {
+      if (child.tagName === 'H2') break;
+      if (child.tagName === 'P') {
+        const t = child.textContent.trim();
+        if (t.length > 30) introParas.push(t);
+        if (introParas.join(' ').length > 480) break;
+      }
+    }
+
+    // Sections
+    const seen = new Set();
+    const sections = [];
+    for (const s of data.parse.sections) {
+      const key = s.line.toLowerCase().replace(/<[^>]+>/g, '').trim();
+      const label = WV_LABELS[key];
+      if (label === undefined || label === null || seen.has(label)) continue;
+      seen.add(label);
+
+      const h2s = [...doc.querySelectorAll('h2')];
+      const h2 = h2s.find(h => h.textContent.toLowerCase().includes(key));
+      if (!h2) continue;
+
+      const paras = [];
+      let n = h2.nextElementSibling;
+      while (n && n.tagName !== 'H2') {
+        if (n.tagName === 'P') {
+          const t = n.textContent.trim();
+          if (t.length > 20) paras.push(t);
+        }
+        if (paras.join(' ').length > 520) break;
+        n = n.nextElementSibling;
+      }
+      const content = paras.join(' ').slice(0, 540).trim();
+      if (content) sections.push({ label, content });
+    }
+
+    const result = {
+      title: data.parse.title,
+      url: 'https://en.wikivoyage.org/wiki/' + encodeURIComponent(title.replace(/ /g, '_')),
+      intro: introParas.join(' ').slice(0, 500).trim(),
+      sections
+    };
+    wvCache[norm] = result;
+    return result;
+
+  } catch (e) {
+    console.warn('[Wikivoyage]', cityName, e.message);
+    wvCache[norm] = null;
+    return null;
+  }
+}
+
+async function renderWikivoyagePanel(cityName, hostId) {
+  const el = document.getElementById(hostId);
+  if (!el) return;
+  const norm = (cityName || '').toLowerCase().trim();
+  if (!norm || norm === 'your location' || /^point\s*\(/.test(norm)) {
+    el.innerHTML = '';
+    return;
+  }
+  el.innerHTML = '<div class="wv-wrap"><div class="wv-loading"><span class="spinner" style="width:12px;height:12px;border-width:2px;display:inline-block"></span>&ensp;Loading city guide…</div></div>';
+
+  const data = await fetchWikivoyage(cityName);
+  if (!data || (!data.intro && !data.sections.length)) { el.innerHTML = ''; return; }
+
+  const uid = 'wv' + Math.random().toString(36).slice(2, 8);
+  const tabs = [];
+  if (data.intro) tabs.push({ key: 'overview', label: 'Overview', content: data.intro });
+  for (const s of data.sections) {
+    const key = s.label.toLowerCase().replace(/[^a-z]/g, '');
+    if (!tabs.find(t => t.key === key)) tabs.push({ key, label: s.label, content: s.content });
+  }
+  if (!tabs.length) { el.innerHTML = ''; return; }
+
+  const tabBtns = tabs.map((t, i) =>
+    `<button class="wv-tab${i===0?' active':''}" onclick="wvTab('${uid}','${t.key}')" data-uid="${uid}" data-key="${t.key}">${escapeHtml(t.label)}</button>`
+  ).join('');
+  const panels = tabs.map((t, i) =>
+    `<div id="${uid}-${t.key}" class="wv-panel${i===0?' active':''}">${escapeHtml(t.content)}<span style="opacity:.4"> …</span></div>`
+  ).join('');
+
+  el.innerHTML = `<div class="wv-wrap" id="${uid}-wrap">
+    <div class="wv-header">
+      <div class="wv-label">City Guide&ensp;${srcTip('Content from Wikivoyage — the free travel wiki (wikivoyage.org). CC-BY-SA licence.',true)}</div>
+      <a class="wv-full-link" href="${escapeHtml(data.url)}" target="_blank" rel="noopener">Full guide ↗</a>
+    </div>
+    <div class="wv-tabs">${tabBtns}</div>
+    ${panels}
+  </div>`;
+}
+
+function wvTab(uid, key) {
+  const wrap = document.getElementById(uid + '-wrap');
+  if (!wrap) return;
+  wrap.querySelectorAll('.wv-panel').forEach(p => p.classList.remove('active'));
+  wrap.querySelectorAll('.wv-tab').forEach(b => b.classList.remove('active'));
+  const panel = document.getElementById(uid + '-' + key);
+  if (panel) panel.classList.add('active');
+  const btn = wrap.querySelector('[data-uid="' + uid + '"][data-key="' + key + '"]');
+  if (btn) btn.classList.add('active');
+}
+
 // ── NUMBEO CRIME INDEX ────────────────────────────────────────────────
 // Crowd-sourced city crime + safety index for 400 cities (0–100 scale)
 // Source: numbeo.com/crime/rankings.jsp — compiled June 2026
@@ -3769,6 +3937,7 @@ function setMode(mode) {
         <span style="font-size:12px;color:var(--charcoal-soft)">UK cities show live street-level crime data.<br>Global cities show country-level safety index.</span>
       </div>`;
     document.getElementById('catsHost').innerHTML = '';
+    document.getElementById('wikivoyageHost').innerHTML = '';
     document.getElementById('hotelsHost').innerHTML = '';
   }
 }
@@ -3809,6 +3978,7 @@ function goBack() {
         <span style="font-size:12px;color:var(--charcoal-soft)">UK cities show live street-level crime data.<br>Global cities show country-level safety index.</span>
       </div>`;
     document.getElementById('catsHost').innerHTML = '';
+    document.getElementById('wikivoyageHost').innerHTML = '';
     document.getElementById('hotelsHost').innerHTML = '';
     map.flyTo({ center: [-2.0, 53.5], zoom: 5.5, duration: 700 });
   }
@@ -3857,6 +4027,7 @@ function showGlobalMapEmptyState() {
       <span style="font-size:12px;color:var(--charcoal-soft)">186+ countries · World Bank homicide data · Eurostat (EU) · OC Index 2025</span>
     </div>`;
   document.getElementById('catsHost').innerHTML = '';
+  document.getElementById('wikivoyageHost').innerHTML = '';
   document.getElementById('hotelsHost').innerHTML = '';
 }
 
@@ -4160,6 +4331,7 @@ function showError(msg) {
   document.getElementById('ratingHost').innerHTML =
     `<div class="warning" style="margin:18px 24px"><strong>Couldn't load data.</strong> ${friendly}<br><span style="opacity:.6;font-size:11px">Technical: ${escapeHtml(msg)}</span></div>`;
   document.getElementById('catsHost').innerHTML = '';
+  document.getElementById('wikivoyageHost').innerHTML = '';
   document.getElementById('hotelsHost').innerHTML = '';
 }
 function escapeHtml(s) {

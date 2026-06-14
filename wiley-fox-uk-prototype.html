@@ -222,6 +222,21 @@
   .wv-panel{font-size:12px;line-height:1.65;color:var(--charcoal);display:none}
   .wv-panel.active{display:block}
   .wv-loading{font-size:12px;color:var(--charcoal-soft);display:flex;align-items:center;gap:8px;padding:2px 0}
+  /* ── Safety Intelligence card ── */
+  .insight-wrap{margin:12px 24px 0;padding:14px;background:linear-gradient(135deg,#232323 0%,#2e2e2e 100%);border-radius:12px;color:#fff}
+  .insight-header{display:flex;align-items:center;gap:7px;margin-bottom:10px}
+  .insight-icon{width:24px;height:24px;border-radius:50%;background:var(--orange);display:grid;place-items:center;flex-shrink:0;font-size:12px}
+  .insight-title{font-size:10px;letter-spacing:.07em;text-transform:uppercase;font-weight:700;color:rgba(255,255,255,.6)}
+  .insight-narrative{font-size:12px;line-height:1.65;color:rgba(255,255,255,.9);margin-bottom:12px}
+  .insight-zones{display:flex;gap:8px;margin-bottom:10px}
+  .insight-zone{flex:1;background:rgba(255,255,255,.07);border-radius:8px;padding:8px 10px}
+  .insight-zone-label{font-size:9px;letter-spacing:.07em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+  .insight-zone-label.safe{color:#3FA34D}
+  .insight-zone-label.alert{color:#FFC857}
+  .insight-area{font-size:11px;color:rgba(255,255,255,.8);padding:2px 0;line-height:1.4}
+  .insight-tip{font-size:11px;color:rgba(255,255,255,.7);line-height:1.55;border-top:1px solid rgba(255,255,255,.1);padding-top:9px;margin-top:2px}
+  .insight-tip strong{color:var(--orange);font-weight:700}
+
   /* ── POI toggle + legend ── */
   .poi-toggle-wrap{margin:12px 24px 0;display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--cream);border-radius:10px}
   .poi-toggle-btn{display:flex;align-items:center;gap:7px;padding:6px 13px;border:1.5px solid rgba(35,35,35,.14);border-radius:20px;background:var(--cream-light);color:var(--charcoal);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap}
@@ -282,6 +297,8 @@
     <div id="catsHost"></div>
 
     <div id="wikivoyageHost"></div>
+
+    <div id="insightHost"></div>
 
     <div id="poiHost"></div>
 
@@ -1126,6 +1143,7 @@ async function loadUSCity(cityData) {
   document.getElementById('ratingHost').innerHTML = '<div class="loading"><span class="spinner"></span> Pulling live crime data…</div>';
   document.getElementById('catsHost').innerHTML = '';
   document.getElementById('wikivoyageHost').innerHTML = '';
+  document.getElementById('insightHost').innerHTML = '';
   document.getElementById('poiHost').innerHTML = '';
   document.getElementById('hotelsHost').innerHTML = '';
 
@@ -1577,6 +1595,7 @@ function renderGlobalCity(c) {
         </div>`;
       catsHost.innerHTML = '';
       document.getElementById('wikivoyageHost').innerHTML = '';
+    document.getElementById('insightHost').innerHTML = '';
       hotelsHost.innerHTML = '';
       renderFCDOPanel(c.country || c.name, 'fcdoHost');
       renderNumbeoPanel(c.name, c.country || '', 'numbeoNoDataHost');
@@ -1846,6 +1865,9 @@ function renderCity(name, lat, lng, crimes, month) {
     catsHost.after(ukNumHost);
     renderNumbeoPanel(name, 'United Kingdom', 'numbeoUKHost');
   }
+
+  // --- Safety Intelligence synthesis
+  renderSafetyInsight(name, sortedCats, rating, 'insightHost');
 
   // --- City guide (Wikivoyage)
   renderWikivoyagePanel(name, 'wikivoyageHost');
@@ -3374,6 +3396,216 @@ function renderPOIToggle(lat, lng, hostId) {
   </div>`;
 }
 
+// ── SAFETY INTELLIGENCE LAYER ────────────────────────────────────────
+// Structured city knowledge + live crime data injection → travel narrative.
+// Covers the 10 UK prototype cities + global fallback.
+
+const CITY_INTEL = {
+  'london': {
+    safe: ['South Kensington','Bloomsbury','Marylebone','Richmond','Greenwich','Covent Garden (day)'],
+    alert: ['Oxford Street (pickpockets)','Around major stations','Soho late-night'],
+    crimeCtx: {
+      'theft-from-the-person': 'Keep bags zipped and phones in pockets — this is the dominant risk in all tourist areas.',
+      'anti-social-behaviour': 'Mostly concentrated near entertainment districts in the evening. Stick to main streets after midnight.',
+      'violence-and-sexual-offences': 'Most incidents occur near late-night venues. Plan transport home before the night ends.',
+      'vehicle-crime': 'Don't leave valuables visible in hire cars or at kerbside.',
+      'burglary': 'Mainly residential — minimal impact on tourists. Standard hotel security applies.',
+      'drugs': 'Generally background noise. Be aware of who approaches you near transport hubs.',
+      'robbery': 'Phone snatching is the most common form. Keep phones out of sight in crowded streets.',
+    },
+    base: 'London is overwhelmingly safe for tourists. Most crime is opportunistic theft in busy areas — keeping a low profile with valuables is the main precaution.',
+  },
+  'manchester': {
+    safe: ['Didsbury','Chorlton','Northern Quarter (day)','Castlefield','Deansgate (early evening)'],
+    alert: ['Piccadilly Gardens area','Around Piccadilly Station late-night','Parts of Salford'],
+    crimeCtx: {
+      'theft-from-the-person': 'City centre shopping areas and the tram network are the main hotspots — stay aware in crowds.',
+      'anti-social-behaviour': 'Piccadilly Gardens has persistent issues — walk through, don't linger.',
+      'violence-and-sexual-offences': 'Clustered around the nightlife strip on Deansgate and Northern Quarter after midnight.',
+      'vehicle-crime': 'Use NCP car parks rather than street parking where possible.',
+      'drugs': 'Visible in and around Piccadilly Gardens. Keep moving and ignore approaches.',
+    },
+    base: 'Manchester is lively and welcoming. The city centre has improved significantly — the main caution is Piccadilly Gardens and the late-night bar scene.',
+    dataNote: 'Note: GMP under-reporting means the real incident count is likely higher than shown.',
+  },
+  'birmingham': {
+    safe: ['Jewellery Quarter','Edgbaston','Moseley','Harborne','City centre (day)','Digbeth (day)'],
+    alert: ['Some areas of Aston & Newtown','Handsworth (after dark)','City centre very late-night'],
+    crimeCtx: {
+      'theft-from-the-person': 'Highest risk in the Bullring shopping area and around New Street Station.',
+      'anti-social-behaviour': 'Broad Street entertainment district generates the majority of late-night incidents.',
+      'violence-and-sexual-offences': 'Broad Street and Hurst Street after midnight — plan your journey home early.',
+      'vehicle-crime': 'Park in well-lit multi-storey car parks — avoid residential side streets.',
+      'burglary': 'Elevated in some residential suburbs — sticks to tourists less than to residents.',
+    },
+    base: 'Birmingham is a welcoming city with a great food scene. The centre is safe during the day; late-night caution applies mainly to the Broad Street strip.',
+  },
+  'liverpool': {
+    safe: ['Albert Dock','Baltic Triangle (day)','Ropewalks (early evening)','Childwall','Woolton'],
+    alert: ['Around Lime Street Station late-night','Some parts of Toxteth','City centre very late-night'],
+    crimeCtx: {
+      'theft-from-the-person': 'Concert Square and Mathew Street (The Beatles quarter) on busy weekends — watch bags.',
+      'anti-social-behaviour': 'Concert Square and Ropewalks at closing time. Move away from venue exits promptly.',
+      'violence-and-sexual-offences': 'Nightlife areas — risk concentrated after midnight on weekends.',
+      'vehicle-crime': 'Use city centre car parks — tourist attractions have secure options nearby.',
+      'drugs': 'Some visibility around transport hubs. Standard urban awareness applies.',
+    },
+    base: 'Liverpool is one of the UK's most vibrant cities and very welcoming to tourists. The waterfront and cultural quarter are relaxed; late-night Ropewalks requires more care.',
+  },
+  'leeds': {
+    safe: ['Headingley','Chapel Allerton','Roundhay','City centre (day)','Victoria Quarter'],
+    alert: ['Around Leeds Station late-night','Kirkgate Market area at night','Parts of Chapeltown'],
+    crimeCtx: {
+      'theft-from-the-person': 'Leeds Kirkgate Market and the city centre retail core — standard crowd precautions.',
+      'anti-social-behaviour': 'Call Lane and Briggate entertainment area at weekends — busiest and noisiest after midnight.',
+      'violence-and-sexual-offences': 'Call Lane nightlife strip — plan your departure before last orders.',
+      'vehicle-crime': 'Avoid leaving luggage visible in hire cars, especially near the station.',
+      'burglary': 'Mainly a residential issue in student areas — less relevant for hotel-based visitors.',
+    },
+    base: 'Leeds is a confident, cosmopolitan city that's safe for visitors. The centre buzzes day and evening; the main late-night precautions apply to the Call Lane bar district.',
+  },
+  'bristol': {
+    safe: ['Clifton','Harbourside','Redcliffe','Cotham','Stokes Croft (day)'],
+    alert: ['Parts of St Pauls (after dark)','Stokes Croft very late-night','Around bus station'],
+    crimeCtx: {
+      'theft-from-the-person': 'Park Street and Cabot Circus shopping area are the main pickpocket hotspots.',
+      'anti-social-behaviour': 'Stokes Croft is culturally rich but has a boisterous late-night scene — fun with awareness.',
+      'violence-and-sexual-offences': 'King Street and Park Street bars — elevated on Friday and Saturday nights.',
+      'vehicle-crime': 'Clifton and the Harbourside have had issues with hire car break-ins — take luggage inside.',
+      'drugs': 'Stokes Croft is known for a relaxed attitude — visible but rarely affecting tourists.',
+    },
+    base: 'Bristol is one of England's most creative and liveable cities. Clifton and the Harbourside are excellent bases. Stokes Croft is fascinating — visit in the day first.',
+  },
+  'newcastle': {
+    safe: ['Jesmond','Heaton','Gosforth','Quayside (day and early evening)','Grainger Town'],
+    alert: ['Bigg Market late-night','Around Central Station after midnight','Some parts of Byker'],
+    crimeCtx: {
+      'theft-from-the-person': 'The Grainger Market and busy shopping areas — standard precautions.',
+      'anti-social-behaviour': 'The Bigg Market is famous for its nightlife and equally famous for late-night disorder. Visit earlier.',
+      'violence-and-sexual-offences': 'Bigg Market and Collingwood Street (the Diamond Strip) — most incidents after midnight.',
+      'vehicle-crime': 'Central station area and Quayside car parks — use well-lit spots.',
+      'drugs': 'Background presence near entertainment areas. Normal urban awareness.',
+    },
+    base: 'Newcastle is famously friendly and the Quayside and Grainger Town are excellent for tourists. The Bigg Market nightlife is legendary — arrive early and leave before it peaks.',
+  },
+  'cardiff': {
+    safe: ['Cardiff Bay','Pontcanna','Roath','Cathedral Road','City centre (day)'],
+    alert: ['St Mary Street very late-night','Central station area after midnight','Parts of Grangetown'],
+    crimeCtx: {
+      'theft-from-the-person': 'St Mary Street on match days and weekend nights — heightened pickpocket risk.',
+      'anti-social-behaviour': 'St Mary Street is Wales's busiest nightlife strip — alcohol-related incidents cluster here.',
+      'violence-and-sexual-offences': 'Cardiff nightlife is a significant generator — St Mary Street and the city centre bars.',
+      'vehicle-crime': 'Cardiff Bay is generally fine; avoid leaving luggage in cars near the castle.',
+      'drugs': 'Minimal tourist impact — standard awareness applies.',
+    },
+    base: 'Cardiff is a compact, walkable capital that's great for tourists. The castle, Bute Park and Cardiff Bay are excellent areas. St Mary Street is lively but safe earlier in the evening.',
+  },
+  'belfast': {
+    safe: ['Cathedral Quarter','Titanic Quarter','Botanic Avenue area','Stranmillis','Malone Road'],
+    alert: ['Parts of North Belfast (some interface areas)','Around Europa Bus Centre very late','Sandy Row area after dark'],
+    crimeCtx: {
+      'theft-from-the-person': 'City centre on busy days — particularly around Victoria Square shopping centre.',
+      'anti-social-behaviour': 'Cathedral Quarter bars on weekend nights — lively but generally managed well.',
+      'violence-and-sexual-offences': 'Cathedral Quarter late-night — plan your route home before the night ends.',
+      'vehicle-crime': 'Avoid leaving anything visible in hire cars across the city.',
+      'public-order': 'Some politically sensitive dates (July 12th parades) can affect certain areas — check local advice.',
+    },
+    base: 'Belfast has transformed dramatically and is one of the UK's most visited cities. The Titanic Quarter and Cathedral Quarter are must-visits. Murals and political history tours are fascinating and safe.',
+  },
+  'brighton': {
+    safe: ['Kemptown','Hove (towards Boundary Road)','North Laine (day)','Brunswick','Seven Dials'],
+    alert: ['The Lanes very late-night','Around Brighton Station at night','Some seafront spots after midnight'],
+    crimeCtx: {
+      'theft-from-the-person': 'The Lanes shopping district and seafront promenade on busy days — popular with pickpockets.',
+      'anti-social-behaviour': 'The seafront in summer and West Street nightlife area — elevated on warm weekends.',
+      'violence-and-sexual-offences': 'West Street bar strip after midnight — most incidents concentrate here.',
+      'vehicle-crime': 'Don't leave anything visible in cars anywhere in the city — a consistent local issue.',
+      'drugs': 'Brighton has a visible drug scene, particularly around the station and seafront. Standard awareness.',
+    },
+    base: 'Brighton is vibrant, creative and very tourist-friendly. The North Laine, Kemptown and seafront are all excellent. West Street late-night is the main area requiring more care.',
+  },
+};
+
+// Crime-type action tips (dynamic, shown when that crime is #1)
+const CRIME_ACTION = {
+  'theft-from-the-person':     'Keep bags zipped and phones in pockets — especially in crowds and on public transport.',
+  'anti-social-behaviour':     'This is mainly background noise — stay on main streets and away from isolated spots at night.',
+  'violence-and-sexual-offences': 'Most incidents are late-night near bars. Plan your way home before you go out.',
+  'vehicle-crime':             'Remove all valuables from your vehicle, even briefly. Don't leave bags visible on seats.',
+  'burglary':                  'Secure hotel room and accommodation as normal — this affects residents more than visitors.',
+  'other-theft':               'Keep an eye on belongings in cafes, restaurants and hotel lobbies.',
+  'robbery':                   'Keep phones and bags out of sight in busy areas. Be aware of your surroundings.',
+  'public-order':              'Avoid confrontations and move away from disturbances. Contact police if needed: 999.',
+  'drugs':                     'Ignore any approaches near transport hubs or entertainment areas. Don't engage.',
+  'shoplifting':               'For reference only — this doesn't affect tourists directly.',
+  'criminal-damage-arson':     'Stay away from any disturbance you see. Not typically tourist-facing.',
+  'bicycle-theft':             'Use the hotel's secure bike storage if cycling, or a D-lock on street fixtures.',
+  'other-crime':               'General awareness is your best protection. Trust your instincts.',
+};
+
+function renderSafetyInsight(name, sortedCats, rating, hostId) {
+  const el = document.getElementById(hostId);
+  if (!el) return;
+
+  const key = name.toLowerCase().split(',')[0].trim().replace(/\s+city$/i, '');
+  const intel = CITY_INTEL[key];
+  if (!intel) { el.innerHTML = ''; return; }
+
+  const topCat  = sortedCats[0]?.[0] || '';
+  const top2Cat = sortedCats[1]?.[0] || '';
+  const topLabel  = CAT_LABEL[topCat]  || topCat;
+  const top2Label = CAT_LABEL[top2Cat] || top2Cat;
+
+  // Dynamic narrative: weave in the actual crime pattern
+  const crimeCtx = intel.crimeCtx[topCat] || '';
+  const riskLevel = !rating.ranked ? 'low recorded incidents'
+    : rating.score >= 5 ? 'very low crime levels'
+    : rating.score >= 4 ? 'relatively low crime'
+    : rating.score >= 3 ? 'moderate crime levels'
+    : rating.score >= 2 ? 'elevated crime levels'
+    : 'high crime levels';
+
+  const crimePhrase = sortedCats.length
+    ? `The leading recorded crime type is <strong style="color:var(--orange)">${escapeHtml(topLabel)}</strong>${top2Cat ? `, followed by ${escapeHtml(top2Label)}` : ''}.`
+    : 'Crime data is limited for this period.';
+
+  const dataNotice = intel.dataNote
+    ? `<div style="font-size:10px;color:rgba(255,255,255,.45);margin-top:8px;font-style:italic">${escapeHtml(intel.dataNote)}</div>`
+    : '';
+
+  const safePills = intel.safe.slice(0, 5).map(a =>
+    `<div class="insight-area">● ${escapeHtml(a)}</div>`
+  ).join('');
+  const alertPills = intel.alert.slice(0, 4).map(a =>
+    `<div class="insight-area">● ${escapeHtml(a)}</div>`
+  ).join('');
+
+  const actionTip = CRIME_ACTION[topCat] || 'Stay aware of your surroundings and keep valuables secure.';
+
+  el.innerHTML = `<div class="insight-wrap">
+    <div class="insight-header">
+      <div class="insight-icon">🦊</div>
+      <div class="insight-title">Wiley Fox Travel Intelligence</div>
+    </div>
+    <div class="insight-narrative">
+      ${escapeHtml(intel.base)} This month shows ${escapeHtml(riskLevel)}.
+      ${crimePhrase} ${crimeCtx ? `<span style="color:rgba(255,255,255,.7)">${escapeHtml(crimeCtx)}</span>` : ''}
+    </div>
+    <div class="insight-zones">
+      <div class="insight-zone">
+        <div class="insight-zone-label safe">Safer for tourists</div>
+        ${safePills}
+      </div>
+      <div class="insight-zone">
+        <div class="insight-zone-label alert">Stay alert</div>
+        ${alertPills}
+      </div>
+    </div>
+    <div class="insight-tip"><strong>Tip:</strong> ${escapeHtml(actionTip)}</div>
+    ${dataNotice}
+  </div>`;
+}
+
 // ── WIKIVOYAGE CITY GUIDE ─────────────────────────────────────────────
 // Free CC-BY-SA travel wiki. Fetches city overview, neighbourhoods,
 // eat/drink, sleep, and getting-around sections via MediaWiki API.
@@ -4112,6 +4344,7 @@ function setMode(mode) {
       </div>`;
     document.getElementById('catsHost').innerHTML = '';
     document.getElementById('wikivoyageHost').innerHTML = '';
+    document.getElementById('insightHost').innerHTML = '';
     document.getElementById('poiHost').innerHTML = '';
     document.getElementById('hotelsHost').innerHTML = '';
   }
@@ -4156,6 +4389,7 @@ function goBack() {
       </div>`;
     document.getElementById('catsHost').innerHTML = '';
     document.getElementById('wikivoyageHost').innerHTML = '';
+    document.getElementById('insightHost').innerHTML = '';
     document.getElementById('poiHost').innerHTML = '';
     document.getElementById('hotelsHost').innerHTML = '';
     map.flyTo({ center: [-2.0, 53.5], zoom: 5.5, duration: 700 });
@@ -4206,6 +4440,7 @@ function showGlobalMapEmptyState() {
     </div>`;
   document.getElementById('catsHost').innerHTML = '';
   document.getElementById('wikivoyageHost').innerHTML = '';
+  document.getElementById('insightHost').innerHTML = '';
   document.getElementById('poiHost').innerHTML = '';
   document.getElementById('hotelsHost').innerHTML = '';
 }
@@ -4511,6 +4746,7 @@ function showError(msg) {
     `<div class="warning" style="margin:18px 24px"><strong>Couldn't load data.</strong> ${friendly}<br><span style="opacity:.6;font-size:11px">Technical: ${escapeHtml(msg)}</span></div>`;
   document.getElementById('catsHost').innerHTML = '';
   document.getElementById('wikivoyageHost').innerHTML = '';
+  document.getElementById('insightHost').innerHTML = '';
   document.getElementById('poiHost').innerHTML = '';
   document.getElementById('hotelsHost').innerHTML = '';
 }

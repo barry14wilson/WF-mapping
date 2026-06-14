@@ -201,6 +201,12 @@
   .rc-chip:hover{border-color:var(--orange);background:#fff;transform:translateY(-1px)}
   .rc-ends{display:flex;justify-content:space-between;font-size:10px;color:var(--charcoal-soft);margin-top:5px;font-weight:500}
   .rc-skip{display:block;margin:12px auto 0;border:none;background:none;font-size:12px;color:var(--charcoal-soft);cursor:pointer;text-decoration:underline;font-family:inherit}
+  /* Source tooltip chips */
+  .src-tip{position:relative;display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:rgba(35,35,35,.1);color:var(--charcoal-soft);font-size:9px;cursor:help;font-family:Inter,sans-serif;font-weight:700;vertical-align:middle;margin-left:5px;flex-shrink:0;line-height:1}
+  .src-tip::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);background:var(--charcoal);color:#fff;font-size:11px;line-height:1.55;padding:9px 11px;border-radius:9px;width:230px;white-space:normal;font-weight:400;pointer-events:none;opacity:0;transition:opacity .15s;z-index:200;box-shadow:0 4px 16px rgba(0,0,0,.22);letter-spacing:0}
+  .src-tip:hover::after{opacity:1}
+  /* keep tooltip on screen at sidebar edges */
+  .src-tip.tip-left::after{left:auto;right:0;transform:none}
   .rc-thanks{text-align:center;font-size:13px;font-weight:600;padding:12px 0 4px}
 </style>
 </head>
@@ -1398,7 +1404,7 @@ async function renderFCDOPanel(country, hostId) {
     const updated = (d.public_updated_at || '').slice(0, 10);
     host.innerHTML = `
       <div style="margin:12px 24px 0;padding:12px 14px;background:${meta.bg};border-left:3px solid ${meta.color};border-radius:8px">
-        <div style="font-family:Fraunces,serif;font-size:13px;font-weight:700;color:${meta.color}">🇬🇧 Gov.uk FCDO advice</div>
+        <div style="font-family:Fraunces,serif;font-size:13px;font-weight:700;color:${meta.color};display:flex;align-items:center;gap:5px">🇬🇧 Gov.uk FCDO advice${srcTip('UK Foreign Commonwealth & Development Office official travel advice. Updated when the security situation changes. May reflect diplomatic considerations as well as crime.')}</div>
         <div style="font-size:12px;color:var(--charcoal);margin-top:4px">${escapeHtml(meta.label)}</div>
         <div style="font-size:10px;color:var(--charcoal-soft);margin-top:8px">
           UK Foreign Office${updated ? ' · Updated ' + escapeHtml(updated) : ''}
@@ -1473,7 +1479,7 @@ function renderGlobalCity(c) {
       ratingHost.innerHTML = `
         <div class="section" style="padding-top:20px;padding-bottom:20px">
           <div class="rating-card">
-            <div class="label">Wiley Fox country-level safety rating</div>
+            <div class="label" style="display:flex;align-items:center;gap:4px">Wiley Fox country-level safety rating${srcTip('No city-specific data available. Rating is derived from national World Bank homicide statistics — a useful baseline but does not reflect neighbourhood-level variation.')}</div>
             <div class="city-name">${escapeHtml(c.name)}</div>
             <div class="rating-display">
               <div class="rating-orb" style="background:${color}">${wfRating}</div>
@@ -1542,7 +1548,7 @@ function renderGlobalCity(c) {
   ratingHost.innerHTML = `
     <div class="section" style="padding-top:20px;padding-bottom:20px">
       <div class="rating-card">
-        <div class="label">Wiley Fox safety index</div>
+        <div class="label" style="display:flex;align-items:center;gap:4px">Wiley Fox safety index${srcTip('WF 1–5 rating derived from World Bank homicide data (VC.IHR.PSRC.P5) and UNODC crime statistics. National average — city-level crime may differ significantly.')}</div>
         <div class="city-name">${escapeHtml(c.name)}</div>
         <div class="rating-display">
           <div class="rating-orb" style="background:${color}">${c.rating}</div>
@@ -1773,7 +1779,7 @@ function renderCity(name, lat, lng, crimes, month) {
   if (sortedCats.length) {
     catsHost.innerHTML = `
       <div class="section">
-        <h2>Crime breakdown</h2>
+        <h2 style="display:flex;align-items:center;gap:4px">Crime breakdown${srcTip('Live street-level crime data from data.police.uk (UK Home Office). Updated monthly. Covers England, Wales & Northern Ireland. Scotland not included.')}</h2>
         <div class="cat-list">
           ${sortedCats.slice(0, 8).map(([cat, n]) => `
             <div class="cat-row">
@@ -2961,6 +2967,12 @@ async function loadCanadaAdvisories() {
   } catch(e) { console.warn('[Canada advisories]', e.message); }
 }
 
+// Inline ⓘ tooltip chip helper
+function srcTip(text, alignLeft) {
+  const cls = alignLeft ? ' tip-left' : '';
+  return `<span class="src-tip${cls}" data-tip="${text}">i</span>`;
+}
+
 // Build government advisory consensus panel HTML for sidebar
 function renderGovAdvisoryPanel(iso3, iso2, geoName) {
   const rows = [];
@@ -3012,7 +3024,7 @@ function renderGovAdvisoryPanel(iso3, iso2, geoName) {
   return `
     <div style="margin:12px 24px 0;padding:12px;background:var(--cream);border-radius:10px">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <div style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:var(--charcoal-soft)">Government Advisories</div>
+        <div style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:var(--charcoal-soft);display:flex;align-items:center;gap:4px">Government Advisories${srcTip('Official travel advisories from US State Dept, Canada Global Affairs, and Australian DFAT. Rated 1–4. Reflect safety, political stability and diplomatic factors — not crime data alone.',true)}</div>
         <div style="padding:2px 8px;border-radius:6px;background:${consensusMeta ? consensusMeta.color : '#888'};color:#fff;font-size:10px;font-weight:700">${rows.length} gov · avg ${avg.toFixed(1)}/4</div>
       </div>
       ${rowsHtml}
@@ -3598,7 +3610,7 @@ function renderNumbeoPanel(cityName, countryName, targetId) {
   el.innerHTML = `
     <div style="margin:12px 24px 0;padding:12px;background:var(--cream);border-radius:10px">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-        <div style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:var(--charcoal-soft)">Numbeo Crime Index</div>
+        <div style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:var(--charcoal-soft);display:flex;align-items:center">Numbeo Crime Index${srcTip('Crowd-sourced perception survey (numbeo.com). Reflects resident opinions — not official crime records. Useful for city comparisons but may under-represent lower-income areas.',true)}</div>
         <a href="https://www.numbeo.com/crime/in/${encodeURIComponent(cityName.replace(/ /g,'-'))}" target="_blank" rel="noopener" style="font-size:10px;color:var(--orange);text-decoration:none">Full report ↗</a>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
@@ -4037,7 +4049,7 @@ function renderCountrySidebar(geoName) {
         }).join('');
       el.innerHTML = `
         <div style="margin:12px 24px 0;padding:12px;background:var(--cream);border-radius:10px">
-          <div style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:var(--charcoal-soft);margin-bottom:8px">Eurostat Crime Statistics</div>
+          <div style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:var(--charcoal-soft);margin-bottom:8px;display:flex;align-items:center">Eurostat Crime Statistics${srcTip('Official EU crime statistics from Eurostat (ec.europa.eu). Based on police-recorded crime, per 100,000 population. Covers EU/EEA countries only. Reporting methods vary between member states.',true)}</div>
           ${rows}
           <div style="font-size:10px;color:var(--charcoal-soft);margin-top:8px"><a href="https://ec.europa.eu/eurostat" target="_blank" rel="noopener" style="color:var(--orange)">Eurostat ↗</a> · ICCS 2.0 · per 100,000 population</div>
         </div>`;
@@ -4061,7 +4073,7 @@ function renderCountrySidebar(geoName) {
 
     catsHost.innerHTML = `
       <div class="section">
-        <h2>Organised crime profile <span class="demo-tag">OC Index 2025</span></h2>
+        <h2 style="display:flex;align-items:center;gap:4px">Organised crime profile <span class="demo-tag">OC Index 2025</span>${srcTip('Global Organised Crime Index by the Global Initiative Against Transnational Organized Crime (GI-TOC). Expert-survey methodology, 0–10 scale. Covers 193 countries. Not police-recorded data.')}</h2>
         <div style="margin-bottom:10px">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
             <span style="font-size:12px;font-weight:600">Overall criminality</span>

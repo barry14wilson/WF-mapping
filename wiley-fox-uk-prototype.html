@@ -992,7 +992,7 @@ async function handleSearch() {
   }
 
   // Geocode globally via Nominatim — no UK restriction
-  const r = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=1`, {
+  const r = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=1&addressdetails=1`, {
     headers: { 'Accept-Language': 'en' }
   });
   const j = await r.json();
@@ -1000,6 +1000,10 @@ async function handleSearch() {
 
   const lat = parseFloat(j[0].lat);
   const lng = parseFloat(j[0].lon);
+  // Nominatim returns ISO2 country code in address.country_code
+  const iso2  = (j[0].address?.country_code || '').toLowerCase();
+  const iso3  = ISO2_TO_ISO3[iso2] || '';
+  const countryName = j[0].address?.country || (j[0].display_name ? j[0].display_name.split(',').slice(-1)[0].trim() : '');
 
   // Hide city grid, show back button
   const gs = document.getElementById('cityGridSection');
@@ -1009,9 +1013,7 @@ async function handleSearch() {
   if (isUKCoords(lat, lng)) {
     loadCity(q, lat, lng);
   } else {
-    // Use country display name from geocoder if we have it
-    const countryName = j[0].display_name ? j[0].display_name.split(',').slice(-1)[0].trim() : '';
-    loadGlobalCity({ name: q, country: countryName, lat, lng });
+    loadGlobalCity({ name: q, country: countryName, lat, lng, iso2, iso3 });
   }
 }
 
@@ -1457,23 +1459,80 @@ function renderGlobalCity(c) {
   const catsHost   = document.getElementById('catsHost');
   const hotelsHost = document.getElementById('hotelsHost');
 
+  // ── Country-level fallback rating ─────────────────────────────────────
+  // If no pre-researched city rating, derive one from World Bank homicide data
   if (!c.rating) {
-    ratingHost.innerHTML = `
-      <div class="section" style="padding-top:20px;padding-bottom:20px">
-        <div class="rating-card">
-          <div class="label">Wiley Fox global rating</div>
-          <div class="city-name">${escapeHtml(c.name)}</div>
-          <div class="warning" style="margin-top:10px">
-            <strong>No crime data for this location yet.</strong> Until street-level data is added,
-            refer to the official government travel advisories below.
+    const iso3     = c.iso3 || ISO2_TO_ISO3[(c.iso2 || '').toLowerCase()] || '';
+    const wb       = iso3 ? WB_HOMICIDE[iso3] : null;
+    const wfRating = wb ? homicideToWF(wb.r) : 0;
+
+    if (wfRating) {
+      // We have country-level World Bank data — show a full rating card
+      const [tag, color] = RATING_TAGS[wfRating];
+      const markerLeft   = ((wfRating - 1) / 4) * 100;
+      ratingHost.innerHTML = `
+        <div class="section" style="padding-top:20px;padding-bottom:20px">
+          <div class="rating-card">
+            <div class="label">Wiley Fox country-level safety rating</div>
+            <div class="city-name">${escapeHtml(c.name)}</div>
+            <div class="rating-display">
+              <div class="rating-orb" style="background:${color}">${wfRating}</div>
+              <div class="rating-info">
+                <div class="rating-num">${tag}</div>
+                <div class="rating-tag">${escapeHtml(c.country || iso3)} · ${wb.r} homicides / 100k</div>
+              </div>
+            </div>
+            <div class="rating-bar"><div class="marker" style="left:${markerLeft}%"></div></div>
+            <div class="scale-row"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
           </div>
-        </div>
-        <div id="fcdoHost"></div>
-        ${renderAdvisoryPanel(c.name)}
-      </div>`;
-    catsHost.innerHTML = '';
-    hotelsHost.innerHTML = '';
-    renderFCDOPanel(c.country, 'fcdoHost');
+          <div class="warning" style="margin:12px 24px 0;border-left-color:${color}">
+            <strong>Country-level estimate.</strong> No city-specific crime database is available for ${escapeHtml(c.name)} yet.
+            This rating is derived from national homicide statistics — crime within a city can vary significantly from the national average.
+            <br><span style="opacity:.7;font-size:10px">Source: World Bank VC.IHR.PSRC.P5 · ${wb.d} data · ${iso3}</span>
+          </div>
+          <div id="fcdoHost"></div>
+          <div id="govAdvHost"></div>
+          ${renderAdvisoryPanel(c.name)}
+          <div id="numbeoSearchHost"></div>
+        </div>`;
+      renderFCDOPanel(c.country || c.name, 'fcdoHost');
+      const govEl = document.getElementById('govAdvHost');
+      if (govEl) govEl.innerHTML = renderGovAdvisoryPanel(iso3, c.iso2 || '', c.country || c.name);
+      renderNumbeoPanel(c.name, c.country || '', 'numbeoSearchHost');
+      catsHost.innerHTML = `
+        <div class="section">
+          <h2>Safety context</h2>
+          <div class="cat-list">
+            <div class="cat-row"><span class="cat-dot" style="background:#D7263D"></span><span class="cat-name">Homicide rate</span><span class="cat-count">${wb.r}/100k</span></div>
+            <div class="cat-row"><span class="cat-dot" style="background:var(--orange)"></span><span class="cat-name">Country</span><span class="cat-count">${escapeHtml(c.country || iso3)}</span></div>
+            <div class="cat-row"><span class="cat-dot" style="background:var(--sage)"></span><span class="cat-name">ISO code</span><span class="cat-count">${iso3}</span></div>
+          </div>
+          <div style="font-size:11px;color:var(--charcoal-soft);margin-top:10px;line-height:1.5">
+            City-level breakdown is not yet available. The Wiley Fox rating above reflects national crime statistics from the World Bank.
+            Travellers should research specific neighbourhoods and check government advisories before visiting.
+          </div>
+        </div>`;
+      renderHotels(c.name);
+    } else {
+      // Truly no data at all
+      ratingHost.innerHTML = `
+        <div class="section" style="padding-top:20px;padding-bottom:20px">
+          <div class="rating-card">
+            <div class="label">Wiley Fox global rating</div>
+            <div class="city-name">${escapeHtml(c.name)}</div>
+            <div class="warning" style="margin-top:10px">
+              <strong>No crime data on file.</strong> Check the government advisories below and refer to official travel guidance.
+            </div>
+          </div>
+          <div id="fcdoHost"></div>
+          ${renderAdvisoryPanel(c.name)}
+          <div id="numbeoNoDataHost"></div>
+        </div>`;
+      catsHost.innerHTML = '';
+      hotelsHost.innerHTML = '';
+      renderFCDOPanel(c.country || c.name, 'fcdoHost');
+      renderNumbeoPanel(c.name, c.country || '', 'numbeoNoDataHost');
+    }
     return;
   }
 
@@ -3574,6 +3633,10 @@ function renderNumbeoPanel(cityName, countryName, targetId) {
     </div>`;
 }
 
+
+
+// ── ISO2 → ISO3 lookup (for Nominatim country_code → WB_HOMICIDE key) ─
+const ISO2_TO_ISO3 = {'af':'AFG', 'al':'ALB', 'dz':'DZA', 'ad':'AND', 'ao':'AGO', 'ag':'ATG', 'ar':'ARG', 'am':'ARM', 'au':'AUS', 'at':'AUT', 'az':'AZE', 'bs':'BHS', 'bh':'BHR', 'bd':'BGD', 'bb':'BRB', 'by':'BLR', 'be':'BEL', 'bz':'BLZ', 'bj':'BEN', 'bt':'BTN', 'bo':'BOL', 'ba':'BIH', 'bw':'BWA', 'br':'BRA', 'bn':'BRN', 'bg':'BGR', 'bf':'BFA', 'bi':'BDI', 'cv':'CPV', 'kh':'KHM', 'cm':'CMR', 'ca':'CAN', 'cf':'CAF', 'td':'TCD', 'cl':'CHL', 'cn':'CHN', 'co':'COL', 'km':'COM', 'cg':'COG', 'cd':'COD', 'cr':'CRI', 'hr':'HRV', 'cu':'CUB', 'cy':'CYP', 'cz':'CZE', 'ci':'CIV', 'dk':'DNK', 'dj':'DJI', 'dm':'DMA', 'do':'DOM', 'ec':'ECU', 'eg':'EGY', 'sv':'SLV', 'gq':'GNQ', 'er':'ERI', 'ee':'EST', 'sz':'SWZ', 'et':'ETH', 'fj':'FJI', 'fi':'FIN', 'fr':'FRA', 'ga':'GAB', 'gm':'GMB', 'ge':'GEO', 'de':'DEU', 'gh':'GHA', 'gr':'GRC', 'gd':'GRD', 'gt':'GTM', 'gn':'GIN', 'gw':'GNB', 'gy':'GUY', 'ht':'HTI', 'hn':'HND', 'hu':'HUN', 'is':'ISL', 'in':'IND', 'id':'IDN', 'ir':'IRN', 'iq':'IRQ', 'ie':'IRL', 'il':'ISR', 'it':'ITA', 'jm':'JAM', 'jp':'JPN', 'jo':'JOR', 'kz':'KAZ', 'ke':'KEN', 'ki':'KIR', 'kw':'KWT', 'kg':'KGZ', 'la':'LAO', 'lv':'LVA', 'lb':'LBN', 'ls':'LSO', 'lr':'LBR', 'ly':'LBY', 'li':'LIE', 'lt':'LTU', 'lu':'LUX', 'mg':'MDG', 'mw':'MWI', 'my':'MYS', 'mv':'MDV', 'ml':'MLI', 'mt':'MLT', 'mh':'MHL', 'mr':'MRT', 'mu':'MUS', 'mx':'MEX', 'fm':'FSM', 'md':'MDA', 'mc':'MCO', 'mn':'MNG', 'me':'MNE', 'ma':'MAR', 'mz':'MOZ', 'mm':'MMR', 'na':'NAM', 'nr':'NRU', 'np':'NPL', 'nl':'NLD', 'nz':'NZL', 'ni':'NIC', 'ne':'NER', 'ng':'NGA', 'mk':'MKD', 'no':'NOR', 'om':'OMN', 'pk':'PAK', 'pw':'PLW', 'pa':'PAN', 'pg':'PNG', 'py':'PRY', 'pe':'PER', 'ph':'PHL', 'pl':'POL', 'pt':'PRT', 'qa':'QAT', 'ro':'ROU', 'ru':'RUS', 'rw':'RWA', 'kn':'KNA', 'lc':'LCA', 'vc':'VCT', 'ws':'WSM', 'sm':'SMR', 'st':'STP', 'sa':'SAU', 'sn':'SEN', 'rs':'SRB', 'sc':'SYC', 'sl':'SLE', 'sg':'SGP', 'sk':'SVK', 'si':'SVN', 'sb':'SLB', 'so':'SOM', 'za':'ZAF', 'ss':'SSD', 'es':'ESP', 'lk':'LKA', 'sd':'SDN', 'sr':'SUR', 'se':'SWE', 'ch':'CHE', 'sy':'SYR', 'tw':'TWN', 'tj':'TJK', 'tz':'TZA', 'th':'THA', 'tl':'TLS', 'tg':'TGO', 'to':'TON', 'tt':'TTO', 'tn':'TUN', 'tr':'TUR', 'tm':'TKM', 'tv':'TUV', 'ug':'UGA', 'ua':'UKR', 'ae':'ARE', 'gb':'GBR', 'us':'USA', 'uy':'URY', 'uz':'UZB', 'vu':'VUT', 've':'VEN', 'vn':'VNM', 'ye':'YEM', 'zm':'ZMB', 'zw':'ZWE', 'xk':'XKX', 'ps':'PSE', 'kr':'KOR', 'kp':'PRK', 'hk':'HKG', 'mo':'MAC', 'ax':'ALA', 'pr':'PRI'};
 
 // GLOBAL MODE — US Travel Advisory choropleth + OC Index sidebar
 // Data: US State Dept (222 countries) + Global OC Index 2025 (193 countries)

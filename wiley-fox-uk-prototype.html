@@ -2167,8 +2167,10 @@ out 30;`;
   try {
     const res = await fetch('https://overpass-api.de/api/interpreter', {
       method: 'POST',
-      body: query
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'data=' + encodeURIComponent(query)
     });
+    if (!res.ok) { console.warn('Overpass API error:', res.status, await res.text()); return; }
     const data = await res.json();
     const elements = (data.elements || []).filter(e => e.lat && e.lon && e.tags && e.tags.name);
 
@@ -2205,7 +2207,7 @@ out 30;`;
       _activityMarkers.push(marker);
     });
   } catch (e) {
-    console.warn('GYG activity pins fetch failed:', e);
+    console.error('GYG activity pins fetch failed:', e);
   }
 }
 

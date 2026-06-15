@@ -246,7 +246,19 @@
   .poi-dot{display:inline-block;width:9px;height:9px;border-radius:50%;flex-shrink:0}
   .poi-legend-item{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--charcoal-soft);font-weight:600}
   .rc-thanks{text-align:center;font-size:13px;font-weight:600;padding:12px 0 4px}
+  /* ── GetYourGuide Activities ─────────────────────────────── */
+  .gyg-section{margin:18px 0 0}
+  .gyg-section-title{font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:var(--charcoal);padding:0 24px 8px;display:flex;align-items:center;gap:8px}
+  .gyg-section-title::before{content:'';display:inline-block;width:4px;height:16px;background:var(--orange);border-radius:2px;flex-shrink:0}
+  .gyg-frame{width:100%;border:none;border-radius:10px;display:block;min-height:380px}
+  .gyg-wrap{padding:0 18px 18px}
+  /* ── Activity map pins ───────────────────────────────────── */
+  .activity-marker{width:26px;height:26px;background:var(--orange);border-radius:50%;border:2.5px solid #fff;box-shadow:0 2px 7px rgba(0,0,0,.38);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;transition:transform .15s,box-shadow .15s;z-index:10}
+  .activity-marker:hover{transform:scale(1.25);box-shadow:0 3px 10px rgba(0,0,0,.45)}
+  .activity-marker span{line-height:1}
 </style>
+<!-- GetYourGuide Partner Analytics -->
+<script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="WXZGXR9"></script>
 </head>
 <body>
 <div class="app">
@@ -303,6 +315,8 @@
     <div id="poiHost"></div>
 
     <div id="hotelsHost"></div>
+
+    <div id="gygHost"></div>
 
     <div class="foot">
       <strong>UK data:</strong> data.police.uk (UK Home Office) · Updated monthly · England, Wales &amp; Northern Ireland only.<br>
@@ -1146,6 +1160,8 @@ async function loadUSCity(cityData) {
   document.getElementById('insightHost').innerHTML = '';
   document.getElementById('poiHost').innerHTML = '';
   document.getElementById('hotelsHost').innerHTML = '';
+  document.getElementById('gygHost').innerHTML = '';
+  clearActivityMarkers();
 
   try {
     const cutoff = new Date();
@@ -1248,6 +1264,7 @@ function renderUSCity(cityData, crimes, periodLabel) {
   renderWikivoyagePanel(cityData.name, 'wikivoyageHost');
   if (cityData.lat && cityData.lng) renderPOIToggle(cityData.lat, cityData.lng, 'poiHost');
   renderHotels(cityData.name);
+  renderGYGActivities(cityData.name, cityData.lat, cityData.lng);
 
   const features = crimes.map(c => ({
     type: 'Feature',
@@ -1582,6 +1599,7 @@ function renderGlobalCity(c) {
       renderWikivoyagePanel(c.name, 'wikivoyageHost');
       if (c.lat && c.lng) renderPOIToggle(c.lat, c.lng, 'poiHost');
       renderHotels(c.name);
+      renderGYGActivities(c.name, c.lat, c.lng);
     } else {
       // Truly no data at all
       ratingHost.innerHTML = `
@@ -1601,6 +1619,8 @@ function renderGlobalCity(c) {
       document.getElementById('wikivoyageHost').innerHTML = '';
     document.getElementById('insightHost').innerHTML = '';
       hotelsHost.innerHTML = '';
+      document.getElementById('gygHost').innerHTML = '';
+      clearActivityMarkers();
       renderFCDOPanel(c.country || c.name, 'fcdoHost');
       renderNumbeoPanel(c.name, c.country || '', 'numbeoNoDataHost');
     }
@@ -1666,6 +1686,7 @@ function renderGlobalCity(c) {
   renderWikivoyagePanel(c.name, 'wikivoyageHost');
   if (c.lat && c.lng) renderPOIToggle(c.lat, c.lng, 'poiHost');
   renderHotels(c.name);
+  renderGYGActivities(c.name, c.lat, c.lng);
 }
 
 // --- Fetch helper with retry + clear errors -------------------------
@@ -1882,6 +1903,7 @@ function renderCity(name, lat, lng, crimes, month) {
 
   // --- Hotels (Booking.com referral)
   renderHotels(name);
+  renderGYGActivities(name, lat, lng);
 
   // --- Plot on map — hexbin aggregates, so use ALL crimes.
   // (A sampling cap here would dilute hex densities in busy cities and
@@ -2081,6 +2103,110 @@ function renderHotels(cityName) {
       </div>
     </div>
   `;
+}
+
+// =====================================================================
+// GETYOURGUIDE ACTIVITIES WIDGET + MAP PINS
+// =====================================================================
+
+// Track activity map markers so we can clear them on city change
+let _activityMarkers = [];
+
+function clearActivityMarkers() {
+  _activityMarkers.forEach(m => m.remove());
+  _activityMarkers = [];
+}
+
+function renderGYGActivities(cityName, lat, lng) {
+  const host = document.getElementById('gygHost');
+  if (!host) return;
+
+  // Build the widget div with GYG data attributes
+  host.innerHTML = `
+    <div class="gyg-section">
+      <div class="gyg-section-title">Things to do in ${escapeHtml(cityName)}</div>
+      <div class="gyg-wrap">
+        <div data-gyg-href="https://widget.getyourguide.com/default/activities.frame"
+             data-gyg-locale-code="en-GB"
+             data-gyg-widget="activities"
+             data-gyg-partner-id="WXZGXR9"
+             data-gyg-q="${escapeHtml(cityName)}"
+             data-gyg-number-of-items="4"
+             data-gyg-cmp="wileyfox_sidebar"></div>
+      </div>
+    </div>
+  `;
+
+  // Trigger GYG widget scan for dynamically injected divs
+  const oldScript = document.getElementById('gyg-pa-script');
+  if (oldScript) oldScript.remove();
+  const s = document.createElement('script');
+  s.id = 'gyg-pa-script';
+  s.async = true;
+  s.defer = true;
+  s.src = 'https://widget.getyourguide.com/dist/pa.umd.production.min.js';
+  s.setAttribute('data-gyg-partner-id', 'WXZGXR9');
+  document.head.appendChild(s);
+
+  // Plot attraction pins on the map
+  if (lat && lng) renderActivityPins(cityName, lat, lng);
+}
+
+async function renderActivityPins(cityName, lat, lng) {
+  clearActivityMarkers();
+
+  const query = `[out:json][timeout:15];
+(
+  node["tourism"~"^(attraction|museum|viewpoint|gallery|artwork|theme_park|zoo|aquarium)$"]["name"](around:6000,${lat},${lng});
+  node["amenity"~"^(theatre|cinema|arts_centre)$"]["name"](around:6000,${lat},${lng});
+  node["historic"~"^(monument|castle|ruins|memorial|building)$"]["name"](around:6000,${lat},${lng});
+  node["leisure"~"^(stadium|park)$"]["name"](around:4000,${lat},${lng});
+);
+out 30;`;
+
+  try {
+    const res = await fetch('https://overpass-api.de/api/interpreter', {
+      method: 'POST',
+      body: query
+    });
+    const data = await res.json();
+    const elements = (data.elements || []).filter(e => e.lat && e.lon && e.tags && e.tags.name);
+
+    elements.slice(0, 25).forEach(el => {
+      const name = el.tags.name;
+      const type = el.tags.tourism || el.tags.amenity || el.tags.historic || el.tags.leisure || 'attraction';
+      const gygUrl = `https://www.getyourguide.com/s/?q=${encodeURIComponent(name + ' ' + cityName)}&partner_id=WXZGXR9`;
+
+      // Marker element
+      const markerEl = document.createElement('div');
+      markerEl.className = 'activity-marker';
+      markerEl.innerHTML = '<span>★</span>';
+      markerEl.title = name;
+
+      // Popup
+      const popup = new maplibregl.Popup({ offset: 16, closeButton: true, maxWidth: '230px' })
+        .setHTML(`
+          <div style="font-family:'Inter',sans-serif;padding:2px 0">
+            <div style="font-weight:700;font-size:13px;color:#232323;line-height:1.3;margin-bottom:2px">${escapeHtml(name)}</div>
+            <div style="font-size:11px;color:#888;text-transform:capitalize;margin-bottom:8px">${escapeHtml(type.replace(/-/g,' '))}</div>
+            <a href="${gygUrl}" target="_blank" rel="noopener"
+               style="display:inline-block;background:#FF7B14;color:#fff;font-size:12px;font-weight:600;
+                      padding:5px 12px;border-radius:6px;text-decoration:none;letter-spacing:.2px">
+              Book tours &amp; tickets →
+            </a>
+          </div>
+        `);
+
+      const marker = new maplibregl.Marker({ element: markerEl })
+        .setLngLat([el.lon, el.lat])
+        .setPopup(popup)
+        .addTo(map);
+
+      _activityMarkers.push(marker);
+    });
+  } catch (e) {
+    console.warn('GYG activity pins fetch failed:', e);
+  }
 }
 
 // =====================================================================
@@ -4569,6 +4695,7 @@ function setMode(mode) {
     document.getElementById('insightHost').innerHTML = '';
     document.getElementById('poiHost').innerHTML = '';
     document.getElementById('hotelsHost').innerHTML = '';
+    document.getElementById('gygHost').innerHTML = '';
   }
 }
 
@@ -4614,6 +4741,7 @@ function goBack() {
     document.getElementById('insightHost').innerHTML = '';
     document.getElementById('poiHost').innerHTML = '';
     document.getElementById('hotelsHost').innerHTML = '';
+    document.getElementById('gygHost').innerHTML = '';
     map.flyTo({ center: [-2.0, 53.5], zoom: 5.5, duration: 700 });
   }
 }
@@ -4665,6 +4793,8 @@ function showGlobalMapEmptyState() {
   document.getElementById('insightHost').innerHTML = '';
   document.getElementById('poiHost').innerHTML = '';
   document.getElementById('hotelsHost').innerHTML = '';
+  document.getElementById('gygHost').innerHTML = '';
+  clearActivityMarkers();
 }
 
 // --- Choropleth -------------------------------------------------------
@@ -4971,6 +5101,8 @@ function showError(msg) {
   document.getElementById('insightHost').innerHTML = '';
   document.getElementById('poiHost').innerHTML = '';
   document.getElementById('hotelsHost').innerHTML = '';
+  document.getElementById('gygHost').innerHTML = '';
+  clearActivityMarkers();
 }
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

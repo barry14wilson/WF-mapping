@@ -203,6 +203,17 @@
   .rc-chip:hover{border-color:var(--orange);background:#fff;transform:translateY(-1px)}
   .rc-ends{display:flex;justify-content:space-between;font-size:10px;color:var(--charcoal-soft);margin-top:5px;font-weight:500}
   .rc-skip{display:block;margin:12px auto 0;border:none;background:none;font-size:12px;color:var(--charcoal-soft);cursor:pointer;text-decoration:underline;font-family:inherit}
+  .rc-skip[style*="charcoal"]{padding:9px 0;border-radius:9px;text-decoration:none;font-weight:600;width:100%}
+  .rc-area-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;max-height:168px;overflow-y:auto}
+  .rc-area-chip{padding:6px 11px;border:1.5px solid rgba(35,35,35,.12);border-radius:16px;background:var(--cream-light);cursor:pointer;font-family:inherit;font-size:12px;color:var(--charcoal);transition:all .12s}
+  .rc-area-chip:hover{border-color:var(--orange)}
+  .rc-add-row{display:flex;gap:6px;margin-bottom:4px}
+  .rc-add-input{flex:1;min-width:0;padding:8px 10px;border:1.5px solid rgba(35,35,35,.12);border-radius:9px;font-family:inherit;font-size:12px;background:var(--cream-light)}
+  .rc-add-input:focus{outline:none;border-color:var(--orange);background:#fff}
+  .rc-add-btn{padding:8px 12px;border:1.5px solid rgba(35,35,35,.12);border-radius:9px;background:#fff;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;color:var(--charcoal)}
+  .rc-add-btn:hover{border-color:var(--orange);color:var(--orange-dark)}
+  .rc-area-rate-list{display:flex;flex-direction:column;gap:12px;max-height:260px;overflow-y:auto;margin-bottom:4px}
+  .rc-area-name{font-size:12px;font-weight:600;margin-bottom:5px;color:var(--charcoal)}
   /* Source tooltip chips */
   .src-tip{position:relative;display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:rgba(35,35,35,.1);color:var(--charcoal-soft);font-size:9px;cursor:help;font-family:Inter,sans-serif;font-weight:700;vertical-align:middle;margin-left:5px;flex-shrink:0;line-height:1}
   .src-tip::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);background:var(--charcoal);color:#fff;font-size:11px;line-height:1.55;padding:9px 11px;border-radius:9px;width:230px;white-space:normal;font-weight:400;pointer-events:none;opacity:0;transition:opacity .15s;z-index:200;box-shadow:0 4px 16px rgba(0,0,0,.22);letter-spacing:0}
@@ -256,6 +267,51 @@
   .activity-marker{width:26px;height:26px;background:var(--orange);border-radius:50%;border:2.5px solid #fff;box-shadow:0 2px 7px rgba(0,0,0,.38);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;transition:transform .15s,box-shadow .15s;z-index:10}
   .activity-marker:hover{transform:scale(1.25);box-shadow:0 3px 10px rgba(0,0,0,.45)}
   .activity-marker span{line-height:1}
+
+  /* ── Save-a-Spot (Instagram pins) ───────────────────────── */
+  .ig-section{padding:18px 24px;border-bottom:1px solid rgba(35,35,35,.06)}
+  .ig-section-header{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+  .ig-icon{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);display:grid;place-items:center;flex-shrink:0}
+  .ig-icon svg{width:12px;height:12px;fill:#fff}
+  .ig-section-title{font-size:13px;font-weight:700;color:var(--charcoal)}
+  .ig-section-sub{font-size:11px;color:var(--charcoal-soft);margin-top:1px}
+  .ig-input-group{display:flex;flex-direction:column;gap:7px;margin-bottom:12px}
+  .ig-input{width:100%;padding:9px 12px;border:1.5px solid rgba(35,35,35,.15);border-radius:9px;font-family:inherit;font-size:12px;background:var(--cream-light);color:var(--charcoal);transition:border-color .15s}
+  .ig-input:focus{outline:none;border-color:var(--orange);background:#fff}
+  .ig-input::placeholder{color:rgba(35,35,35,.4)}
+  .ig-add-btn{width:100%;padding:10px;border:none;border-radius:9px;background:var(--charcoal);color:#fff;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .15s}
+  .ig-add-btn:hover{background:var(--orange)}
+  .ig-add-btn:disabled{opacity:.5;cursor:not-allowed;background:var(--charcoal)}
+  .ig-status{font-size:11px;color:var(--charcoal-soft);padding:6px 0;display:none;align-items:center;gap:7px}
+  .ig-status.show{display:flex}
+  .ig-status.err{color:#D7263D}
+  .ig-saved-list{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+  .ig-saved-empty{font-size:12px;color:var(--charcoal-soft);padding:10px 0 4px}
+  .ig-spot-row{display:flex;align-items:center;gap:9px;padding:8px 10px;background:var(--cream-light);border-radius:9px;border:1px solid transparent;cursor:pointer;transition:all .15s}
+  .ig-spot-row:hover{border-color:var(--orange);background:#fff}
+  .ig-spot-thumb{width:36px;height:36px;border-radius:7px;object-fit:cover;flex-shrink:0;background:linear-gradient(135deg,#f09433,#bc1888)}
+  .ig-spot-thumb-ph{width:36px;height:36px;border-radius:7px;flex-shrink:0;background:linear-gradient(135deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);display:grid;place-items:center;font-size:14px}
+  .ig-spot-info{flex:1;min-width:0}
+  .ig-spot-name{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ig-spot-meta{font-size:10px;color:var(--charcoal-soft);margin-top:1px}
+  .ig-spot-badge{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:9px;font-weight:800;color:#fff;flex-shrink:0;font-family:'Fraunces',serif}
+  .ig-spot-del{width:22px;height:22px;border:none;background:none;color:var(--charcoal-soft);cursor:pointer;font-size:14px;line-height:1;border-radius:50%;transition:all .15s;flex-shrink:0;display:grid;place-items:center}
+  .ig-spot-del:hover{background:#fee;color:#D7263D}
+  /* map pin for saved spots */
+  .ig-map-pin{position:relative;width:46px;height:46px;cursor:pointer}
+  .ig-map-pin-ring{position:absolute;inset:0;border-radius:50%;border:3px solid #ccc}
+  .ig-map-pin-img{width:40px;height:40px;border-radius:50%;object-fit:cover;position:absolute;top:3px;left:3px;background:linear-gradient(135deg,#f09433,#bc1888)}
+  .ig-map-pin-ph{width:40px;height:40px;border-radius:50%;position:absolute;top:3px;left:3px;background:linear-gradient(135deg,#f09433 0%,#bc1888 100%);display:grid;place-items:center;font-size:18px}
+  .ig-map-pin-label{position:absolute;top:46px;left:50%;transform:translateX(-50%);background:#fff;border:1px solid rgba(35,35,35,.12);border-radius:6px;padding:2px 7px;font-size:10px;font-weight:600;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.12);color:var(--charcoal)}
+  .ig-map-pin:hover .ig-map-pin-ring{border-width:4px}
+  /* popup */
+  .ig-popup{padding:0;max-width:220px}
+  .ig-popup-thumb{width:100%;height:100px;object-fit:cover;border-radius:8px 8px 0 0;display:block;background:linear-gradient(135deg,#f09433,#bc1888)}
+  .ig-popup-body{padding:10px 12px 12px}
+  .ig-popup-loc{font-size:13px;font-weight:700;margin-bottom:3px}
+  .ig-popup-safety{font-size:11px;font-weight:600;margin-bottom:8px}
+  .ig-popup-link{display:flex;align-items:center;justify-content:center;gap:5px;padding:8px;background:#000;color:#fff;border-radius:7px;font-size:11px;font-weight:600;text-decoration:none;transition:opacity .15s}
+  .ig-popup-link:hover{opacity:.8}
 </style>
 <!-- GetYourGuide Partner Analytics -->
 <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="WXZGXR9"></script>
@@ -318,6 +374,32 @@
 
     <div id="gygHost"></div>
 
+    <!-- ── Save-a-Spot (Instagram pins) ── -->
+    <div class="ig-section" id="igSpotSection">
+      <div class="ig-section-header">
+        <div class="ig-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </div>
+        <div>
+          <div class="ig-section-title">Save a Spot</div>
+          <div class="ig-section-sub">Pin any Instagram place to the map</div>
+        </div>
+      </div>
+      <div class="ig-input-group">
+        <input class="ig-input" id="igUrlInput" type="url" placeholder="Paste Instagram post URL…" />
+        <input class="ig-input" id="igLocationInput" type="text" placeholder="Location / place name (e.g. Soho, London)" />
+      </div>
+      <button class="ig-add-btn" id="igAddBtn" onclick="addIgSpot()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        Pin to Map
+      </button>
+      <div class="ig-status" id="igStatus">
+        <div class="spinner"></div>
+        <span id="igStatusText">Looking up location…</span>
+      </div>
+      <div class="ig-saved-list" id="igSavedList"></div>
+    </div>
+
     <div class="foot">
       <strong>UK data:</strong> data.police.uk (UK Home Office) · Updated monthly · England, Wales &amp; Northern Ireland only.<br>
       <strong>Global data:</strong> UNODC · World Bank · national police sources · Updated annually.<br><br>
@@ -333,11 +415,12 @@
     </div>
     <div class="map-legend" id="mapLegend">
       <div class="title">Incident level</div>
+      <div class="legend-row"><span class="legend-sq" style="background:#3FA34D"></span> Very low incident</div>
+      <div class="legend-row"><span class="legend-sq" style="background:#A4C957"></span> Low incident</div>
+      <div class="legend-row"><span class="legend-sq" style="background:#FFC857"></span> Caution</div>
+      <div class="legend-row"><span class="legend-sq" style="background:#F46036"></span> Elevated</div>
+      <div class="legend-row"><span class="legend-sq" style="background:#D7263D"></span> High incident</div>
       <div class="legend-row"><span class="legend-sq" style="background:#9ED2B2"></span> Low incident count</div>
-      <div class="legend-row"><span class="legend-sq" style="background:#2EBD6B"></span> Low incident</div>
-      <div class="legend-row"><span class="legend-sq" style="background:#F2B92E"></span> Caution</div>
-      <div class="legend-row"><span class="legend-sq" style="background:#E8503F"></span> Not safe</div>
-      <div class="legend-row"><span class="legend-sq" style="background:#8E5BA6"></span> Avoid</div>
     </div>
     <div class="map-legend" id="globalLegend" style="display:none">
       <div class="title">Wiley Fox Safety</div>
@@ -1754,30 +1837,92 @@ const SEVERITY = {
 };
 const AREA_KM2 = Math.PI * 1.6 * 1.6;
 
-// Areas with too few recorded incidents are NOT ranked: a graded score on
-// thin data is misleading (and "safe" claims carry legal exposure). They
-// return score:null + lowData:true and display as "Low incident count".
+// ── Population density (people per km²) ───────────────────────────────
+// ONS Mid-Year Estimates 2024 (England), StatsWales & NISRA (Cardiff/Belfast),
+// whole-administrative-area resident density. Used as a *bounded* fairness
+// adjustment so dense city centres aren't over-penalised by raw crime counts.
+// NOTE: this is a city-level approximation. Resident density understates the
+// daytime/footfall population a city-centre search actually captures, so we
+// deliberately cap its influence. Footfall-weighted small-area (LSOA)
+// population is the planned refinement — a good candidate for a data pipeline.
+const POP_DENSITY = {
+  'london': 5600, 'manchester': 5100, 'liverpool': 4550, 'bristol': 4510,
+  'birmingham': 4400, 'brighton': 3430, 'newcastle': 2830, 'cardiff': 2640,
+  'belfast': 2620, 'leeds': 1530,
+};
+const POP_DENSITY_REF = 4000; // typical UK core-city density (adjustment baseline)
+
+function popDensityFor(name) {
+  if (!name) return null;
+  const n = name.toLowerCase();
+  for (const k in POP_DENSITY) if (n.includes(k)) return POP_DENSITY[k];
+  return null;
+}
+
+// Areas with too few recorded incidents are NOT ranked from live data: a graded
+// score on thin data is misleading (and "safe" claims carry legal exposure).
 const MIN_INCIDENTS_FOR_RATING = 30;
 
-function calculateWFRating(crimes) {
+// Map severity-weighted crime density (per km²) to a 0–100 safety sub-score
+// (higher = safer). Smooth exponential decay calibrated to UK urban densities:
+// ~25/km² → 90, ~75 → 74, ~200 → 45, ~400 → 20, ~800 → 4.
+function policeSafetyScore(weightedDensity) {
+  return Math.round(100 * Math.exp(-weightedDensity / 250));
+}
+
+// 0–100 unified score → 1–5 colour band (5 = safest)
+function bandFromScore(s) {
+  if (s >= 80) return 5;
+  if (s >= 60) return 4;
+  if (s >= 40) return 3;
+  if (s >= 20) return 2;
+  return 1;
+}
+
+// ── Unified Wiley Fox Safety Score ────────────────────────────────────
+// Blends live police-recorded crime (data.police.uk) with Numbeo resident
+// perception. Higher = safer (0–100), plus a 1–5 band for the colour system.
+//   • Live sub-score  P : severity-weighted crime density, population-adjusted
+//   • Numbeo sub-score N : Numbeo Safety Index (0–100, higher = safer)
+//   • Blend            : 70% live data / 30% Numbeo when both exist; degrades
+//                        gracefully to whichever single source is available.
+function calculateWFRating(crimes, cityName) {
   let weighted = 0;
   for (const c of crimes) weighted += (SEVERITY[c.category] || 1);
   const weightedDensity = weighted / AREA_KM2; // weighted crimes per km²
 
-  if (crimes.length < MIN_INCIDENTS_FOR_RATING) {
-    return { score: null, lowData: true, weighted: Math.round(weighted), raw: crimes.length, density: weightedDensity.toFixed(1) };
+  // Bounded population-density adjustment (fairness for busy centres)
+  const pop = popDensityFor(cityName);
+  let adjDensity = weightedDensity;
+  if (pop) {
+    const f = Math.min(1.5, Math.max(0.7, Math.pow(pop / POP_DENSITY_REF, 0.25)));
+    adjDensity = weightedDensity / f;
   }
 
-  // Empirically calibrated thresholds (tune with real-world benchmarking)
-  // Higher density = lower rating
-  let score;
-  if (weightedDensity < 25) score = 5;
-  else if (weightedDensity < 75) score = 4;
-  else if (weightedDensity < 200) score = 3;
-  else if (weightedDensity < 400) score = 2;
-  else score = 1;
+  // Numbeo (real, perception-based) safety sub-score, where available
+  const nb = numbeoLookup(cityName, 'United Kingdom');
+  const N  = nb ? nb.si : null;   // Safety Index 0–100, higher = safer
+  const ci = nb ? nb.ci : null;   // Crime Index 0–100, higher = worse
 
-  return { score, weighted: Math.round(weighted), raw: crimes.length, density: weightedDensity.toFixed(1) };
+  const enoughLive = crimes.length >= MIN_INCIDENTS_FOR_RATING;
+  const P = enoughLive ? policeSafetyScore(adjDensity) : null;
+
+  let score100 = null, blend = null;
+  if (P != null && N != null) { score100 = Math.round(0.7 * P + 0.3 * N); blend = '70% live data · 30% Numbeo'; }
+  else if (P != null)         { score100 = P;  blend = '100% live data'; }
+  else if (N != null)         { score100 = Math.round(N);  blend = '100% Numbeo (insufficient live data)'; }
+
+  const score = score100 != null ? bandFromScore(score100) : null;
+
+  return {
+    score, score100, P, N, ci, blend,
+    popDensity: pop,
+    lowData: score == null,
+    weighted: Math.round(weighted),
+    raw: crimes.length,
+    density: weightedDensity.toFixed(1),
+    adjDensity: adjDensity.toFixed(1),
+  };
 }
 
 const RATING_TAGS = {
@@ -1804,7 +1949,7 @@ function renderCity(name, lat, lng, crimes, month) {
   for (const c of crimes) counts[c.category] = (counts[c.category] || 0) + 1;
   const sortedCats = Object.entries(counts).sort((a, b) => b[1] - a[1]);
 
-  const rating = calculateWFRating(crimes);
+  const rating = calculateWFRating(crimes, name);
 
   // --- Rating card
   const ratingHost = document.getElementById('ratingHost');
@@ -1832,19 +1977,22 @@ function renderCity(name, lat, lng, crimes, month) {
   ratingHost.innerHTML = `
     <div class="section" style="padding-top:20px;padding-bottom:20px">
       <div class="rating-card">
-        <div class="label">Wiley Fox rating</div>
+        <div class="label">Wiley Fox Safety Score${srcTip('Unified 0–100 score (higher = safer): 70% live data.police.uk crime density (population-adjusted) + 30% Numbeo resident perception. The 1–5 band drives the colour.')}</div>
         <div class="city-name">${escapeHtml(name)}</div>
         <div class="rating-display">
-          <div class="rating-orb" style="background:${color}">${display}</div>
+          <div class="rating-orb" style="background:${color}">${ranked ? rating.score100 : display}</div>
           <div class="rating-info">
-            <div class="rating-num">${tag}</div>
-            <div class="rating-tag">${rating.raw.toLocaleString()} recorded incidents · ${month}</div>
+            <div class="rating-num">${ranked ? rating.score100 + '/100 · ' + tag : tag}</div>
+            <div class="rating-tag">${ranked ? 'Band ' + rating.score + '/5 · ' + rating.raw.toLocaleString() + ' incidents · ' + month : rating.raw.toLocaleString() + ' recorded incidents · ' + month}</div>
           </div>
         </div>
         <div class="rating-bar">${ranked ? `<div class="marker" style="left:${markerLeft}%"></div>` : ''}</div>
         <div class="scale-row"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
       </div>
       ${dataWarn}
+      ${ranked ? `<div style="margin:10px 24px 0;font-size:11px;line-height:1.5;color:var(--charcoal-soft)">
+        <strong style="color:var(--charcoal)">How this score is built:</strong> ${rating.blend}${rating.P != null && rating.N != null ? ` — live-data sub-score ${rating.P}/100, Numbeo sub-score ${rating.N}/100` : ''}.${rating.popDensity ? ` Population-adjusted using ${rating.popDensity.toLocaleString()}/km².` : ''}
+      </div>` : ''}
       <div class="meta-grid" style="margin:14px 24px 0">
         <div class="meta-tile"><div class="v">${rating.raw.toLocaleString()}</div><div class="l">Crimes recorded</div></div>
         <div class="meta-tile"><div class="v">${rating.density || 0}</div><div class="l">Weighted /km²</div></div>
@@ -1932,26 +2080,29 @@ function renderCity(name, lat, lng, crimes, month) {
 }
 
 // --- Hex-grid crime overlay (waits for style load, defensive) --------
-// Crimes are aggregated into a hexagonal grid. Each hex is tiered by
-// severity-weighted crime density, using the same thresholds as the
-// city-level Wiley Fox rating so the two always agree:
-//   Safe ≈ rating 4–5 · Caution ≈ 3 · Not safe ≈ 2 · Avoid ≈ 1
-const HEX_R = 260; // hex circumradius in metres
+// Crimes are aggregated into a hexagonal grid. Each hex is coloured by the SAME
+// live-data band the unified Wiley Fox Safety Score uses: its severity-weighted
+// crime density is run through policeSafetyScore() → bandFromScore(), then the
+// brand 1–5 palette. So a green hex and a green rating mean the same thing.
+// (Numbeo perception and population density are city-level inputs and are
+// intentionally NOT applied per-hex — the map shows raw live crime density.)
+const HEX_R = 165; // hex circumradius in metres (smaller = finer detail; tune 140–220)
 const HEX_AREA_KM2 = (3 * Math.sqrt(3) / 2) * Math.pow(HEX_R / 1000, 2);
-const HEX_TIERS = [
-  { key: 'low',     label: 'Low incident', color: '#2EBD6B', max: 75 },
-  { key: 'caution', label: 'Caution',      color: '#F2B92E', max: 200 },
-  { key: 'unsafe',  label: 'Not safe',     color: '#E8503F', max: 400 },
-  { key: 'avoid',   label: 'Avoid',        color: '#8E5BA6', max: Infinity },
-];
+const HEX_BANDS = {
+  5: { color: '#3FA34D', label: 'Very low incident' },
+  4: { color: '#A4C957', label: 'Low incident' },
+  3: { color: '#FFC857', label: 'Caution' },
+  2: { color: '#F46036', label: 'Elevated' },
+  1: { color: '#D7263D', label: 'High incident' },
+};
 // Hexes with too few incidents to grade reliably are not ranked — they show
 // as a separate "Low incident count" state (no safety claim is made).
 const HEX_MIN_INCIDENTS = 3;
 const HEX_LOWCOUNT = { key: 'lowcount', label: 'Low incident count', color: '#9ED2B2' };
 function hexTier(weightedDensity, n) {
   if (n < HEX_MIN_INCIDENTS) return HEX_LOWCOUNT;
-  for (const t of HEX_TIERS) if (weightedDensity < t.max) return t;
-  return HEX_TIERS[HEX_TIERS.length - 1];
+  const b = bandFromScore(policeSafetyScore(weightedDensity));
+  return { key: 'band' + b, color: HEX_BANDS[b].color, label: HEX_BANDS[b].label };
 }
 function hexRound(q, r) {
   const s = -q - r;
@@ -2164,14 +2315,30 @@ async function renderActivityPins(cityName, lat, lng) {
 );
 out 30;`;
 
+  // Overpass mirrors are frequently rate-limited; try them in turn so the
+  // attraction pins ("★") stay reliable rather than silently vanishing.
+  const OVERPASS_ENDPOINTS = [
+    'https://overpass-api.de/api/interpreter',
+    'https://overpass.kumi.systems/api/interpreter',
+    'https://maps.mail.ru/osm/tools/overpass/api/interpreter',
+  ];
   try {
-    const res = await fetch('https://overpass-api.de/api/interpreter', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: 'data=' + encodeURIComponent(query)
-    });
-    if (!res.ok) { console.warn('Overpass API error:', res.status, await res.text()); return; }
-    const data = await res.json();
+    let data = null;
+    for (const endpoint of OVERPASS_ENDPOINTS) {
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: 'data=' + encodeURIComponent(query)
+        });
+        if (!res.ok) { console.warn('Overpass error', res.status, 'at', endpoint); continue; }
+        data = await res.json();
+        break;
+      } catch (mirrorErr) {
+        console.warn('Overpass mirror failed:', endpoint, mirrorErr);
+      }
+    }
+    if (!data) { console.warn('All Overpass mirrors unavailable — attraction pins skipped.'); return; }
     const elements = (data.elements || []).filter(e => e.lat && e.lon && e.tags && e.tags.name);
 
     elements.slice(0, 25).forEach(el => {
@@ -2248,7 +2415,12 @@ function reportRatingMeta(rep) {
 //     with check (rating between 1 and 5 and char_length(area_name) <= 80);
 //   create policy "anon read" on public.area_ratings for select to anon using (true);
 // =====================================================================
-var RATINGS_BACKEND = { url: '', key: '' }; // <-- DEV: Supabase project URL + publishable key to go live
+// Wiley Fox Supabase project (admin@thewileyfox.com org). Publishable key is
+// public by design — access is gated by row-level-security on area_ratings.
+var RATINGS_BACKEND = {
+  url: 'https://kicfftbhbrvphlyvpywt.supabase.co',
+  key: 'sb_publishable_QbtkCvtZDQX6N5xZtruz2g_pPvrA7Gb'
+};
 
 var RatingsStore = {
   cloud() { return RATINGS_BACKEND.url && RATINGS_BACKEND.key; },
@@ -2288,33 +2460,139 @@ function maybeShowRateCard(area) {
   setTimeout(() => showRateCard(area), 650);
 }
 
+// ── Multi-step traveller rating flow ─────────────────────────────────
+// Step 1: overall feel · Step 2: which areas were you in · Step 3: rate each.
+// Per-area ratings are stored under "<city> — <area>" so they aggregate into
+// the same community-ratings store, building area-level intelligence over time.
+var wfRate = null;
+
+// Known neighbourhoods for a city, drawn from CITY_INTEL (safe + alert lists)
+function rateAreaSuggestions(area) {
+  const intel = CITY_INTEL[(area || '').toLowerCase()];
+  if (!intel) return [];
+  const clean = s => s.replace(/\s*\(.*?\)\s*/g, '').trim();
+  const out = [];
+  for (const a of [...(intel.safe || []), ...(intel.alert || [])]) {
+    const c = clean(a);
+    if (c && !out.includes(c)) out.push(c);
+  }
+  return out.slice(0, 10);
+}
+
 function showRateCard(area) {
-  const card = document.getElementById('rateCard');
-  card.innerHTML = `
-    <button class="rc-close" onclick="dismissRateCard('${escapeHtml(area).replace(/'/g, '&#39;')}')" aria-label="Dismiss">✕</button>
-    <h3 class="serif">Been to ${escapeHtml(area)}?</h3>
-    <div class="rc-sub">How safe did it feel? One tap — that\'s it.</div>
+  wfRate = { area, overall: null, suggestions: rateAreaSuggestions(area), selected: [], ratings: {} };
+  renderRateStep1();
+  document.getElementById('rateCard').classList.add('open');
+}
+
+function renderRateStep1() {
+  const a = wfRate.area;
+  document.getElementById('rateCard').innerHTML = `
+    <button class="rc-close" onclick="dismissRateCard()" aria-label="Dismiss">✕</button>
+    <h3 class="serif">Been to ${escapeHtml(a)}?</h3>
+    <div class="rc-sub">How safe did it feel overall? One tap.</div>
     <div class="rc-chips">
-      ${[1,2,3,4,5].map(v => `<button class="rc-chip" onclick="submitAreaRating('${escapeHtml(area).replace(/'/g, '&#39;')}', ${v})">${v}</button>`).join('')}
+      ${[1,2,3,4,5].map(v => `<button class="rc-chip" onclick="rateStep1(${v})">${v}</button>`).join('')}
     </div>
     <div class="rc-ends"><span>Felt unsafe</span><span>Felt very safe</span></div>
-    <button class="rc-skip" onclick="dismissRateCard('${escapeHtml(area).replace(/'/g, '&#39;')}')">Skip — maybe later</button>
+    <button class="rc-skip" onclick="dismissRateCard()">Skip — maybe later</button>
   `;
-  card.classList.add('open');
 }
 
-function dismissRateCard(area) {
-  try { sessionStorage.setItem('wf-rated-' + area, 'skipped'); } catch (e) {}
-  document.getElementById('rateCard').classList.remove('open');
+async function rateStep1(value) {
+  wfRate.overall = value;
+  try { sessionStorage.setItem('wf-rated-' + wfRate.area, String(value)); } catch (e) {}
+  try { await RatingsStore.submit(wfRate.area, value); } catch (e) { console.warn('[ratings]', e); }
+  refreshCommunityLine(wfRate.area);
+  // Point clicks have no named areas — finish after the overall rating
+  if (!wfRate.suggestions.length && /^point \(/i.test(wfRate.area)) { finishRate(); return; }
+  renderRateStep2();
 }
 
-async function submitAreaRating(area, value) {
-  try { sessionStorage.setItem('wf-rated-' + area, String(value)); } catch (e) {}
+function renderRateStep2() {
+  const chips = wfRate.suggestions.map((name, i) => {
+    const on = wfRate.selected.includes(i);
+    return `<button class="rc-area-chip" style="${on ? 'border-color:var(--orange);background:#FFF1E6;color:var(--orange-dark);font-weight:600' : ''}" onclick="rateToggleArea(${i})">${escapeHtml(name)}${on ? ' ✓' : ''}</button>`;
+  }).join('');
+  document.getElementById('rateCard').innerHTML = `
+    <button class="rc-close" onclick="dismissRateCard()" aria-label="Dismiss">✕</button>
+    <h3 class="serif">Which parts did you visit?</h3>
+    <div class="rc-sub">Tap any you went to — or add your own.</div>
+    <div class="rc-area-wrap">${chips || '<span style="font-size:12px;color:var(--charcoal-soft)">No suggestions — add the areas you visited below.</span>'}</div>
+    <div class="rc-add-row">
+      <input id="rcAddInput" class="rc-add-input" type="text" placeholder="Add an area…" maxlength="40"
+             onkeydown="if(event.key==='Enter'){rateAddArea();}">
+      <button class="rc-add-btn" onclick="rateAddArea()">Add</button>
+    </div>
+    <button class="rc-skip" style="background:var(--charcoal);color:#fff;border:none" onclick="rateStep2Continue()">
+      ${wfRate.selected.length ? 'Rate ' + wfRate.selected.length + ' area' + (wfRate.selected.length === 1 ? '' : 's') + ' →' : 'Done'}
+    </button>
+  `;
+}
+
+function rateToggleArea(i) {
+  const idx = wfRate.selected.indexOf(i);
+  if (idx === -1) wfRate.selected.push(i); else wfRate.selected.splice(idx, 1);
+  renderRateStep2();
+}
+
+function rateAddArea() {
+  const input = document.getElementById('rcAddInput');
+  const val = (input && input.value || '').trim();
+  if (!val) return;
+  wfRate.suggestions.push(val);
+  wfRate.selected.push(wfRate.suggestions.length - 1);
+  renderRateStep2();
+}
+
+function rateStep2Continue() {
+  if (!wfRate.selected.length) { finishRate(); return; }
+  renderRateStep3();
+}
+
+function renderRateStep3() {
+  const rows = wfRate.selected.map(i => {
+    const name = wfRate.suggestions[i];
+    const chosen = wfRate.ratings[i];
+    const chips = [1,2,3,4,5].map(v =>
+      `<button class="rc-chip" style="${chosen === v ? 'border-color:var(--orange);background:#FFF1E6;color:var(--orange-dark)' : ''}" onclick="rateArea(${i},${v})">${v}</button>`
+    ).join('');
+    return `<div class="rc-area-rate">
+      <div class="rc-area-name">${escapeHtml(name)}</div>
+      <div class="rc-chips">${chips}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('rateCard').innerHTML = `
+    <button class="rc-close" onclick="dismissRateCard()" aria-label="Dismiss">✕</button>
+    <h3 class="serif">Rank how safe each felt</h3>
+    <div class="rc-sub">1 = felt unsafe · 5 = felt very safe</div>
+    <div class="rc-area-rate-list">${rows}</div>
+    <button class="rc-skip" style="background:var(--charcoal);color:#fff;border:none" onclick="finishRate()">Done</button>
+  `;
+}
+
+function rateArea(i, value) {
+  wfRate.ratings[i] = value;
+  renderRateStep3();
+}
+
+async function finishRate() {
   const card = document.getElementById('rateCard');
-  card.innerHTML = `<div class="rc-thanks">Thanks — added to traveller ratings for ${escapeHtml(area)}.</div>`;
-  setTimeout(() => card.classList.remove('open'), 1900);
-  try { await RatingsStore.submit(area, value); } catch (e) { console.warn('[ratings]', e); }
-  refreshCommunityLine(area);
+  const entries = Object.entries(wfRate.ratings);
+  const n = entries.length;
+  card.innerHTML = `<div class="rc-thanks">Thanks${wfRate.overall ? '' : ''} — your ${n ? n + ' area rating' + (n === 1 ? '' : 's') + ' plus the' : ''} overall score help fellow travellers.</div>`;
+  try { sessionStorage.setItem('wf-rated-' + wfRate.area, 'done'); } catch (e) {}
+  for (const [i, v] of entries) {
+    const name = wfRate.suggestions[i];
+    try { await RatingsStore.submit(`${wfRate.area} — ${name}`, v); } catch (e) { console.warn('[ratings]', e); }
+  }
+  setTimeout(() => card.classList.remove('open'), 2100);
+}
+
+function dismissRateCard() {
+  const a = wfRate ? wfRate.area : '';
+  try { if (a) sessionStorage.setItem('wf-rated-' + a, 'skipped'); } catch (e) {}
+  document.getElementById('rateCard').classList.remove('open');
 }
 
 async function refreshCommunityLine(area) {
@@ -2369,9 +2647,9 @@ function openSafetyReport() {
 
     <div class="report-rating">
       <div class="report-rating-row">
-        <div class="report-orb" style="background:${color}">${display}</div>
+        <div class="report-orb" style="background:${color}">${ranked ? rep.rating.score100 : display}</div>
         <div>
-          <div class="rr-label">Wiley Fox incident rating</div>
+          <div class="rr-label">Wiley Fox Safety Score${ranked ? ' · ' + rep.rating.score100 + '/100 (band ' + rep.rating.score + '/5)' : ''}</div>
           <div class="rr-head">${headline}</div>
           <div class="rr-sub">${subline}</div>
         </div>
@@ -2379,6 +2657,14 @@ function openSafetyReport() {
       <div class="rating-bar">${ranked ? `<div class="marker" style="left:${markerLeft}%"></div>` : ''}</div>
       <div class="report-scale"><span>Highest incidents</span><span>Lowest incidents</span></div>
     </div>
+
+    ${ranked ? `<div class="score-compose" style="margin:14px 0 0;padding:12px 14px;background:var(--cream);border-radius:10px;font-size:12px;line-height:1.55;color:var(--charcoal)">
+      <div style="font-weight:600;margin-bottom:6px">How this score is built</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:3px"><span>Live police data${rep.rating.popDensity ? ' (population-adjusted)' : ''}</span><span style="font-weight:600">${rep.rating.P != null ? rep.rating.P + '/100' : 'n/a'}${rep.rating.P != null && rep.rating.N != null ? ' × 70%' : ''}</span></div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:3px"><span>Numbeo resident perception</span><span style="font-weight:600">${rep.rating.N != null ? rep.rating.N + '/100' : 'n/a'}${rep.rating.P != null && rep.rating.N != null ? ' × 30%' : ''}</span></div>
+      <div style="display:flex;justify-content:space-between;border-top:1px solid rgba(35,35,35,.12);margin-top:6px;padding-top:6px"><span style="font-weight:600">Unified Safety Score</span><span style="font-weight:700">${rep.rating.score100}/100</span></div>
+      <div style="font-size:10.5px;color:var(--charcoal-soft);margin-top:6px">${rep.rating.blend}. Higher = safer. Live data weighted by offence severity over a ~1-mile radius${rep.rating.popDensity ? '; adjusted for resident density (' + rep.rating.popDensity.toLocaleString() + '/km²)' : ''}.</div>
+    </div>` : ''}
 
     <div class="community-line" id="communityLine"></div>
 
@@ -2596,7 +2882,7 @@ function generateTravelGuide(name, lat, lng, crimes, month, rating, sortedCats) 
       // Fallback: warn that server is needed
       const msg = document.createElement('div');
       msg.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#D7263D;color:#fff;padding:16px 24px;border-radius:10px;font-family:Inter,sans-serif;font-size:14px;font-weight:600;z-index:9999;max-width:420px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.25)';
-      msg.innerHTML = 'Travel guide requires the local server.<br><small style="font-weight:400;opacity:.85">Open "Start Prototype" from the Wileyfox folder, then reload this page.</small>';
+      msg.innerHTML = 'Travel guide needs the local server.<br><small style="font-weight:400;opacity:.85">In the Wileyfox folder, double-click <strong>start-prototype.command</strong> (right-click → Open the first time), then use the localhost tab it opens.</small>';
       document.body.appendChild(msg);
       setTimeout(() => msg.remove(), 5000);
     });
@@ -4104,7 +4390,8 @@ function wvTab(uid, key) {
 
 // ── NUMBEO CRIME INDEX ────────────────────────────────────────────────
 // Crowd-sourced city crime + safety index for 400 cities (0–100 scale)
-// Source: numbeo.com/crime/rankings.jsp — compiled June 2026
+// Source: numbeo.com/crime/rankings.jsp — UK cities refreshed from Numbeo
+// (last updated 17 April 2026); non-UK rows compiled June 2026.
 // Higher crime index = more crime. Higher safety index = safer.
 const NUMBEO = {
   "pietermaritzburg, south africa":[82.8,17.2],
@@ -4154,13 +4441,13 @@ const NUMBEO = {
   "quezon city, philippines":[64.3,35.7],
   "santiago, chile":[64.2,35.8],
   "atlanta, ga, united states":[64.2,35.8],
-  "birmingham, united kingdom":[63.8,36.2],
+  "birmingham, united kingdom":[64.0,36.0],
   "quito, ecuador":[63.5,36.5],
   "houston, tx, united states":[63.2,36.8],
   "lethbridge, ab, canada":[63.1,36.9],
   "buenos aires, argentina":[63.0,37.0],
   "darwin, australia":[62.9,37.1],
-  "coventry, united kingdom":[62.7,37.3],
+  "coventry, united kingdom":[62.1,37.9],
   "grenoble, france":[62.6,37.4],
   "sudbury, canada":[62.5,37.5],
   "guadalajara, mexico":[62.4,37.6],
@@ -4185,7 +4472,7 @@ const NUMBEO = {
   "lyon, france":[59.3,40.7],
   "kuala lumpur, malaysia":[59.1,40.9],
   "delhi, india":[59.1,40.9],
-  "bradford, united kingdom":[59.0,41.0],
+  "bradford, united kingdom":[58.4,41.6],
   "brasilia, brazil":[58.7,41.3],
   "nantes, france":[58.6,41.4],
   "kansas city, mo, united states":[58.6,41.4],
@@ -4199,13 +4486,13 @@ const NUMBEO = {
   "montevideo, uruguay":[56.5,43.5],
   "asuncion, paraguay":[56.2,43.8],
   "hamilton, canada":[56.2,43.8],
-  "manchester, united kingdom":[55.9,44.1],
+  "manchester, united kingdom":[55.7,44.3],
   "hamilton, new zealand":[55.9,44.1],
   "san salvador, el salvador":[55.7,44.3],
   "nice, france":[55.6,44.4],
   "minneapolis, mn, united states":[55.6,44.4],
   "san jose, costa rica":[55.6,44.4],
-  "london, united kingdom":[55.6,44.4],
+  "london, united kingdom":[55.3,44.7],
   "brampton, canada":[55.5,44.5],
   "las vegas, nv, united states":[55.5,44.5],
   "brussels, belgium":[55.4,44.6],
@@ -4237,7 +4524,7 @@ const NUMBEO = {
   "almaty, kazakhstan":[53.1,46.9],
   "phoenix, az, united states":[53.0,47.0],
   "jakarta, indonesia":[52.8,47.2],
-  "nottingham, united kingdom":[52.7,47.3],
+  "nottingham, united kingdom":[52.3,47.7],
   "thessaloniki, greece":[52.0,48.0],
   "barcelona, spain":[51.9,48.1],
   "turin, italy":[51.9,48.1],
@@ -4269,7 +4556,7 @@ const NUMBEO = {
   "san antonio, tx, united states":[48.8,51.2],
   "bologna, italy":[48.7,51.3],
   "johor bahru, malaysia":[48.6,51.4],
-  "liverpool, united kingdom":[48.5,51.5],
+  "liverpool, united kingdom":[47.4,52.6],
   "catania, italy":[48.5,51.5],
   "tunis, tunisia":[48.5,51.5],
   "indore, india":[48.2,51.8],
@@ -4278,7 +4565,7 @@ const NUMBEO = {
   "istanbul, turkey":[48.0,52.0],
   "orlando, fl, united states":[48.0,52.0],
   "san jose, ca, united states":[48.0,52.0],
-  "belfast, united kingdom":[48.0,52.0],
+  "belfast, united kingdom":[48.2,51.8],
   "denver, co, united states":[48.0,52.0],
   "newcastle, australia":[47.8,52.2],
   "honolulu, hi, united states":[47.5,52.5],
@@ -4303,8 +4590,8 @@ const NUMBEO = {
   "cuenca, ecuador":[45.5,54.5],
   "alexandria, egypt":[45.4,54.6],
   "novosibirsk, russia":[45.3,54.7],
-  "glasgow, united kingdom":[45.2,54.8],
-  "leeds, united kingdom":[45.1,54.9],
+  "glasgow, united kingdom":[44.8,55.2],
+  "leeds, united kingdom":[45.5,54.5],
   "hanover, germany":[45.1,54.9],
   "genoa, italy":[45.0,55.0],
   "christchurch, new zealand":[44.9,55.1],
@@ -4325,7 +4612,7 @@ const NUMBEO = {
   "yekaterinburg, russia":[43.0,57.0],
   "bristol, united kingdom":[43.0,57.0],
   "kitchener, canada":[42.9,57.1],
-  "sheffield, united kingdom":[42.9,57.1],
+  "sheffield, united kingdom":[42.6,57.4],
   "vaughan, canada":[42.8,57.2],
   "vancouver, canada":[42.7,57.3],
   "colombo, sri lanka":[42.6,57.4],
@@ -4349,11 +4636,11 @@ const NUMBEO = {
   "san diego, ca, united states":[39.6,60.4],
   "ankara, turkey":[39.5,60.5],
   "victoria, canada":[39.4,60.6],
-  "newcastle upon tyne, united kingdom":[39.4,60.6],
+  "newcastle upon tyne, united kingdom":[39.3,60.7],
   "bonn, germany":[39.2,60.8],
   "thiruvananthapuram, india":[39.0,61.0],
   "halifax, canada":[39.0,61.0],
-  "brighton, united kingdom":[38.9,61.1],
+  "brighton, united kingdom":[39.5,60.5],
   "sofia, bulgaria":[38.8,61.2],
   "limassol, cyprus":[38.7,61.3],
   "kingston, canada":[38.7,61.3],
@@ -4422,7 +4709,7 @@ const NUMBEO = {
   "galway, ireland":[30.9,69.1],
   "san sebastian, spain":[30.5,69.5],
   "bratislava, slovakia":[30.5,69.5],
-  "edinburgh, united kingdom":[30.4,69.6],
+  "edinburgh, united kingdom":[30.5,69.5],
   "vadodara, india":[30.4,69.6],
   "vilnius, lithuania":[30.1,69.9],
   "baku, azerbaijan":[30.1,69.9],
@@ -4513,7 +4800,13 @@ const NUMBEO = {
 // Returns {ci, si, label, color} or null
 function numbeoLookup(cityName, countryName) {
   if (!cityName) return null;
+  // City-name aliases → Numbeo table keys
+  const ALIASES = { 'newcastle': 'newcastle upon tyne' };
+  const cn = cityName.toLowerCase();
+  const canon = ALIASES[cn] || cn;
   const attempts = [
+    `${canon}, ${countryName}`.toLowerCase(),
+    canon,
     `${cityName}, ${countryName}`.toLowerCase(),
     cityName.toLowerCase(),
     // Common remaps
@@ -5109,6 +5402,291 @@ function showError(msg) {
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
+
+// --- Boot ------------------------------------------------------------
+document.getElementById('ratingHost').innerHTML = `
+  <div class="empty-state">
+    <div class="ico">🦊</div>
+    <strong>Pick a city</strong> to see the Wiley Fox safety rating.<br><br>
+    <span style="font-size:12px;color:var(--charcoal-soft)">UK cities show live street-level crime data.<br>Global cities show country-level safety index.</span>
+  </div>
+`;
+
+/* ================================================================== *
+ *  SAVE-A-SPOT  — Instagram pin feature
+ *  Prototype implementation:
+ *    1. User pastes an Instagram URL + location name
+ *    2. We geocode via Nominatim (OSM, free, no auth)
+ *    3. We look up nearest Wiley Fox safety rating
+ *    4. Drop a circular thumbnail pin on the map
+ *    5. Persist pins to localStorage
+ *
+ *  Production note for dev team:
+ *    Replace Nominatim with Google Places API for accuracy.
+ *    Add Meta Graph API call to pull real thumbnail + caption.
+ *    See dev handoff doc: "Instagram Save-a-Spot" section.
+ * ================================================================== */
+
+const IG_STORAGE_KEY = 'wf_ig_spots';
+const RATING_COLOURS = { 1:'#D7263D', 2:'#F46036', 3:'#FFC857', 4:'#A4C957', 5:'#3FA34D' };
+const RATING_LABELS  = { 1:'High caution', 2:'Caution', 3:'Stay aware', 4:'Generally safe', 5:'Very safe' };
+
+let igSpots = [];
+const igMarkers = {};   // id → MapLibre Marker
+
+// ── Persistence ──────────────────────────────────────────────────────
+function igLoad() {
+  try { igSpots = JSON.parse(localStorage.getItem(IG_STORAGE_KEY) || '[]'); } catch { igSpots = []; }
+}
+function igSave() {
+  localStorage.setItem(IG_STORAGE_KEY, JSON.stringify(igSpots));
+}
+
+// ── Safety rating — nearest known city within 200 km ─────────────────
+function getNearestSafetyRating(lat, lng) {
+  // Search GLOBAL_CITIES array defined earlier in this file
+  if (typeof GLOBAL_CITIES === 'undefined') return null;
+  let best = null, bestDist = Infinity;
+  for (const c of GLOBAL_CITIES) {
+    const d = Math.sqrt(Math.pow(c.lat - lat, 2) + Math.pow(c.lng - lng, 2));
+    if (d < bestDist) { bestDist = d; best = c; }
+  }
+  // ~200 km in degrees ≈ 1.8 at mid-latitudes
+  if (bestDist < 1.8 && best) return { rating: best.rating, city: best.name };
+  // Fallback: check UK cities by coords
+  const ukApprox = [
+    { name:'London',     lat:51.509, lng:-0.118,  rating:3 },
+    { name:'Manchester', lat:53.483, lng:-2.244,  rating:2 },
+    { name:'Birmingham', lat:52.480, lng:-1.902,  rating:2 },
+    { name:'Bristol',    lat:51.454, lng:-2.587,  rating:3 },
+    { name:'Edinburgh',  lat:55.953, lng:-3.189,  rating:4 },
+    { name:'Glasgow',    lat:55.864, lng:-4.252,  rating:3 },
+    { name:'Leeds',      lat:53.800, lng:-1.549,  rating:3 },
+    { name:'Liverpool',  lat:53.408, lng:-2.991,  rating:3 },
+    { name:'Newcastle',  lat:54.978, lng:-1.614,  rating:3 },
+    { name:'Cardiff',    lat:51.481, lng:-3.179,  rating:3 },
+    { name:'Belfast',    lat:54.597, lng:-5.930,  rating:3 },
+    { name:'Brighton',   lat:50.823, lng:-0.137,  rating:3 },
+  ];
+  for (const c of ukApprox) {
+    const d = Math.sqrt(Math.pow(c.lat - lat, 2) + Math.pow(c.lng - lng, 2));
+    if (d < bestDist) { bestDist = d; best = { rating: c.rating, city: c.name }; }
+  }
+  if (bestDist < 1.5 && best) return best.rating ? best : { rating: best.rating, city: best.city || best.name };
+  return null;
+}
+
+// ── Nominatim geocode ─────────────────────────────────────────────────
+async function geocodeLocation(text) {
+  const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(text)}&format=json&limit=1`;
+  const res = await fetch(url, { headers: { 'Accept-Language': 'en' } });
+  if (!res.ok) throw new Error('Geocoding failed');
+  const data = await res.json();
+  if (!data.length) throw new Error(`Could not find "${text}" on the map`);
+  return { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon), displayName: data[0].display_name };
+}
+
+// ── Instagram oEmbed (best-effort — may require auth in production) ───
+async function fetchIgOembed(url) {
+  try {
+    const endpoint = `https://api.instagram.com/oembed/?url=${encodeURIComponent(url)}&omitscript=1`;
+    const res = await fetch(endpoint, { mode: 'cors' });
+    if (!res.ok) return null;
+    return await res.json();  // { thumbnail_url, author_name, title }
+  } catch { return null; }
+}
+
+// ── Extract shortcode from URL ────────────────────────────────────────
+function parseIgUrl(raw) {
+  try {
+    const u = new URL(raw.trim());
+    if (!u.hostname.includes('instagram.com')) return null;
+    const m = u.pathname.match(/\/(p|reel|tv)\/([A-Za-z0-9_-]+)/);
+    return m ? { shortcode: m[2], url: `https://www.instagram.com/${m[1]}/${m[2]}/` } : null;
+  } catch { return null; }
+}
+
+// ── Render sidebar saved-spot list ────────────────────────────────────
+function renderIgList() {
+  const el = document.getElementById('igSavedList');
+  if (!igSpots.length) {
+    el.innerHTML = '<div class="ig-saved-empty">No spots saved yet. Paste an Instagram URL above to get started.</div>';
+    return;
+  }
+  el.innerHTML = igSpots.map(spot => {
+    const ratingColor = spot.rating ? RATING_COLOURS[spot.rating] : '#aaa';
+    const ratingLabel = spot.rating ? `${spot.rating}/5 · ${RATING_LABELS[spot.rating]}` : 'Safety unknown';
+    const thumb = spot.thumbnail
+      ? `<img class="ig-spot-thumb" src="${escapeHtml(spot.thumbnail)}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">`
+        + `<div class="ig-spot-thumb-ph" style="display:none">📍</div>`
+      : `<div class="ig-spot-thumb-ph">📍</div>`;
+    return `
+      <div class="ig-spot-row" onclick="igFlyTo('${spot.id}')">
+        ${thumb}
+        <div class="ig-spot-info">
+          <div class="ig-spot-name">${escapeHtml(spot.locationName)}</div>
+          <div class="ig-spot-meta" style="color:${ratingColor}">${ratingLabel}</div>
+        </div>
+        <div class="ig-spot-badge" style="background:${ratingColor}">${spot.rating || '?'}</div>
+        <button class="ig-spot-del" onclick="event.stopPropagation();removeIgSpot('${spot.id}')" title="Remove">×</button>
+      </div>`;
+  }).join('');
+}
+
+// ── Render a single pin on the map ────────────────────────────────────
+function renderIgMarker(spot) {
+  if (!window.map) return;
+  if (igMarkers[spot.id]) igMarkers[spot.id].remove();
+
+  const ratingColor = spot.rating ? RATING_COLOURS[spot.rating] : '#aaa';
+  const shortLoc = spot.locationName.split(',')[0].trim().slice(0, 18);
+
+  const el = document.createElement('div');
+  el.className = 'ig-map-pin';
+  el.innerHTML = `
+    <div class="ig-map-pin-ring" style="border-color:${ratingColor}"></div>
+    ${spot.thumbnail
+      ? `<img class="ig-map-pin-img" src="${escapeHtml(spot.thumbnail)}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">`
+        + `<div class="ig-map-pin-ph" style="display:none">📍</div>`
+      : `<div class="ig-map-pin-ph">📍</div>`}
+    <div class="ig-map-pin-label">${escapeHtml(shortLoc)}</div>`;
+
+  const popup = new maplibregl.Popup({ offset: 56, closeButton: true, maxWidth: '220px' })
+    .setHTML(`
+      <div class="ig-popup">
+        ${spot.thumbnail ? `<img class="ig-popup-thumb" src="${escapeHtml(spot.thumbnail)}" alt="">` : ''}
+        <div class="ig-popup-body">
+          <div class="ig-popup-loc">${escapeHtml(spot.locationName.split(',').slice(0,2).join(', '))}</div>
+          <div class="ig-popup-safety" style="color:${ratingColor}">
+            ${spot.rating ? `${spot.rating}/5 · ${RATING_LABELS[spot.rating]}` : 'Safety data unavailable'}
+            ${spot.nearestCity ? ` <span style="font-weight:400;color:#999">(near ${escapeHtml(spot.nearestCity)})</span>` : ''}
+          </div>
+          ${spot.igUrl ? `<a class="ig-popup-link" href="${escapeHtml(spot.igUrl)}" target="_blank" rel="noopener">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            View on Instagram
+          </a>` : ''}
+        </div>
+      </div>`);
+
+  const marker = new maplibregl.Marker({ element: el, anchor: 'bottom' })
+    .setLngLat([spot.lng, spot.lat])
+    .setPopup(popup)
+    .addTo(map);
+
+  el.addEventListener('click', () => marker.togglePopup());
+  igMarkers[spot.id] = marker;
+}
+
+// ── Fly to spot ───────────────────────────────────────────────────────
+function igFlyTo(id) {
+  const spot = igSpots.find(s => s.id === id);
+  if (!spot || !window.map) return;
+  map.flyTo({ center: [spot.lng, spot.lat], zoom: 14, duration: 900 });
+  setTimeout(() => igMarkers[id]?.togglePopup(), 950);
+}
+
+// ── Remove a spot ─────────────────────────────────────────────────────
+function removeIgSpot(id) {
+  igSpots = igSpots.filter(s => s.id !== id);
+  igSave();
+  if (igMarkers[id]) { igMarkers[id].remove(); delete igMarkers[id]; }
+  renderIgList();
+}
+
+// ── Main add flow ─────────────────────────────────────────────────────
+async function addIgSpot() {
+  const urlInput  = document.getElementById('igUrlInput');
+  const locInput  = document.getElementById('igLocationInput');
+  const btn       = document.getElementById('igAddBtn');
+  const statusEl  = document.getElementById('igStatus');
+  const statusTxt = document.getElementById('igStatusText');
+
+  const rawUrl  = urlInput.value.trim();
+  const locText = locInput.value.trim();
+
+  if (!locText) {
+    locInput.focus();
+    locInput.style.borderColor = '#D7263D';
+    setTimeout(() => locInput.style.borderColor = '', 1500);
+    return;
+  }
+
+  const parsed = rawUrl ? parseIgUrl(rawUrl) : null;
+
+  // Show spinner
+  btn.disabled = true;
+  statusEl.classList.remove('err');
+  statusEl.classList.add('show');
+  statusTxt.textContent = 'Looking up location…';
+
+  try {
+    // 1. Geocode
+    const geo = await geocodeLocation(locText);
+
+    // 2. Try oEmbed (best effort — no auth = usually fails in browser, that's OK)
+    statusTxt.textContent = 'Fetching post details…';
+    let thumbnail = null;
+    if (parsed) {
+      const oembed = await fetchIgOembed(parsed.url);
+      if (oembed?.thumbnail_url) thumbnail = oembed.thumbnail_url;
+    }
+
+    // 3. Safety rating
+    statusTxt.textContent = 'Checking safety data…';
+    const safetyResult = getNearestSafetyRating(geo.lat, geo.lng);
+
+    // 4. Build spot
+    const spot = {
+      id:           `ig_${Date.now()}`,
+      igUrl:        parsed?.url || rawUrl || null,
+      shortcode:    parsed?.shortcode || null,
+      locationName: locText,
+      geoName:      geo.displayName,
+      lat:          geo.lat,
+      lng:          geo.lng,
+      thumbnail:    thumbnail,
+      rating:       safetyResult?.rating || null,
+      nearestCity:  safetyResult?.city || null,
+      savedAt:      new Date().toISOString(),
+    };
+
+    igSpots.unshift(spot);
+    igSave();
+    renderIgMarker(spot);
+    renderIgList();
+
+    // Fly to the pin
+    if (window.map) map.flyTo({ center: [geo.lng, geo.lat], zoom: 13, duration: 900 });
+
+    // Clear inputs
+    urlInput.value = '';
+    locInput.value = '';
+    statusEl.classList.remove('show');
+
+  } catch (err) {
+    statusEl.classList.add('err');
+    statusTxt.textContent = err.message || 'Something went wrong — please try again.';
+    setTimeout(() => statusEl.classList.remove('show', 'err'), 4000);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// Also trigger on Enter key in location field
+document.getElementById('igLocationInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') addIgSpot();
+});
+
+// ── Boot: load persisted spots + render ───────────────────────────────
+igLoad();
+renderIgList();
+// Render markers after map is ready
+const _igMapReadyCheck = setInterval(() => {
+  if (window.map && map.isStyleLoaded()) {
+    clearInterval(_igMapReadyCheck);
+    igSpots.forEach(renderIgMarker);
+  }
+}, 400);
 
 // --- Boot ------------------------------------------------------------
 document.getElementById('ratingHost').innerHTML = `

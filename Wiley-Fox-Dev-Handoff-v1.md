@@ -2,7 +2,7 @@
 
 **Status:** Ready for dev kickoff
 **Scope:** UK England, Wales & Northern Ireland (Scotland deferred to v2)
-**Date:** 2026-04-29 · **Last updated:** 2026-06-22 (prototype v1.1)
+**Date:** 2026-04-29 · **Last updated:** 2026-06-23 (v1.2 — reconciled with the WF-mapping repo)
 **Owner:** Barry Wilson
 
 ---
@@ -19,6 +19,31 @@ The prototype was reworked in June 2026. The following changes supersede earlier
 - **Travel guide** requires the page to be served over HTTP, not opened via `file://` (Section 8). A `start-prototype.command` launcher is included in the folder.
 - **Data sources & refresh strategy** documented in full (new Section 14).
 - **Secrets & API key management** documented — where keys live and the production convention (new Section 15).
+- **Architecture reconciliation (2026-06-23):** the production backend already exists as the `WF-mapping` repo pipeline (Node + 9 connectors + H3 scoring + **Neon Postgres** + Netlify, live at `wiley-fox.netlify.app`). Crime data is in Neon; **Supabase holds only community ratings.** See the new **§0.5** and the prototype→pipeline **scoring port plan (§16)**.
+
+---
+
+## 0.5 Architecture reality — READ FIRST (2026-06-23 reconciliation)
+
+This document was originally written **prototype-first**. In reality Wiley Fox is **two separate pieces**, and the dev should treat the *repo* as the production source of truth:
+
+**1. The production backend — GitHub `barry14wilson/WF-mapping` (the real product).**
+A Node pipeline that ingests open crime data and serves it to the map:
+- **9 connectors** (`connectors/`): `uk-police`, `us-fbi`, `eu-eurostat`, `mexico-hoyodecrimen`, `australia-abs`, `canada-statcan`, `acled-conflict`, `unodc-global`, `worldbank-global`.
+- **Scoring engine** (`scoring/scoring-engine.js`): aggregates incidents into **Uber H3 cells** (res 7/9/11) and scores `0.30·volume + 0.35·severity + 0.20·recency + 0.15·population`, banded by percentile.
+- **Storage = Neon Postgres** (`DATABASE_URL`). The `supabase/migrations/` folder name is historical — the SQL is plain Postgres on Neon.
+- **Netlify scheduled functions** (`netlify/functions/scheduled-*.js`) ingest on a cadence; **API** `GET /api/safety-tiles` + `POST /api/route-safety-check`.
+- **Live:** `https://wiley-fox.netlify.app` (root serves the prototype; `/api/safety-tiles` serves data).
+- Documented in the repo's own `README.md`, `DEPLOY.md`, `CLAUDE.md` — **the authoritative pipeline docs.**
+
+**2. The single-file prototype — `wiley-fox-uk-prototype.html` (a standalone demo).**
+Client-side; calls `data.police.uk` directly (UK only); holds the unified-score UI, hex overlay, travel-guide generator and community-ratings UX. It is **not** wired to the pipeline's API yet.
+
+**Two databases, by design:**
+- **Crime/pipeline data → Neon Postgres** (`DATABASE_URL`).
+- **Community `area_ratings` → Supabase** (`admin@thewileyfox.com` project `kicfftbhbrvphlyvpywt`). This is the *only* thing in Supabase.
+
+**Known divergence:** the prototype's scoring (70/30 police+Numbeo, ONS population adjustment, 5-band brand palette, absolute thresholds) is **not** in the pipeline, which scores differently (no Numbeo, 4 coarse severity buckets, percentile bands, 4-colour palette). Sections 5 and 16 cover this and the port plan. **Where this doc conflicts with the repo's README/DEPLOY, the repo wins** for the pipeline; this doc remains the reference for the prototype/UX, data-source catalogue, secrets, and the scoring port.
 
 ---
 
@@ -34,7 +59,7 @@ The prototype was reworked in June 2026. The following changes supersede earlier
 | `../WileyFox Shared/Crime stats and data/` | Reference datasets (UNODC, global sources for v2). |
 | `../WileyFox Shared/PRD Document WF.docx` | Original product brief. |
 
-The prototype is a reference implementation, not production code. Dev team rebuilds it properly in Next.js — but the rating algorithm, data shape, UX patterns, and brand application are all there to copy.
+The prototype is a reference implementation, not production code. **The production backend already exists** as the `WF-mapping` pipeline (see §0.5) — so this isn't a from-scratch rebuild. The prototype carries the rating UX, brand application, and the unified-score logic that still needs porting into the pipeline (§16). Section 3 below describes one option for a *future frontend* rebuild; it does **not** override the existing Node/Netlify/Neon backend.
 
 ---
 
@@ -499,6 +524,36 @@ Real secret values are **never** shared via this doc, the repo, email, or chat. 
 | Klaviyo API key | Klaviyo account |
 | Mapbox/Google Places (if used for geocoding) | respective consoles |
 | Supabase URL + keys | Supabase project settings |
+
+---
+
+## 16. Scoring port — prototype → pipeline
+
+The prototype's unified score and the pipeline's scorer differ by design, so this is a **reconcile, not a copy/paste**. Side-by-side:
+
+| | Prototype (`wiley-fox-uk-prototype.html`) | Pipeline (`scoring/scoring-engine.js`) |
+|---|---|---|
+| Direction | **Safety** score 0–100 (higher = safer) | **Risk** score (higher = worse) |
+| Inputs | 70% live police + 30% Numbeo, ONS pop-adjust | volume 0.30 + severity 0.35 + recency 0.20 + population 0.15 |
+| Numbeo | yes (30%) | **none** |
+| Severity | ~14 fine UK categories | 4 buckets (violent 3 / sexual 4 / property 1 / asb 1) |
+| Population | bounded area-density adjust (city) | per-capita, **country-level** |
+| Bands | absolute thresholds, **5-band brand palette** | per-country **percentile**, 4-colour palette |
+| Geography | ~1-mile radius + local hexes, UK live | H3 r7/9/11, all sources, server-side |
+
+**Decisions to make first (they shape the work):**
+- **D1 — Direction.** Pick safety-up vs risk-up for the product. Recommend: keep risk internally, expose `safety = 100 − score` in the API/UI so it reads like Numbeo (higher = safer). Low effort.
+- **D2 — Banding.** Pipeline bands are *relative* (per-country percentile) so "green" isn't comparable across countries and colours shift as data lands. For a travel product, **absolute thresholds** (the prototype's approach) are more honest and stable. Moving to absolute means scoring on a fixed 0–100 scale instead of min-max-per-cohort. Medium effort.
+- **D3 — Numbeo blend.** Add a city-level Numbeo layer blended into the final cell score (e.g. `final = 0.7·pipeline + 0.3·Numbeo_for_enclosing_city`). Needs a city→Numbeo table + cell→city mapping. Medium effort.
+
+**Port items, sequenced:**
+1. **Brand palette + 5 bands (quick win).** Update `lib/bands.js` to the 5 brand colours; add a migration to change `h3_safety_scores.band` CHECK from 4→5 values; update the band thresholds in `scoring-engine.js`. *(Schema change required — `band` is a CHECK-constrained column.)*
+2. **D1 + D2.** Implement direction + absolute 0–100 banding in `scoring-engine.js`.
+3. **D3.** Add the Numbeo table + blend step.
+4. **Wire the prototype to the API.** The prototype currently calls `data.police.uk` directly; point it at `/api/safety-tiles` so demo and production agree. This is the real fix for "the two disagree."
+5. **Population refinement (future).** Pipeline pop-normalisation is country-level; move toward sub-national (LSOA / H3 population grid) — supersedes the prototype's bounded city adjustment.
+
+**Deliberately NOT ported:** the prototype's fine UK severity weights. The pipeline keeps 4 coarse buckets because international sources (FBI/ICCS/Eurostat) only map to coarse categories — finer weights can't generalise. Optionally apply finer weighting *inside* `connectors/uk-police.js` for UK only, if desired.
 
 ---
 

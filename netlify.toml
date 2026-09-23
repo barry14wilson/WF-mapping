@@ -13,6 +13,11 @@
   to   = "/.netlify/functions/route-safety-check"
   status = 200
 
+[[redirects]]
+  from = "/api/fbi-state"
+  to   = "/.netlify/functions/fbi-state"
+  status = 200
+
 # Root URL serves the prototype map (rewrite, not redirect — keeps the URL clean).
 [[redirects]]
   from = "/"

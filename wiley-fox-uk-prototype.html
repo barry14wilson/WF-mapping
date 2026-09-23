@@ -1047,29 +1047,22 @@ const CAT_LABEL = {
 // --- Map -------------------------------------------------------------
 const map = new maplibregl.Map({
   container: 'map',
-  style: {
-    version: 8,
-    sources: {
-      basemap: {
-        type: 'raster',
-        // Carto Voyager — free, no API key, generous rate limit, designed for product UIs.
-        // Replace with self-hosted vector tiles in production.
-        tiles: [
-          'https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
-          'https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
-          'https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
-          'https://d.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
-        ],
-        tileSize: 256,
-        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
-      },
-    },
-    layers: [{ id: 'basemap', type: 'raster', source: 'basemap' }],
-  },
+  // OpenFreeMap Positron — free, no API key, no usage caps, commercial use allowed.
+  // (Carto basemaps started requiring an API key in 2026 and watermarked tiles.)
+  style: 'https://tiles.openfreemap.org/styles/positron',
   center: [-2.0, 53.5], // UK-centred (default UK mode)
   zoom: 5.5,
 });
 map.addControl(new maplibregl.NavigationControl(), 'top-right');
+// Warm the neutral Positron palette toward the Wiley Fox cream/sage brand.
+map.once('style.load', () => {
+  const tint = { background: ['background-color', '#F2F4E5'], park: ['fill-color', '#E3EAD6'],
+    landcover_wood: ['fill-color', '#DCE5CF'], water: ['fill-color', '#C9D8DC'],
+    landuse_residential: ['fill-color', '#ECEEE0'], building: ['fill-color', '#E6E8DA'] };
+  for (const [id, [prop, val]] of Object.entries(tint)) {
+    try { if (map.getLayer(id)) map.setPaintProperty(id, prop, val); } catch (e) {}
+  }
+});
 
 // Pre-warm: fetch GeoJSON + Canada advisories in background so Global mode
 // is instant when the user clicks the toggle
@@ -3533,7 +3526,7 @@ function renderGovAdvisoryPanel(iso3, iso2, geoName) {
 // ⚠️  API KEY REQUIRED: register free at https://api.data.gov/signup/
 // Once you have a key, replace the placeholder below.
 // Endpoint: https://api.usa.gov/crime/fbi/cde/
-const FBI_API_KEY = 'VdegBEznpLIUqGRGHasrJOJ45qDBut58aiJCY1AG';
+// FBI key lives server-side in Netlify env (FBI_API_KEY) — see netlify/functions/fbi-state.js
 const FBI_BASE    = 'https://api.usa.gov/crime/fbi/cde';
 const FBI_ENABLED = true;
 
@@ -3572,9 +3565,8 @@ async function fetchFBIState(stateAbbr) {
   if (!FBI_ENABLED) return null;
   if (fbiCache[stateAbbr]) return fbiCache[stateAbbr];
   try {
-    // Fetch most recent year of state-level offense totals
-    const year = new Date().getFullYear() - 2; // FBI data lags ~2 years
-    const url = `${FBI_BASE}/summarized/state/${stateAbbr}/all-offenses/${year}/${year}?API_KEY=${FBI_API_KEY}`;
+    // Server-side proxy (hides the API key; uses the FBI's current CDE endpoints)
+    const url = `/api/fbi-state?state=${encodeURIComponent(stateAbbr)}`;
     const d = await fetchJSON(url, { retries: 1, delay: 400 });
     if (d && (d.data || Array.isArray(d))) {
       const result = d.data || d;

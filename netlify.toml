@@ -18,6 +18,16 @@
   to   = "/.netlify/functions/fbi-state"
   status = 200
 
+[[redirects]]
+  from = "/api/wf-admin"
+  to   = "/.netlify/functions/wf-admin"
+  status = 200
+
+[[redirects]]
+  from = "/api/city-guide"
+  to   = "/.netlify/functions/wf-city-guide"
+  status = 200
+
 # Root URL serves the prototype map (rewrite, not redirect — keeps the URL clean).
 [[redirects]]
   from = "/"
@@ -55,3 +65,8 @@
 
 [functions."scheduled-acled"]
   schedule = "@monthly"
+
+# City content database: YouTube discovery at 10:00 London time (runs 09:00 + 10:00 UTC,
+# the function only works on the run that lands on 10:xx in Europe/London).
+[functions."scheduled-youtube-discovery"]
+  schedule = "0 9,10 * * *"

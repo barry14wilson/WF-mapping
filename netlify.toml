@@ -24,6 +24,11 @@
   status = 200
 
 [[redirects]]
+  from = "/api/us-advisories"
+  to   = "/.netlify/functions/us-advisories"
+  status = 200
+
+[[redirects]]
   from = "/api/city-guide"
   to   = "/.netlify/functions/wf-city-guide"
   status = 200

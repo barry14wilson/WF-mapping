@@ -2891,7 +2891,7 @@ map.once('style.load', () => {
 // Pre-warm: fetch GeoJSON + Canada advisories in background so Global mode
 // is instant when the user clicks the toggle
 map.once('load', () => {
-  loadCanadaAdvisories().catch(() => {});
+  loadUSAdvisories();
   // Silently pre-fetch GeoJSON and cache it — loadChoropleth checks choroplethLoaded
   // so this won\'t double-add layers; it just warms the browser cache
   fetch(WORLD_GEOJSON_URL).catch(() => {});
@@ -3169,6 +3169,7 @@ function renderUSCity(cityData, crimes, periodLabel, opts = {}) {
       </button>
       ${cityData.context ? `<div class="warning" style="margin:12px 24px 0">${escapeHtml(cityData.context)}</div>` : ''}
       ${renderAdvisoryPanel(cityData.name)}
+      <div id="usTravHost"></div>
       ${cityGuideButtonHTML(cityData.name)}
     </div>
   `;
@@ -3189,6 +3190,7 @@ function renderUSCity(cityData, crimes, periodLabel, opts = {}) {
     </div>
   ` : '';
 
+  renderTravellersPanel(cityData.name, document.getElementById('usTravHost'));
   renderGlobalInsight(cityData, 'insightHost');
   renderWikivoyagePanel(cityData.name, 'wikivoyageHost');
   if (cityData.lat && cityData.lng) renderPOIToggle(cityData.lat, cityData.lng, 'poiHost');
@@ -3781,6 +3783,122 @@ const FCDO_ALERT_META = {
   parts: { color: '#E8A020', bg: '#FEF6E4', label: 'FCDO advises against travel to parts of this country' },
   whole: { color: '#D7263D', bg: '#FDEAED', label: 'FCDO advises against all or all but essential travel' },
 };
+
+// --- Official travel advice: ONE source everywhere — US State Department ------
+// Live via our proxy (/api/us-advisories → cadataapi.state.gov, cached 6h).
+// The COUNTRY_ADVISORIES table in this file is only a fallback copy.
+const US_ADV_API = 'https://wiley-fox.netlify.app/api/us-advisories';
+const US_ADV_ALIAS = {
+  'Burma': ['Burma (Myanmar)'], 'Cote d Ivoire': ["Côte d'Ivoire (Ivory Coast)"], 'Eswatini': ['Eswatini (Swaziland)'],
+  'Israel': ['Israel, The West Bank and Gaza'], 'Guadeloupe': ['Guadeloupe (French West Indies)'], 'Kingdom of Denmark': ['Denmark'],
+  'Mainland China, Hong Kong & Macau - See Summaries': ['Hong Kong', 'Macau'], 'Martinique': ['Martinique (French West Indies)'],
+  'North Macedonia': ['Republic of North Macedonia'], 'Saint Barthelemy': ['Saint Barthélemy (French West Indies)'],
+  'The Bahamas': ['Bahamas'], 'The Kyrgyz Republic': ['Kyrgyzstan'],
+};
+const US_ADV_NAME_ALIAS = { 'uk': 'united kingdom', 'great britain': 'united kingdom', 'england': 'united kingdom', 'scotland': 'united kingdom',
+  'wales': 'united kingdom', 'northern ireland': 'united kingdom', 'czech republic': 'czechia', 'turkiye': 'turkey', 'uae': 'united arab emirates',
+  'myanmar': 'burma', 'ivory coast': 'cote divoire', 'korea': 'south korea', 'republic of korea': 'south korea', 'holland': 'netherlands' };
+const advNorm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+  .replace(/\(.*?\)/g, '').replace(/^the /, '').replace(/[^a-z ]/g, '').replace(/\s+/g, ' ').trim();
+let usAdvLive = null, usAdvPromise = null;
+function loadUSAdvisories() {
+  if (usAdvPromise) return usAdvPromise;
+  usAdvPromise = fetch(US_ADV_API).then(r => (r.ok ? r.json() : null)).then(d => {
+    if (!d || !Array.isArray(d.advisories)) return null;
+    usAdvLive = {};
+    for (const a of d.advisories) {
+      const rec = { l: a.level, a: a.label, d: a.updated, f: a.risks || [], h: a.headline, u: a.url, live: true };
+      for (const k of (US_ADV_ALIAS[a.name] || [a.name])) {
+        COUNTRY_ADVISORIES[k] = rec;
+        if (typeof ADV_LOOKUP !== 'undefined') ADV_LOOKUP[(typeof ADV_TO_GEO !== 'undefined' && ADV_TO_GEO[k]) || k] = { ...rec, displayName: k };
+        usAdvLive[advNorm(k)] = { ...rec, name: k };
+      }
+      usAdvLive[advNorm(a.name)] = { ...rec, name: a.name };
+    }
+    return usAdvLive;
+  }).catch(() => null);
+  return usAdvPromise;
+}
+function findUSAdvisory(country) {
+  let n = advNorm(country); n = US_ADV_NAME_ALIAS[n] || n;
+  if (usAdvLive && usAdvLive[n]) return usAdvLive[n];
+  for (const [k, v] of Object.entries(COUNTRY_ADVISORIES)) if (advNorm(k) === n) return { ...v, name: k };
+  return null;
+}
+function fmtAdvDate(d) {
+  if (!d) return '';
+  const m = String(d).match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  const dt = m ? new Date(+m[3], +m[1] - 1, +m[2]) : new Date(d);
+  return isNaN(dt) ? String(d) : dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+function isUSA(country) { return /^(usa|us|united states( of america)?)$/i.test(String(country || '').trim()); }
+
+async function renderUSAdvisoryPanel(country, hostId, place) {
+  const host = document.getElementById(hostId);
+  if (!host) return;
+  const slot = `<div class="trav-slot"></div>`;
+  if (!country) { host.innerHTML = slot; }
+  else if (isUSA(country)) {
+    host.innerHTML = `<div style="margin:12px 24px 0;padding:10px 14px;background:#F2F4E5;border-radius:8px;font-size:12px;line-height:1.5">
+      <strong style="font-family:Fraunces,serif;font-size:13px">🇺🇸 US State Dept travel advice</strong><br>
+      The State Department does not issue advisories for places inside the US. Use the crime data above.</div>${slot}`;
+  } else {
+    host.innerHTML = `<div style="margin:12px 24px 0;font-size:12px;color:var(--charcoal-soft)">Loading US State Dept advice…</div>${slot}`;
+    await loadUSAdvisories();
+    const adv = findUSAdvisory(country);
+    const box = adv ? (() => {
+      const meta = ADVISORY_META[adv.l] || { color: '#888', bg: '#F0F0F0', label: 'Advisory' };
+      const risks = (adv.f || []).filter(Boolean);
+      return `<div style="margin:12px 24px 0;padding:12px 14px;background:${meta.bg};border-left:3px solid ${meta.color};border-radius:8px">
+        <div style="font-family:Fraunces,serif;font-size:13px;font-weight:700;color:${meta.color};display:flex;align-items:center;gap:5px">🇺🇸 US State Dept · ${escapeHtml(meta.label)}${srcTip('Official US Department of State travel advisory (levels 1–4). Wiley Fox uses this single source for every country. It is written for US citizens; UK travellers should also check their insurer\'s terms.')}</div>
+        ${adv.h ? `<div style="font-size:12px;color:var(--charcoal);margin-top:4px;line-height:1.45">${escapeHtml(adv.h)}</div>` : `<div style="font-size:12px;color:var(--charcoal);margin-top:4px">${escapeHtml(adv.a || '')}</div>`}
+        ${risks.length ? `<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:5px">${risks.map(r => `<span style="font-size:10px;padding:2px 8px;border-radius:20px;background:${meta.color};color:#fff;font-family:Inter,sans-serif">${escapeHtml(r)}</span>`).join('')}</div>` : ''}
+        <div style="font-size:10px;color:var(--charcoal-soft);margin-top:8px">${escapeHtml(adv.name || country)} · Updated ${escapeHtml(fmtAdvDate(adv.d))}${adv.live ? '' : ' · stored copy'}
+          <a href="${escapeHtml(adv.u || 'https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories.html')}" target="_blank" rel="noopener" style="color:var(--orange);text-decoration:none;margin-left:6px">Full advisory ↗</a></div>
+      </div>`; })()
+      : `<div style="margin:12px 24px 0;padding:10px 14px;background:#F2F4E5;border-radius:8px;font-size:12px;line-height:1.5">
+        <strong style="font-family:Fraunces,serif;font-size:13px">🇺🇸 US State Dept travel advice</strong><br>
+        No advisory found for ${escapeHtml(country)} — check <a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories.html" target="_blank" rel="noopener" style="color:var(--orange)">travel.state.gov ↗</a></div>`;
+    host.innerHTML = box + slot;
+  }
+  const s2 = host.querySelector('.trav-slot');
+  if (s2) renderTravellersPanel(place || country, s2);
+}
+
+// --- "What travellers say" (placeholder, fed by the city database) -------------
+// Creator + traveller insight for the place; empty state invites a report.
+async function renderTravellersPanel(place, el) {
+  if (!el || !place) return;
+  const name = String(place).split(',')[0].trim();
+  const share = `<button type="button" class="cg-more" style="margin-top:10px" onclick="(document.querySelector('.wf-chip.report')||{click(){}}).click()">Share how ${escapeHtml(name)} felt</button>`;
+  const wrap = inner => `<div style="margin:12px 24px 0;padding:12px 14px;background:var(--cream,#FBF7F1);border:1px solid var(--line,#E3D8C6);border-radius:10px">
+    <div style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--charcoal-soft)">What travellers say</div>${inner}
+    <div style="font-size:10px;color:var(--charcoal-soft);margin-top:8px">Travellers' and creators' own experiences — opinions, not official advice.</div></div>`;
+  el.innerHTML = wrap(`<div style="font-size:12px;color:var(--charcoal-soft);margin-top:6px">Loading…</div>`);
+  let data = null;
+  try {
+    const slug = (typeof cityGuideSlug === 'function') ? cityGuideSlug(name) : name.toLowerCase().replace(/\s+/g, '_');
+    const r = await fetch(CITY_GUIDE_API + encodeURIComponent(slug));
+    if (r.ok) data = await r.json();
+  } catch (e) {}
+  const facts = data && data.facts ? data.facts : {};
+  const pool = [...(facts.safety_feeling || []), ...(facts.caution || []), ...(facts.scam || []), ...(facts.tip || [])]
+    .filter(f => f.data && f.data.summary);
+  const area = (typeof cgPointCtx !== 'undefined' && cgPointCtx && cgPointCtx.area) ? cgPointCtx.area.toLowerCase() : '';
+  pool.sort((a, b) => (area && String(b.area || '').toLowerCase().includes(area) ? 1 : 0) - (area && String(a.area || '').toLowerCase().includes(area) ? 1 : 0)
+    || String(b.observed_at || '').localeCompare(String(a.observed_at || '')));
+  const items = pool.slice(0, 3);
+  if (!items.length) {
+    el.innerHTML = wrap(`<div style="font-size:12px;color:var(--charcoal);margin-top:6px;line-height:1.5">No traveller reports for ${escapeHtml(name)} yet. Be the first to share how it felt — busy, calm, anything to watch for.</div>${share}`);
+    return;
+  }
+  const videos = data.counts && data.counts.videos ? data.counts.videos : 0;
+  el.innerHTML = wrap(items.map(f => `<div style="margin-top:8px;font-size:12px;line-height:1.45;color:var(--charcoal)">
+      ${f.area ? `<b>${escapeHtml(f.area)}:</b> ` : ''}${escapeHtml(f.data.summary)}
+      <div style="font-size:10px;color:var(--charcoal-soft);margin-top:2px">— ${escapeHtml(f.creator || 'Traveller')}${f.observed_at ? ' · ' + escapeHtml(String(f.observed_at).slice(0, 7)) : ''}</div></div>`).join('')
+    + `<div style="font-size:11px;color:var(--charcoal-soft);margin-top:8px">${pool.length} report${pool.length === 1 ? '' : 's'}${videos ? ` from ${videos} creator videos` : ''} · <a href="#" onclick="openCityGuide(${escapeHtml(JSON.stringify(name))});return false" style="color:var(--orange)">See all in the city guide</a></div>` + share);
+}
+
 async function renderFCDOPanel(country, hostId) {
   const host = document.getElementById(hostId);
   if (!host || !country || /united kingdom|^uk$/i.test(country)) return;
@@ -3820,7 +3938,7 @@ const ADVISORY_META = {
 
 function renderAdvisoryPanel(cityName) {
   const adv = US_ADVISORY[cityName];
-  if (!adv) return '';
+  if (!adv || adv.level !== null) return '';   // non-US cities: the live country card covers it
 
   // US domestic — no advisory issued
   if (adv.level === null) {
@@ -3891,9 +4009,7 @@ function renderGlobalCity(c) {
           ${renderAdvisoryPanel(c.name)}
           <div id="numbeoSearchHost"></div>
         </div>`;
-      renderFCDOPanel(c.country || c.name, 'fcdoHost');
-      const govEl = document.getElementById('govAdvHost');
-      if (govEl) govEl.innerHTML = renderGovAdvisoryPanel(iso3, c.iso2 || '', c.country || c.name);
+      renderUSAdvisoryPanel(c.country || c.name, 'fcdoHost', c.name);
       renderNumbeoPanel(c.name, c.country || '', 'numbeoSearchHost');
       catsHost.innerHTML = `
         <div class="section">
@@ -3934,7 +4050,7 @@ function renderGlobalCity(c) {
       hotelsHost.innerHTML = '';
       document.getElementById('gygHost').innerHTML = '';
       clearActivityMarkers();
-      renderFCDOPanel(c.country || c.name, 'fcdoHost');
+      renderUSAdvisoryPanel(c.country || c.name, 'fcdoHost', c.name);
       renderNumbeoPanel(c.name, c.country || '', 'numbeoNoDataHost');
     }
     return;
@@ -3971,7 +4087,7 @@ function renderGlobalCity(c) {
       ${cityGuideButtonHTML(c.name)}
     </div>
   `;
-  renderFCDOPanel(c.country, 'fcdoHost');
+  renderUSAdvisoryPanel(c.country, 'fcdoHost', c.name);
 
   catsHost.innerHTML = `
     <div class="section">
@@ -4224,6 +4340,7 @@ function renderCity(name, lat, lng, crimes, month) {
         See detailed safety report
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
+      <div id="ukAdvHost"></div>
       ${cityGuideButtonHTML(name)}
       <button class="cg-gen-btn" id="guideGenBtn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -4231,6 +4348,7 @@ function renderCity(name, lat, lng, crimes, month) {
       </button>
     </div>
   `;
+  renderUSAdvisoryPanel('United Kingdom', 'ukAdvHost', (typeof cgPointCtx !== 'undefined' && cgPointCtx && name === cgPointCtx.label) ? cgPointCtx.city : name);
   // Wire up the printable (generated) guide button
   const gb = document.getElementById('guideGenBtn');
   if (gb) gb.onclick = () => generateTravelGuide(name, lat, lng, crimes, month, rating, sortedCats);
@@ -7188,7 +7306,7 @@ function setMode(mode) {
 
   const sourcePill = document.getElementById('sourcePill');
   if (mode === 'global') {
-    sourcePill.innerHTML = 'Safety: <a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5" target="_blank" rel="noopener">World Bank</a> + <a href="https://ec.europa.eu/eurostat" target="_blank" rel="noopener">Eurostat</a> + <a href="https://www.gov.uk/foreign-travel-advice" target="_blank" rel="noopener">FCDO</a> · OC: <a href="https://ocindex.net" target="_blank" rel="noopener">GI 2025</a> · Map © OpenStreetMap';
+    sourcePill.innerHTML = 'Safety: <a href="https://data.worldbank.org/indicator/VC.IHR.PSRC.P5" target="_blank" rel="noopener">World Bank</a> + <a href="https://ec.europa.eu/eurostat" target="_blank" rel="noopener">Eurostat</a> + <a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories.html" target="_blank" rel="noopener">US State Dept</a> · OC: <a href="https://ocindex.net" target="_blank" rel="noopener">GI 2025</a> · Map © OpenStreetMap';
     hideBackBtn();
     showGlobalMapEmptyState();
     setHexVisibility(false);
@@ -7329,8 +7447,8 @@ async function loadChoropleth() {
   }
 
   try {
-    // Kick off Canada advisory fetch in parallel with GeoJSON load
-    loadCanadaAdvisories();
+    // Live US State Dept levels must be in place before the map is coloured
+    await loadUSAdvisories();
 
     const resp = await fetch(WORLD_GEOJSON_URL);
     const geojson = await resp.json();
@@ -7490,11 +7608,10 @@ function renderCountrySidebar(geoName) {
       <div id="eurostatHost"></div>
     </div>
   `;
-  renderFCDOPanel(displayName, 'fcdoHost');
+  { const h = document.getElementById('fcdoHost'); if (h) { h.innerHTML = '<div class="trav-slot"></div>'; renderTravellersPanel(displayName, h.firstChild); } }
 
   // Government advisory consensus panel (US + Canada live + AUS static)
-  const govEl = document.getElementById('govAdvHost');
-  if (govEl) govEl.innerHTML = renderGovAdvisoryPanel(iso3, iso2, geoName);
+  // Single advisory source: the US State Dept card above (live).
 
   // Async Eurostat enrichment for EU countries
   if (iso3 && EU_ISO3.has(iso3)) {
@@ -8702,13 +8819,13 @@ document.getElementById('ratingHost').innerHTML = `
   function badge(chip, band, opts) {
     var b = chip.querySelector('.wf-badge'); if (!b) { b = document.createElement('span'); b.className = 'wf-badge'; chip.appendChild(b); }
     opts = opts || {};
-    if (band) { b.className = 'wf-badge b' + band + (opts.prov ? ' prov' : ''); b.textContent = band; b.title = (opts.prov ? 'Provisional — from Gov.uk FCDO travel advice: ' : 'Wiley Fox rating: ') + band + '/5 · ' + BAND_LBL[band]; }
+    if (band) { b.className = 'wf-badge b' + band + (opts.prov ? ' prov' : ''); b.textContent = band; b.title = (opts.prov ? 'Provisional — from US State Dept travel advice: ' : 'Wiley Fox rating: ') + band + '/5 · ' + BAND_LBL[band]; }
     else { b.className = 'wf-badge none'; b.textContent = '—'; b.title = opts.title || 'Tap to load live data'; }
   }
   document.querySelectorAll('#globalCityGrid .city').forEach(function (chip) {
     var c = null; try { c = GLOBAL_CITIES.find(function (x) { return x.name === chip.dataset.name; }); } catch (e) {}
     if (c && c.rating) badge(chip, c.rating);
-    else { badge(chip, null, { title: 'No crime data — checking Gov.uk advice' }); if (c) fcdoBand(c.country || c.name).then(function (r) { if (r) badge(chip, r.band, { prov: true }); }); }
+    else { badge(chip, null, { title: 'No crime data — checking US State Dept advice' }); if (c) fcdoBand(c.country || c.name).then(function (r) { if (r) badge(chip, r.band, { prov: true }); }); }
   });
   function refreshUK() { document.querySelectorAll('#cityGrid .city').forEach(function (chip) { var v = ukCache[chip.dataset.name]; badge(chip, v || null); }); }
   refreshUK();
@@ -8722,22 +8839,14 @@ document.getElementById('ratingHost').innerHTML = `
     };
   } catch (e) {}
 
-  /* ---------- 3. provisional rating from Gov.uk FCDO advice ---------- */
-  var fcdoCache = {};
-  function slug(country) { try { return fcdoSlug(country); } catch (e) { return String(country || '').toLowerCase().replace(/[^a-z ]/g, '').replace(/ +/g, '-'); } }
-  function fcdoBand(country) {
-    if (!country || /united kingdom|^uk$|international/i.test(country)) return Promise.resolve(null);
-    var k = slug(country);
-    if (fcdoCache[k]) return Promise.resolve(fcdoCache[k]);
-    return fetch('https://www.gov.uk/api/content/foreign-travel-advice/' + k).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (d) {
-      var alerts = ((d.details && d.details.alert_status) || []).map(String);
-      var band = 4, why = 'No FCDO travel warnings in force';
-      if (alerts.some(function (a) { return a === 'avoid_all_travel_to_whole_country'; })) { band = 1; why = 'FCDO advises against all travel to the whole country'; }
-      else if (alerts.some(function (a) { return a === 'avoid_all_but_essential_travel_to_whole_country'; })) { band = 2; why = 'FCDO advises against all but essential travel to the whole country'; }
-      else if (alerts.some(function (a) { return a === 'avoid_all_travel_to_parts'; })) { band = 2; why = 'FCDO advises against all travel to parts of the country'; }
-      else if (alerts.length) { band = 3; why = 'FCDO advises against all but essential travel to parts of the country'; }
-      var out = { band: band, why: why, updated: (d.public_updated_at || '').slice(0, 10), url: 'https://www.gov.uk/foreign-travel-advice/' + k, country: country };
-      fcdoCache[k] = out; return out;
+  /* ---------- 3. provisional rating from US State Dept advice (single official source) ---------- */
+  function fcdoBand(country) {   // name kept for existing callers
+    if (!country || /international/i.test(country) || (typeof isUSA === 'function' && isUSA(country))) return Promise.resolve(null);
+    return loadUSAdvisories().then(function () {
+      var a = findUSAdvisory(country); if (!a) return null;
+      var band = { 4: 1, 3: 2, 2: 3, 1: 4 }[a.l]; if (!band) return null;
+      var why = 'US State Dept Level ' + a.l + ': ' + (a.a || '');
+      return { band: band, why: why, updated: fmtAdvDate(a.d), url: a.u || 'https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories.html', country: a.name || country };
     }).catch(function () { return null; });
   }
   function noDataShowing() {
@@ -8749,19 +8858,19 @@ document.getElementById('ratingHost').innerHTML = `
     var h = $('ratingHost'); if (!h || h.querySelector('.wf-prov')) return;
     var sec = h.querySelector('.section') || h;
     var el = document.createElement('div'); el.className = 'wf-prov';
-    el.innerHTML = '<div class="k">PROVISIONAL RATING <span class="pill">FROM GOV.UK FCDO ADVICE</span></div>'
+    el.innerHTML = '<div class="k">PROVISIONAL RATING <span class="pill">FROM US STATE DEPT ADVICE</span></div>'
       + '<div class="row"><div class="orb" style="background:' + BAND_COL[r.band] + (r.band === 3 || r.band === 4 ? ';color:#17130F' : '') + '"><b>' + r.band + '</b><span>OF 5</span></div>'
       + '<div><div class="t"></div><div class="s"></div></div></div>'
-      + '<div class="src">Wiley Fox has no crime dataset for this place yet, so the Foreign, Commonwealth &amp; Development Office\'s travel advice stands in. It is advice for travellers, not incident data' + (r.updated ? ' · updated ' + r.updated : '') + ' · <a href="' + r.url + '" target="_blank" rel="noopener">Full advice ↗</a></div>';
+      + '<div class="src">Wiley Fox has no crime dataset for this place yet, so the US State Department travel advisory stands in. It is advice for travellers, not incident data' + (r.updated ? ' · updated ' + r.updated : '') + ' · <a href="' + r.url + '" target="_blank" rel="noopener">Full advice ↗</a></div>';
     el.querySelector('.t').textContent = r.band + '/5 · ' + BAND_LBL[r.band];
     el.querySelector('.s').textContent = r.why + ' — ' + r.country + '.';
     sec.insertBefore(el, sec.firstChild);
   }
   // hook the prototype's own FCDO panel: whenever it renders for a place with no rating, add the provisional band above it
   try {
-    var _renderFCDOPanel = renderFCDOPanel;
-    window.renderFCDOPanel = function (country, hostId) {
-      var p = _renderFCDOPanel.apply(this, arguments);
+    var _renderUSAdv = renderUSAdvisoryPanel;
+    window.renderUSAdvisoryPanel = function (country, hostId) {
+      var p = _renderUSAdv.apply(this, arguments);
       setTimeout(function () { if (noDataShowing()) fcdoBand(country).then(function (r) { if (r && noDataShowing()) injectProvisional(r); }); }, 50);
       return p;
     };

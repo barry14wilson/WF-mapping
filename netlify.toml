@@ -70,3 +70,9 @@
 # the function only works on the run that lands on 10:xx in Europe/London).
 [functions."scheduled-youtube-discovery"]
   schedule = "0 9,10 * * *"
+
+# Redesign preview served alongside the classic homepage (not indexed).
+[[headers]]
+  for = "/new/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"

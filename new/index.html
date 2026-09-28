@@ -1165,6 +1165,11 @@ h1,h2,h3,.serif,.rating-card .city-name,.rating-orb,.report-orb,.report-city{
 .cg-root{--cg-accent:#EA2E00;--cg-red:#D7263D;--cg-orange:#F46036;--cg-amber:#FFC857;--cg-lime:#A4C957;--cg-green:#3FA34D}
 .guide-btn.cg-btn{background:#EA2E00;box-shadow:0 4px 12px rgba(234,46,0,.22)}
 .guide-btn.cg-btn:hover{background:#B62A08}
+.cg-cityall{margin-top:18px;border-top:1px solid var(--wf-line,#E3D8C6);padding-top:10px}
+.cg-cityall>summary{cursor:pointer;font-weight:800;font-size:14px;padding:10px 12px;border-radius:10px;background:var(--wf-card2,#FBF7F1);border:1px solid var(--wf-line,#E3D8C6);list-style:none}
+.cg-cityall>summary::-webkit-details-marker{display:none}
+.cg-cityall>summary::after{content:' +';color:#EA2E00}
+.cg-cityall[open]>summary::after{content:' –'}
 .cg-gen-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:calc(100% - 48px);margin:8px 24px 0;padding:11px;background:transparent;color:var(--charcoal);border:1px solid var(--wf-line2,#D8CBB6);border-radius:12px;font:700 12.5px 'Plus Jakarta Sans',sans-serif;cursor:pointer}
 .cg-gen-btn:hover{background:var(--wf-card2,#FBF7F1)}
 .cg-gen-btn svg{width:13px;height:13px}
@@ -2987,6 +2992,7 @@ async function handleSearch() {
 }
 
 // --- Map click -------------------------------------------------------
+let cgClickSeq = 0;
 map.on('click', e => {
   const hits = map.queryRenderedFeatures(e.point, {
     layers: ['hex-fill'].filter(l => map.getLayer(l)),
@@ -2996,7 +3002,14 @@ map.on('click', e => {
   const lng = e.lngLat.lng;
   const label = `Point (${lat.toFixed(3)}, ${lng.toFixed(3)})`;
   if (isUKCoords(lat, lng)) {
-    loadCity(label, lat, lng);
+    const clickId = ++cgClickSeq;
+    cgReverseArea(lat, lng).then(ctx => {
+      if (clickId !== cgClickSeq) return;             // user clicked again
+      if (ctx) {
+        cgPointCtx = { ...ctx, lat, lng, label: `${ctx.area}, ${ctx.city}` };
+        loadCity(cgPointCtx.label, lat, lng);
+      } else { cgPointCtx = null; loadCity(label, lat, lng); }
+    });
   } else {
     // Find nearest global city for context, or show generic global notice
     const nearest = GLOBAL_CITIES.reduce((best, c) => {
@@ -3346,6 +3359,7 @@ function cityGuideSlug(name) {
   return CITY_GUIDE_SLUG_ALIASES[s] || s;
 }
 function cityGuideButtonHTML(name) {
+  if (cgPointCtx && name === cgPointCtx.label) return cgAreaButtonHTML(cgPointCtx);
   return `
       <button class="guide-btn cg-btn" id="guideBtn" data-city="${escapeHtml(name)}" onclick="openCityGuide(this.dataset.city)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6l7-3 6 3 7-3v15l-7 3-6-3-7 3z"/><path d="M9 3v15M15 6v15"/></svg>
@@ -3353,12 +3367,84 @@ function cityGuideButtonHTML(name) {
       </button>`;
 }
 
-function openCityGuide(name) {
+// --- Area focus for map-point clicks -------------------------------------
+// A clicked point is named by its suburb (OpenStreetMap reverse geocode), e.g.
+// "Knightsbridge, London". The guide then shows that area first, the rest of
+// its borough if local content is thin, and the whole city underneath.
+let cgPointCtx = null;             // { label, area, borough, city, lat, lng }
+let cgActiveArea = null;           // ctx used by the open panel (null = whole city)
+const LONDON_BOROUGHS = {
+  'City of Westminster': ['westminster','mayfair','soho','covent garden','marylebone','fitzrovia','st james','pimlico','victoria','belgravia','knightsbridge','bayswater','paddington','little venice','maida vale','st john\'s wood','leicester square','piccadilly','oxford street','carnaby','kingly court','chinatown','seven dials','neal\'s yard','trafalgar','buckingham palace','hyde park','regent street','tottenham court road'],
+  'Royal Borough of Kensington and Chelsea': ['kensington','chelsea','south kensington','earl\'s court','notting hill','holland park','knightsbridge','sloane square','king\'s road','brompton','ladbroke grove','kensington gardens'],
+  'City of London': ['the city','city of london','bank','st paul','barbican','moorgate','liverpool street','monument','tower hill','fleet street'],
+  'London Borough of Camden': ['camden','bloomsbury','holborn','king\'s cross','hampstead','kentish town','euston','primrose hill','covent garden','fitzrovia','tottenham court road','kilburn'],
+  'London Borough of Islington': ['islington','angel','clerkenwell','highbury','upper street','finsbury'],
+  'London Borough of Tower Hamlets': ['whitechapel','brick lane','spitalfields','canary wharf','bethnal green','mile end','wapping','bow','tower of london','tower hill','limehouse'],
+  'London Borough of Hackney': ['hackney','shoreditch','dalston','london fields','hoxton','stoke newington','clapton'],
+  'London Borough of Southwark': ['southwark','borough','london bridge','bermondsey','peckham','elephant','south bank','bankside','dulwich','camberwell'],
+  'London Borough of Lambeth': ['lambeth','south bank','waterloo','brixton','clapham','vauxhall','stockwell','london eye','westminster bridge'],
+  'Royal Borough of Greenwich': ['greenwich','woolwich','eltham','north greenwich','o2'],
+  'London Borough of Lewisham': ['lewisham','deptford','catford','forest hill','new cross'],
+  'London Borough of Newham': ['stratford','olympic park','east ham','canning town','west ham'],
+  'London Borough of Hammersmith and Fulham': ['hammersmith','fulham','shepherd\'s bush','white city','putney bridge'],
+  'London Borough of Wandsworth': ['wandsworth','battersea','putney','tooting','clapham junction','nine elms'],
+  'London Borough of Merton': ['wimbledon','mitcham','morden'],
+  'London Borough of Richmond upon Thames': ['richmond','kew','twickenham','hampton court','teddington'],
+  'London Borough of Croydon': ['croydon'],
+  'London Borough of Brent': ['wembley','kilburn','brent'],
+  'London Borough of Haringey': ['tottenham','haringey','wood green','crouch end','muswell hill'],
+};
+const LONDON_BOROUGH_ALIASES = { 'westminster': 'City of Westminster', 'kensington and chelsea': 'Royal Borough of Kensington and Chelsea' };
+function cgBoroughKey(b) {
+  if (!b) return null;
+  if (LONDON_BOROUGHS[b]) return b;
+  const n = String(b).toLowerCase().replace(/^(london borough of|royal borough of|city of)\s+/, '');
+  return Object.keys(LONDON_BOROUGHS).find(k => k.toLowerCase().endsWith(n)) || LONDON_BOROUGH_ALIASES[n] || null;
+}
+function cgShortBorough(b) { return String(b || '').replace(/^(London Borough of|Royal Borough of)\s+/, ''); }
+
+// Reverse-geocode a UK point to { area, borough, city }. 3s budget; null on failure.
+async function cgReverseArea(lat, lng) {
+  try {
+    const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 3000);
+    const r = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&zoom=16&addressdetails=1`,
+      { headers: { 'Accept': 'application/json', 'Accept-Language': 'en-GB' }, signal: ctl.signal });
+    clearTimeout(t);
+    if (!r.ok) return null;
+    const a = (await r.json()).address || {};
+    const boroughRaw = a.city_district || a.borough || a.city || '';
+    const bKey = cgBoroughKey(boroughRaw) || cgBoroughKey(a.city);
+    const isLondon = !!bKey || a.city === 'London' || a.state_district === 'Greater London' || /^GB-(WSM|KEC|LND|CMD|ISL|TWH|HCK|SWK|LBH|GRE|LEW|NWM|HMF|WND|MRT|RIC|CRY|BEN|HRY)/.test(a['ISO3166-2-lvl8'] || '');
+    const city = isLondon ? 'London' : (a.city || a.town || a.village || a.county || '');
+    // Most specific named place; parks/water fall back to the next level up
+    const area = a.suburb || a.quarter || a.neighbourhood || a.village || a.hamlet || a.town || (isLondon ? cgShortBorough(bKey) : '') || city;
+    if (!area || !city) return null;
+    if (/^(city|town) centre$/i.test(area)) return { area: `${city} ${area.toLowerCase()}`, borough: bKey || null, city };
+    return { area, borough: bKey || (isLondon ? null : (a.county || null)), city };
+  } catch (e) { return null; }
+}
+
+// Does a fact mention any of these place words (area, name or summary)?
+function cgFactMentions(f, words) {
+  const hay = [f.area, f.name, f.data && f.data.summary].filter(Boolean).join(' | ').toLowerCase();
+  return words.some(w => w && new RegExp(`(^|[^a-z])${w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}([^a-z]|$)`).test(hay));
+}
+function cgAreaButtonHTML(ctx) {
+  return `
+      <button class="guide-btn cg-btn" id="guideBtn" onclick="openAreaGuide()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-6.5-8-13a8 8 0 0 1 16 0c0 6.5-8 13-8 13z"/><circle cx="12" cy="9" r="3"/></svg>
+        ${escapeHtml(ctx.area)} guide
+      </button>`;
+}
+function openAreaGuide() { if (cgPointCtx) openCityGuide(cgPointCtx.city, cgPointCtx); }
+
+function openCityGuide(name, areaCtx) {
   const panel = document.getElementById('cgPanel');
   const scrim = document.getElementById('cgScrim');
   if (!panel || !name) return;
   cityGuideLastFocus = document.activeElement;
-  document.getElementById('cgTitle').textContent = name;
+  cgActiveArea = areaCtx && areaCtx.area && areaCtx.area !== name ? areaCtx : null;
+  document.getElementById('cgTitle').textContent = cgActiveArea ? `${cgActiveArea.area}, ${name}` : name;
   document.getElementById('cgBuilt').innerHTML = 'Loading traveller insight…';
   panel.classList.add('open'); scrim.classList.add('open');
   panel.setAttribute('aria-hidden', 'false');
@@ -3485,6 +3571,48 @@ function cgSection(title, items, opts = {}) {
 }
 
 function renderCityGuide(name, data) {
+  if (cgActiveArea) return renderAreaGuide(name, data, cgActiveArea);
+  return renderCityGuideAll(name, data);
+}
+
+const CG_AREA_ENOUGH = 5;          // local items needed before we stop widening
+function renderAreaGuide(city, data, ctx) {
+  const body = document.getElementById('cgBody');
+  const built = document.getElementById('cgBuilt');
+  const all = Object.values((data && data.facts) || {}).flat().filter(Boolean);
+  const order = ['safety_feeling', 'caution', 'scam', 'stay', 'hotel', 'visit', 'food', 'transport', 'cost', 'tip'];
+  const byKind = (a, b) => order.indexOf(a.kind) - order.indexOf(b.kind) || (cgTone(a) === 'red' ? -1 : 0);
+  const local = all.filter(f => cgFactMentions(f, [ctx.area.toLowerCase()])).sort(byKind);
+  const bKey = cgBoroughKey(ctx.borough);
+  const bWords = (bKey && LONDON_BOROUGHS[bKey]) || [];
+  const nearby = local.length >= CG_AREA_ENOUGH || !bKey ? []
+    : all.filter(f => !local.includes(f) && (cgFactMentions(f, bWords) || (f.data && cgBoroughKey(f.data.borough) === bKey))).sort(byKind);
+  const cityHTML = renderCityGuideAll(city, data, { returnHTML: true });
+  const videos = (data && data.counts && data.counts.videos) || 0;
+  const bName = cgShortBorough(bKey);
+  document.getElementById('cgTitle').textContent = `${ctx.area}, ${city}`;
+  built.innerHTML = `<b>${local.length}</b> creator mention${local.length === 1 ? '' : 's'} of ${esc(ctx.area)}`
+    + (nearby.length ? ` · <b>${nearby.length}</b> elsewhere in ${esc(bName)}` : '')
+    + (videos ? ` · ${Number(videos).toLocaleString()} videos for ${esc(city)}` : '') + ' + Wiley Fox crime data';
+
+  let html = cgFullGuideHTML(city);
+  if (local.length) {
+    html += cgSection(`In ${ctx.area}`, local, { dot: 'var(--cg-accent)' });
+  } else {
+    html += `<div class="cg-state" style="padding:14px 8px"><b>No creator has talked about ${esc(ctx.area)} specifically yet</b>
+      ${nearby.length ? `Here's what they say about the rest of ${esc(bName)}, then ${esc(city)} as a whole.` : `Here's what they say about ${esc(city)} as a whole.`}</div>`;
+  }
+  if (nearby.length) html += cgSection(`Nearby in ${bName}`, nearby, { dot: 'var(--cg-amber)' });
+  if (cityHTML) {
+    const openCity = local.length + nearby.length < CG_AREA_ENOUGH;
+    html += `<details class="cg-cityall"${openCity ? ' open' : ''}><summary>${esc(city)} overall — top sights, getting around &amp; local tips</summary>${cityHTML}</details>`;
+  } else if (!local.length && !nearby.length) {
+    html += `<div class="cg-state"><b>Coming soon</b>We're still gathering traveller insight for ${esc(city)} — check back soon.</div>`;
+  }
+  body.innerHTML = html;
+  body.scrollTop = 0;
+}
+function renderCityGuideAll(name, data, opts = {}) {
   const body = document.getElementById('cgBody');
   const built = document.getElementById('cgBuilt');
   const facts = (data && data.facts) || {};
@@ -3493,18 +3621,19 @@ function renderCityGuide(name, data) {
   const nFacts = Object.values(facts).reduce((a, v) => a + (Array.isArray(v) ? v.length : 0), 0);
   const videos = (data && data.counts && data.counts.videos) || 0;
   const cityName = (data && data.city && data.city.name) || name;
-  document.getElementById('cgTitle').textContent = cityName;
-  built.innerHTML = videos
+  if (!opts.returnHTML) document.getElementById('cgTitle').textContent = cityName;
+  if (!opts.returnHTML) built.innerHTML = videos
     ? `Built from <b>${Number(videos).toLocaleString()} creator video${videos === 1 ? '' : 's'}</b> + Wiley Fox crime data`
     : 'Built from Wiley Fox crime data';
 
   if (!data || (!nFacts && !tips.length)) {
+    if (opts.returnHTML) return '';
     body.innerHTML = cgFullGuideHTML(name) + `<div class="cg-state"><b>Coming soon</b>We're still gathering traveller insight for this city — check back soon.
       ${videos ? `<br><span style="font-size:12px">${Number(videos).toLocaleString()} creator videos collected so far.</span>` : ''}</div>`;
     return;
   }
   const F = k => (Array.isArray(facts[k]) ? facts[k] : []);
-  let html = cgFullGuideHTML(name);
+  let html = opts.returnHTML ? '' : cgFullGuideHTML(name);
 
   // Photo strip (skip generic cover shot if there are others)
   const shown = photos.filter(p => cgSafeUrl(p.url)).filter((p, _, a) => !(p.subject_type === 'cover' && a.length > 1)).slice(0, 12);
@@ -3570,6 +3699,7 @@ function renderCityGuide(name, data) {
 
   const srcN = (data.sources || []).length;
   html += `<div class="cg-srcnote">Insight summarised from ${srcN ? `${srcN} public creator video${srcN === 1 ? '' : 's'}` : 'public creator videos'} and Wiley Fox crime data${data.counts && data.counts.last_added ? ` · updated ${esc(new Date(data.counts.last_added).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }))}` : ''}. Creators are credited on each item; opinions are theirs. Photo credits and licences shown with each image.</div>`;
+  if (opts.returnHTML) return html;
   body.innerHTML = html;
   body.scrollTop = 0;
 }
@@ -4106,14 +4236,14 @@ function renderCity(name, lat, lng, crimes, month) {
     const ukNumHost = document.createElement('div');
     ukNumHost.id = 'numbeoUKHost';
     catsHost.after(ukNumHost);
-    renderNumbeoPanel(name, 'United Kingdom', 'numbeoUKHost');
+    renderNumbeoPanel(cgPointCtx && name === cgPointCtx.label ? cgPointCtx.city : name, 'United Kingdom', 'numbeoUKHost');
   }
 
   // --- Safety Intelligence synthesis
   renderSafetyInsight(name, sortedCats, rating, 'insightHost');
 
   // --- City guide (Wikivoyage)
-  renderWikivoyagePanel(name, 'wikivoyageHost');
+  renderWikivoyagePanel(cgPointCtx && name === cgPointCtx.label ? cgPointCtx.city : name, 'wikivoyageHost');
 
   // --- Points of interest toggle
   renderPOIToggle(lat, lng, 'poiHost');

@@ -172,6 +172,22 @@ const OPS = {
     return { inserted: n };
   },
 
+
+  // Review helpers: list fact/tip rows for given sources, and change their status
+  // (active | superseded | rejected). Rows are never deleted.
+  async list_rows(sql, b) {
+    const t = b.table === 'tips' ? 'wf_tips' : 'wf_facts';
+    return { rows: await sql.query(`select id, source_id, kind, name, area, status, created_at from ${t === 'wf_tips' ? "(select id, source_id, category as kind, worry as name, scope as area, status, created_at from wf_tips) x" : t}
+      where source_id = any($1) order by id`, [arr(b.source_ids)]) };
+  },
+  async set_status(sql, b) {
+    const t = b.table === 'tips' ? 'wf_tips' : 'wf_facts';
+    const st = ['active', 'superseded', 'rejected'].includes(b.status) ? b.status : null;
+    if (!st) throw new Error('bad status');
+    const r = await sql.query(`update ${t} set status=$2 where id = any($1) returning id`, [arr(b.ids).map(Number), st]);
+    return { updated: r.length };
+  },
+
   async mark_extracted(sql, b) {
     const r = await sql.query(`update wf_sources set extracted_at=now(), updated_at=now() where id = any($1) returning id`, [arr(b.ids)]);
     return { marked: r.length };

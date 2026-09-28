@@ -3026,10 +3026,11 @@ map.on('click', e => {
 
 // --- US City Socrata API config --------------------------------------
 const US_CITY_APIS = {
-  'New York':      { url: 'https://data.cityofnewyork.us/resource/qgea-i56i.json',  lat: 'latitude', lng: 'longitude', cat: 'ofns_desc',         date: 'rpt_dt',          daysBack: 180 },
-  'Chicago':       { url: 'https://data.cityofchicago.org/resource/ijzp-q8t2.json', lat: 'latitude', lng: 'longitude', cat: 'primary_type',       date: 'date',            daysBack: 90  },
-  'San Francisco': { url: 'https://data.sfgov.org/resource/wg3w-h783.json',         lat: 'latitude', lng: 'longitude', cat: 'incident_category',  date: 'incident_date',   daysBack: 90  },
-  'Los Angeles':   { url: 'https://data.lacity.org/resource/2nrs-mtv8.json',        lat: 'lat',      lng: 'lon',       cat: 'crm_cd_desc',         date: 'date_occ',        daysBack: 365 },
+  // NYPD Complaint Data Current (Year To Date). The Historic set (qgea-i56i) stops at the end of last year.
+  'New York':      { url: 'https://data.cityofnewyork.us/resource/5uac-w243.json',  lat: 'latitude', lng: 'longitude', cat: 'ofns_desc',         date: 'cmplnt_fr_dt',    daysBack: 30  },
+  'Chicago':       { url: 'https://data.cityofchicago.org/resource/ijzp-q8t2.json', lat: 'latitude', lng: 'longitude', cat: 'primary_type',       date: 'date',            daysBack: 30  },
+  'San Francisco': { url: 'https://data.sf.gov/resource/wg3w-h783.json',         lat: 'latitude', lng: 'longitude', cat: 'incident_category',  date: 'incident_date',   daysBack: 30  },
+  'Los Angeles':   { url: 'https://data.lacity.org/resource/2nrs-mtv8.json',        lat: 'lat',      lng: 'lon',       cat: 'crm_cd_desc',         date: 'date_occ',        daysBack: 30  },
 };
 
 // Map US crime descriptions → WF category keys (for colour + label reuse)
@@ -3072,10 +3073,17 @@ async function loadUSCity(cityData) {
   clearActivityMarkers();
 
   try {
-    const cutoff = new Date();
+    // Open-data portals publish with a lag (NYPD: quarterly), so anchor the window
+    // to the newest record in the dataset rather than today's date.
+    let latest = new Date();
+    try {
+      const mx = await fetchJSON(`${api.url}?%24select=${encodeURIComponent(`max(${api.date}) as m`)}`);
+      if (mx && mx[0] && mx[0].m) { const d = new Date(mx[0].m); if (!isNaN(d) && d < latest) latest = d; }
+    } catch (e) { /* fall back to today */ }
+    const cutoff = new Date(latest);
     cutoff.setDate(cutoff.getDate() - api.daysBack);
     const dateStr = cutoff.toISOString().slice(0, 10);
-    const r = 0.12; // ~13 km bounding box
+    const r = 0.05; // ~5 km bounding box: one month of records for the map
     const { lat, lng } = cityData;
 
     const where = [
@@ -3085,7 +3093,10 @@ async function loadUSCity(cityData) {
       `${api.date} > '${dateStr}T00:00:00'`,
     ].join(' AND ');
 
-    const url = `${api.url}?%24limit=3000&%24where=${encodeURIComponent(where)}`;
+    const LIMIT = 25000;
+    const sel = [api.lat, api.lng, api.cat, api.date, 'block', 'location_description'].filter((v, i, a) => a.indexOf(v) === i);
+    const cols = api.cat === 'primary_type' ? sel : sel.filter(c => c !== 'block' && c !== 'location_description');
+    const url = `${api.url}?%24limit=${LIMIT}&%24select=${encodeURIComponent(cols.join(','))}&%24order=${encodeURIComponent(api.date + ' DESC')}&%24where=${encodeURIComponent(where)}`;
     const raw = await fetchJSON(url);
     if (!Array.isArray(raw)) throw new Error('UNEXPECTED_RESPONSE');
 
@@ -3101,22 +3112,36 @@ async function loadUSCity(cityData) {
       }))
       .filter(c => c.location.latitude && !isNaN(parseFloat(c.location.latitude)));
 
-    const periodLabel = `Last ${api.daysBack === 365 ? '12 months' : api.daysBack + ' days'}`;
-    renderUSCity(cityData, crimes, periodLabel);
+    const fmt = d => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    const dates = raw.map(c => new Date(c[api.date])).filter(d => !isNaN(d)).sort((a, b) => a - b);
+    const spanDays = dates.length ? Math.max(1, (dates[dates.length - 1] - dates[0]) / 864e5) : api.daysBack;
+    const periodLabel = dates.length
+      ? `${fmt(dates[0])} – ${fmt(dates[dates.length - 1])}${raw.length >= LIMIT ? ` (latest ${LIMIT.toLocaleString()} records)` : ''}`
+      : `${api.daysBack} days to ${fmt(latest)}`;
+    // Rate exactly like the UK: crimes within 1 mile of the point, per month.
+    const R_M = 1609, mLat = 110540, mLng = 111320 * Math.cos(lat * Math.PI / 180);
+    const near = crimes.filter(c => Math.hypot((parseFloat(c.location.latitude) - lat) * mLat, (parseFloat(c.location.longitude) - lng) * mLng) <= R_M);
+    const scale = spanDays < 28 ? 30 / spanDays : 1;   // truncated windows are scaled up to a month
+    const ratingCrimes = scale === 1 ? near : Array.from({ length: Math.round(near.length * scale) }, (_, i) => near[i % Math.max(1, near.length)]).filter(Boolean);
+    renderUSCity(cityData, crimes, periodLabel, { ratingCrimes, nearCount: near.length, scaled: scale !== 1 });
+    const pill = document.getElementById('sourcePill');
+    if (pill) { const host = new URL(api.url).host; pill.innerHTML = `Data: <a href="https://${host}" target="_blank" rel="noopener">${host}</a> (city open data) · Map © OpenStreetMap`; }
 
   } catch (err) {
     console.warn('[loadUSCity]', err);
+    const pill = document.getElementById('sourcePill'); if (pill) pill.innerHTML = 'Map © OpenStreetMap';
     // Graceful fallback to index card
     renderGlobalCity(cityData);
   }
 }
 
-function renderUSCity(cityData, crimes, periodLabel) {
-  const rating    = calculateWFRating(crimes);
+function renderUSCity(cityData, crimes, periodLabel, opts = {}) {
+  const rating    = calculateWFRating(opts.ratingCrimes || crimes);
   const { tag, color, display, ranked } = ratingMeta(rating);
   const markerLeft = ranked ? ((rating.score - 1) / 4) * 100 : null;
   const counts    = {};
-  for (const c of crimes) counts[c.category] = (counts[c.category] || 0) + 1;
+  const near1 = opts.ratingCrimes ? crimes.filter(c => Math.hypot((parseFloat(c.location.latitude) - cityData.lat) * 110540, (parseFloat(c.location.longitude) - cityData.lng) * 111320 * Math.cos(cityData.lat * Math.PI / 180)) <= 1609) : crimes;
+  for (const c of near1) counts[c.category] = (counts[c.category] || 0) + 1;
   const sortedCats = Object.entries(counts).sort((a, b) => b[1] - a[1]);
 
   document.getElementById('ratingHost').innerHTML = `
@@ -3128,14 +3153,14 @@ function renderUSCity(cityData, crimes, periodLabel) {
           <div class="rating-orb" style="background:${color}">${display}</div>
           <div class="rating-info">
             <div class="rating-num">${tag}</div>
-            <div class="rating-tag">${rating.raw.toLocaleString()} incidents · ${escapeHtml(periodLabel)}</div>
+            <div class="rating-tag">${(opts.nearCount ?? rating.raw).toLocaleString()} incidents within 1 mile · ${escapeHtml(periodLabel)}</div>
           </div>
         </div>
         <div class="rating-bar">${ranked ? `<div class="marker" style="left:${markerLeft}%"></div>` : ''}</div>
         <div class="scale-row"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
       </div>
       <div class="meta-grid" style="margin:14px 24px 0">
-        <div class="meta-tile"><div class="v">${rating.raw.toLocaleString()}</div><div class="l">Incidents recorded</div></div>
+        <div class="meta-tile"><div class="v">${(opts.nearCount ?? rating.raw).toLocaleString()}</div><div class="l">Incidents within 1 mile${opts.scaled ? ' (scaled to a month for the rating)' : ''}</div></div>
         <div class="meta-tile"><div class="v">${rating.density || 0}</div><div class="l">Weighted /km²</div></div>
       </div>
       <button class="report-btn" onclick="openSafetyReport()">

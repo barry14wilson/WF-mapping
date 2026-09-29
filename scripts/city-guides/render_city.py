@@ -180,6 +180,16 @@ else:
 <div class="map-legend"><b>Pins</b><span><i style="background:#1F6B3A"></i>Christmas market</span><span><i style="background:#1a1a1a"></i>Sight or base</span><span><i style="background:#F46036"></i>Take extra care</span></div></div>
 <p class="map-foot">Crime figures: {e(CS["name"])} · <a href="{G["app_ctas"][0]["url"]}" target="_blank" rel="noopener">Open the Wiley Fox map</a></p>"""
 
+CP = G.get('compare')
+if CP:
+    _mx = [max(r['vals'][i] for r in CP['rows']) or 1 for i in range(len(CP['cols']))]
+    _rows = ''.join('<tr class="%s"><th>%s</th>%s</tr>' % ('me' if r.get('me') else ('avg' if r.get('avg') else ''), e(r['name']),
+        ''.join(f'<td><span class="cmp-bar" style="width:{v/_mx[i]*100:.0f}%"></span><span class="cmp-v">{v:,}</span></td>' for i, v in enumerate(r['vals']))) for r in CP['rows'])
+    MAP_BLOCK += f"""<h3 class="sub-h" id="compare">{e(CP['title'])}</h3><p class="section-sub">{e(CP['intro'])}</p>
+<div class="cmp-wrap"><table class="cmp"><thead><tr><th></th>{''.join(f'<th>{e(c)}</th>' for c in CP['cols'])}</tr></thead><tbody>{_rows}</tbody></table>
+<div class="cmp-unit">{e(CP['unit'])}</div></div>
+<p class="map-foot">{e(CP['note'])} Source: <a href="{CP['source']['url']}" target="_blank" rel="noopener">{e(CP['source']['name'])}</a></p>"""
+
 page = f'''<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{e(CITY)} Travel Guide | Wiley Fox</title>

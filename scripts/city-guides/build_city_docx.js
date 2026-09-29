@@ -79,6 +79,9 @@ if (G.official_crime && G.official_crime.length) {
   kids.push(h2('What the official figures say'));
   G.official_crime.forEach(o => kids.push(bullet(o.number + ' — ' + o.label + '.', o.desc || '')));
 }
+if (G.compare) { const X = G.compare; kids.push(h2(X.title), p(X.intro));
+  kids.push(table([3400, ...X.cols.map(() => Math.floor(5626 / X.cols.length))], ['', ...X.cols], X.rows.map(r => [r.name + (r.me ? '  ◀' : ''), ...r.vals.map(v => v.toLocaleString('en-GB'))])));
+  kids.push(p(X.note + ' Source: ' + X.source.name + ' (' + X.unit + ').', { run: { size: 16, color: MUTED } })); }
 const ct = Object.entries(G.crime_table || {}).sort((a, b) => a[1].avg_month - b[1].avg_month);
 if (ct.length) kids.push(h2('Recorded crime by area'), table([3000, 1600, 1500, 1500, 1426], ['Area', 'Crimes / month', 'Theft share', 'Violence share', 'Level'],
   ct.map(([k, v]) => [k, v.avg_month.toLocaleString('en-GB'), v.theft_share + '%', v.violence_share + '%',

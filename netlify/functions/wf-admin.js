@@ -6,7 +6,8 @@
 //
 // ops: migrate | stats | upsert_cities | upsert_creators | list_creators | add_sources |
 //      pending_transcripts | put_transcripts | pending_extraction | get_transcripts |
-//      put_facts | put_tips | put_photos | mark_extracted | exclude_source | log_run
+//      put_facts | put_tips | put_photos | mark_extracted | exclude_source | log_run |
+//      get_focus | set_focus | set_config | list_rows | set_status
 
 import { getSql } from '../../lib/db.js';
 import { CONTENT_SCHEMA } from '../../lib/wf-content-schema.js';
@@ -113,7 +114,9 @@ const OPS = {
   async pending_transcripts(sql, b) {
     return { sources: await sql.query(`select id,url,title,city_slug from wf_sources
       where platform='youtube' and transcript_status='pending' and transcript_attempts < 3 and not excluded
-      order by first_seen_at limit $1`, [Math.min(+b.limit || 50, 200)]) };
+      order by (city_slug = (select slug from wf_cities where focus_rank is not null and coalesce(guide_status,'queued') <> 'done'
+                             order by focus_rank limit 1)) desc nulls last, first_seen_at
+      limit $1`, [Math.min(+b.limit || 50, 200)]) };
   },
 
   async put_transcripts(sql, b) {
@@ -141,7 +144,9 @@ const OPS = {
       from wf_sources s left join wf_transcripts t on t.source_id=s.id
       where s.extracted_at is null and not s.excluded and (s.transcript_status='ok' or s.platform<>'youtube')
         and ($2::text is null or s.city_slug=$2 or ($2='unassigned' and s.city_slug is null))
-      order by s.first_seen_at limit $1`, [Math.min(+b.limit || 20, 100), b.city ?? null]) };
+      order by (s.city_slug = (select slug from wf_cities where focus_rank is not null and coalesce(guide_status,'queued') <> 'done'
+                               order by focus_rank limit 1)) desc nulls last, s.first_seen_at
+      limit $1`, [Math.min(+b.limit || 20, 100), b.city ?? null]) };
   },
 
   async get_transcripts(sql, b) {
@@ -186,6 +191,28 @@ const OPS = {
     if (!st) throw new Error('bad status');
     const r = await sql.query(`update ${t} set status=$2 where id = any($1) returning id`, [arr(b.ids).map(Number), st]);
     return { updated: r.length };
+  },
+
+
+  // Focus queue: the city being built gets (almost) all discovery effort.
+  // body: { queue: ["nuremberg","cologne",...] } replaces the order; { slug, status } marks one city.
+  async get_focus(sql) {
+    const queue = await sql.query(`select slug,name,focus_rank,coalesce(guide_status,'queued') as guide_status from wf_cities
+      where focus_rank is not null order by focus_rank`);
+    const cfg = Object.fromEntries((await sql.query('select key,value from wf_config')).map((r) => [r.key, r.value]));
+    return { queue, current: queue.find((c) => c.guide_status !== 'done') || null, config: cfg };
+  },
+  async set_focus(sql, b) {
+    if (Array.isArray(b.queue)) {
+      await sql.query('update wf_cities set focus_rank=null where focus_rank is not null');
+      for (const [i, slug] of b.queue.entries()) await sql.query(`update wf_cities set focus_rank=$2, guide_status=coalesce(guide_status,'queued') where slug=$1`, [slug, i + 1]);
+    }
+    if (b.slug && b.status) await sql.query('update wf_cities set guide_status=$2 where slug=$1', [b.slug, b.status]);
+    return OPS.get_focus(sql);
+  },
+  async set_config(sql, b) {
+    await sql.query(`insert into wf_config (key,value) values ($1,$2) on conflict (key) do update set value=excluded.value, updated_at=now()`, [b.key, JSON.stringify(b.value)]);
+    return { ok: true };
   },
 
   async mark_extracted(sql, b) {

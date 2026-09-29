@@ -190,6 +190,7 @@ if CP:
 <div class="cmp-unit">{e(CP['unit'])}</div></div>
 <p class="map-foot">{e(CP['note'])} Source: <a href="{CP['source']['url']}" target="_blank" rel="noopener">{e(CP['source']['name'])}</a></p>"""
 
+NTOP = ['Zero','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen'][len(G['top'])] if len(G['top'])<16 else str(len(G['top']))
 page = f'''<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{e(CITY)} Travel Guide | Wiley Fox</title>
@@ -242,7 +243,7 @@ page = f'''<!DOCTYPE html>
 </div></section>
 
 <section id="top"><div class="container"><div class="section-rule">Chapter {chap()} · The Sights</div>
-<div class="section-label">What creators rate</div><h2 class="section-title">Ten things worth your time</h2>
+<div class="section-label">What creators rate</div><h2 class="section-title">{NTOP} things worth your time</h2>
 <p class="section-sub">{e(G.get('top_intro', 'Ranked by how often creators recommend them. Book popular ones early.'))}</p><div class="top-list">{top_rows}</div>
 <h3 class="sub-h">If you only have one day</h3><div class="itin-day"><div class="itin-day-num"><span class="label">One</span><span class="num">1</span></div><div class="itin-day-content"><h3>The classic loop</h3>{it1}</div></div>
 <h3 class="sub-h">Three days, grouped by area</h3>{it3}

@@ -107,7 +107,7 @@ kids.push(table([2600, 1500, 3526, 1400], ['Hotel', 'Area / for', 'Why', 'Book']
 kids.push(space(), cta('families'));
 
 // See
-kids.push(new Paragraph({ children: [new PageBreak()] }), chap('The sights'), h1('Ten things worth your time'));
+kids.push(new Paragraph({ children: [new PageBreak()] }), chap('The sights'), h1((['Zero','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen'][G.top.length] || G.top.length) + ' things worth your time'));
 G.top.forEach((t, i) => { kids.push(new Paragraph({ spacing: { before: 160, after: 40 }, children: [new TextRun({ text: String(i + 1).padStart(2, '0') + '  ', color: ORANGE, bold: true, size: 28, font: 'Georgia' }),
   new TextRun({ text: t.name, bold: true, size: 26, font: 'Georgia', italics: true })] }),
   p(`${t.area} · ${t.price}${t.family ? ' · Great for kids' : ''}`, { run: { size: 16, color: MUTED } }), p(t.why),

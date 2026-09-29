@@ -16,7 +16,7 @@ TIER_LABEL = {1: "Highest", 2: "High", 3: "Moderate", 4: "Lower", 5: "Lowest"}
 
 def credit(keys):
     keys = [k for k in keys if k in C]
-    if not keys: return '<span class="credit">Wiley Fox data</span>'
+    if not keys: return f'<span class="credit">{e(G.get("credit_fallback", "Wiley Fox data"))}</span>'
     return '<span class="credit">Via ' + ', '.join(f'<a href="{C[k]["url"]}" target="_blank" rel="noopener">{e(C[k]["name"])}</a>' for k in keys) + '</span>'
 
 def cta(where):
@@ -35,37 +35,47 @@ def photo(key):
     p = PH.get(key)
     if not p: return ''
     return f'<figure class="ph"><img src="{p["file"]}" alt="{e(key)}" loading="lazy"><figcaption>Photo: {e(html.unescape(p["artist"]) or "Wikimedia Commons")} · <a href="{p["page"]}" target="_blank" rel="noopener">{e(p["license"])}</a></figcaption></figure>'
-HEX = open(f'{D}/hexdata.json').read()
-total_crimes = json.loads(HEX)['total']
-PINS = json.dumps([{"n": k, "lat": v["lat"], "lng": v["lng"], "m": v["avg_month"], "t": v["theft_share"], "v": v["violence_share"]} for k, v in G["crime_table"].items()])
+HAS_HEX = os.path.exists(f'{D}/hexdata.json')
+HEX = open(f'{D}/hexdata.json').read() if HAS_HEX else 'null'
+total_crimes = json.loads(HEX)['total'] if HAS_HEX else 0
+CT = G.get('crime_table') or {}
+if CT:
+    PINS = json.dumps([{"n": k, "lat": v["lat"], "lng": v["lng"], "m": v["avg_month"], "t": v["theft_share"], "v": v["violence_share"], "k": "area"} for k, v in CT.items()])
+else:  # cities without street-level data: labelled pins (markets, sights, official hotspots)
+    PINS = json.dumps([{"n": p["n"], "lat": p["lat"], "lng": p["lng"], "note": p.get("note", ""), "k": p.get("kind", "sight")} for p in G.get("map_pins", [])])
+def crime_line(c, full=True):
+    if not c: return ''
+    if full: return f'<div class="hood-data">{c["avg_month"]:,} crimes a month nearby · {c["theft_share"]}% theft · {c["violence_share"]}% violence or robbery</div>'
+    return f'<div class="hood-data">{c["avg_month"]:,} crimes a month nearby · top: {e(", ".join(c["top_categories"]))}</div>'
+OFFICIAL = ''.join(f'<div class="stat-item"><div class="stat-number">{e(x["number"])}</div><div class="stat-label">{e(x["label"])}</div><div class="stat-desc">{e(x.get("desc",""))}</div></div>' for x in G.get('official_crime', []))
 
 
 stay_cards = ''.join(f'''
 <article class="hood-card">{photo(s["area"])}
   <div class="hood-head"><div class="hood-name">{e(s["area"])}</div>
-    <div class="tier-pill t{s["crime"]["tier"]}">{TIER_LABEL[s["crime"]["tier"]]} recorded crime</div></div>
+    {f'<div class="tier-pill t{s["crime"]["tier"]}">{TIER_LABEL[s["crime"]["tier"]]} recorded crime</div>' if s.get("crime") else ''}</div>
   <div class="hood-body">
     <div class="hood-tagline">{" · ".join(e(x) for x in s["for"])}</div>
     <p class="hood-desc">{e(s["why"])}</p>
-    <div class="hood-data">{s["crime"]["avg_month"]:,} crimes a month nearby · {s["crime"]["theft_share"]}% theft · {s["crime"]["violence_share"]}% violence or robbery</div>
+    {crime_line(s.get("crime"))}
     {credit(s["creators"])}
   </div>
 </article>''' for s in G['stay'])
 
 caution_rows = ''.join(f'''
 <div class="caution-row">
-  <div class="dot" style="background:var(--safety-{c["crime"]["tier"] if c["crime"]["tier"]<3 else 2})"></div>
+  <div class="dot" style="background:var(--safety-{(c["crime"]["tier"] if c.get("crime") and c["crime"]["tier"]<3 else 2)})"></div>
   <div style="flex:1">
     <div class="borough-name">{e(c["area"])}</div>
     <div class="caution-when">Take most care: {e(c["when"])}</div>
     <p class="caution-note">{e(c["note"])}</p>
-    <div class="hood-data">{c["crime"]["avg_month"]:,} crimes a month nearby · top: {e(", ".join(c["crime"]["top_categories"]))}</div>
+    {crime_line(c.get("crime"), False)}
     {credit(c["creators"])}
   </div>
 </div>''' for c in G['caution'])
 
-ct = sorted(G['crime_table'].items(), key=lambda x: x[1]['avg_month'])
-mx = max(v['avg_month'] for _, v in ct)
+ct = sorted(CT.items(), key=lambda x: x[1]['avg_month'])
+mx = max([v['avg_month'] for _, v in ct] or [1])
 bars = ''.join(f'''<div class="bar-row"><span class="bar-name">{e(k)}</span>
   <span class="bar-track"><span class="bar-fill" style="width:{v["avg_month"]/mx*100:.1f}%;background:var(--safety-{v["tier"]})"></span></span>
   <span class="bar-val">{v["avg_month"]:,}</span></div>''' for k, v in ct)
@@ -151,6 +161,25 @@ if X:
 else:
     XNAV = ''; XMAS_BODY = ''
 
+if HAS_HEX:
+    MAP_BLOCK = f"""<h3 class="sub-h" id="map">The Wiley Fox crime map of {e(CITY)}</h3>
+<p class="section-sub">Every recorded crime in {MON(S['data_months'][0])} from {e(CS['name'])}, weighted by seriousness the same way as the Wiley Fox app and grouped into 350-metre hexagons. Colours compare each hexagon with the rest of {e(CITY)}: red marks the busiest 5% of the city. Blank areas had no recorded crime. Busy tourist districts show up red partly because so many people pass through them. For a street-level score, open the Wiley Fox map.</p>
+<div class="map-wrap"><div id="gmap"></div>
+<div class="map-legend"><b>Recorded crime vs rest of {e(CITY)}</b><span><i style="background:#D7263D"></i>Highest 5%</span><span><i style="background:#F46036"></i>Next 10%</span><span><i style="background:#FFC857"></i>Next 20%</span><span><i style="background:#A4C957"></i>Middle 30%</span><span><i style="background:#3FA34D"></i>Lowest 35%</span></div></div>
+<p class="map-foot">{total_crimes:,} crimes · {e(CS["name"])} · <a href="{G["app_ctas"][0]["url"]}" target="_blank" rel="noopener">Check any street live on the Wiley Fox map</a></p>
+<h3 class="sub-h">Recorded crime by area</h3><p class="section-sub">{e(S["data_note"])}</p>
+<div class="bars">{bars}</div>
+<div class="legend"><span><i style="background:var(--safety-5)"></i>Lowest</span><span><i style="background:var(--safety-4)"></i>Lower</span><span><i style="background:var(--safety-3)"></i>Moderate</span><span><i style="background:var(--safety-2)"></i>High</span><span><i style="background:var(--safety-1)"></i>Highest</span></div>"""
+else:
+    MAP_BLOCK = f"""<h3 class="sub-h">What the official figures say</h3>
+<p class="section-sub">{e(S["data_note"])}</p>
+<div class="stat-strip" style="margin:18px 0;border-radius:10px"><div class="container" style="padding:0">{OFFICIAL}</div></div>
+<h3 class="sub-h" id="map">Map: markets, sights and places to take care</h3>
+<p class="section-sub">{e(G.get("map_intro", "Street-level crime data is not published for this city, so this map shows the places in this guide and the areas official reports and creators flag. Tap a pin for the note."))}</p>
+<div class="map-wrap"><div id="gmap"></div>
+<div class="map-legend"><b>Pins</b><span><i style="background:#1F6B3A"></i>Christmas market</span><span><i style="background:#1a1a1a"></i>Sight or base</span><span><i style="background:#F46036"></i>Take extra care</span></div></div>
+<p class="map-foot">Crime figures: {e(CS["name"])} · <a href="{G["app_ctas"][0]["url"]}" target="_blank" rel="noopener">Open the Wiley Fox map</a></p>"""
+
 page = f'''<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{e(CITY)} Travel Guide | Wiley Fox</title>
@@ -183,14 +212,7 @@ page = f'''<!DOCTYPE html>
 <section id="safety"><div class="container"><div class="section-rule">Chapter {chap()} · Safety</div>
 <div class="section-label">What the data and the creators say</div><h2 class="section-title">How it feels, and what the numbers show</h2>
 <div class="two-col"><div class="panel"><h3>The data</h3><p>{e(S["wf_summary"])}</p></div><div class="panel"><h3>The creators</h3><p>{e(S["creator_summary"])}</p></div></div>
-<h3 class="sub-h" id="map">The Wiley Fox crime map of {e(CITY)}</h3>
-<p class="section-sub">Every recorded crime in {MON(S['data_months'][0])} from {e(CS['name'])}, weighted by seriousness the same way as the Wiley Fox app and grouped into 350-metre hexagons. Colours compare each hexagon with the rest of {e(CITY)}: red marks the busiest 5% of the city. Blank areas had no recorded crime. Busy tourist districts show up red partly because so many people pass through them. For a street-level score, open the Wiley Fox map.</p>
-<div class="map-wrap"><div id="gmap"></div>
-<div class="map-legend"><b>Recorded crime vs rest of {e(CITY)}</b><span><i style="background:#D7263D"></i>Highest 5%</span><span><i style="background:#F46036"></i>Next 10%</span><span><i style="background:#FFC857"></i>Next 20%</span><span><i style="background:#A4C957"></i>Middle 30%</span><span><i style="background:#3FA34D"></i>Lowest 35%</span></div></div>
-<p class="map-foot">{total_crimes:,} crimes · {e(CS["name"])} · <a href="{G["app_ctas"][0]["url"]}" target="_blank" rel="noopener">Check any street live on the Wiley Fox map</a></p>
-<h3 class="sub-h">Recorded crime by area</h3><p class="section-sub">{e(S["data_note"])}</p>
-<div class="bars">{bars}</div>
-<div class="legend"><span><i style="background:var(--safety-5)"></i>Lowest</span><span><i style="background:var(--safety-4)"></i>Lower</span><span><i style="background:var(--safety-3)"></i>Moderate</span><span><i style="background:var(--safety-2)"></i>High</span><span><i style="background:var(--safety-1)"></i>Highest</span></div>
+{MAP_BLOCK}
 <h3 class="sub-h" id="caution">Areas to take extra care</h3><p class="section-sub">None of these are no-go areas. Know the pattern, and plan your timing and your route home.</p>
 <div class="ranking-card">{caution_rows}</div>
 {cta("night")}
@@ -199,7 +221,7 @@ page = f'''<!DOCTYPE html>
 
 <section id="stay" class="alt"><div class="container"><div class="section-rule">Chapter {chap()} · Where to base yourself</div>
 <div class="section-label">Neighbourhoods</div><h2 class="section-title">Where to stay</h2>
-<p class="section-sub">Pick an area first, then a hotel. Every area card shows the latest recorded crime within about a mile, so you can compare busy against calm.</p>
+<p class="section-sub">{"Pick an area first, then a hotel. Every area card shows the latest recorded crime within about a mile, so you can compare busy against calm." if HAS_HEX else "Pick an area first, then a hotel. The old town is compact, so most bases are within a short walk of the markets."}</p>
 <div class="hood-grid">{stay_cards}</div>
 <h3 class="sub-h">Hotels we'd start with</h3>
 <div class="affiliate-note">Wiley Fox may earn a small commission if you book through these links. Your price stays the same.</div>
@@ -256,7 +278,7 @@ const H={HEX}; const PINS={PINS};
 const COL={{5:'#3FA34D',4:'#A4C957',3:'#FFC857',2:'#F46036',1:'#D7263D',0:'#9ED2B2'}};
 const LAB={{5:'Lowest 35% in {e(CITY)}',4:'Middle 30% in {e(CITY)}',3:'Busier than most (top 35%)',2:'Busy (top 15%)',1:'Highest 5% in {e(CITY)}'}};
 const toLL=(x,y)=>[H.clng+x/H.mLng,H.clat+y/H.mLat];
-const feats=H.h.map(([q,r,b,n,c])=>{{const cx=H.R*Math.sqrt(3)*(q+r/2),cy=H.R*1.5*r;const ring=[];
+const feats=!H?[]:H.h.map(([q,r,b,n,c])=>{{const cx=H.R*Math.sqrt(3)*(q+r/2),cy=H.R*1.5*r;const ring=[];
  for(let i=0;i<6;i++){{const a=Math.PI/180*(60*i-30);ring.push(toLL(cx+H.R*Math.cos(a),cy+H.R*Math.sin(a)));}} ring.push(ring[0]);
  return {{type:'Feature',properties:{{b,n,top:H.cats[c],col:COL[b],lab:LAB[b]}},geometry:{{type:'Polygon',coordinates:[ring]}}}};}});
 const pins={{type:'FeatureCollection',features:PINS.map(p=>({{type:'Feature',properties:p,geometry:{{type:'Point',coordinates:[p.lng,p.lat]}}}}))}};
@@ -264,15 +286,15 @@ if(!window.maplibregl){{document.getElementById('gmap').innerHTML='<p style="pad
 const map=new maplibregl.Map({{container:'gmap',style:'https://tiles.openfreemap.org/styles/positron',center:{json.dumps(MAPC['center'])},zoom:(window.innerWidth<700?{MAPC['zoom']-1.2}:{MAPC['zoom']}),cooperativeGestures:true,attributionControl:{{compact:true}}}});
 map.addControl(new maplibregl.NavigationControl({{showCompass:false}}),'top-right');
 map.on('load',()=>{{
- map.addSource('hex',{{type:'geojson',data:{{type:'FeatureCollection',features:feats}}}});
- map.addLayer({{id:'hex',type:'fill',source:'hex',paint:{{'fill-color':['get','col'],'fill-opacity':0.55}}}});
+ if(H){{map.addSource('hex',{{type:'geojson',data:{{type:'FeatureCollection',features:feats}}}});
+ map.addLayer({{id:'hex',type:'fill',source:'hex',paint:{{'fill-color':['get','col'],'fill-opacity':0.55}}}});}}
  map.addSource('pins',{{type:'geojson',data:pins}});
- map.addLayer({{id:'pins',type:'circle',source:'pins',paint:{{'circle-radius':6,'circle-color':'#1a1a1a','circle-stroke-color':'#fff','circle-stroke-width':2}}}});
+ map.addLayer({{id:'pins',type:'circle',source:'pins',paint:{{'circle-radius':6,'circle-color':['match',['get','k'],'market','#1F6B3A','caution','#F46036','#1a1a1a'],'circle-stroke-color':'#fff','circle-stroke-width':2}}}});
  map.addLayer({{id:'pinlab',type:'symbol',source:'pins',layout:{{'text-field':['get','n'],'text-size':11,'text-offset':[0,1.1],'text-anchor':'top','text-font':['Noto Sans Bold']}},paint:{{'text-color':'#1a1a1a','text-halo-color':'#fff','text-halo-width':1.6}}}});
  const pop=new maplibregl.Popup({{closeButton:true,maxWidth:'260px'}});
- map.on('click','pins',e=>{{const p=e.features[0].properties;pop.setLngLat(e.lngLat).setHTML(`<b>${{p.n}}</b><br>${{Number(p.m).toLocaleString('en-GB')}} crimes a month within ~1 mile<br>${{p.t}}% theft · ${{p.v}}% violence or robbery<br><a href="https://www.thewileyfox.com" target="_blank">Open on Wiley Fox</a>`).addTo(map);}});
+ map.on('click','pins',e=>{{const p=e.features[0].properties;pop.setLngLat(e.lngLat).setHTML(p.m!==undefined&&p.m!==null&&p.m!=='' ? `<b>${{p.n}}</b><br>${{Number(p.m).toLocaleString('en-GB')}} crimes a month within ~1 mile<br>${{p.t}}% theft · ${{p.v}}% violence or robbery<br><a href="https://www.thewileyfox.com" target="_blank">Open on Wiley Fox</a>` : `<b>${{p.n}}</b><br>${{p.note||''}}`).addTo(map);}});
  map.on('click','hex',e=>{{if(map.queryRenderedFeatures(e.point,{{layers:['pins']}}).length)return;const p=e.features[0].properties;pop.setLngLat(e.lngLat).setHTML(`<b style="color:${{p.col}}">${{p.lab}}</b><br>${{p.n}} crimes in ${{'{MON(S["data_months"][0])}'}}<br>Most common: ${{p.top}}`).addTo(map);}});
- ['hex','pins'].forEach(l=>{{map.on('mouseenter',l,()=>map.getCanvas().style.cursor='pointer');map.on('mouseleave',l,()=>map.getCanvas().style.cursor='');}});
+ (H?['hex','pins']:['pins']).forEach(l=>{{map.on('mouseenter',l,()=>map.getCanvas().style.cursor='pointer');map.on('mouseleave',l,()=>map.getCanvas().style.cursor='');}});
 }});
 }})();
 </script>

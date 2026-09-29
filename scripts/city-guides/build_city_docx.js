@@ -75,25 +75,28 @@ if (G.christmas) { const X = G.christmas;
 // Safety
 kids.push(new Paragraph({ children: [new PageBreak()] }), chap('Safety'), h1('How it feels, and what the numbers show'));
 kids.push(h2('The data'), p(S.wf_summary), h2('The creators'), p(S.creator_summary), p(S.data_note, { run: { size: 18, color: MUTED } }));
-kids.push(h2('Recorded crime by area'));
-const ct = Object.entries(G.crime_table).sort((a, b) => a[1].avg_month - b[1].avg_month);
-kids.push(table([3000, 1600, 1500, 1500, 1426], ['Area', 'Crimes / month', 'Theft share', 'Violence share', 'Level'],
+if (G.official_crime && G.official_crime.length) {
+  kids.push(h2('What the official figures say'));
+  G.official_crime.forEach(o => kids.push(bullet(o.number + ' — ' + o.label + '.', o.desc || '')));
+}
+const ct = Object.entries(G.crime_table || {}).sort((a, b) => a[1].avg_month - b[1].avg_month);
+if (ct.length) kids.push(h2('Recorded crime by area'), table([3000, 1600, 1500, 1500, 1426], ['Area', 'Crimes / month', 'Theft share', 'Violence share', 'Level'],
   ct.map(([k, v]) => [k, v.avg_month.toLocaleString('en-GB'), v.theft_share + '%', v.violence_share + '%',
     [new Paragraph({ children: [new TextRun({ text: TIER[v.tier], bold: true, size: 18, color: TIERCOL[v.tier] })] })]])));
 kids.push(h2('Areas to take extra care'), p('None of these are no-go areas. Know the pattern, and plan your timing and your route home.'));
 G.caution.forEach(c => { kids.push(new Paragraph({ spacing: { before: 160, after: 40 }, children: [new TextRun({ text: c.area, bold: true, size: 24 })] }),
   p('Take most care: ' + c.when, { run: { color: ORANGE, size: 18 } }), p(c.note),
-  p(`${c.crime.avg_month.toLocaleString('en-GB')} crimes a month nearby · top: ${c.crime.top_categories.join(', ')}`, { run: { size: 16, color: MUTED } }), credit(c.creators)); });
+  ...(c.crime ? [p(`${c.crime.avg_month.toLocaleString('en-GB')} crimes a month nearby · top: ${c.crime.top_categories.join(', ')}`, { run: { size: 16, color: MUTED } })] : []), credit(c.creators)); });
 kids.push(cta('night'), h2('Scams and tricks creators keep seeing'));
 G.scams.forEach(s => { kids.push(bullet(s.title + '.', s.text), credit(s.creators)); });
 
 // Stay
 kids.push(new Paragraph({ children: [new PageBreak()] }), chap('Where to base yourself'), h1('Where to stay'));
-kids.push(p('Pick an area first, then a hotel. Every area shows the latest recorded crime within about a mile, so you can compare busy against calm.'));
+kids.push(p(G.crime_table ? 'Pick an area first, then a hotel. Every area shows the latest recorded crime within about a mile, so you can compare busy against calm.' : 'Pick an area first, then a hotel.'));
 G.stay.forEach(s => { kids.push(new Paragraph({ spacing: { before: 200, after: 40 }, children: [new TextRun({ text: s.area, font: 'Georgia', italics: true, bold: true, size: 28 }),
-    new TextRun({ text: `   ${TIER[s.crime.tier]} recorded crime`, size: 16, bold: true, color: TIERCOL[s.crime.tier] })] }),
+    ...(s.crime ? [new TextRun({ text: `   ${TIER[s.crime.tier]} recorded crime`, size: 16, bold: true, color: TIERCOL[s.crime.tier] })] : [])] }),
   p(s.for.join(' · '), { run: { size: 16, color: ORANGE } }), p(s.why),
-  p(`${s.crime.avg_month.toLocaleString('en-GB')} crimes a month nearby · ${s.crime.theft_share}% theft · ${s.crime.violence_share}% violence or robbery`, { run: { size: 16, color: MUTED } }), credit(s.creators)); });
+  ...(s.crime ? [p(`${s.crime.avg_month.toLocaleString('en-GB')} crimes a month nearby · ${s.crime.theft_share}% theft · ${s.crime.violence_share}% violence or robbery`, { run: { size: 16, color: MUTED } })] : []), credit(s.creators)); });
 kids.push(h2("Hotels we'd start with"), p('Wiley Fox may earn a small commission if you book through these links. Your price stays the same.', { run: { size: 18, color: MUTED } }));
 kids.push(table([2600, 1500, 3526, 1400], ['Hotel', 'Area / for', 'Why', 'Book'], G.hotels.map(h => [
   [new Paragraph({ children: [new TextRun({ text: h.name, bold: true, size: 18 })] }), new Paragraph({ children: [new TextRun({ text: h.band + ' · ' + (C[h.source] ? 'via ' + C[h.source].name : h.source), size: 16, color: MUTED })] })],

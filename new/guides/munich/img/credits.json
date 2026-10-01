@@ -1,17 +1,31 @@
 {
  "cover": {
   "file": "img/cover.jpg",
-  "artist": "Strubbl",
-  "page": "https://commons.wikimedia.org/wiki/File:Weihnachtsmarkt_vor_Neuem_Rathaus_M%C3%BCnchen_2024-12-02.jpg",
-  "license": "CC BY-SA 4.0",
-  "title": "File:Weihnachtsmarkt vor Neuem Rathaus München 2024-12-02.jpg"
+  "artist": "Ashwin Chandrasekaran",
+  "page": "https://commons.wikimedia.org/wiki/File:Marienplatz_Christkindlmarkt,_2013.jpg",
+  "license": "CC BY 2.0",
+  "title": "File:Marienplatz Christkindlmarkt, 2013.jpg"
+ },
+ "Münchner Christkindlmarkt": {
+  "file": "img/m-nchner-christkindlmarkt.jpg",
+  "artist": "Usien",
+  "page": "https://commons.wikimedia.org/wiki/File:Marienplatz_M%C3%BCnchen_Weihnachten_2013.jpg",
+  "license": "CC BY-SA 3.0",
+  "title": "File:Marienplatz München Weihnachten 2013.jpg"
  },
  "Altstadt (around Marienplatz)": {
   "file": "img/altstadt-around-marienplatz.jpg",
-  "artist": "Diliff",
-  "page": "https://commons.wikimedia.org/wiki/File:Rathaus_and_Marienplatz_from_Peterskirche_-_August_2006.jpg",
+  "artist": "Martin Falbisoner",
+  "page": "https://commons.wikimedia.org/wiki/File:Frauenkirche_and_Neues_Rathaus_Munich_March_2013.JPG",
   "license": "CC BY-SA 3.0",
-  "title": "File:Rathaus and Marienplatz from Peterskirche - August 2006.jpg"
+  "title": "File:Frauenkirche and Neues Rathaus Munich March 2013.JPG"
+ },
+ "Haidhausen": {
+  "file": "img/haidhausen.jpg",
+  "artist": "GFreihalter",
+  "page": "https://commons.wikimedia.org/wiki/File:M%C3%BCnchen-Haidhausen_Lucile-Grahn-Stra%C3%9Fe_47_207.jpg",
+  "license": "CC BY-SA 3.0",
+  "title": "File:München-Haidhausen Lucile-Grahn-Straße 47 207.jpg"
  },
  "Schwabing & Maxvorstadt": {
   "file": "img/schwabing-maxvorstadt.jpg",
@@ -36,10 +50,10 @@
  },
  "St Peter's tower (Alter Peter)": {
   "file": "img/st-peter-s-tower-alter-peter.jpg",
-  "artist": "Sascha Mironov",
-  "page": "https://commons.wikimedia.org/wiki/File:Alter_Peter_M%C3%BCnchen_Nacht.jpg",
-  "license": "CC BY-SA 4.0",
-  "title": "File:Alter Peter München Nacht.jpg"
+  "artist": "High Contrast",
+  "page": "https://commons.wikimedia.org/wiki/File:Neues_Rathaus_M%C3%BCnchen_-_2014_-_Alter_Peter.jpg",
+  "license": "CC BY 3.0 de",
+  "title": "File:Neues Rathaus München - 2014 - Alter Peter.jpg"
  },
  "Viktualienmarkt": {
   "file": "img/viktualienmarkt.jpg",
@@ -51,9 +65,9 @@
  "Englischer Garten & the Eisbach surfers": {
   "file": "img/englischer-garten-the-eisbach-surfers.jpg",
   "artist": "Strubbl",
-  "page": "https://commons.wikimedia.org/wiki/File:Surfer_auf_und_an_der_Eisbachwelle_M%C3%BCnchen_Bild_1_2023-11-04.jpg",
-  "license": "CC BY-SA 4.0",
-  "title": "File:Surfer auf und an der Eisbachwelle München Bild 1 2023-11-04.jpg"
+  "page": "https://commons.wikimedia.org/wiki/File:Eisbachwelle_am_8.2.2019.jpg",
+  "license": "CC0",
+  "title": "File:Eisbachwelle am 8.2.2019.jpg"
  },
  "Residenz": {
   "file": "img/residenz.jpg",
@@ -62,12 +76,19 @@
   "license": "CC0",
   "title": "File:Antiquarium, Münchner Residenz.jpg"
  },
+ "Frauenkirche": {
+  "file": "img/frauenkirche.jpg",
+  "artist": "Burkhard Mücke",
+  "page": "https://commons.wikimedia.org/wiki/File:Neues_Rathaus_M%C3%BCnchen_und_T%C3%BCrme_der_Frauenkirche.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Neues Rathaus München und Türme der Frauenkirche.jpg"
+ },
  "Deutsches Museum": {
   "file": "img/deutsches-museum.jpg",
-  "artist": "High Contrast",
-  "page": "https://commons.wikimedia.org/wiki/File:Deutsches_Museum_M%C3%BCnchen_-_Geb%C3%A4ude.JPG",
-  "license": "CC BY 3.0 de",
-  "title": "File:Deutsches Museum München - Gebäude.JPG"
+  "artist": "Julian Herzog (Website)",
+  "page": "https://commons.wikimedia.org/wiki/File:Deutsches_Museum_Munich_2014_01.jpg",
+  "license": "CC BY 4.0",
+  "title": "File:Deutsches Museum Munich 2014 01.jpg"
  },
  "Schloss Nymphenburg": {
   "file": "img/schloss-nymphenburg.jpg",
@@ -76,81 +97,25 @@
   "license": "CC BY-SA 2.5",
   "title": "File:Image-Schloss Nymphenburg Munich CC.jpg"
  },
- "Hofbräuhaus": {
-  "file": "img/hofbr-uhaus.jpg",
-  "artist": "Dr. Frank Gaeth",
-  "page": "https://commons.wikimedia.org/wiki/File:Hofbr%C3%A4uhaus_M%C3%BCnchen_2023.jpg",
-  "license": "CC BY-SA 4.0",
-  "title": "File:Hofbräuhaus München 2023.jpg"
- },
- "Münchner Christkindlmarkt": {
-  "file": "img/m-nchner-christkindlmarkt.jpg",
-  "artist": "Strubbl",
-  "page": "https://commons.wikimedia.org/wiki/File:Weihnachtsbaum_vor_Neuem_Rathaus_M%C3%BCnchen_2024-12-02.jpg",
-  "license": "CC BY-SA 4.0",
-  "title": "File:Weihnachtsbaum vor Neuem Rathaus München 2024-12-02.jpg"
- },
  "Weihnachtsdorf im Kaiserhof der Residenz": {
   "file": "img/weihnachtsdorf-im-kaiserhof-der-residenz.jpg",
   "artist": "Burkhard Mücke",
-  "page": "https://commons.wikimedia.org/wiki/File:Residenz_M%C3%BCnchen_Weihnachtsdorf_04.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Residenz_M%C3%BCnchen_Weihnachtsdorf_05.jpg",
   "license": "CC BY-SA 4.0",
-  "title": "File:Residenz München Weihnachtsdorf 04.jpg"
+  "title": "File:Residenz München Weihnachtsdorf 05.jpg"
  },
- "The market from Alter Peter": {
-  "file": "img/the-market-from-alter-peter.jpg",
-  "artist": "Herokk",
-  "page": "https://commons.wikimedia.org/wiki/File:Blick_auf_Marienplatz_vom_Alten_Peter.jpg",
-  "license": "CC BY-SA 4.0",
-  "title": "File:Blick auf Marienplatz vom Alten Peter.jpg"
- },
- "Frauenkirche": {
-  "file": "img/frauenkirche.jpg",
-  "artist": "Martin Falbisoner",
-  "page": "https://commons.wikimedia.org/wiki/File:Frauenkirche_Munich,_March_2018.jpg",
-  "license": "CC BY-SA 4.0",
-  "title": "File:Frauenkirche Munich, March 2018.jpg"
- },
- "Tierpark Hellabrunn": {
-  "file": "img/tierpark-hellabrunn.jpg",
-  "artist": "Wikitarisch",
-  "page": "https://commons.wikimedia.org/wiki/File:Steinb%C3%B6cke_Eingang_Tierpark_Hellabrunn_Seitenansicht.jpg",
-  "license": "CC BY-SA 4.0",
-  "title": "File:Steinböcke Eingang Tierpark Hellabrunn Seitenansicht.jpg"
- },
- "Christkindlmarkt am Chinesischen Turm": {
-  "file": "img/christkindlmarkt-am-chinesischen-turm.jpg",
-  "artist": "Sven Teschke",
-  "page": "https://commons.wikimedia.org/wiki/File:2012-07-17_-_Landtagsprojekt_M%C3%BCnchen_-_Englischer_Garten_-_Chinesischer-Turm_-_7362.jpg",
-  "license": "CC BY-SA 3.0 de",
-  "title": "File:2012-07-17 - Landtagsprojekt München - Englischer Garten - Chinesischer-Turm - 7362.jpg"
- },
- "Tollwood Winter Festival": {
-  "file": "img/tollwood-winter-festival.jpg",
-  "artist": "Edelmauswaldgeist",
-  "page": "https://commons.wikimedia.org/wiki/File:Tollwood_M%C3%BCnchen.jpg",
-  "license": "CC0",
-  "title": "File:Tollwood München.jpg"
- },
- "Eiszauber at Karlsplatz": {
-  "file": "img/eiszauber-at-karlsplatz.jpg",
-  "artist": "Diego Delso",
-  "page": "https://commons.wikimedia.org/wiki/File:Karlsplatz,_M%C3%BAnich,_Alemania1.JPG",
-  "license": "CC BY-SA 3.0",
-  "title": "File:Karlsplatz, Múnich, Alemania1.JPG"
- },
- "Near the Hauptbahnhof (Ludwigsvorstadt)": {
-  "file": "img/near-the-hauptbahnhof-ludwigsvorstadt.jpg",
-  "artist": "Andrzej Otrębski",
-  "page": "https://commons.wikimedia.org/wiki/File:Munchen_Karlstor_3.jpg",
-  "license": "CC BY-SA 4.0",
-  "title": "File:Munchen Karlstor 3.jpg"
- },
- "Haidhausen": {
-  "file": "img/haidhausen.jpg",
-  "artist": "Steve Knight",
-  "page": "https://commons.wikimedia.org/wiki/File:Au-Haidhausen_und_Ludwigvorstadt-Isarvorstadt_2014.jpg",
+ "Pink Christmas": {
+  "file": "img/pink-christmas.jpg",
+  "artist": "Rob Young from United Kingdom",
+  "page": "https://commons.wikimedia.org/wiki/File:Pink_Christmas,_Munich_(27441302778).jpg",
   "license": "CC BY 2.0",
-  "title": "File:Au-Haidhausen und Ludwigvorstadt-Isarvorstadt 2014.jpg"
+  "title": "File:Pink Christmas, Munich (27441302778).jpg"
+ },
+ "Kripperlmarkt & Rindermarkt": {
+  "file": "img/kripperlmarkt-rindermarkt.jpg",
+  "artist": "Richard Huber",
+  "page": "https://commons.wikimedia.org/wiki/File:Stand_am_Kripperlmarkt_am_Rindermarkt.JPG",
+  "license": "CC BY-SA 3.0",
+  "title": "File:Stand am Kripperlmarkt am Rindermarkt.JPG"
  }
 }

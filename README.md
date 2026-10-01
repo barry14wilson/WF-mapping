@@ -183,6 +183,17 @@ Returns:
 
 The suggested waypoint is the centroid of the nearest green/amber neighbour cell. It's a v1 hint — the caller can then re-plan via Mapbox Directions with `avoid` polygons or pass the waypoint into a new directions request.
 
+### City content & advice endpoints (added September 2026)
+
+| Endpoint | What it returns |
+| --- | --- |
+| `GET /api/city-guide?city=<slug>` | Creator-sourced facts (grouped by kind), local tips, photos and source videos for one city, from the `wf_*` tables. Used by the `/new` map's City guide panel and the guide build scripts. |
+| `GET /api/us-advisories` | Live US State Dept travel advisories for every country, normalised to `{name, code, level, label, headline, risks, updated, url}`. 6-hour CDN cache. The single official-advice source on the map. |
+| `GET /api/fbi-state?state=XX` | FBI Crime Data Explorer totals for a US state, latest full year. Key stays server-side (`FBI_API_KEY`). |
+| `POST /api/wf-admin` | Private admin API for the content pipeline (bearer `WF_ADMIN_TOKEN`). Body `{op, ...}`; ops listed in the handoff §20.2. |
+
+See `Wiley-Fox-Dev-Handoff-v1.md` §20 for the content pipeline and travel-guide workflow, and `CHANGELOG.md` for what changed when.
+
 ---
 
 ## Tests

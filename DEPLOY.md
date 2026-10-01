@@ -119,6 +119,16 @@ curl -X POST "$SITE/.netlify/functions/scheduled-uk"
 
 The scheduled functions will start running on the cadence in `netlify.toml` (UK + MX daily, US/EU/AU/CA weekly, others monthly).
 
+## 7. City content pipeline & travel guides (September 2026)
+
+Extra environment variables on the production site: `WF_ADMIN_TOKEN` (admin API), `YOUTUBE_API_KEY` (daily discovery), `FBI_API_KEY` (FBI proxy). Apply the content schema once with `POST /api/wf-admin {"op":"migrate"}`.
+
+- **Daily discovery** runs as `scheduled-youtube-discovery` (focus-city mode — see handoff §20.2). Trigger manually with `{"op":"run_discovery"}`.
+- **Transcripts and Wikimedia photos** must be fetched from a residential IP (Barry's Mac): `node scripts/city-db/wf_transcripts.mjs 60 6`, `node scripts/city-db/wf_photo_fetch.mjs <wants.json> <out_dir>`. Both read `.env.pipeline`.
+- **Build a guide**: `python3 scripts/city-guides/<city>/build_guide.py` → `python3 scripts/city-guides/render_city.py <dir>` → `node scripts/city-guides/build_city_docx.js <dir>` → `python3 scripts/city-guides/make_pdf.py <dir>`. Copy `<City>_Guide.{html,pdf,docx}`, `index.html` and `img/` to `new/guides/<slug>/`.
+- **Release flow**: preview site (`wiley-fox-redesign.netlify.app`) first; publish to `/new` only after Barry approves, then add the city to `GUIDE_LINKS` and the map city list in `new/index.html`.
+- **Comparison data**: refresh `scripts/city-guides/data/eu_crime_nuts3.json` with `eu_fetch.py` when Eurostat publishes a new year (usually mid-year).
+
 ---
 
 ## Troubleshooting

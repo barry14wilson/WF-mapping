@@ -146,6 +146,14 @@ Pipeline-side priorities are tracked in the project spec (Phases 1–7).
 - The unicorn thesis depends on **automation-first thinking**. If a process needs a human, flag it and suggest how an AI agent could handle it instead.
 - When suggesting enhancements, briefly note if it's a candidate for a Claude skill (repeatable automated task).
 
+## City guides & content pipeline (added October 2026)
+
+- The redesigned prototype is `new/index.html`, served at `/new` on the live site; the classic homepage stays unchanged.
+- City travel guides live in `new/guides/<slug>/` and are built with `scripts/city-guides/` (see `DEPLOY.md` §7 and the handoff §20). Publish to the preview site first; only go live after Barry approves.
+- Content data is append-only in Neon (`wf_*` tables) — never delete rows; supersede with the `set_status` admin op.
+- Honesty rules for guides: official data first with plain caveats; state what isn't published rather than guessing; credit every creator; check every photo visually.
+- Record every change in `CHANGELOG.md` and, for anything structural, in the handoff doc.
+
 ---
 
-Last updated: May 2026 · Maintained by Cowork AI
+Last updated: October 2026 · Maintained by Cowork AI

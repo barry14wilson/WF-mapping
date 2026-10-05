@@ -1,0 +1,382 @@
+{
+ "generated": "2026-10-05",
+ "source_note": "Portal counts: City of Chicago Data Portal, Crimes - 2001 to Present (ijzp-q8t2), https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-Present/ijzp-q8t2 , queried via SoQL 2026-10-05; latest record date 2026-09-27 (max updated_on 2026-10-04). Counts are reported incidents by primary_type (one row per incident/offence, not per victim; 'ALL' = all primary types). Portal data are preliminary, exclude some records (e.g. sealed/expunged, murders reclassified), lag, and are revised; CPD press-release figures use different definitions (Part I index crimes, homicide victims) so numbers will not match exactly (e.g. 2025 homicides: CPD 416 vs portal 440; 2024: CPD 587 vs portal 597). CPD 2025-in-review PDF: https://www.chicagopolice.org/wp-content/uploads/2025-in-Review.pdf (preliminary, subject to change). Web-page figures were extracted by a summarising fetch tool; key numbers cross-checked where noted.",
+ "scope_warning": "Citywide figures cover all of Chicago, ~230 sq mi, and are dominated by South/West Side violence that rarely touches tourists; Districts 1 (Central: Loop, South Loop, Millennium Park) and 18 (Near North: Magnificent Mile, River North, Streeterville, Gold Coast, Old Town) are the visitor areas but also host the highest property-crime counts because of huge daytime/visitor populations (rates per resident are meaningless/inflated there). Per-100k district rates are NOT VERIFIED (no official district residential population sourced). Not a prediction of risk for any individual.",
+ "population": {
+  "chicago_2025": 2731585,
+  "chicago_2024": 2726332,
+  "source": "US Census Bureau Vintage 2025 estimates, July 1 2025: 2,731,585 (Table 5, https://www.census.gov/newsroom/press-releases/2026/vintage-2025-city-town-pop-estimates.html); 2024 figure 2,726,332 per Fox 32 (May 2026) https://www.fox32chicago.com/news/chicago-population-grew-2025-census-estimate (secondary; Census 2024 vintage not directly checked)",
+  "note": "2026 YTD rates use the 2025 population as a proxy and are for a 270-day period, not annualised."
+ },
+ "headline_citywide_2025_vs_2024": {
+  "cpd_official": {
+   "source": "https://www.chicagopolice.org/wp-content/uploads/2025-in-Review.pdf (CPD, Jan 1-Dec 31 2025 vs same period 2024, preliminary)",
+   "homicides": {
+    "2025": 416,
+    "2024": 587,
+    "change": "-29%",
+    "note": "lowest since 1965 (CPD). Also reported by Fox 32 5 Jan 2026 https://www.fox32chicago.com/news/chicago-homicides-fall-2025 ; homicide clearance 71% vs 56%"
+   },
+   "shooting_incidents": {
+    "2025": 1471,
+    "2024": 2274,
+    "change": "-35%"
+   },
+   "shooting_victims": {
+    "2025": 1848,
+    "2024": 2797,
+    "change": "-34%"
+   },
+   "robbery": {
+    "change": "-36%",
+    "counts": "NOT VERIFIED (counts not in CPD release as retrieved)",
+    "firearm_robbery": "-45%"
+   },
+   "motor_vehicle_theft": {
+    "change": "-21%",
+    "counts": "NOT VERIFIED in CPD release; see portal"
+   },
+   "violent_crime": "-23%",
+   "property_crime": "-10%",
+   "overall_part1": "-14%",
+   "theft": "CPD release as retrieved gives no theft-specific %: NOT VERIFIED (portal below)",
+   "battery": "CPD release as retrieved gives no battery-specific %: NOT VERIFIED (portal below)"
+  },
+  "data_portal_counts": {
+   "HOMICIDE": {
+    "2025": 440,
+    "2024": 597,
+    "pct_change": -26.3,
+    "per100k_2025": 16.1,
+    "per100k_2024": 21.9
+   },
+   "ROBBERY": {
+    "2025": 5815,
+    "2024": 9120,
+    "pct_change": -36.2,
+    "per100k_2025": 212.9,
+    "per100k_2024": 334.5
+   },
+   "THEFT": {
+    "2025": 55198,
+    "2024": 60559,
+    "pct_change": -8.9,
+    "per100k_2025": 2020.7,
+    "per100k_2024": 2221.3
+   },
+   "MOTOR VEHICLE THEFT": {
+    "2025": 17258,
+    "2024": 21714,
+    "pct_change": -20.5,
+    "per100k_2025": 631.8,
+    "per100k_2024": 796.5
+   },
+   "BATTERY": {
+    "2025": 42660,
+    "2024": 46188,
+    "pct_change": -7.6,
+    "per100k_2025": 1561.7,
+    "per100k_2024": 1694.1
+   },
+   "ASSAULT": {
+    "2025": 21599,
+    "2024": 23488,
+    "pct_change": -8.0,
+    "per100k_2025": 790.7,
+    "per100k_2024": 861.5
+   },
+   "DECEPTIVE PRACTICE": {
+    "2025": 15342,
+    "2024": 16466,
+    "pct_change": -6.8,
+    "per100k_2025": 561.7,
+    "per100k_2024": 604.0
+   },
+   "ALL": {
+    "2025": 238108,
+    "2024": 259648,
+    "pct_change": -8.3,
+    "per100k_2025": 8716.8,
+    "per100k_2024": 9523.7
+   }
+  },
+  "data_portal_source": "https://data.cityofchicago.org/resource/ijzp-q8t2.json (SoQL, year=2025/2024)"
+ },
+ "ytd_2026_vs_2025": {
+  "period": "1 Jan - 27 Sep (portal records dated <2026-09-28 vs <2025-09-28)",
+  "source": "Data Portal SoQL, 2026-10-05; preliminary; recent weeks under-reported (lag)",
+  "citywide": {
+   "THEFT": {
+    "new": 37179,
+    "old": 41566,
+    "pct_change": -10.6
+   },
+   "ROBBERY": {
+    "new": 3521,
+    "old": 4506,
+    "pct_change": -21.9
+   },
+   "BATTERY": {
+    "new": 31733,
+    "old": 32148,
+    "pct_change": -1.3
+   },
+   "ASSAULT": {
+    "new": 15626,
+    "old": 16395,
+    "pct_change": -4.7
+   },
+   "DECEPTIVE PRACTICE": {
+    "new": 9760,
+    "old": 11728,
+    "pct_change": -16.8
+   },
+   "HOMICIDE": {
+    "new": 325,
+    "old": 334,
+    "pct_change": -2.7
+   },
+   "MOTOR VEHICLE THEFT": {
+    "new": 13557,
+    "old": 12512,
+    "pct_change": 8.4
+   },
+   "BURGLARY": {
+    "new": 10346,
+    "old": 6870,
+    "pct_change": 50.6
+   },
+   "ALL": {
+    "new": 172225,
+    "old": 178912,
+    "pct_change": -3.7
+   }
+  },
+  "district_001_central": {
+   "THEFT": {
+    "new": 3056,
+    "old": 3530,
+    "pct_change": -13.4
+   },
+   "ROBBERY": {
+    "new": 204,
+    "old": 241,
+    "pct_change": -15.4
+   },
+   "BATTERY": {
+    "new": 1396,
+    "old": 1413,
+    "pct_change": -1.2
+   },
+   "ASSAULT": {
+    "new": 594,
+    "old": 648,
+    "pct_change": -8.3
+   },
+   "DECEPTIVE PRACTICE": {
+    "new": 754,
+    "old": 874,
+    "pct_change": -13.7
+   },
+   "HOMICIDE": {
+    "new": 4,
+    "old": 8,
+    "pct_change": -50.0
+   },
+   "MOTOR VEHICLE THEFT": {
+    "new": 598,
+    "old": 613,
+    "pct_change": -2.4
+   },
+   "BURGLARY": {
+    "new": 511,
+    "old": 268,
+    "pct_change": 90.7
+   },
+   "ALL": {
+    "new": 9480,
+    "old": 10382,
+    "pct_change": -8.7
+   }
+  },
+  "district_018_near_north": {
+   "THEFT": {
+    "new": 3658,
+    "old": 4048,
+    "pct_change": -9.6
+   },
+   "ROBBERY": {
+    "new": 204,
+    "old": 210,
+    "pct_change": -2.9
+   },
+   "BATTERY": {
+    "new": 1249,
+    "old": 1339,
+    "pct_change": -6.7
+   },
+   "ASSAULT": {
+    "new": 498,
+    "old": 586,
+    "pct_change": -15.0
+   },
+   "DECEPTIVE PRACTICE": {
+    "new": 902,
+    "old": 1052,
+    "pct_change": -14.3
+   },
+   "HOMICIDE": {
+    "new": 4,
+    "old": 12,
+    "pct_change": -66.7
+   },
+   "MOTOR VEHICLE THEFT": {
+    "new": 463,
+    "old": 361,
+    "pct_change": 28.3
+   },
+   "BURGLARY": {
+    "new": 468,
+    "old": 298,
+    "pct_change": 57.0
+   },
+   "ALL": {
+    "new": 9203,
+    "old": 9853,
+    "pct_change": -6.6
+   }
+  },
+  "district_001_2025_full_year": {
+   "THEFT": 4714,
+   "ROBBERY": 310,
+   "BATTERY": 1882,
+   "ASSAULT": 863,
+   "DECEPTIVE PRACTICE": 1174,
+   "HOMICIDE": 11,
+   "MOTOR VEHICLE THEFT": 838,
+   "BURGLARY": 380,
+   "ALL": 13726
+  },
+  "district_018_2025_full_year": {
+   "THEFT": 5522,
+   "ROBBERY": 288,
+   "BATTERY": 1748,
+   "ASSAULT": 746,
+   "DECEPTIVE PRACTICE": 1398,
+   "HOMICIDE": 14,
+   "MOTOR VEHICLE THEFT": 517,
+   "BURGLARY": 438,
+   "ALL": 13262
+  },
+  "district_2025_vs_2024_all": {
+   "001": {
+    "2025": 13726,
+    "2024": 14916,
+    "pct": -8.0
+   },
+   "018": {
+    "2025": 13262,
+    "2024": 13575,
+    "pct": -2.3
+   }
+  },
+  "citywide_ytd2026_per100k_2025pop": 6304.9,
+  "citywide_homicide_ytd2026_per100k_2025pop": 11.9,
+  "citywide_2025_homicide_per100k_cpd_416": 15.2,
+  "citywide_2025_homicide_per100k_portal_440": 16.1,
+  "district_note": "District figures are incident counts, not rates; ward/district residential population NOT VERIFIED. Counts for D1/D18 include visitor-driven theft.",
+  "anomaly_warning": "Burglary (+50.6% citywide, +90.7% D1, +57.0% D18) and motor vehicle theft (+8.4% citywide, +28.3% D18) rise sharply while almost everything else falls; 2026 YTD burglary (10,346) already exceeds full-year 2025 (9,740). Possible recording/reclassification change or data artefact: cause NOT VERIFIED; do not publish as a real surge without CPD confirmation."
+ },
+ "downtown_measures": {
+  "millennium_park_minor_policy": {
+   "rule": "Guests under 18 must be accompanied by an adult aged 21+ after 6 p.m., Friday through Sunday; ID may be requested; adult must stay for whole visit and may escort up to four young people. Park open daily 6am-11pm; Fri-Sun 4-11pm only the Michigan Ave/Washington St and Michigan/Madison entrances open, with security wanding and bag check. Tree Lighting Ceremony listed for Friday 20 Nov 2026 (no outside alcohol).",
+   "source": "City of Chicago DCASE https://www.chicago.gov/city/en/depts/dca/supp_info/millennium_park_visit.html (page published 16 Sep 2026)",
+   "discrepancy": "CPD message relayed by CPS (30 Mar 2026) says 'Thursday through Sunday': https://www.cps.edu/media/community-updates/2026/march/youth-safety/ . Official DCASE page says Friday-Sunday. Use DCASE; flag the difference. Original policy introduced May 2022 (Lightfoot) https://www.fox32chicago.com/news/millennium-park-curfew-starts-thursday-unaccompanied-minors-no-longer-allowed-in-park-after-6-p-m (2022 version reported as weekday/weekend variants; current wording is from DCASE)."
+  },
+  "citywide_youth_curfew": {
+   "rule": "Age 12+: 10 p.m.; under 12: 8:30 p.m. (9 p.m. Fri-Sat); until 6 a.m.",
+   "source": "CPD youth-safety message via CPS, 30 Mar 2026 https://www.cps.edu/media/community-updates/2026/march/youth-safety/ (secondary relay; CPD original not fetched)"
+  },
+  "snap_curfew": {
+   "2025": "Council passed 'snap curfew' 27-22 on 18 Jun 2025 (Supt could declare curfews at short notice); Mayor Johnson vetoed; override failed in July 2025 - NOT law. https://www.fox32chicago.com/news/chicago-teen-curfew-vote-again ; https://blockclubchicago.org/2025/07/16/city-council-fails-to-override-mayor-brandon-johnsons-veto-of-controversial-snap-curfew-law/ (linked from Block Club; not fetched directly)",
+   "2026": "Hopkins' revised 'declaration of disruptive youth gathering' ordinance: committee approved a 12-hour-notice version 10-4 on 7 Jan 2026 (https://chicago.suntimes.com/city-hall/2026/01/07/city-council-public-safety-committee-revised-teen-curfew-measure), then held/watered down 21 Jan 2026. As of Block Club 28 May 2026 it was at an impasse with the Mayor's Office and not enacted: https://blockclubchicago.org/2026/05/28/teen-takeovers-revive-chicago-debate-over-curfews-and-parental-accountability/ . Parental Accountability Ordinance (fines $1,000-$10,000) rejected 16-32 on 17 Jun 2026 (CBS Chicago https://www.cbsnews.com/chicago/news/revived-ordinance-penalize-parents-teen-takeovers-chicago/). Status after June 2026: NOT VERIFIED. Note: one WTTW summary (30 Mar 2026) implied a revised ordinance was passed and vetoed; contradicted by Block Club 28 May 2026 - treat as unverified/likely wrong."
+  },
+  "teen_takeover_events_2026": "Late March 2026 Loop spring-break gathering: 8 arrests, 24 curfew violations (WTTW https://news.wttw.com/2026/03/30/teen-takeover-raises-questions-about-public-safety-spaces-young-people ). Memorial Day weekend 2026: 5 officers struck by a car on Near West Side (24 May); Hyde Park 3 shot, 53 arrested (Block Club 28 May 2026, URL above)."
+ },
+ "nov_2025_tree_lighting_shootings": {
+  "date": "Friday 21 Nov 2025 (evening of the Millennium Park Christmas tree lighting). Some outlets (CBS summary) wrongly say 22 Nov; Block Club published Sat 22 Nov and says 'Friday'.",
+  "incident_1": "About 9:40-9:50 p.m., 100-block N. State St by the Chicago Theatre (175 N. State): 7 teens (13-17) shot, non-fatal; one 17-year-old later charged as an adult (CPD https://www.chicagopolice.org/stories/dec-25-shooting-charges/ ; CBS https://www.cbsnews.com/chicago/news/boy-17-charged-downtown-chicago-wounded-7-teens/ title only)",
+  "incident_2": "About 10:40 p.m., 100-block S. Dearborn St (Adams/Dearborn area per CBS): 14-year-old Armani Floyd killed; 18-year-old wounded, serious condition.",
+  "context": "Event advertised on social media as a 'teen takeover'; Mayor Johnson called them 'unauthorized events'; Ald. Hopkins alleged ~300 juveniles (his X post, unverified claim). CBS: 18 arrests, five guns recovered (not for the two shootings); $10,000 Crime Stoppers reward.",
+  "sources": [
+   "https://blockclubchicago.org/2025/11/22/1-teen-killed-8-others-injured-in-downtown-shootings-friday-night/ (fetched in full)",
+   "https://www.cbsnews.com/chicago/news/shooting-loop-state-randolph-christmas-tree-lighting-millennium-park/",
+   "https://www.chicagopolice.org/stories/dec-25-shooting-charges/"
+  ],
+  "follow_up": "Downtown aldermen renewed curfew push 25 Nov 2025 https://blockclubchicago.org/2025/11/25/downtown-aldermen-renew-push-for-tougher-curfew-after-teen-takeover-shootings/ (headline only). 2026 tree lighting: Fri 20 Nov 2026 per DCASE; 2026 security plan NOT VERIFIED."
+ },
+ "cta": {
+  "2025": {
+   "cpd_system_crime_2025_vs_2024": "down 3% (CPD stats via WTTW, 19 Dec 2025) https://news.wttw.com/2025/12/19/feds-reject-cta-s-revised-safety-plan-threaten-withhold-millions-transit-funding",
+   "aggravated_assaults_and_batteries": "469 in 2025 vs 441 in 2024, a 24-year high (CPD data via Sun-Times, 2 Mar 2026) https://chicago.suntimes.com/the-watchdogs/2026/03/02/chicago-cta-transit-crime-assault-battery-leerhsen",
+   "fta": "FTA special directive 8 Dec 2025; CTA revised plan rejected 19 Dec 2025 as 'materially deficient'; up to $50m federal funding at risk; later deadline 19 Mar 2026 per Sun-Times (final outcome NOT VERIFIED)."
+  },
+  "2026": {
+   "claims": "CTA acting president Nora Leerhsen, 8 Jul 2026: June 2026 vs June 2025 system serious crime -45%, violent crime -58%; Red Line all crime -47%, serious -69%, violent -76%; six consecutive monthly declines (CBS Chicago https://www.cbsnews.com/chicago/news/cta-says-crime-down-riders-dont-feel-safe/ ). WTTW 10 Jun 2026 (CPD data): most serious crimes -40% May25-May26; violent -20% YTD, property -35% YTD https://news.wttw.com/2026/06/10/cta-leaders-tout-ridership-gains-lower-crime-rates-system . Union leaders dispute the decline; Sun-Times 2 Mar 2026 reported violent crimes +33% in early 2026 vs 2025 (before the surge).",
+   "measures": "Security surge since March 2026: extra CPD and Cook County Sheriff patrols, esp. Red Line; new chief of security Joe Bird; bus/train ride-alongs; violence-intervention/crisis specialists planned; $54m extra rider-focused funding (WTTW, Sun-Times https://chicago.suntimes.com/transportation/2026/07/08/cta-transit-crime-security-surge )."
+  },
+  "caveat": "Figures differ by metric (all/serious/violent/aggravated), period and source; CTA and CPD numbers are not directly comparable. Absolute 2026 counts NOT VERIFIED."
+ },
+ "scams": {
+  "tap_to_pay_donation": {
+   "what": "Strangers claim to be raising money (often for a funeral), ask to 'tap' your phone/card for $10-$25 then charge thousands; refunds often refused as you authorised it.",
+   "reports": [
+    {
+     "area": "Wicker Park (2025)",
+     "detail": "$5,000 loss, bank reimbursed (CBS 12 Jun 2026 https://www.cbsnews.com/chicago/news/tap-to-pay-scammers-caught-on-video-streeterville/)"
+    },
+    {
+     "area": "Lakeview, Clark/Broadway/Southport/School St (8 Aug 2025)",
+     "detail": "Ald. Bennett Lawson warning; $5,000 loss; reports to 19th District https://cwbchicago.com/2025/08/alderman-warns-of-charity-donation-scam-operating-on-lakeview-streets.html (no CPD statement)"
+    },
+    {
+     "area": "Streeterville, near Ohio/St Clair (12 Jun 2026)",
+     "detail": "Attempt caught on video, no loss; CPD said it had no calls for service logged"
+    },
+    {
+     "area": "Lincoln Park/Ravenswood (29 Apr 2025)",
+     "detail": "$2,500-$3,000 charges; BBB Chicago president Steve Bernas quoted https://abc7chicago.com/post/chicago-crime-con-artists-claim-need-donations-kids-funerals-steal-thousands-tap-pay-ravenswood-lincoln-park/16273430/"
+    }
+   ],
+   "advice": "Ask for a receipt, give cash or decline, never hand over/tap without seeing the amount, check bank statements (BBB via ABC7).",
+   "official_cpd_warning": "NOT VERIFIED - no CPD press release found; warnings are from BBB and an alderman via press."
+  },
+  "fulton_market_fake_parking_attendants": {
+   "date": "27-28 Jun 2025",
+   "source": "Fulton Market Association via CBS Chicago https://www.cbsnews.com/chicago/news/fulton-market-warning-fake-parking-attendants/",
+   "detail": "People in yellow vests/security hats charging $20 to park in three private lots near Justine and Lake streets on weekends 9 p.m.-3 a.m. for about three months; association says 100+ drivers a night (association's estimate); advice: stay in car, lock doors, call police.",
+   "official_cpd_warning": "NOT VERIFIED; 2026 recurrence NOT VERIFIED."
+  }
+ },
+ "fcdo_usa": {
+  "source": "https://www.gov.uk/foreign-travel-advice/usa and /safety-and-security",
+  "page_updated": "18 August 2026 (latest update: hurricane season predictions); 'still current at' 5 Oct 2026; GOV.UK metadata updated-at 30 Sep 2026",
+  "terrorism": "'Terrorists are very likely to try and carry out attacks in the US.' Attacks could be indiscriminate, including crowded places and mass gatherings, transport networks, sporting and cultural events. Also: high global threat to UK interests.",
+  "crime": "'Violent crime and gun crime rarely affect tourists, but take care in unfamiliar areas. Try not to walk through quieter areas alone, especially at night.' 'Mass shooting incidents can happen but are a very small percentage of murders.' Protests are common and can become violent. Advises not leaving passports in rental cars; gangs may target tourist-looking vehicles. No Chicago-specific text. Snowstorms can disrupt transport (relevant for December)."
+ },
+ "unverified": [
+  "District 1/18 per-100k rates (no residential population sourced)",
+  "Theft and battery official year-end percentages and absolute counts from CPD (not in the release as retrieved; portal counts only)",
+  "Official CPD press release/PDF on teen takeover curfew-hours original (CPS relay used)",
+  "Exact Millennium Park rule days: DCASE says Fri-Sun, CPS/CPD relay says Thu-Sun",
+  "Status of curfew/'disruptive youth gathering' ordinance after 17 Jun 2026",
+  "2026 tree-lighting security plan and any Christkindlmarket 2026 measures",
+  "CTA 2026 absolute crime counts; outcome of FTA $50m funding dispute",
+  "Official CPD/BBB advisory on tap-to-pay scam in Streeterville; Fulton Market scam recurrence in 2026",
+  "Census 2024 vintage figure checked directly (2,726,332 is from Fox 32)",
+  "Adams/Dearborn precise intersection (CPD/Block Club say 100-block S. Dearborn; CBS says near Adams & Dearborn)",
+  "Citywide 2025 theft/battery CPD year-end % (use portal)",
+  "Block Club Chicago snap-curfew veto-override article (July 2025) linked but not fetched directly",
+  "Cause of 2026 burglary jump in the portal (+51% citywide)"
+ ]
+}

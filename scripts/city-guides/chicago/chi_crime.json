@@ -1,0 +1,290 @@
+{
+ "months": [
+  "2026-06",
+  "2026-07",
+  "2026-08"
+ ],
+ "source": "Chicago Police Department, Crimes - 2001 to Present, City of Chicago Data Portal",
+ "areas": {
+  "The Loop (Daley Plaza)": {
+   "avg_month": 1403,
+   "theft_share": 49,
+   "violence_share": 22,
+   "top_categories": [
+    "theft",
+    "violence",
+    "criminal damage"
+   ],
+   "pickpocket_month": 72,
+   "lat": 41.884,
+   "lng": -87.6303,
+   "tier": 1
+  },
+  "Millennium Park": {
+   "avg_month": 1211,
+   "theft_share": 51,
+   "violence_share": 23,
+   "top_categories": [
+    "theft",
+    "violence",
+    "criminal damage"
+   ],
+   "pickpocket_month": 70,
+   "lat": 41.8826,
+   "lng": -87.6226,
+   "tier": 1
+  },
+  "Magnificent Mile": {
+   "avg_month": 1190,
+   "theft_share": 53,
+   "violence_share": 23,
+   "top_categories": [
+    "theft",
+    "violence",
+    "criminal damage"
+   ],
+   "pickpocket_month": 65,
+   "lat": 41.8948,
+   "lng": -87.6243,
+   "tier": 2
+  },
+  "River North": {
+   "avg_month": 1441,
+   "theft_share": 52,
+   "violence_share": 22,
+   "top_categories": [
+    "theft",
+    "violence",
+    "criminal damage"
+   ],
+   "pickpocket_month": 72,
+   "lat": 41.8924,
+   "lng": -87.6341,
+   "tier": 1
+  },
+  "Streeterville": {
+   "avg_month": 1137,
+   "theft_share": 54,
+   "violence_share": 24,
+   "top_categories": [
+    "theft",
+    "violence",
+    "criminal damage"
+   ],
+   "pickpocket_month": 67,
+   "lat": 41.8925,
+   "lng": -87.62,
+   "tier": 2
+  },
+  "Navy Pier": {
+   "avg_month": 428,
+   "theft_share": 55,
+   "violence_share": 24,
+   "top_categories": [
+    "theft",
+    "violence",
+    "criminal damage"
+   ],
+   "pickpocket_month": 36,
+   "lat": 41.8917,
+   "lng": -87.6086,
+   "tier": 4
+  },
+  "Gold Coast": {
+   "avg_month": 863,
+   "theft_share": 50,
+   "violence_share": 25,
+   "top_categories": [
+    "theft",
+    "violence",
+    "criminal damage"
+   ],
+   "pickpocket_month": 29,
+   "lat": 41.903,
+   "lng": -87.628,
+   "tier": 2
+  },
+  "South Loop": {
+   "avg_month": 609,
+   "theft_share": 38,
+   "violence_share": 29,
+   "top_categories": [
+    "theft",
+    "violence",
+    "criminal damage"
+   ],
+   "pickpocket_month": 16,
+   "lat": 41.8676,
+   "lng": -87.627,
+   "tier": 3
+  },
+  "Museum Campus": {
+   "avg_month": 306,
+   "theft_share": 36,
+   "violence_share": 31,
+   "top_categories": [
+    "theft",
+    "violence",
+    "criminal damage"
+   ],
+   "pickpocket_month": 7,
+   "lat": 41.8663,
+   "lng": -87.6146,
+   "tier": 5
+  },
+  "West Loop / Fulton Market": {
+   "avg_month": 690,
+   "theft_share": 38,
+   "violence_share": 17,
+   "top_categories": [
+    "theft",
+    "violence",
+    "criminal damage"
+   ],
+   "pickpocket_month": 9,
+   "lat": 41.8865,
+   "lng": -87.652,
+   "tier": 3
+  },
+  "Union Station": {
+   "avg_month": 1150,
+   "theft_share": 45,
+   "violence_share": 21,
+   "top_categories": [
+    "theft",
+    "violence",
+    "criminal damage"
+   ],
+   "pickpocket_month": 41,
+   "lat": 41.8786,
+   "lng": -87.64,
+   "tier": 2
+  },
+  "Old Town": {
+   "avg_month": 448,
+   "theft_share": 46,
+   "violence_share": 25,
+   "top_categories": [
+    "theft",
+    "violence",
+    "criminal damage"
+   ],
+   "pickpocket_month": 6,
+   "lat": 41.911,
+   "lng": -87.638,
+   "tier": 3
+  },
+  "Lincoln Park Zoo": {
+   "avg_month": 245,
+   "theft_share": 42,
+   "violence_share": 25,
+   "top_categories": [
+    "theft",
+    "violence",
+    "vehicle crime"
+   ],
+   "pickpocket_month": 3,
+   "lat": 41.9211,
+   "lng": -87.634,
+   "tier": 5
+  },
+  "Lincoln Park": {
+   "avg_month": 352,
+   "theft_share": 47,
+   "violence_share": 19,
+   "top_categories": [
+    "theft",
+    "violence",
+    "burglary"
+   ],
+   "pickpocket_month": 4,
+   "lat": 41.9214,
+   "lng": -87.6513,
+   "tier": 4
+  },
+  "Wrigleyville / Lakeview": {
+   "avg_month": 532,
+   "theft_share": 46,
+   "violence_share": 27,
+   "top_categories": [
+    "theft",
+    "violence",
+    "criminal damage"
+   ],
+   "pickpocket_month": 12,
+   "lat": 41.9484,
+   "lng": -87.6553,
+   "tier": 3
+  },
+  "Wicker Park": {
+   "avg_month": 494,
+   "theft_share": 38,
+   "violence_share": 19,
+   "top_categories": [
+    "theft",
+    "violence",
+    "criminal damage"
+   ],
+   "pickpocket_month": 2,
+   "lat": 41.9088,
+   "lng": -87.6796,
+   "tier": 3
+  },
+  "Logan Square": {
+   "avg_month": 391,
+   "theft_share": 33,
+   "violence_share": 25,
+   "top_categories": [
+    "theft",
+    "violence",
+    "criminal damage"
+   ],
+   "pickpocket_month": 2,
+   "lat": 41.9231,
+   "lng": -87.7093,
+   "tier": 4
+  },
+  "Chinatown": {
+   "avg_month": 362,
+   "theft_share": 29,
+   "violence_share": 29,
+   "top_categories": [
+    "theft",
+    "violence",
+    "criminal damage"
+   ],
+   "pickpocket_month": 2,
+   "lat": 41.8517,
+   "lng": -87.6338,
+   "tier": 4
+  },
+  "Pilsen": {
+   "avg_month": 329,
+   "theft_share": 27,
+   "violence_share": 33,
+   "top_categories": [
+    "violence",
+    "theft",
+    "criminal damage"
+   ],
+   "pickpocket_month": 2,
+   "lat": 41.8564,
+   "lng": -87.66,
+   "tier": 4
+  },
+  "Hyde Park": {
+   "avg_month": 225,
+   "theft_share": 29,
+   "violence_share": 30,
+   "top_categories": [
+    "theft",
+    "violence",
+    "criminal damage"
+   ],
+   "pickpocket_month": 0,
+   "lat": 41.7906,
+   "lng": -87.583,
+   "tier": 5
+  }
+ }
+}

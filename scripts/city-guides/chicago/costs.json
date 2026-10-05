@@ -1,0 +1,128 @@
+[
+ {
+  "item": "CTA single train ride",
+  "price": "$2.50 (bus $2.25); fare chart dated 20 Feb 2023, still current",
+  "date": "2026-10-05",
+  "source": "https://www.transitchicago.com/fares/"
+ },
+ {
+  "item": "CTA 1-day pass",
+  "price": "$5",
+  "date": "2026-10-05",
+  "source": "https://www.transitchicago.com/fares/"
+ },
+ {
+  "item": "CTA 3-day pass",
+  "price": "$15",
+  "date": "2026-10-05",
+  "source": "https://www.transitchicago.com/fares/"
+ },
+ {
+  "item": "CTA 7-day pass",
+  "price": "$20",
+  "date": "2026-10-05",
+  "source": "https://www.transitchicago.com/fares/"
+ },
+ {
+  "item": "Blue Line fare from O'Hare",
+  "price": "$5 adult (unlimited pass boards free)",
+  "date": "2026-10-05",
+  "source": "https://www.transitchicago.com/fares/"
+ },
+ {
+  "item": "Taxi O'Hare to downtown",
+  "price": "About $50 average; shared-ride flat fare $30 per person; $4 airport departure tax",
+  "date": "2026-10-05",
+  "source": "https://www.flychicago.com/ohare/tofrom/taxi/pages/default.aspx"
+ },
+ {
+  "item": "Divvy classic bike",
+  "price": "$1 unlock + $0.20/min; Day Pass $19.90",
+  "date": "2026-10-05",
+  "source": "https://divvybikes.com/pricing"
+ },
+ {
+  "item": "Skydeck Chicago",
+  "price": "From $32 adult, from $24 child 3-11, under 3 free",
+  "date": "2026-10-05",
+  "source": "https://theskydeck.com/tickets-shop/general-pricing/"
+ },
+ {
+  "item": "360 Chicago",
+  "price": "From $30 adult, from $20 child 3-11 (gate price from $35)",
+  "date": "2026-10-05",
+  "source": "https://360chicago.com/hours-pricing"
+ },
+ {
+  "item": "Art Institute of Chicago",
+  "price": "$32 adult, children free",
+  "date": "2026-10-05",
+  "source": "https://www.artic.edu/visit"
+ },
+ {
+  "item": "Field Museum",
+  "price": "$30 adult guest (child price NOT VERIFIED); free Wednesdays for Illinois residents",
+  "date": "2026-10-05",
+  "source": "https://www.fieldmuseum.org/landing/tickets-and-pricing"
+ },
+ {
+  "item": "Museum of Science and Industry",
+  "price": "$25.95 adult, $14.95 child 3-11 (general admission)",
+  "date": "2026-10-05",
+  "source": "https://www.griffinmsi.org/pricing"
+ },
+ {
+  "item": "ZooLights 2026",
+  "price": "$7-$12 fixed date in advance; $20 on the day or flexible; free Mondays 23 Nov-14 Dec with booking",
+  "date": "2026-10-05",
+  "source": "https://www.lpzoo.org/event/zoolights/"
+ },
+ {
+  "item": "McCormick Tribune Ice Rink",
+  "price": "Admission free; skate hire NOT VERIFIED",
+  "date": "2026-10-05",
+  "source": "https://www.chicago.gov/city/en/depts/dca/supp_info/millennium_park_ice_rink.html"
+ },
+ {
+  "item": "Maggie Daley Skating Ribbon skate hire",
+  "price": "$17 online / $19 walk-up Mon-Thu; $21 / $23 Fri-Sun and holidays; own skates free first session, $5 after",
+  "date": "2026-10-05",
+  "source": "https://www.maggiedaleypark.com/things-to-do-see/ice-skating-ribbon"
+ },
+ {
+  "item": "Christkindlmarket mug (2025 price)",
+  "price": "$10 empty; stein $20 (latest year only, 2025). 2026 price and Gluhwein price NOT VERIFIED",
+  "date": "2026-10-05",
+  "source": "https://www.christkindlmarket.com/behind-the-scenes/our-2025-christkindlmarket-mugs-merchandise/"
+ },
+ {
+  "item": "Navy Pier Winter WonderFest",
+  "price": "$27 online 24h ahead, $32 door; under 3s free; skating included",
+  "date": "2026-10-05",
+  "source": "https://navypier.org/pier-events/wintrust-winter-wonderfest/"
+ },
+ {
+  "item": "Navy Pier Centennial Wheel",
+  "price": "$10 add-on with WonderFest ticket (same day); standalone price NOT VERIFIED",
+  "date": "2026-10-05",
+  "source": "https://navypier.org/pier-events/wintrust-winter-wonderfest/"
+ },
+ {
+  "item": "Architecture river cruise (First Lady)",
+  "price": "From $57, but runs March-November only, so not in December",
+  "date": "2026-10-05",
+  "source": "https://www.architecture.org/city-tours/river-cruise"
+ },
+ {
+  "item": "Chicago CityPASS",
+  "price": "$144 adult, $114 child, valid 9 days",
+  "date": "2026-10-05",
+  "source": "https://www.citypass.com/chicago"
+ },
+ {
+  "item": "Chicago sales tax (general goods)",
+  "price": "10.25%; restaurants also pay 0.5% restaurant tax",
+  "date": "2026-10-05",
+  "source": "https://tax.illinois.gov/content/dam/soi/en/web/tax/localgovernments/localtaxallocation/documents/pio-114-pre-1-1-26.pdf"
+ }
+]

@@ -1,0 +1,301 @@
+{
+ "tips": [
+  {
+   "scope": "chicago",
+   "category": "transport_payment",
+   "worry": "How much is a CTA ride?",
+   "tip": "A train ride costs $2.50 and a bus ride $2.25. Two extra rides within two hours are free. The fare chart on CTA's site is dated 20 Feb 2023 and is still the one shown today.",
+   "verified_url": "https://www.transitchicago.com/fares/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "transport_payment",
+   "worry": "Can I just tap my bank card?",
+   "tip": "Yes. You can pay with a contactless bank card, a phone wallet, a Ventra card or a Ventra ticket. Tap-to-pay covers full and reduced fares only, not passes. The Ventra app shows balances, passes and train times.",
+   "verified_url": "https://www.transitchicago.com/fares/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "transport_payment",
+   "worry": "Is a pass worth it?",
+   "tip": "CTA/Pace passes cost $5 for 1 day, $15 for 3 days and $20 for 7 days. They run from first use (1 day = 24 hours). A 3-day Ventra ticket can be bought at the Ventra machines at O'Hare and Midway.",
+   "verified_url": "https://www.transitchicago.com/fares/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "transport_payment",
+   "worry": "What is the O'Hare $5 rule?",
+   "tip": "Boarding a train at O'Hare costs $5 (adult) instead of $2.50. If you hold an unlimited pass, boarding at O'Hare costs no extra. Going into O'Hare from the city costs the normal fare.",
+   "verified_url": "https://www.transitchicago.com/fares/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "transport_payment",
+   "worry": "What do reduced fares and children pay?",
+   "tip": "CTA lists reduced ($1.25 train) and student ($0.75) fares. Reduced fares need a permit issued by NITA. Whether UK visitors or young children qualify for free or reduced fares: NOT VERIFIED, so check CTA before travel.",
+   "verified_url": "https://www.transitchicago.com/reduced-fare-programs/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "transport_payment",
+   "worry": "How long is the Blue Line from O'Hare?",
+   "tip": "CTA says the Blue Line takes 40-45 minutes from O'Hare to downtown. It runs 24 hours a day, seven days a week, and every train from O'Hare goes through downtown.",
+   "verified_url": "https://www.transitchicago.com/airports/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "transport_payment",
+   "worry": "How long is the Orange Line from Midway?",
+   "tip": "CTA says 20-25 minutes from Midway to downtown. The Orange Line is not 24-hour: Midway to Loop trains run about 3:30am-1:05am on weekdays. The N62 Archer bus covers overnight.",
+   "verified_url": "https://www.transitchicago.com/airports/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "transport_payment",
+   "worry": "Is Metra worth knowing about?",
+   "tip": "Metra runs commuter trains to the suburbs. Metra's fare page lists a $7 Saturday or Sunday day pass and a Weekend Pass (page does not print a year). The Ventra app also sells a Regional Day Pass for CTA, Metra and Pace.",
+   "verified_url": "https://ridertools.metrarail.com/tickets/ticket-options",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "transport_payment",
+   "worry": "How much are Divvy bikes?",
+   "tip": "Divvy single rides cost $1 to unlock plus $0.20 a minute for classic bikes. E-bikes are about $0.44 a minute. A Day Pass is $19.90 for unlimited classic rides in 24 hours. Winter availability and snow limits: NOT VERIFIED.",
+   "verified_url": "https://divvybikes.com/pricing",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "transport_payment",
+   "worry": "What does a taxi from the airport cost?",
+   "tip": "O'Hare to downtown averages about $50 by taxi, depending on traffic (Chicago airports site). The city's shared-ride taxi flat fares are $30 a person from O'Hare to downtown and $18 a person from Midway to downtown. A $4 airport departure tax is added to taxi rides from airports.",
+   "verified_url": "https://www.chicago.gov/ridesmart",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "transport_payment",
+   "worry": "What do rideshares cost from the airport?",
+   "tip": "A typical Uber or Lyft fare from O'Hare to the Loop: NOT VERIFIED (prices are dynamic and no official figure found). The city charges a ground transportation tax on app rides, including airport trips.",
+   "verified_url": "https://www.chicago.gov/city/en/depts/fin/supp_info/revenue/tax_list/ground_transportationtax.html",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "money_tipping",
+   "worry": "What sales tax will I pay?",
+   "tip": "General goods in the City of Chicago carry 10.25% sales tax (state revenue guide, edition dated before 1 Jan 2026, so confirm the rate finder). Restaurants also pay a 0.5% Chicago restaurant tax. The exact total on a meal: NOT VERIFIED.",
+   "verified_url": "https://tax.illinois.gov/content/dam/soi/en/web/tax/localgovernments/localtaxallocation/documents/pio-114-pre-1-1-26.pdf",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "money_tipping",
+   "worry": "How much should I tip?",
+   "tip": "Tipped staff in Chicago have a lower base wage ($12.96 an hour from 1 July 2026, against $17.05 standard), so tips matter. The usual 18-20% restaurant tip is common practice, but NOT VERIFIED on an official page.",
+   "verified_url": "https://www.chicago.gov/city/en/depts/bacp/supp_info/minimumwageinformation.html",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "money_tipping",
+   "worry": "Are the free museum days for me?",
+   "tip": "No. Free days are for Illinois residents. Field Museum's free Wednesdays are for Illinois residents. MSI's Illinois Free Days need a zip code check. Art Institute's Third Thursdays and summer Thursdays are for Illinois residents. Shedd's $19.95 rate is for Chicago residents.",
+   "verified_url": "https://www.griffinmsi.org/pricing",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "money_tipping",
+   "worry": "Is the CityPASS worth it?",
+   "tip": "Chicago CityPASS is $144 adult and $114 child, valid 9 days, and covers a choice of attractions (Shedd, Skydeck, Field, 360 Chicago, MSI, Art Institute, Adler, Shoreline Sightseeing). The Shoreline boat tour may not run in winter: NOT VERIFIED.",
+   "verified_url": "https://www.citypass.com/chicago",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "money_tipping",
+   "worry": "Will the market take cards?",
+   "tip": "Whether Christkindlmarket vendors take cards or cash only in 2026: NOT VERIFIED. The 2025 mug cost $10 empty. Carry a little cash and a card.",
+   "verified_url": "https://chicago.suntimes.com/entertainment-culture/2025/11/18/christkindlmarket-daley-plaza-aurora-wrigleyville-mug",
+   "verified_at": "2026-10-05",
+   "season": "christmas"
+  },
+  {
+   "scope": "chicago",
+   "category": "phone_data",
+   "worry": "What about UK phone roaming?",
+   "tip": "Charges depend on your network and when you joined. EE's Travel Data Pass starts from GBP 2.72 a day. Vodafone says GBP 2.75 a day for plans from Aug 2021. Three charges GBP 8 a day for new joiners from 1 April 2026. Whether each covers the USA, and eSIM prices: NOT VERIFIED.",
+   "verified_url": "https://ee.co.uk/mobile/international/travel-data-pass",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "phone_data",
+   "worry": "How much is ESTA?",
+   "tip": "The official ESTA fee is $40.27. Apply only on the official CBP site, esta.cbp.dhs.gov, as other sites charge more. Validity, 90-day stay and how early to apply: NOT VERIFIED on the page fetched, so confirm on the site.",
+   "verified_url": "https://esta.cbp.dhs.gov/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "safety_habits",
+   "worry": "Who do I call in an emergency?",
+   "tip": "Call 911 for emergencies. For police non-emergencies call 311, which is open 24 hours a day, seven days a week.",
+   "verified_url": "https://www.chicagopolice.org/about/contact-us/use-3-1-1-to-report-non-emergencies/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "safety_habits",
+   "worry": "What are the cannabis rules?",
+   "tip": "Cannabis is legal for adults 21 and over, but public consumption is illegal. It must not be used in a vehicle and must not be taken across state lines. Airport screening rules: NOT VERIFIED here, so treat airports as no-go.",
+   "verified_url": "https://www.chicago.gov/city/en/sites/cannabis-information-center/home/social-consumption.html",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "safety_habits",
+   "worry": "Do I need ID for alcohol?",
+   "tip": "Adults-only holiday events state 21+ with photo ID required (Shedd's Holiday House Party). The general Illinois drinking age of 21 is NOT VERIFIED on an official page here. Carry your passport or a photocard ID.",
+   "verified_url": "https://www.sheddaquarium.org/holiday-house-party",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "safety_habits",
+   "worry": "How cold does it get?",
+   "tip": "Wind off Lake Michigan makes it feel colder than the thermometer. NOT VERIFIED: no official wind chill figures were gathered. Check the National Weather Service Chicago forecast for hazards and dress in layers with hats and gloves.",
+   "verified_url": "https://www.weather.gov/lot/",
+   "verified_at": "2026-10-05",
+   "season": "winter"
+  },
+  {
+   "scope": "chicago",
+   "category": "safety_habits",
+   "worry": "How early does it get dark?",
+   "tip": "Sunset in Chicago is 4:20pm on 1 and 15 Dec, 4:22pm on 21 Dec, 4:24pm on 24 and 25 Dec and 4:29pm on 31 Dec 2026. Sunrise is about 7:16am on 24 Dec. Plan outdoor sights for the morning.",
+   "verified_url": "https://www.timeanddate.com/sun/usa/chicago?month=12&year=2026",
+   "verified_at": "2026-10-05",
+   "season": "christmas"
+  },
+  {
+   "scope": "chicago",
+   "category": "safety_habits",
+   "worry": "Is the lakefront ice safe?",
+   "tip": "NOT VERIFIED on an official page. Treat any ice on Lake Michigan or the harbours as unsafe, and keep children back from the water's edge in winter. The NWS Chicago site carries local hazards.",
+   "verified_url": "https://www.weather.gov/lot/",
+   "verified_at": "2026-10-05",
+   "season": "winter"
+  },
+  {
+   "scope": "chicago",
+   "category": "water_snacks",
+   "worry": "Is the tap water safe?",
+   "tip": "Yes. The City of Chicago says its tap water meets or exceeds all US EPA standards. Bring a refillable bottle.",
+   "verified_url": "https://www.chicago.gov/city/en/depts/water/supp_info/Consumer_ConfidenceReports.html",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "water_snacks",
+   "worry": "Can we bring snacks to the lights?",
+   "tip": "Not to ZooLights: outside food and drink is not allowed. Lightscape has hot and cold drinks, snacks and kids' food on the trail. ZooLights sells hot chocolate, churros and s'mores.",
+   "verified_url": "https://www.lpzoo.org/event/zoolights/",
+   "verified_at": "2026-10-05",
+   "season": "christmas"
+  },
+  {
+   "scope": "chicago",
+   "category": "toilets",
+   "worry": "Where are free toilets downtown?",
+   "tip": "The Chicago Cultural Center has restrooms on floors 1, 2 and 4 on the north side, with water fountains nearby. Millennium Park is open 6am-11pm, but its East and West restrooms near the Pritzker Pavilion were noted as closing for construction from 18 Sep (year not shown), so check first.",
+   "verified_url": "https://www.chicago.gov/city/en/depts/dca/supp_info/ccc.html",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "parks_play",
+   "worry": "Do kids need tickets and can I bring a pushchair?",
+   "tip": "Every child at ZooLights needs a ticket, including infants, and strollers are allowed but crowds can make them hard to use. Lightscape allows strollers except on 21+ nights. Navy Pier WonderFest is free for under 3s.",
+   "verified_url": "https://www.lpzoo.org/event/zoolights/",
+   "verified_at": "2026-10-05",
+   "season": "christmas"
+  },
+  {
+   "scope": "chicago",
+   "category": "parks_play",
+   "worry": "Do I need to book ice skating?",
+   "tip": "Yes at Maggie Daley: everyone needs a ticket for a set two-hour session. Skate hire is $17-$19 Mon-Thu and $21-$23 Fri-Sun and holidays. Ribbon season is 13 Nov - 7 Mar. Millennium Park rink reservation rules: NOT VERIFIED.",
+   "verified_url": "https://www.maggiedaleypark.com/things-to-do-see/ice-skating-ribbon",
+   "verified_at": "2026-10-05",
+   "season": "christmas"
+  },
+  {
+   "scope": "chicago",
+   "category": "local_ways",
+   "worry": "Can I get a free local guide?",
+   "tip": "Yes. Chicago Greeter visits and InstaGreeter walks are completely free and led by volunteers. Winter and Christmas availability: NOT VERIFIED, so book ahead.",
+   "verified_url": "https://www.chicagogreeter.com/visit",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "local_ways",
+   "worry": "How do I stay out of the cold downtown?",
+   "tip": "The Pedway is a network of walkways linking downtown buildings. Opening hours vary by passage. An old city map says normal hours are 7am-5pm Mon-Fri (2013 map, latest year only), so do not rely on it for evenings or weekends.",
+   "verified_url": "https://www.chicago.gov/city/en/depts/cdot/provdrs/ped/svcs/pedway.html",
+   "verified_at": "2026-10-05",
+   "season": "winter"
+  },
+  {
+   "scope": "chicago",
+   "category": "local_ways",
+   "worry": "What if I lose something on CTA?",
+   "tip": "Contact the bus garage or rail terminal for the line. CTA suggests waiting and calling the next day. The main line 1-888-YOUR-CTA is staffed weekdays 7am-5:30pm.",
+   "verified_url": "https://www.transitchicago.com/lostandfound/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "chicago",
+   "category": "local_ways",
+   "worry": "Where is a 24-hour pharmacy?",
+   "tip": "Walgreens at 757 N Michigan Ave is listed as open 24 hours, but the pharmacy counter has set hours (Mon-Fri 9am-8pm with meal breaks), so you may not get prescriptions at night. Check before you go.",
+   "verified_url": "https://www.walgreens.com/locator/walgreens-757+n+michigan+ave-chicago-il-60611/id=211",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  }
+ ]
+}

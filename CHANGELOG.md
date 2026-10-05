@@ -2,6 +2,10 @@
 
 All notable changes to the WF-mapping repo. Newest first. Dates are commit dates (UTC). Design and architecture notes live in `Wiley-Fox-Dev-Handoff-v1.md` (§20 covers September 2026).
 
+## 2026-10-05 (Chicago)
+
+- **feat:** Chicago Christmas 2026 guide build script and source data (`scripts/city-guides/chicago/`): 790 creator facts from 222 videos, Chicago Police 2025 review and Data Portal trends to 27 Sep 2026, street-level crime table and hex map from Data Portal records (Jun-Aug 2026, `crime_build.py`), verified 2026 Christmas dates, 33 checked tips. Preview only (`/guides/chicago/`); preview map entry updated (rating 2 -> 3, 'Stay aware', CPD 2025). Awaiting approval before `/new`.
+
 ## 2026-10-05 (publish)
 
 - **feat:** Cologne, New York and Berlin Christmas 2026 guides approved and live at `/new/guides/<slug>/`. `/new` map: `GUIDE_LINKS` now points New York at `guides/new-york/` (old standalone HTML left in place) and adds Cologne and Berlin; city list adds Cologne and updates Berlin (rating 4 → 3, 'Stay aware', PKS 2025) and New York.

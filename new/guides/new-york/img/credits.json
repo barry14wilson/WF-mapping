@@ -1,0 +1,198 @@
+{
+ "cover": {
+  "file": "img/cover.jpg",
+  "artist": "Rhododendrites",
+  "page": "https://commons.wikimedia.org/wiki/File:Pier_66_and_Hudson_Yards_(01473)p.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Pier 66 and Hudson Yards (01473)p.jpg"
+ },
+ "Midtown East / Grand Central": {
+  "file": "img/midtown-east-grand-central.jpg",
+  "artist": "Original photography & stitching by Diliff, horizontal correction by Janke",
+  "page": "https://commons.wikimedia.org/wiki/File:Grand_Central_Station_Main_Concourse_Jan_2006.jpg",
+  "license": "CC BY 2.5",
+  "title": "File:Grand Central Station Main Concourse Jan 2006.jpg"
+ },
+ "Upper West Side": {
+  "file": "img/upper-west-side.jpg",
+  "artist": "Christian David",
+  "page": "https://commons.wikimedia.org/wiki/File:The_Dakota,_West_72nd_Street,_Upper_West_Side,_Manhattan,_New_York.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:The Dakota, West 72nd Street, Upper West Side, Manhattan, New York.jpg"
+ },
+ "Financial District": {
+  "file": "img/financial-district.jpg",
+  "artist": "King of Hearts",
+  "page": "https://commons.wikimedia.org/wiki/File:Lower_Manhattan_from_Governors_Island_August_2017_panorama.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Lower Manhattan from Governors Island August 2017 panorama.jpg"
+ },
+ "Long Island City": {
+  "file": "img/long-island-city.jpg",
+  "artist": "King of Hearts",
+  "page": "https://commons.wikimedia.org/wiki/File:Long_Island_City_New_York_May_2015_panorama_3.jpg",
+  "license": "CC BY-SA 3.0",
+  "title": "File:Long Island City New York May 2015 panorama 3.jpg"
+ },
+ "DUMBO": {
+  "file": "img/dumbo.jpg",
+  "artist": "diego_cue",
+  "page": "https://commons.wikimedia.org/wiki/File:Dumbo_Dumbo_(Down_Under_the_Manhattan_Bridge_Overpass)_at_Brooklyn_-_NYC_-_USA_-_panoramio.jpg",
+  "license": "CC BY-SA 3.0",
+  "title": "File:Dumbo Dumbo (Down Under the Manhattan Bridge Overpass) at Brooklyn - NYC - USA - panoramio.jpg"
+ },
+ "Greenwich Village": {
+  "file": "img/greenwich-village.jpg",
+  "artist": "Marc-Lautenbacher",
+  "page": "https://commons.wikimedia.org/wiki/File:New_York_City_Greenwich_Village_fire_escapes.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:New York City Greenwich Village fire escapes.jpg"
+ },
+ "Williamsburg": {
+  "file": "img/williamsburg.jpg",
+  "artist": "Jakub Ha\u0142un",
+  "page": "https://commons.wikimedia.org/wiki/File:Williamsburg_Bridge,_New_York_City,_20231001_1053_0976.jpg",
+  "license": "CC BY 4.0",
+  "title": "File:Williamsburg Bridge, New York City, 20231001 1053 0976.jpg"
+ },
+ "Central Park": {
+  "file": "img/central-park.jpg",
+  "artist": "Rhododendrites",
+  "page": "https://commons.wikimedia.org/wiki/File:Bow_Bridge_panorama_Central_Park_(86746p).jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Bow Bridge panorama Central Park (86746p).jpg"
+ },
+ "Statue of Liberty & Ellis Island": {
+  "file": "img/statue-of-liberty-ellis-island.jpg",
+  "artist": "William Warby",
+  "page": "https://commons.wikimedia.org/wiki/File:Statue_of_Liberty,_NY.jpg",
+  "license": "CC BY 2.0",
+  "title": "File:Statue of Liberty, NY.jpg"
+ },
+ "Brooklyn Bridge & DUMBO": {
+  "file": "img/brooklyn-bridge-dumbo.jpg",
+  "artist": "MusikAnimal",
+  "page": "https://commons.wikimedia.org/wiki/File:NYPD_police_boat,_Brooklyn_Bridge_and_Downtown_Brooklyn_at_sunset.JPG",
+  "license": "CC BY-SA 4.0",
+  "title": "File:NYPD police boat, Brooklyn Bridge and Downtown Brooklyn at sunset.JPG"
+ },
+ "An observation deck": {
+  "file": "img/an-observation-deck.jpg",
+  "artist": "Daniel Schwen",
+  "page": "https://commons.wikimedia.org/wiki/File:NYC_Top_of_the_Rock_Pano.jpg",
+  "license": "CC BY-SA 3.0",
+  "title": "File:NYC Top of the Rock Pano.jpg"
+ },
+ "9/11 Memorial & Museum": {
+  "file": "img/9-11-memorial-museum.jpg",
+  "artist": "NormanB",
+  "page": "https://commons.wikimedia.org/wiki/File:New_York_-_National_September_11_Memorial_South_Pool_-_April_2012_-_9693C.jpg",
+  "license": "CC BY-SA 3.0",
+  "title": "File:New York - National September 11 Memorial South Pool - April 2012 - 9693C.jpg"
+ },
+ "High Line & Little Island": {
+  "file": "img/high-line-little-island.jpg",
+  "artist": "Photograph by Mike Peel (www.mikepeel.net).",
+  "page": "https://commons.wikimedia.org/wiki/File:High_Line,_New_York_2012_39.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:High Line, New York 2012 39.jpg"
+ },
+ "Staten Island Ferry": {
+  "file": "img/staten-island-ferry.jpg",
+  "artist": "Daniel Schwen",
+  "page": "https://commons.wikimedia.org/wiki/File:Staten_Island_Ferry_terminal.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Staten Island Ferry terminal.jpg"
+ },
+ "A Broadway show": {
+  "file": "img/a-broadway-show.jpg",
+  "artist": "Wurts Bros.",
+  "page": "https://commons.wikimedia.org/wiki/File:West_side_of_Broadway_at_46th_Street,_Manhattan_(1).jpg",
+  "license": "Public domain",
+  "title": "File:West side of Broadway at 46th Street, Manhattan (1).jpg"
+ },
+ "Roosevelt Island Tramway": {
+  "file": "img/roosevelt-island-tramway.jpg",
+  "artist": "Superbass",
+  "page": "https://commons.wikimedia.org/wiki/File:2024-11-18-_Roosevelt_Island_Tramway-0602.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:2024-11-18- Roosevelt Island Tramway-0602.jpg"
+ },
+ "Bank of America Winter Village at Bryant Park": {
+  "file": "img/bank-of-america-winter-village-at-bryant-park.jpg",
+  "artist": "Rhododendrites",
+  "page": "https://commons.wikimedia.org/wiki/File:Bryant_Park_Winter_Village_(61329).jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Bryant Park Winter Village (61329).jpg"
+ },
+ "Grand Central Holiday Fair": {
+  "file": "img/grand-central-holiday-fair.jpg",
+  "artist": "Theo Winter",
+  "page": "https://commons.wikimedia.org/wiki/File:Christmas_In_The_Grand_Central_Terminal_(200281713).jpeg",
+  "license": "CC BY 3.0",
+  "title": "File:Christmas In The Grand Central Terminal (200281713).jpeg"
+ },
+ "Rockefeller Center tree & rink": {
+  "file": "img/rockefeller-center-tree-rink.jpg",
+  "artist": "Anthony Quintano from Mount Laurel, United States",
+  "page": "https://commons.wikimedia.org/wiki/File:Rockefeller_Center_Christmas_Tree_2021_(51770696938).jpg",
+  "license": "CC BY 2.0",
+  "title": "File:Rockefeller Center Christmas Tree 2021 (51770696938).jpg"
+ },
+ "Macy's Santaland": {
+  "file": "img/macy-s-santaland.jpg",
+  "artist": "Alex Liivet from Chester, United Kingdom",
+  "page": "https://commons.wikimedia.org/wiki/File:Macy%27s_Christmas_2015_(23010076280).jpg",
+  "license": "CC0",
+  "title": "File:Macy's Christmas 2015 (23010076280).jpg"
+ },
+ "Radio City Christmas Spectacular": {
+  "file": "img/radio-city-christmas-spectacular.jpg",
+  "artist": "HeatherMarieKosur",
+  "page": "https://commons.wikimedia.org/wiki/File:Radio_City_Music_Hall,_December_2015.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Radio City Music Hall, December 2015.jpg"
+ },
+ "Dyker Heights Christmas lights": {
+  "file": "img/dyker-heights-christmas-lights.jpg",
+  "artist": "Rhododendrites",
+  "page": "https://commons.wikimedia.org/wiki/File:Dyker_Lights_(62317).jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Dyker Lights (62317).jpg"
+ },
+ "NYBG Holiday Train Show": {
+  "file": "img/nybg-holiday-train-show.jpg",
+  "artist": "Reconrabbit",
+  "page": "https://commons.wikimedia.org/wiki/File:New_York_Botanical_Garden_2024_Holiday_Train_Show_Manhattan_diorama.jpg",
+  "license": "CC0",
+  "title": "File:New York Botanical Garden 2024 Holiday Train Show Manhattan diorama.jpg"
+ },
+ "Downtown trees & the Oculus": {
+  "file": "img/downtown-trees-the-oculus.jpg",
+  "artist": "Rhododendrites",
+  "page": "https://commons.wikimedia.org/wiki/File:One_World_Trade_Center_through_the_Oculus_(91538).jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:One World Trade Center through the Oculus (91538).jpg"
+ },
+ "SoHo": {
+  "file": "img/soho.jpg",
+  "artist": "50greenestreet",
+  "page": "https://commons.wikimedia.org/wiki/File:Cast_Iron_Buildings_-_SoHo_Historic_District.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Cast Iron Buildings - SoHo Historic District.jpg"
+ },
+ "Chelsea Market at Christmas": {
+  "file": "img/chelsea-market-at-christmas.jpg",
+  "artist": "Kidfly182",
+  "page": "https://commons.wikimedia.org/wiki/File:Chelsea_Market_August_2024_001.jpg",
+  "license": "CC BY 4.0",
+  "title": "File:Chelsea Market August 2024 001.jpg"
+ },
+ "Wollman Rink & cheaper rinks": {
+  "file": "img/wollman-rink-cheaper-rinks.jpg",
+  "artist": "Eternalsleeper at English Wikipedia",
+  "page": "https://commons.wikimedia.org/wiki/File:Wollman_Memorial_skating_rink.jpg",
+  "license": "Public domain",
+  "title": "File:Wollman Memorial skating rink.jpg"
+ }
+}

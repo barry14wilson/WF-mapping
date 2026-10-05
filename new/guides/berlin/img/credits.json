@@ -1,0 +1,156 @@
+{
+ "cover": {
+  "file": "img/cover.jpg",
+  "artist": "Andreas Trojak",
+  "page": "https://commons.wikimedia.org/wiki/File:Weihnachtszauber-Gendarmenmarkt-Berlin2016-Weihnachtsmarkt.jpg",
+  "license": "CC BY 2.0",
+  "title": "File:Weihnachtszauber-Gendarmenmarkt-Berlin2016-Weihnachtsmarkt.jpg"
+ },
+ "Mitte": {
+  "file": "img/mitte.jpg",
+  "artist": "Ansgar Koreng",
+  "page": "https://commons.wikimedia.org/wiki/File:Berliner_Dom,_Nacht,_160316,_ako.jpg",
+  "license": "CC BY-SA 3.0 de",
+  "title": "File:Berliner Dom, Nacht, 160316, ako.jpg"
+ },
+ "Prenzlauer Berg": {
+  "file": "img/prenzlauer-berg.jpg",
+  "artist": "Fridolin freudenfett",
+  "page": "https://commons.wikimedia.org/wiki/File:Prenzlauer_Berg_Kollwitzplatz_Gugelhof.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Prenzlauer Berg Kollwitzplatz Gugelhof.jpg"
+ },
+ "Charlottenburg (Zoo & Ku'damm)": {
+  "file": "img/charlottenburg-zoo-ku-damm.jpg",
+  "artist": "Carsten Steger",
+  "page": "https://commons.wikimedia.org/wiki/File:Aerial_image_of_Schloss_Charlottenburg_(view_from_the_southwest).jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Aerial image of Schloss Charlottenburg (view from the southwest).jpg"
+ },
+ "Kreuzberg": {
+  "file": "img/kreuzberg.jpg",
+  "artist": "A.Savin",
+  "page": "https://commons.wikimedia.org/wiki/File:Landwehrkanal_in_B-Kreuzberg_07-2014.jpg",
+  "license": "CC BY-SA 3.0",
+  "title": "File:Landwehrkanal in B-Kreuzberg 07-2014.jpg"
+ },
+ "Friedrichshain": {
+  "file": "img/friedrichshain.jpg",
+  "artist": "Arild Vågen, cropped by Tomer T",
+  "page": "https://commons.wikimedia.org/wiki/File:Oberbaumbr%C3%BCcke_November_2013_01_(crop).jpg",
+  "license": "CC BY-SA 3.0",
+  "title": "File:Oberbaumbrücke November 2013 01 (crop).jpg"
+ },
+ "Near the Hauptbahnhof (Moabit)": {
+  "file": "img/near-the-hauptbahnhof-moabit.jpg",
+  "artist": "Dosseman",
+  "page": "https://commons.wikimedia.org/wiki/File:Hauptbahnhof_Berlin_exterior_0136.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Hauptbahnhof Berlin exterior 0136.jpg"
+ },
+ "Brandenburg Gate & Unter den Linden": {
+  "file": "img/brandenburg-gate-unter-den-linden.jpg",
+  "artist": "Thomas Wolf, www.foto-tw.de",
+  "page": "https://commons.wikimedia.org/wiki/File:Brandenburger_Tor_nachts.jpg",
+  "license": "CC BY-SA 3.0",
+  "title": "File:Brandenburger Tor nachts.jpg"
+ },
+ "Reichstag dome": {
+  "file": "img/reichstag-dome.jpg",
+  "artist": "Ank Kumar",
+  "page": "https://commons.wikimedia.org/wiki/File:Reichstag_Dome,_Berlin_(Ank_Kumar)_01.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Reichstag Dome, Berlin (Ank Kumar) 01.jpg"
+ },
+ "Berlin Wall Memorial (Bernauer Straße)": {
+  "file": "img/berlin-wall-memorial-bernauer-stra-e.jpg",
+  "artist": "Ansgar Koreng",
+  "page": "https://commons.wikimedia.org/wiki/File:Berliner_Mauer,_Bernauer_Stra%C3%9Fe,_Berlin-Mitte,_160326,_ako.jpg",
+  "license": "CC BY 3.0 de",
+  "title": "File:Berliner Mauer, Bernauer Straße, Berlin-Mitte, 160326, ako.jpg"
+ },
+ "East Side Gallery": {
+  "file": "img/east-side-gallery.jpg",
+  "artist": "Singlespeedfahrer",
+  "page": "https://commons.wikimedia.org/wiki/File:Mural_Himlen_over_Berlin_Karina_Bjerregaard_Lotte_Haubert_East_Side_Gallery_Berlin_02.jpg",
+  "license": "CC0",
+  "title": "File:Mural Himlen over Berlin Karina Bjerregaard Lotte Haubert East Side Gallery Berlin 02.jpg"
+ },
+ "Museum Island & the Neues Museum": {
+  "file": "img/museum-island-the-neues-museum.jpg",
+  "artist": "Joyofmuseums",
+  "page": "https://commons.wikimedia.org/wiki/File:Neues_Museum_-_Joy_of_Museums.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Neues Museum - Joy of Museums.jpg"
+ },
+ "TV Tower (Fernsehturm)": {
+  "file": "img/tv-tower-fernsehturm.jpg",
+  "artist": "Diego Delso",
+  "page": "https://commons.wikimedia.org/wiki/File:Fernsehturm,_Berl%C3%ADn,_Alemania,_2016-04-22,_DD_40-42_HDR.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Fernsehturm, Berlín, Alemania, 2016-04-22, DD 40-42 HDR.jpg"
+ },
+ "Berliner Dom": {
+  "file": "img/berliner-dom.jpg",
+  "artist": "Ansgar Koreng",
+  "page": "https://commons.wikimedia.org/wiki/File:141227_Berliner_Dom.jpg",
+  "license": "CC BY 3.0 de",
+  "title": "File:141227 Berliner Dom.jpg"
+ },
+ "Charlottenburg Palace": {
+  "file": "img/charlottenburg-palace.jpg",
+  "artist": "kaʁstn Disk/Cat",
+  "page": "https://commons.wikimedia.org/wiki/File:Berlin,_Charlottenburg,_Schloss,_2012-07_CN-03.jpg",
+  "license": "CC BY-SA 3.0 de",
+  "title": "File:Berlin, Charlottenburg, Schloss, 2012-07 CN-03.jpg"
+ },
+ "Tiergarten & Berlin Zoo": {
+  "file": "img/tiergarten-berlin-zoo.jpg",
+  "artist": "Ввласенко",
+  "page": "https://commons.wikimedia.org/wiki/File:View_of_the_Brandenburg_Gate_from_Victory_Column._Berlin,_Germany.jpg",
+  "license": "CC BY-SA 3.0",
+  "title": "File:View of the Brandenburg Gate from Victory Column. Berlin, Germany.jpg"
+ },
+ "WeihnachtsZauber Gendarmenmarkt": {
+  "file": "img/weihnachtszauber-gendarmenmarkt.jpg",
+  "artist": "O.Gaudig",
+  "page": "https://commons.wikimedia.org/wiki/File:Weihnachtskitsch_am_Gendarmenmarkt.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Weihnachtskitsch am Gendarmenmarkt.jpg"
+ },
+ "Berliner Weihnachtszeit (Rotes Rathaus)": {
+  "file": "img/berliner-weihnachtszeit-rotes-rathaus.jpg",
+  "artist": "Arild Vågen",
+  "page": "https://commons.wikimedia.org/wiki/File:Rotes_Rathaus_November_2013.jpg",
+  "license": "CC BY-SA 3.0",
+  "title": "File:Rotes Rathaus November 2013.jpg"
+ },
+ "Alexanderplatz Christmas market": {
+  "file": "img/alexanderplatz-christmas-market.jpg",
+  "artist": "Burkhard Mücke",
+  "page": "https://commons.wikimedia.org/wiki/File:Weihnachtsmarkt_auf_dem_Alexanderplatz_2018,_2.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Weihnachtsmarkt auf dem Alexanderplatz 2018, 2.jpg"
+ },
+ "Breitscheidplatz (Kaiser Wilhelm Memorial Church)": {
+  "file": "img/breitscheidplatz-kaiser-wilhelm-memorial-church.jpg",
+  "artist": "Leonhard Lenz",
+  "page": "https://commons.wikimedia.org/wiki/File:Christmas_market_Breitscheidplatz_Berlin_2022-12-11_01.jpg",
+  "license": "CC0",
+  "title": "File:Christmas market Breitscheidplatz Berlin 2022-12-11 01.jpg"
+ },
+ "Charlottenburg Palace Christmas market": {
+  "file": "img/charlottenburg-palace-christmas-market.jpg",
+  "artist": "Leonhard Lenz",
+  "page": "https://commons.wikimedia.org/wiki/File:Christmas_market_Schloss_Charlottenburg_Berlin-Charlottenburg_2024-12-23_04.jpg",
+  "license": "CC0",
+  "title": "File:Christmas market Schloss Charlottenburg Berlin-Charlottenburg 2024-12-23 04.jpg"
+ },
+ "Lucia Christmas market (Kulturbrauerei)": {
+  "file": "img/lucia-christmas-market-kulturbrauerei.jpg",
+  "artist": "Leonhard Lenz",
+  "page": "https://commons.wikimedia.org/wiki/File:Christmas_market_Kulturbrauerei_Berlin_2022-12-11_06.jpg",
+  "license": "CC0",
+  "title": "File:Christmas market Kulturbrauerei Berlin 2022-12-11 06.jpg"
+ }
+}

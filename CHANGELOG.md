@@ -2,6 +2,10 @@
 
 All notable changes to the WF-mapping repo. Newest first. Dates are commit dates (UTC). Design and architecture notes live in `Wiley-Fox-Dev-Handoff-v1.md` (§20 covers September 2026).
 
+## 2026-10-05 (publish)
+
+- **feat:** Cologne, New York and Berlin Christmas 2026 guides approved and live at `/new/guides/<slug>/`. `/new` map: `GUIDE_LINKS` now points New York at `guides/new-york/` (old standalone HTML left in place) and adds Cologne and Berlin; city list adds Cologne and updates Berlin (rating 4 → 3, 'Stay aware', PKS 2025) and New York.
+
 ## 2026-10-05
 
 - **feat:** Berlin Christmas 2026 guide build script and source data (`scripts/city-guides/berlin/`): PKS Berlin 2025, the seven kbO hotspots from 1 July 2026, knife-ban zones, Görlitzer Park court rulings, verified 2026 market dates, 33 checked tips. Guide is on the preview site only (`/guides/berlin/`), awaiting approval before `/new`. Two campaigning channels are excluded from creator credits via `EXCLUDE` in the build script.

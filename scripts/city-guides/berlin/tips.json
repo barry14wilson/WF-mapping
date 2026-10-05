@@ -1,0 +1,301 @@
+{
+ "tips": [
+  {
+   "scope": "berlin",
+   "category": "water_snacks",
+   "worry": "Is the tap water safe to drink?",
+   "tip": "Yes. Berliner Wasserbetriebe says Berlin water comes from groundwater and is not chlorinated. It is hard, 14 degrees dH or more. Fill your bottle at the hotel tap.",
+   "verified_url": "https://www.bwb.de/de/wasserqualitaet.php",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "water_snacks",
+   "worry": "What is the bottle deposit thing on drinks?",
+   "tip": "Single-use plastic bottles and cans carry a 25 cent Pfand. Return them to the machine in any shop that sells drinks.",
+   "verified_url": "https://www.verbraucherzentrale.de/wissen/umwelt-haushalt/abfall/mehrweg-oder-einweg-wichtige-unterschiede-beim-pfand-11504",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "water_snacks",
+   "worry": "Do I pay extra for my Glühwein mug?",
+   "tip": "Yes. In Dec 2025 mug deposits were EUR 5 at Alexanderplatz and the Rotes Rathaus market, per t-online. Cups cost EUR 3-6. Check each stall for 2026.",
+   "verified_url": "https://www.t-online.de/",
+   "verified_at": "2026-10-05",
+   "season": "christmas"
+  },
+  {
+   "scope": "berlin",
+   "category": "transport_payment",
+   "worry": "How much is a single ticket in Berlin?",
+   "tip": "From 1 Jan 2026 an AB single is EUR 4.00 (reduced EUR 2.50). A 4-trip card is EUR 12.40. ABC single is EUR 5.00. A short trip (Kurzstrecke) is EUR 2.80. The AB single stays at EUR 4.00 in 2027.",
+   "verified_url": "https://viz.berlin.de",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "transport_payment",
+   "worry": "What is the best ticket for a day out?",
+   "tip": "A 24-hour AB ticket is EUR 11.20 (reduced EUR 7.40). ABC is EUR 12.90. The small-group 24-hour ticket for up to 5 people is EUR 35.30 AB or EUR 37.70 ABC. These two rise to EUR 36.00 and EUR 39.10 on 1 Jan 2027.",
+   "verified_url": "https://viz.berlin.de",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "transport_payment",
+   "worry": "Do children pay on buses and trains?",
+   "tip": "Under 6s travel free. Ages 6-14 pay the reduced fare. berlin.de says up to 3 children aged 6-14 travel free with a 24-hour ticket, and with a WelcomeCard adult.",
+   "verified_url": "https://www.berlin.de/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "transport_payment",
+   "worry": "Do I need to stamp my ticket?",
+   "tip": "Paper tickets must be stamped before the first ride. Fare evasion costs EUR 60 (BVG). A EUR 7 fee applies if you can prove you held a valid personal ticket. Even forgotten stamps count. Whether app tickets need validating was NOT VERIFIED on the pages read.",
+   "verified_url": "https://www.bvg.de",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "transport_payment",
+   "worry": "Is the Deutschlandticket worth it for a short trip?",
+   "tip": "Rarely. It is EUR 63 a month now and is a monthly subscription. Deutschlandfunk (30 Sep 2026) reports EUR 66.80 for 2027. A 24-hour or small-group ticket is cheaper for a week.",
+   "verified_url": "https://www.deutschlandfunk.de/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "transport_payment",
+   "worry": "How do I get from BER airport to the centre?",
+   "tip": "Take the FEX or an RE train. FEX takes about 23 minutes to Hbf, 19 to Potsdamer Platz and 14 to Südkreuz. About 3 trains an hour. S9 and S85 also run, about every 20 minutes on S9. The fare is a Berlin ABC single, EUR 5.00. Monthly pass holders need a EUR 2.40 add-on.",
+   "verified_url": "https://ber.berlin-airport.de/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "transport_payment",
+   "worry": "Where do I leave my bags at the main station?",
+   "tip": "Hbf has lockers: small EUR 4 per 24 hours, large EUR 6. Short stays of 2 hours cost EUR 2 or EUR 3. They are in the second basement and on the first floor near platforms 13 and 14.",
+   "verified_url": "https://www.bahnhof.de/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "toilets",
+   "worry": "Are public toilets free?",
+   "tip": "Mostly no. Of 278 City-Toiletten, 107 are free (those with a urinal). Others cost EUR 0.50. You can pay by card or phone. Berlin has about 485 public toilets (Aug 2026). 13 partner cafes are in the Berlin WC scheme.",
+   "verified_url": "https://www.berlin.de/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "local_ways",
+   "worry": "Can I shop on Sunday or Christmas Day?",
+   "tip": "No. Shops shut on Sundays and public holidays. On 24 Dec (a Thursday) they must close from 14:00. They are shut on 25 and 26 Dec and on 1 Jan. Two Sundays open in 2026: 6 and 20 Dec, 13:00-20:00. Buy food before 14:00 on the 24th.",
+   "verified_url": "https://www.ihk.de/berlin",
+   "verified_at": "2026-10-05",
+   "season": "christmas"
+  },
+  {
+   "scope": "berlin",
+   "category": "money_tipping",
+   "worry": "Do I have to tip?",
+   "tip": "It is voluntary. About 5-10 per cent in restaurants and cafes is usual. Say the total when you pay, for example 'make it 25'.",
+   "verified_url": "https://www.sparkasse.de/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "safety_habits",
+   "worry": "What are the emergency numbers?",
+   "tip": "110 for police. 112 for fire and ambulance. 116117 for an out-of-hours doctor. Police non-emergency line is +49 30 4664-4664.",
+   "verified_url": "https://www.berlin.de/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "safety_habits",
+   "worry": "Where do I find an emergency pharmacy?",
+   "tip": "Search by postcode at aponet.de, which uses official pharmacist chamber data. Night and Sunday duty rotates daily.",
+   "verified_url": "https://www.aponet.de/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "safety_habits",
+   "worry": "I lost something. What now?",
+   "tip": "On BVG, use the BVG Fundbüro, Rudolfstr. 1-8. Open Mon, Tue, Thu, Fri 09:00-17:00. Closed Wed, weekends and holidays. Items are kept up to 6 weeks. For other items, report online to the Zentrales Fundbüro (Tempelhof).",
+   "verified_url": "https://www.bvg.de/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "money_tipping",
+   "worry": "Can I pay by card everywhere?",
+   "tip": "Not always. Many Berlin places are cash-first. At Gendarmenmarkt cards work in food areas, not at all craft stalls. Cash-only signs were reported at Potsdamer Platz and RAW in earlier years. Carry some euros.",
+   "verified_url": "https://www.weihnachtsmarkt-berlin.de/en/faqs",
+   "verified_at": "2026-10-05",
+   "season": "christmas"
+  },
+  {
+   "scope": "berlin",
+   "category": "safety_habits",
+   "worry": "Is Görlitzer Park open at night?",
+   "tip": "Yes, at the moment. The Senate's night closure from 1 Mar 2026 was stopped by the Berlin administrative court on 1 Jun. The higher court rejected the Senate's appeal on 1 Oct 2026. The main case is still open, so check again. Police still treat the park as a high-crime area.",
+   "verified_url": "https://www.berlin.de/polizei/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "safety_habits",
+   "worry": "Are knives banned anywhere?",
+   "tip": "Yes. Any knife is banned in three zones: Görlitzer Park, Kottbusser Tor and Leopoldplatz. A ban on weapons and knives also applies on public transport. Fines go up to EUR 10,000. Leave pocket knives at the hotel.",
+   "verified_url": "https://www.berlin.de/polizei/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "safety_habits",
+   "worry": "Which parts of Berlin do police flag?",
+   "tip": "Seven places are kbO from 1 Jul 2026: Alexanderplatz, Görlitzer Park/Wrangelkiez, Hermannplatz/Donaukiez, Hermannstraße/Bf Neukölln, Kottbusser Tor, Rigaer Straße and Warschauer Brücke. Police can check people there without a specific reason. Expect more officers, not necessarily danger.",
+   "verified_url": "https://www.berlin.de/polizei/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "safety_habits",
+   "worry": "Is pickpocketing a worry?",
+   "tip": "Yes, in crowds. Police recorded 13,621 cases in 2025, down 14.6 per cent. On public transport 6,192 cases, down 24.6 per cent. Keep phones in front pockets at markets and on the U-Bahn.",
+   "verified_url": "https://www.berlin.de/polizei/_assets/verschiedenes/pks/pks-kurzbericht-2025.pdf",
+   "verified_at": "2026-10-05",
+   "season": "christmas"
+  },
+  {
+   "scope": "berlin",
+   "category": "safety_habits",
+   "worry": "Is Christmas market security visible?",
+   "tip": "In 2025 police said they used bollards, a mobile police station and a knife ban at Breitscheidplatz, with about 20 private guards. 2026 security plans were NOT found yet.",
+   "verified_url": "https://www.t-online.de/",
+   "verified_at": "2026-10-05",
+   "season": "christmas"
+  },
+  {
+   "scope": "berlin",
+   "category": "safety_habits",
+   "worry": "What is New Year's Eve like?",
+   "tip": "Loud. In 2025/26 police used four pyrotechnics-ban zones (Alexanderplatz, Steinmetzkiez, Sonnenallee, Admiralbrücke) and about 3,200 extra officers. About 430 arrests, 35 police injured and over 220,000 items seized. 2026/27 rules are NOT yet announced. Stay clear of Alexanderplatz and Neukölln after dark.",
+   "verified_url": "https://www.berlin.de/polizei/",
+   "verified_at": "2026-10-05",
+   "season": "christmas"
+  },
+  {
+   "scope": "berlin",
+   "category": "local_ways",
+   "worry": "Can I see the Reichstag dome?",
+   "tip": "Yes, free, but book ahead. Photo ID is needed for ages 16 and over. Closed all day 24 Dec. On 31 Dec it closes from 16:00. Walk-up spots up to 2 hours before are subject to space.",
+   "verified_url": "https://www.bundestag.de/besuche/kuppel",
+   "verified_at": "2026-10-05",
+   "season": "christmas"
+  },
+  {
+   "scope": "berlin",
+   "category": "local_ways",
+   "worry": "How much is the TV Tower?",
+   "tip": "From EUR 20.00 online for the standard ticket. Prices vary by time. Book ahead in Dec.",
+   "verified_url": "https://tv-turm.de/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "local_ways",
+   "worry": "Is Museum Island free on Sundays?",
+   "tip": "No. The free first-Sunday scheme ended in Dec 2024 and I found no 2026 return. Museumsinsel-Ticket is EUR 24. Under 18s are free. Pergamon is closed until 4 Jul 2027.",
+   "verified_url": "https://www.smb.museum/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "transport_payment",
+   "worry": "Is the WelcomeCard worth it?",
+   "tip": "BVG WelcomeCard 48 hours is EUR 28.50 AB or EUR 34.50 ABC. Up to 3 children aged 6-14 travel free with an adult. Compare it with a 24-hour or small-group ticket, which can be cheaper for families.",
+   "verified_url": "https://www.bvg.de/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "local_ways",
+   "worry": "Is there a Sunday flea market?",
+   "tip": "Yes. Mauerpark flea market runs Sundays 10:00-18:00. Winter weather may thin it out.",
+   "verified_url": "https://www.mv-perske.de/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "parks_play",
+   "worry": "What does the Zoo cost?",
+   "tip": "Prices change online. Zoo only: adult EUR 16-25, child 4-15 EUR 7.50-12.50. Zoo plus Aquarium: adult EUR 24-37, child EUR 11-17.50. Under 4s free. Book early for cheaper slots.",
+   "verified_url": "https://www.zoo-berlin.de/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "local_ways",
+   "worry": "What do UK visitors need to enter Germany?",
+   "tip": "A passport issued within 10 years and valid 3 months after departure. Up to 90 days in 180 without a visa. EES biometric registration is running, so allow extra time. GHIC is recommended but is not travel insurance.",
+   "verified_url": "https://www.gov.uk/foreign-travel-advice/germany/entry-requirements",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "phone_data",
+   "worry": "What about roaming?",
+   "tip": "Check with your provider before you go. Which? (undated) listed O2 free with a 25GB fair-use limit, EE GBP 2.59 a day, Vodafone GBP 2.57, Three GBP 2. Whether those prices are still current is NOT VERIFIED.",
+   "verified_url": "https://www.ofcom.org.uk/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "local_ways",
+   "worry": "Can I do Potsdam in a day?",
+   "tip": "Yes. Berlin ABC tickets cover Potsdam Hbf, so no extra ticket is needed. A Brandenburg-Berlin-Ticket costs EUR 36.50 for up to 5 people (DB Regio). Palace opening hours in Dec were NOT VERIFIED.",
+   "verified_url": "https://www.berlin.de/",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  },
+  {
+   "scope": "berlin",
+   "category": "safety_habits",
+   "worry": "Is it safe for families and solo visitors?",
+   "tip": "The FCDO says crime levels are similar to the UK. Berlin's police total fell 6.7 per cent in 2025. Note a July 2026 vehicle attack near a Berlin Pride event killed 1 and injured 29 per the FCDO (updated 30 Sep 2026). Check FCDO advice before you travel.",
+   "verified_url": "https://www.gov.uk/foreign-travel-advice/germany",
+   "verified_at": "2026-10-05",
+   "season": "any"
+  }
+ ]
+}

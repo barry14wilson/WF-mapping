@@ -1,0 +1,122 @@
+[
+ {
+  "item": "BVG AB single (adult / reduced)",
+  "price": "EUR 4.00 / EUR 2.50 (unchanged 1 Jan 2027)",
+  "date": "From 1 Jan 2026",
+  "source": "VBB tariff, viz.berlin.de"
+ },
+ {
+  "item": "BVG ABC single (adult / reduced)",
+  "price": "EUR 5.00 / EUR 3.50 (EUR 5.20 from 1 Jan 2027)",
+  "date": "From 1 Jan 2026",
+  "source": "VBB tariff, viz.berlin.de"
+ },
+ {
+  "item": "4-trip card AB",
+  "price": "EUR 12.40 (EUR 13.20 from 1 Jan 2027)",
+  "date": "From 1 Jan 2026",
+  "source": "VBB tariff, viz.berlin.de"
+ },
+ {
+  "item": "24-hour ticket AB (adult / reduced)",
+  "price": "EUR 11.20 / EUR 7.40",
+  "date": "From 1 Jan 2026",
+  "source": "VBB tariff, viz.berlin.de"
+ },
+ {
+  "item": "24-hour small-group ticket AB, up to 5 people",
+  "price": "EUR 35.30 (EUR 36.00 from 1 Jan 2027)",
+  "date": "From 1 Jan 2026",
+  "source": "VBB tariff, viz.berlin.de"
+ },
+ {
+  "item": "24-hour small-group ticket ABC, up to 5 people",
+  "price": "EUR 37.70 (EUR 39.10 from 1 Jan 2027)",
+  "date": "From 1 Jan 2026",
+  "source": "VBB tariff, viz.berlin.de"
+ },
+ {
+  "item": "Deutschlandticket (monthly)",
+  "price": "EUR 63 (EUR 66.80 in 2027 per Deutschlandfunk)",
+  "date": "30 Sep 2026",
+  "source": "Deutschlandfunk"
+ },
+ {
+  "item": "BVG WelcomeCard 48h AB / ABC",
+  "price": "EUR 28.50 / EUR 34.50",
+  "date": "2026",
+  "source": "BVG"
+ },
+ {
+  "item": "Fare evasion penalty",
+  "price": "EUR 60 (EUR 7 fee if you prove a valid personal ticket)",
+  "date": "2026",
+  "source": "BVG"
+ },
+ {
+  "item": "TV Tower, standard ticket",
+  "price": "From EUR 20.00 online",
+  "date": "Oct 2026",
+  "source": "tv-turm.de"
+ },
+ {
+  "item": "Zoo Berlin adult / child 4-15",
+  "price": "EUR 16-25 / EUR 7.50-12.50 (dynamic pricing)",
+  "date": "Oct 2026",
+  "source": "zoo-berlin.de"
+ },
+ {
+  "item": "Museumsinsel-Ticket",
+  "price": "EUR 24 (under 18s free)",
+  "date": "Oct 2026",
+  "source": "smb.museum"
+ },
+ {
+  "item": "Christmas Garden Berlin adult / child 6-14",
+  "price": "EUR 16.90-27.90 / EUR 12.90-23.90 (box office +EUR 2)",
+  "date": "Oct 2026, varies by date",
+  "source": "christmas-garden.de/berlin"
+ },
+ {
+  "item": "WeihnachtsZauber Gendarmenmarkt entry",
+  "price": "EUR 2 (free weekdays at midday, 24-26 Dec, under 12s)",
+  "date": "2026 organiser FAQ",
+  "source": "weihnachtsmarkt-berlin.de/en/faqs"
+ },
+ {
+  "item": "Charlottenburg Palace, Old Palace and New Wing",
+  "price": "EUR 12 (reduced EUR 8)",
+  "date": "2026",
+  "source": "SPSG"
+ },
+ {
+  "item": "Berliner Dom",
+  "price": "EUR 15 (concession EUR 12)",
+  "date": "2026",
+  "source": "berlinerdom.de"
+ },
+ {
+  "item": "DDR Museum",
+  "price": "EUR 13.90 (concession EUR 8.50)",
+  "date": "2026",
+  "source": "ddr-museum.de"
+ },
+ {
+  "item": "Glühwein per cup (market press survey)",
+  "price": "EUR 3-6; mug deposit EUR 5 at some stalls",
+  "date": "12 Dec 2025 (latest year only)",
+  "source": "t-online.de"
+ },
+ {
+  "item": "Hbf luggage locker small / large (24h)",
+  "price": "EUR 4 / EUR 6",
+  "date": "2026",
+  "source": "bahnhof.de"
+ },
+ {
+  "item": "Public toilet (City-Toilette, non-urinal)",
+  "price": "EUR 0.50",
+  "date": "Aug 2026",
+  "source": "berlin.de"
+ }
+]

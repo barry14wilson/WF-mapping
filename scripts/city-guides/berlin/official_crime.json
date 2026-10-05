@@ -1,0 +1,252 @@
+{
+ "generated": "2026-10-05",
+ "source_note": "Main sources: Polizei Berlin, PKS Berlin 2025 Kurzbericht (PDF read in full text; presented 11 Mar 2026 by Senator Spranger and Police President Slowik Meisel, press release linked). Police page on kriminalitätsbelastete Orte, police pages on weapon and knife ban zones, police Silvester balance of 1 Jan 2026, Berlin Senate press release on the Görlitzer Park, OVG press release 1 Oct 2026. Where a figure comes from press or a third party it is marked.",
+ "scope_warning": "All PKS figures are for the whole city of Berlin (3,685,265 residents at end 2024, per Amt für Statistik). Reported crime is not the same as risk to a visitor. Pickpocketing, shoplifting and drug offences dominate many central areas. The Kurzbericht does not use the label 'Gewaltkriminalität'. I give Rohheitsdelikte instead.",
+ "headline": {
+  "total_offences_2025": {
+   "value": "502,743 offences",
+   "previous_year": "539,049",
+   "change": "-36,306 (-6.7%)",
+   "clearance_rate": "44.9% (2024: 45.5%)",
+   "quote": "Abnahme der Straftaten insgesamt um 6,7% auf 502.743 Fälle (-36.306 Fälle).",
+   "police_comment": "Lowest total in more than ten years, except pandemic year 2021 (Senate press release 11 Mar 2026).",
+   "source_url": "https://www.berlin.de/polizei/_assets/verschiedenes/pks/pks-kurzbericht-2025.pdf",
+   "press_url": "https://www.berlin.de/sen/inneres/presse/pressemitteilungen/2026/pressemitteilung.1651060.php"
+  },
+  "hz_2025": {
+   "value": "13,642 offences per 100,000 residents",
+   "previous_year": "14,719 (recalculated on Census 2022 population)",
+   "change": "-1,077 per 100,000 (-7.3%)",
+   "quote": "Je 100.000 Einwohnende wurden 13.642 Straftaten registriert; 1.077 Taten weniger pro 100.000 Einwohnende als im Vorjahr.",
+   "note": "HZ for 2023-2025 uses Census 2022 population; earlier years use Census 2011, so long-run HZ series are not like for like. Only 2021 had a lower HZ in the ten-year table.",
+   "source_url": "https://www.berlin.de/polizei/_assets/verschiedenes/pks/pks-kurzbericht-2025.pdf"
+  },
+  "city_comparison_check": "The Munich file (muc/official_crime.json) lists Berlin HZ 2025 as 13,233 taken from the Munich report. Berlin's own Kurzbericht says 13,642. Use 13,642 for Berlin. I did not find why the two differ. The Kriminalitätsatlas total is 12,882 (see kriminalitaetsatlas.json).",
+  "no_ranking_claim": "I did not fetch the BKA table, so no ranking of Berlin against other German cities is stated here."
+ },
+ "offence_groups_2025": {
+  "pickpocketing": {
+   "2025": 13621,
+   "2024": 15943,
+   "change": "-2,322 (-14.6%)",
+   "note": "Police president: 'Besonders deutliche Rückgänge verzeichnen wir im Bereich des Diebstahls.' On public transport (S-Bahn, U-Bahn, regional rail; Verlaufsstatistik, not PKS) pickpocketing fell from 8,214 to 6,192 (-24.6%).",
+   "police_prevention_note": "On 1 Oct 2026 Berlin police, Brandenburg police and Bundespolizei announced a pickpocketing prevention week 5-9 Oct 2026: 'Trotz deutlich rückläufiger Fallzahlen bleibt Taschendiebstahl ein Thema. Besonders in Supermärkten, an Bahnhöfen und im öffentlichen Nahverkehr...'",
+   "source_url": "https://www.berlin.de/polizei/_assets/verschiedenes/pks/pks-kurzbericht-2025.pdf",
+   "police_note_url": "https://www.berlin.de/polizei/polizeimeldungen/2026/pressemitteilung.1720255.php"
+  },
+  "theft_total": {
+   "2025": 203061,
+   "2024": 223586,
+   "change": "-20,525 (-9.2%)",
+   "source_url": "https://www.berlin.de/polizei/_assets/verschiedenes/pks/pks-kurzbericht-2025.pdf"
+  },
+  "robbery_total": {
+   "2025": 4823,
+   "2024": 5121,
+   "change": "-298 (-5.8%)",
+   "clearance": "44.5%",
+   "source_url": "https://www.berlin.de/polizei/_assets/verschiedenes/pks/pks-kurzbericht-2025.pdf"
+  },
+  "street_robbery": {
+   "2025": "2,730 (sonstige Raubüberfälle auf Straßen, Wegen oder Plätzen)",
+   "2024": "3,003 (2,730 + 273)",
+   "change": "-273 (-9.1%)",
+   "handbag_robbery": "148 (+15, +11.3%)",
+   "note": "The Kurzbericht names this category 'sonstige Raubüberfälle auf Straßen, Wegen oder Plätzen'. A separate 'Straßenraub' label is not used in the text I read, so I treat this as the closest match.",
+   "source_url": "https://www.berlin.de/polizei/_assets/verschiedenes/pks/pks-kurzbericht-2025.pdf"
+  },
+  "rohheitsdelikte_violent_crime_proxy": {
+   "2025": 80541,
+   "2024": 81460,
+   "change": "-919 (-1.1%)",
+   "includes": "robbery, bodily harm, offences against personal freedom (threats, coercion)",
+   "dangerous_or_serious_bodily_harm": "13,382 (2024: 13,847), -3.4%",
+   "simple_bodily_harm": "33,981 (-0.9%)",
+   "source_url": "https://www.berlin.de/polizei/_assets/verschiedenes/pks/pks-kurzbericht-2025.pdf",
+   "gewaltkriminalitaet": "NOT VERIFIED. Not given as a separate figure in the Kurzbericht."
+  },
+  "sexual_offences_all": {
+   "2025": 8652,
+   "2024": 7475,
+   "change": "+1,177 (+15.7%)",
+   "clearance": "68.9%",
+   "note": "Most of the rise is online child and youth abuse-image offences: child-pornography content 1,954 (+53.6%), youth-pornography content 637 (+86.8%). Police link this to international reports (NCMEC). Not a measure of risk to visitors on the street.",
+   "rape_sexual_coercion_assault": "2,114 (2024: 2,013), +5.0%",
+   "sexual_harassment": "1,357 (1,207), +12.4%",
+   "source_url": "https://www.berlin.de/polizei/_assets/verschiedenes/pks/pks-kurzbericht-2025.pdf",
+   "press_url": "https://www.berlin.de/sen/inneres/presse/pressemitteilungen/2026/pressemitteilung.1651060.php"
+  },
+  "knife_attacks": {
+   "2025": 3599,
+   "2024": 3412,
+   "change": "+187 (+5.5%)",
+   "note": "Police say the rise is probably due to a duty since 2025 to record the type of weapon use. Threats are 1,779 of the 3,599 (49.4%). 1,759 cases (48.9%) were in public. 4,456 victims. In the three weapon and knife ban zones, police say knife attacks fell by about 25 to 45 per cent since Feb 2025 (Senator Spranger, 11 Mar 2026).",
+   "source_url": "https://www.berlin.de/polizei/_assets/verschiedenes/pks/pks-kurzbericht-2025.pdf",
+   "press_url": "https://www.berlin.de/sen/inneres/presse/pressemitteilungen/2026/pressemitteilung.1651060.php"
+  },
+  "firearm_threat_or_use": {
+   "2025": "1,119 (+68%): 604 threats, 515 shots",
+   "note": "Police say this is partly a recording change. Senator called it 'ein klares Warnsignal'.",
+   "source_url": "https://www.berlin.de/sen/inneres/presse/pressemitteilungen/2026/pressemitteilung.1651060.php"
+  },
+  "homicide": {
+   "2025": "165 (+48, +41%)",
+   "note": "79 of these are attributed to one series: a palliative doctor suspected of killing seriously ill patients (Senate press release).",
+   "source_url": "https://www.berlin.de/sen/inneres/presse/pressemitteilungen/2026/pressemitteilung.1651060.php"
+  },
+  "burglary_homes": {
+   "2025": 10618,
+   "change": "+2,089 (+24.5%)",
+   "source_url": "https://www.berlin.de/polizei/_assets/verschiedenes/pks/pks-kurzbericht-2025.pdf"
+  },
+  "fare_evasion": {
+   "2025": 8691,
+   "change": "+2,040 (+30.7%)",
+   "note": "Reflects ticket checks as much as behaviour.",
+   "source_url": "https://www.berlin.de/polizei/_assets/verschiedenes/pks/pks-kurzbericht-2025.pdf"
+  },
+  "public_transport_offences": {
+   "bodily_harm_2025": 5340,
+   "bodily_harm_2024": 5480,
+   "robbery_2025": 426,
+   "robbery_2024": 503,
+   "all_violent_2025": 7610,
+   "all_violent_2024": 7773,
+   "change_violent": "-2.1%",
+   "source": "Verlaufsstatistik Polizei Berlin plus Bundespolizei, 16 and 26 Jan 2026; fare evasion left out",
+   "source_url": "https://www.berlin.de/polizei/_assets/verschiedenes/pks/pks-kurzbericht-2025.pdf"
+  }
+ },
+ "kriminalitaetsatlas": {
+  "latest_edition": "PKS 2025 data, table 'Kriminalitätsatlas Fallzahlen 2016 - 2025' (XLSX, 612 kB)",
+  "download_url": "https://www.berlin.de/polizei/_assets/dienststellen/lka/fallzahlen_hz-2016-2025.xlsx",
+  "landing_page": "https://www.berlin.de/polizei/service/kriminalitaetsatlas/",
+  "covers": "17 offence groups, 12 districts, 143 Bezirksregionen, last ten years. HZ and absolute cases.",
+  "change": "The interactive atlas was switched off on 1 Oct 2026. Only the XLSX remains.",
+  "saved_as": "ber/kriminalitaetsatlas.json",
+  "central_regions_hz_2025_all_offences": {
+   "Regierungsviertel": 46179,
+   "Tiergarten Süd": 31960,
+   "Alexanderplatz": 28817,
+   "Lietzenburger Straße (Ku'damm area, mapping not verified)": 27132,
+   "Nördliche Luisenstadt (Kotti area, mapping not verified)": 26540,
+   "Südliche Luisenstadt (Görlitzer Park area, mapping not verified)": 23937,
+   "Neuköllner Mitte/Zentrum": 20825,
+   "Wedding Zentrum": 15860,
+   "Schloss Charlottenburg": 9518,
+   "Berlin (atlas total)": 12882
+  },
+  "caveat": "HZ is inflated in places with few residents and many visitors (Regierungsviertel, Tiergarten Süd, Alexanderplatz). ODIS Berlin says so about Regierungsviertel (14 May 2026). A high HZ is not a danger rating for tourists.",
+  "odis_url": "https://odis-berlin.de/aktuelles/2026-05-15-kbo-datenrecherche-blogpost/"
+ },
+ "kriminalitaetsbelastete_orte": {
+  "current_list": [
+   "Alexanderplatz",
+   "Görlitzer Park/Wrangelkiez",
+   "Hermannplatz/Donaukiez",
+   "Hermannstraße/Bahnhof Neukölln",
+   "Kottbusser Tor",
+   "Rigaer Straße",
+   "Warschauer Brücke"
+  ],
+  "status": "Seven kbO in force from 1 Jul 2026 under the kbO-Verordnung of 17 Jun 2026 (published 30 Jun 2026). Since 24 Dec 2025 the Interior Senate department sets kbO by ordinance. Police published exact boundaries on 19 Jan 2026.",
+  "what_it_means": "Police may check ID and search people and bags without suspicion, and may use video. It does not mean the area is closed or that visitors are at special risk.",
+  "police_quote": "Ein kbO setzt voraus, dass dort Straftaten von erheblicher Bedeutung, also zum Beispiel Raubtaten, Brandstiftungen, gefährliche Körperverletzungen, gewerbs- oder bandenmäßiger Taschendiebstahl oder Rauschgifthandel verabredet, vorbereitet oder verübt werden.",
+  "police_per_place": "Police: Görlitzer Park/Wrangelkiez and Kottbusser Tor have drug dealing and violence linked to it. Alexanderplatz has relatively many Rohheitsdelikte by groups. Hermannstraße/Bahnhof Neukölln has clan-crime-related offences.",
+  "case_counts_secondary": "ODIS (not police) reports from Drucksache 19/24404 (Abgeordnetenhaus answer): all offences 1 Jan 2024 to 19 Nov 2025: Alexanderplatz 11,235; Görlitzer Park/Wrangelkiez 8,865; Hermannplatz/Donaukiez 8,357; Hermannstraße/Bf Neukölln 7,685; Kottbusser Tor 7,158; Warschauer Brücke 3,994; Rigaer Straße 1,248. ODIS notes that most Alexanderplatz cases are shoplifting. I did not open the Drucksache itself.",
+  "source_url": "https://www.berlin.de/polizei/polizeimeldungen/fakten-hintergruende/artikel.1078268.php",
+  "odis_url": "https://odis-berlin.de/aktuelles/2026-05-15-kbo-datenrecherche-blogpost/"
+ },
+ "goerlitzer_park_night_closure": {
+  "status_2026_10_05": "NOT IN FORCE. The Senate closed the park at night from 1 Mar 2026 (6-22 h, 23 Sep-13 May; 6-23 h, 14 May-22 Sep). The Verwaltungsgericht Berlin stopped this on 1 Jun 2026 (VG 24 L 117/26). On 1 Oct 2026 the Oberverwaltungsgericht Berlin-Brandenburg rejected the Senate's appeal (OVG 11 S 33/26). The order cannot be appealed. A final ruling comes only in the main case. So the park is open round the clock for now.",
+  "why": "Court: the Senate transport department was not competent to set opening hours. It had not given the district the specific instruction needed for its right to step in.",
+  "police_data_note": "t-online (1 Oct 2026): police data for the closure period Mar-May show no clear fall in offences in the park. Police say the park cannot be separated from the Wrangelkiez, also a kbO.",
+  "senate_press_release_27_feb_2026": "https://www.berlin.de/rbmskzl/aktuelles/pressemitteilungen/2026/pressemitteilung.1648032.php",
+  "vg_report_url": "https://www.lto.de/recht/nachrichten/n/vg-berlin-eilverfahren-vg24l11726-goerlitzer-park-vorerst-wieder-nachts-geoeffnet",
+  "ovg_press_release_url": "https://www.berlin.de/gerichte/oberverwaltungsgericht/presse/pressemitteilungen/2026/pressemitteilung.1720565.php",
+  "press_url": "https://berlin.t-online.de/region/berlin/id_101461724/goerlitzer-park-berlin-gericht-stoppt-naechtliche-schliessung-endgueltig.html",
+  "visitor_note": "The Waffen- und Messerverbotszone around the park still applies (see below). Check again before travel because the main case is open."
+ },
+ "weapon_and_knife_bans": {
+  "zones": {
+   "where": "Görlitzer Park, Kottbusser Tor, Leopoldplatz (maps on the police page)",
+   "in_force_since": "15 Feb 2025 (ordinance of 17 Dec 2024)",
+   "applies_to": "public streets, paths and squares inside the mapped areas, including parks",
+   "what": "Any knife, including kitchen, pocket and tool knives, and weapons such as pepper spray aimed at people. Animal-defence spray that is clearly labelled is not a weapon under the ordinance.",
+   "exception": "Knives carried not within reach (more than three hand movements to reach) are allowed; for one-hand knives and fixed blades over 12 cm a closed container is needed.",
+   "checks": "Police may stop and search without suspicion.",
+   "fine": "Up to 10,000 euros and the item is confiscated.",
+   "source_url": "https://www.berlin.de/polizei/polizeimeldungen/fakten-hintergruende/artikel.1520041.php"
+  },
+  "public_transport": {
+   "what": "Weapons and knives are banned on all public transport in Berlin (BVG buses, trams, U-Bahn, ferries, S-Bahn and regional trains in Berlin) and in station buildings, public platform areas and side-enclosed access ways. Bus and tram stops are not covered.",
+   "in_force_since": "17 Jul 2025 (ordinance of 24 Jun 2025)",
+   "fine": "Up to 10,000 euros",
+   "note": "Same exceptions as above. A small knife for eating is not automatically allowed in transport if it is within reach.",
+   "source_url": "https://www.berlin.de/polizei/polizeimeldungen/fakten-hintergruende/artikel.1570919.php"
+  },
+  "christmas_markets": "The Breitscheidplatz police chief said in Nov 2025 that a knife ban applies and is checked (t-online). The Gendarmenmarkt organiser lists weapons of any kind and bags over 15 litres as banned (organiser FAQ 2026)."
+ },
+ "christmas_markets": {
+  "breitscheidplatz_2025": {
+   "date": "24 Nov 2025 (t-online)",
+   "statements": [
+    "Polizeidirektor Andreas Tschisch: 'Wir haben uns das noch einmal sehr genau angesehen und der neuen Lage angepasst. Selbst die kleinste Lücke musste geschlossen werden.' The concept was reworked after the Magdeburg attack of Dec 2024.",
+    "Tschisch on the threat picture: 'Aktuell haben wir keine Hinweise auf konkrete Gefährdungen, auch bundesweit nicht.'",
+    "Bollards and other barriers protect the market. Police have a mobile station and plain-clothes patrols. A knife ban applies and is checked. Video is used at times.",
+    "The showmen's association adds private security of about 20 people at entrances and on site, cost about 180,000 euros for the season.",
+    "Police advice: stay alert to pickpockets, leave large amounts of cash at home, carry wallets under clothing.",
+    "District councillor Schruoffeneger: bollards and barriers to be installed permanently around Breitscheidplatz after the market instead of being set up each year."
+   ],
+   "memorial": "The memorial 'Der Riss' remembers the victims of the 19 Dec 2016 attack. The market opening includes laying 13 white roses (district press release 24 Nov 2025).",
+   "source_url": "https://berlin.t-online.de/region/berlin/id_101009514/breitscheidplatz-in-berlin-weihnachtsmarkt-oeffnet-mehr-sicherheit-.html",
+   "district_press_release": "https://www.berlin.de/ba-charlottenburg-wilmersdorf/aktuelles/pressemitteilungen/2025/pressemitteilung.1619006.php"
+  },
+  "2026_security_statements": "NOT VERIFIED. I found no 2026 police or organiser security statement for the Berlin markets. Recheck in November.",
+  "after_csd_attack": "The FCDO lists a vehicle attack at Berlin CSD in July 2026 (see recent_incidents). I found no Berlin statement on how it changes market security in 2026."
+ },
+ "new_years_eve": {
+  "rules_2025_26": {
+   "pyro_ban_zones": "Four Pyrotechnikverbotsbereiche by general order: Alexanderplatz (Mitte), Steinmetzkiez (Schöneberg), Sonnenallee (Neukölln) and Admiralbrücke (Kreuzberg, new). The first three were 'teilweise erheblich vergrößert'. Unlike earlier years they were not fenced off; police moved through the areas and checked groups.",
+   "source_url": "https://www.berlin.de/sen/inneres/presse/pressemitteilungen/2026/pressemitteilung.1629620.php"
+  },
+  "police_balance_1_jan_2026": {
+   "officers": "about 3,200 extra officers, 785 from Bundespolizei and other states",
+   "arrests": "about 430 (Senate release, 9:45 h: more than 420; last year 400)",
+   "police_injured": "35 (22 by pyrotechnics), last year 37; two needed hospital stay",
+   "investigations": "about 800",
+   "calls": "2,340 police operations 18:00-06:00 (previous year 2,168)",
+   "vehicle_fires": "47 vehicles set alight or caught fire",
+   "zones_result": "Police: the ban orders were 'überwiegend eingehalten' in the four zones.",
+   "fire_brigade": "1,830 calls 19:00-06:00 (2024/25: 1,892)",
+   "seized_pyro": "more than 220,000 pieces, of which more than 109,000 category-4 items, seized before and during the night (Senate)",
+   "children_injured": "Hospitals treated at least eight children with severe or very severe firework injuries (Senator Spranger)",
+   "brandenburg_gate": "About 20,000 people at the Silvester event at Brandenburger Tor; police noted no special incidents.",
+   "senator_quote": "Der Großteil der Berlinerinnen und Berliner hat einen friedlichen Jahreswechsel erlebt.",
+   "source_url": "https://www.berlin.de/polizei/polizeimeldungen/2026/pressemitteilung.1629630.php"
+  },
+  "status_2026_27": "Not announced for the pyro-ban zones. The Senate said on 16 Sep 2026 it plans another free party at the Brandenburger Tor with fireworks and DJs, organised by Kulturprojekte Berlin; no programme yet (t-online). Zones, hours and tickets for 2026/27 must be rechecked in December.",
+  "status_url": "https://berlin.t-online.de/region/berlin/id_101437498/silvester-2026-in-berlin-senat-plant-erneut-feier-am-brandenburger-tor.html"
+ },
+ "recent_incidents": {
+  "csd_berlin_july_2026": {
+   "what": "FCDO Germany travel advice (updated 30 Sep 2026): 'in July 2026, 1 person was killed and 29 injured when a vehicle drove into crowds celebrating Christopher Street Day, Berlin's annual LGBT+ Pride event'. First press reports of 26 Jul 2026 said 1 dead and 16 injured near Potsdamer Platz / Tiergarten (Ahornsteig) at about 22:00; the event was abandoned.",
+   "investigation": "General prosecutor and LKA investigating, suspicion of an attack (ZDF). A police spokesman said the suspect was known to police and attributed to the Islamist scene in Berlin (t-online, 26 Jul 2026). I did not check later developments or any court outcome.",
+   "fcdo_url": "https://www.gov.uk/foreign-travel-advice/germany/safety-and-security",
+   "press_urls": [
+    "https://berlin.t-online.de/region/berlin/id_101360160/csd-berlin-2026-auto-faehrt-in-menschenmenge-eine-tote-16-verletzte.html",
+    "https://www.zdfheute.de/panorama/csd-berlin-abschlusskundgebung-evakuierung-100.html"
+   ]
+  },
+  "fcdo_crime_line": "FCDO: 'Crime levels are similar to the UK. Take sensible precautions to avoid mugging, bag-snatching and pickpocketing. Be particularly vigilant at airports, railway stations and in crowded public places or gatherings.' FCDO also says terrorists 'are very likely to try to carry out attacks in Germany'."
+ },
+ "unverified": [
+  "A separate Gewaltkriminalität figure for Berlin 2025.",
+  "Which Bezirksregion contains Kottbusser Tor, Warschauer Straße, Breitscheidplatz and Hermannplatz.",
+  "The first line of the Kurzbericht on how many victims are visitors. The report has no split between residents and tourists.",
+  "Any 2026 police statement on Christmas market security.",
+  "2026/27 New Year's Eve zones and rules.",
+  "A January 2026 arson attack on the Berlin power grid appeared as a search-result title only (Wikipedia). I did not read it, so it is not used here.",
+  "Berlin City-Toilet and other items are in tips.json."
+ ]
+}

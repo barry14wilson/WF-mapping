@@ -2,6 +2,10 @@
 
 All notable changes to the WF-mapping repo. Newest first. Dates are commit dates (UTC). Design and architecture notes live in `Wiley-Fox-Dev-Handoff-v1.md` (§20 covers September 2026).
 
+## 2026-10-05
+
+- **feat:** Berlin Christmas 2026 guide build script and source data (`scripts/city-guides/berlin/`): PKS Berlin 2025, the seven kbO hotspots from 1 July 2026, knife-ban zones, Görlitzer Park court rulings, verified 2026 market dates, 33 checked tips. Guide is on the preview site only (`/guides/berlin/`), awaiting approval before `/new`. Two campaigning channels are excluded from creator credits via `EXCLUDE` in the build script.
+
 ## 2026-10-01
 
 - **docs:** handoff v1.6 (§20 city content pipeline, guides and live advice); this changelog; README/DEPLOY/CLAUDE updated for the new endpoints, admin ops and guide workflow.

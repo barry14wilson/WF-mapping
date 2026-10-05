@@ -1,0 +1,151 @@
+{
+ "generated": "2026-10-05",
+ "note": "Dates and hours from organisers, berlin.de and visitBerlin on 5 Oct 2026. Several organiser pages still show 2025 details. Those rows say 'latest year only'. Anything marked NOT VERIFIED was not found on an official page. Recheck in November, and for 24 Dec hours.",
+ "calendar_note": "24 Dec 2026 is a Thursday. 25 and 26 Dec are Fri and Sat. 1 Jan 2027 is a Friday. Shops close from 14:00 on 24 Dec and all day on 25 and 26 Dec. The first official market date is 22 Nov (Totensonntag).",
+ "markets": [
+  {
+   "market": "WeihnachtsZauber Gendarmenmarkt",
+   "dates_2026": "23 Nov - 31 Dec 2026",
+   "hours": "Organiser FAQ: daily 11:00-22:00, Fri/Sat to 23:00. visitBerlin: Sun-Thu 12:00-22:00, Fri/Sat 12:00-23:00. The two sources disagree.",
+   "closed_or_special": "Entry fee: EUR 2. Free Mon-Fri 11:00-14:00 (visitBerlin says 12:00-14:00) and on 24, 25 and 26 Dec. Free for under 12s, seniors and disabled visitors. NYE ticket EUR 9. visitBerlin: 24 Dec 12:00-18:00, NYE 12:00-24:00 (organiser FAQ gives no 24 Dec hours). Bags over 15 litres, weapons and dogs not allowed. No luggage storage. Cards work in food areas, not guaranteed at craft stalls. The organiser homepage still shows 2025 dates.",
+   "status": "official 2026 (dates and fee); hours conflict",
+   "source_url": "https://www.weihnachtsmarkt-berlin.de/en/faqs"
+  },
+  {
+   "market": "Weihnachtsmarkt Breitscheidplatz (Gedächtniskirche)",
+   "dates_2026": "23 Nov 2026 - 3 Jan 2027",
+   "hours": "2026 hours NOT VERIFIED. Latest year only (2025): daily 11:00-21:00, Fri/Sat 11:00-22:00; 24 Dec 11:00-14:00.",
+   "closed_or_special": "Free entry. Dates from visitBerlin. 2025 hours may change.",
+   "status": "official 2026 (dates only); hours latest year only",
+   "source_url": "https://www.visitberlin.de/en/christmas-markets-berlin"
+  },
+  {
+   "market": "Berliner Weihnachtszeit (Rotes Rathaus / Neptunbrunnen)",
+   "dates_2026": "23 Nov 2026 - 3 Jan 2027",
+   "hours": "Mon-Fri 12:00-22:00; Sat/Sun 11:00-22:00; 3 Jan 11:00-20:00",
+   "closed_or_special": "Closed 24 Dec. Free entry. Ice rink EUR 5, skate hire EUR 3. 50 m Ferris wheel (price NOT VERIFIED). Glühwein mug deposit EUR 5 reported in 2025.",
+   "status": "official 2026",
+   "source_url": "https://www.visitberlin.de/en/christmas-markets-berlin"
+  },
+  {
+   "market": "Lucia Weihnachtsmarkt (Kulturbrauerei, Prenzlauer Berg)",
+   "dates_2026": "23 Nov - 22 Dec 2026",
+   "hours": "Mon-Fri 15:00-22:00; Sat/Sun 13:00-22:00",
+   "closed_or_special": "Ends 22 Dec, so closed 24 Dec. Free entry.",
+   "status": "official 2026",
+   "source_url": "https://www.visitberlin.de/en/christmas-markets-berlin"
+  },
+  {
+   "market": "Weihnachtsmarkt Spandau Altstadt",
+   "dates_2026": "23 Nov - 22 Dec 2026",
+   "hours": "Altstadt Spandau site: Sun-Thu 11:00-20:00; Fri/Sat 11:00-22:00",
+   "closed_or_special": "Ends 22 Dec, so closed 24 Dec. Free entry. Check the organiser page for any 2026 change.",
+   "status": "official 2026 (dates); hours from organiser site, year not confirmed",
+   "source_url": "https://www.visitberlin.de/en/christmas-markets-berlin"
+  },
+  {
+   "market": "Weihnachtsmarkt Schloss Charlottenburg",
+   "dates_2026": "23 Nov - 27 Dec 2026",
+   "hours": "Mon-Thu 13:00-22:00; Fri-Sun 12:00-22:00; 25 and 26 Dec 12:00-22:00",
+   "closed_or_special": "Closed 24 Dec. Free entry. The palace itself closes Mondays and 24 Dec.",
+   "status": "official 2026",
+   "source_url": "https://www.visitberlin.de/en/christmas-markets-berlin"
+  },
+  {
+   "market": "Weihnachtsmarkt Alexanderplatz",
+   "dates_2026": "23 Nov - 26 Dec 2026",
+   "hours": "11:00-22:00 daily",
+   "closed_or_special": "Free entry. 24 Dec hours NOT VERIFIED. Alexanderplatz is a police kbO and a New Year's Eve pyro-ban zone (see official_crime.json).",
+   "status": "official 2026",
+   "source_url": "https://www.visitberlin.de/en/christmas-markets-berlin"
+  },
+  {
+   "market": "Winterwelt Potsdamer Platz",
+   "dates_2026": "Slide from 31 Oct 2026 (visitBerlin); page says end Oct to end Dec 2026",
+   "hours": "Market 11:00-22:00; 24 Dec until 16:00",
+   "closed_or_special": "Free entry. Toboggan run is 12 m (visitBerlin intro says 70 m winter slide, so sources conflict). The organiser page is last year's. Cash only signs reported in earlier years.",
+   "status": "official 2026 (visitBerlin); organiser page latest year only",
+   "source_url": "https://www.visitberlin.de/en/christmas-markets-berlin"
+  },
+  {
+   "market": "Weihnachtsmarkt Domäne Dahlem",
+   "dates_2026": "Advent weekends: 28-29 Nov, 5-6, 12-13 and 19-20 Dec 2026",
+   "hours": "NOT VERIFIED. Hours and prices not yet announced.",
+   "closed_or_special": "Weekends only.",
+   "status": "official 2026 (dates only)",
+   "source_url": "https://www.domaene-dahlem.de/"
+  },
+  {
+   "market": "Christmas Garden Berlin (Botanic Garden)",
+   "dates_2026": "18 Nov 2026 - 10 Jan 2027",
+   "hours": "Mon-Thu and Sun 16:20-21:00. Fri/Sat 16:20-22:00 from 18 Dec to 2 Jan.",
+   "closed_or_special": "Closed 23, 24 and 30 Nov, 7 Dec, 24 and 31 Dec, 4 and 5 Jan. Timed entry. Online adult EUR 16.90-27.90; child 6-14 EUR 12.90-23.90; family from EUR 42.90 (some rows show EUR 45.90-80.90); box office adds EUR 2; under 6 free. Price varies by date.",
+   "status": "official 2026",
+   "source_url": "https://www.christmas-garden.de/berlin"
+  },
+  {
+   "market": "Humboldt Forum winter market",
+   "dates_2026": "18 Nov 2026 - 3 Jan 2027",
+   "hours": "NOT VERIFIED",
+   "closed_or_special": "Listed by visitBerlin. No further detail checked.",
+   "status": "official 2026 (dates only)",
+   "source_url": "https://www.visitberlin.de/en/christmas-markets-berlin"
+  },
+  {
+   "market": "Tierpark Christmas lights",
+   "dates_2026": "20 Nov 2026 - 9 Jan 2027",
+   "hours": "NOT VERIFIED",
+   "closed_or_special": "Listed by visitBerlin. Ticket price NOT VERIFIED.",
+   "status": "official 2026 (dates only)",
+   "source_url": "https://www.visitberlin.de/en/christmas-markets-berlin"
+  },
+  {
+   "market": "RAW medieval market (Friedrichshain)",
+   "dates_2026": "12 Nov - 22 Dec 2026",
+   "hours": "NOT VERIFIED",
+   "closed_or_special": "Listed by visitBerlin. Reported cash-only in earlier years.",
+   "status": "official 2026 (dates only)",
+   "source_url": "https://www.visitberlin.de/en/christmas-markets-berlin"
+  },
+  {
+   "market": "Ku'damm Christmas lights / KaDeWe",
+   "dates_2026": "2026 dates NOT VERIFIED",
+   "hours": "NOT VERIFIED",
+   "closed_or_special": "Latest year only: Ku'damm lights ran 24 Nov 2025 - 6 Jan 2026. Nothing found for 2026. KaDeWe window and opening details not verified.",
+   "status": "latest year only",
+   "source_url": "https://www.visitberlin.de/en/christmas-markets-berlin"
+  }
+ ],
+ "sights": [
+  {
+   "item": "Reichstag dome",
+   "detail": "Free. Book ahead online. Photo ID for ages 16 and over. Closed all day 24 Dec. Closes from 16:00 on 31 Dec, last entry 14:30. Walk-up registration at the Serviceaußenstelle up to 2 hours before, subject to space.",
+   "source_url": "https://www.bundestag.de/besuche/kuppel"
+  },
+  {
+   "item": "Charlottenburg Palace (SPSG)",
+   "detail": "Closed Mondays and 24 Dec 2026. Old Palace and New Wing single ticket EUR 12 (reduced EUR 8). Other days: check SPSG for 25, 26 and 31 Dec.",
+   "source_url": "https://www.spsg.de/"
+  },
+  {
+   "item": "Berliner Dom",
+   "detail": "Fully reopened 1 Mar 2026. Adult EUR 15, concession EUR 12, WelcomeCard EUR 11. Christmas Eve and Day hours NOT VERIFIED.",
+   "source_url": "https://www.berlinerdom.de/"
+  },
+  {
+   "item": "DDR Museum",
+   "detail": "24 and 31 Dec open 09:00-16:00. Adult EUR 13.90, concession EUR 8.50.",
+   "source_url": "https://www.ddr-museum.de/"
+  },
+  {
+   "item": "Museum Island (SMB)",
+   "detail": "Museumsinsel-Ticket EUR 24. Under 18s free. Pergamon Museum closed until 4 Jul 2027. The free first-Sunday scheme ended Dec 2024 and has not returned (no 2026 evidence).",
+   "source_url": "https://www.smb.museum/"
+  },
+  {
+   "item": "Shops on Sundays in 2026",
+   "detail": "Shops shut on Sundays and holidays. Two open Sundays before Christmas: 6 Dec and 20 Dec, 13:00-20:00 (IHK Berlin).",
+   "source_url": "https://www.ihk.de/berlin"
+  }
+ ]
+}

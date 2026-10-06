@@ -1,0 +1,220 @@
+{
+ "generated": "2026-10-06",
+ "note": "Researched 6 Oct 2026. Status labels: 'official 2026' = on an official 2026 page; 'latest year only (2025)' = only last year's dates found; 'NOT VERIFIED' = not confirmed on an official page. The City of Strasbourg Christmas site (noel.strasbourg.eu) showed on 5-6 Oct 2026 only the opening date (Friday 27 November 2026), no end date, no theme, no tree-lighting date.",
+ "calendar_note": "24 Dec 2026 is a Thursday. 25 Dec is a Friday. 26 Dec is a Saturday and is a public holiday in Alsace-Moselle (St Stephen's Day). 27 Dec is a Sunday. 31 Dec is a Thursday and 1 Jan 2027 is a Friday. 27 Nov 2026 (opening) is a Friday.",
+ "overall": {
+  "name": "Strasbourg, Capitale de Noel 2026",
+  "opening": "Friday 27 November 2026 (official 2026 edition page: 'The Strasbourg Christmas Market will open its doors on Friday 27 November 2026'). Official FAQ: opening day starts at 2:00 p.m.",
+  "closing": "NOT VERIFIED for 2026. Official site shows no end date. Last year's official dates were 26 Nov to 24 Dec 2025. Some secondary posts quote 27 Dec 2026 (21:00) but we could not confirm this on an official page.",
+  "daily_hours": "Stalls open daily 11:30 to 21:00 (official FAQ). Exceptions: opening day from 14:00; 24 December closes 18:00 (official FAQ).",
+  "source_urls": [
+   "https://noel.strasbourg.eu/en/",
+   "https://noel.strasbourg.eu/en/frequently-asked-questions",
+   "https://france3-regions.franceinfo.fr/grand-est/bas-rhin/strasbourg-0/marche-de-noel-de-strasbourg-2025-drones-nouvelles-rues-fermees-affluence-en-hausse-ce-qu-il-faut-savoir-sur-la-securite-3251626.html"]
+ },
+ "markets": [
+  {
+   "market": "Whole Strasbourg Christmas market (8 official markets)",
+   "dates_2026": "Opens Fri 27 Nov 2026. End date NOT VERIFIED (2025: 26 Nov to 24 Dec).",
+   "hours": "11:30 to 21:00 daily; opening day from 14:00",
+   "closed_or_special": "24 Dec: stalls close 18:00 (official FAQ). 25 Dec status NOT VERIFIED for 2026. A City social post quoted by search snippets (year unknown) said stalls close at 18:00 on 24 and 25 Dec and that 25 and 26 Dec are holidays in Alsace. Check the official page in mid-November.",
+   "status": "opening date official 2026; end date and 25 Dec NOT VERIFIED",
+   "source_url": "https://noel.strasbourg.eu/en/frequently-asked-questions"
+  },
+  {
+   "market": "Chrìstkìndelsmärik, Place Broglie (historic market)",
+   "dates_2026": "Part of the main market, from 27 Nov 2026",
+   "hours": "Page gives no separate hours. Use general 11:30 to 21:00.",
+   "closed_or_special": "Trams do not stop at Broglie during market hours (2025 rule; 2026 NOT VERIFIED).",
+   "status": "listed on official 2026 markets page; separate hours NOT VERIFIED",
+   "source_url": "https://noel.strasbourg.eu/en/w/place-christkindelsmarik"
+  },
+  {
+   "market": "Around the Cathedral (Place de la Cathedrale and Place du Chateau)",
+   "dates_2026": "Opens 27 Nov 2026 (official page: 'Opening dates: 27 November')",
+   "hours": "General 11:30 to 21:00",
+   "closed_or_special": "In 2025 the cathedral entrance and exit were moved to the south side (Place du Chateau). 2026 NOT VERIFIED.",
+   "status": "official 2026 for opening day only",
+   "source_url": "https://noel.strasbourg.eu/en/w/place-cathedral"
+  },
+  {
+   "market": "At the foot of the Grand Sapin, Place Kleber (includes Village du Partage)",
+   "dates_2026": "From 27 Nov 2026. Official page says 'The date is set for 27 November' (this is the market opening, not a separate tree-lighting date).",
+   "hours": "General 11:30 to 21:00",
+   "closed_or_special": "Village du Partage: charities, handmade crafts, traditional 'Soupe de l'Etoile'. In 2025 the Place Kleber 'convivial zone' was closed at weekends to ease crowds.",
+   "status": "official 2026 for opening; Grand Sapin lighting date NOT VERIFIED",
+   "source_url": "https://noel.strasbourg.eu/en/w/grand-sapin-market"
+  },
+  {
+   "market": "La Petite France: Place Benjamin Zix and Place Saint-Thomas",
+   "dates_2026": "From 27 Nov 2026 (main market)",
+   "hours": "General 11:30 to 21:00",
+   "closed_or_special": "Place des Meuniers is not named on the official list of 8 markets. NOT VERIFIED.",
+   "status": "listed on official 2026 markets page; separate hours NOT VERIFIED",
+   "source_url": "https://noel.strasbourg.eu/en/w/petite-france-authentic-christmas-market"
+  },
+  {
+   "market": "Square Louise Weiss (Petite France): Advent Village and small producers of Alsace",
+   "dates_2026": "From 27 Nov 2026 (main market)",
+   "hours": "General 11:30 to 21:00. Children's programme times NOT VERIFIED for 2026.",
+   "closed_or_special": "Official FAQ: Advent Village has daily storytelling, creative workshops, concerts and games, free and open to the public (FAQ is the 2026 edition page; programme still being finalised).",
+   "status": "listed on official 2026 page",
+   "source_url": "https://noel.strasbourg.eu/en/frequently-asked-questions"
+  },
+  {
+   "market": "Carre d'Or market, Place du Temple Neuf (Place du Marche aux Poissons area is the 'Dock of delights')",
+   "dates_2026": "From 27 Nov 2026 (main market)",
+   "hours": "General 11:30 to 21:00",
+   "closed_or_special": "Official 2026 list: 'The dock of delights' is at Terrasse Rohan and Place du Marche aux Poissons (gourmet market). 'Carre d'Or Market' is at Place du Temple Neuf. Note: the brief grouped the Carre d'Or with Marche aux Poissons; the official list separates them.",
+   "status": "listed on official 2026 markets page",
+   "source_url": "https://noel.strasbourg.eu/en/markets"
+  },
+  {
+   "market": "Terrasse Rohan and Place du Marche aux Poissons ('The dock of delights', gourmet)",
+   "dates_2026": "From 27 Nov 2026 (main market)",
+   "hours": "General 11:30 to 21:00",
+   "closed_or_special": "None found",
+   "status": "listed on official 2026 markets page",
+   "source_url": "https://noel.strasbourg.eu/en/w/gourmet-christmas-market"
+  },
+  {
+   "market": "Marche OFF, Place Grimmeissen",
+   "dates_2026": "From 27 Nov 2026 (main market)",
+   "hours": "Separate hours NOT VERIFIED",
+   "closed_or_special": "Social and solidarity economy market in shipping containers (vintage furniture, ethical gifts, upcycling workshops, organic produce).",
+   "status": "official 2026 page, hours NOT VERIFIED",
+   "source_url": "https://noel.strasbourg.eu/en/frequently-asked-questions"
+  },
+  {
+   "market": "Place d'Austerlitz",
+   "dates_2026": "NOT VERIFIED. Not on the official list of 8 markets for 2026.",
+   "hours": "NOT VERIFIED",
+   "closed_or_special": "Do not include in the guide unless an official source is found.",
+   "status": "NOT VERIFIED",
+   "source_url": "https://noel.strasbourg.eu/en/markets"
+  },
+  {
+   "market": "Guest country or theme 2026, Christmas lights, Grand Sapin lighting date",
+   "dates_2026": "NOT VERIFIED. No official 2026 theme, guest country, lights switch-on date or tree-lighting ceremony date found. The official site says the programme is 'being finalised behind the scenes'.",
+   "hours": "n/a",
+   "closed_or_special": "Official 2025 text describes a 'luminous trail' linking the Cathedral, Petite France and the Neustadt (no 2026 dates).",
+   "status": "NOT VERIFIED",
+   "source_url": "https://noel.strasbourg.eu/en/"
+  },
+  {
+   "market": "Colmar Christmas markets (day trip)",
+   "dates_2026": "23 Nov to 29 Dec 2026 (official Colmar Christmas site). Marche gourmand and big wheel stay open to 3 Jan.",
+   "hours": "Page gives 11:00 to 19:00 on weekdays. Friday to Sunday hours were not clearly captured. A hotel site (not official) says Mon to Thu 11:00 to 19:00 and Fri to Sun 10:00 to 20:00. Marche gourmand: daily 11:00 to 22:00.",
+   "closed_or_special": "24 Dec: 11:00 to 17:00. 25 Dec: 10:00 to 20:00. 26 Dec: 10:00 to 20:00. 31 Dec: marche gourmand and big wheel close 17:00. Markets close at the stated time for safety. No park-and-ride shuttle on 26 and 27 Dec 2026.",
+   "status": "official 2026",
+   "source_url": "https://www.noel-colmar.com/fr/marches-de-noel-de-colmar/pratique/horaires"
+  },
+  {
+   "market": "Riquewihr Christmas market (day trip)",
+   "dates_2026": "Friday 27 Nov to Sunday 20 Dec 2026, open every day (Colmar tourism site)",
+   "hours": "Mon to Fri 10:00 to 18:30. Weekend hours NOT VERIFIED.",
+   "closed_or_special": "Shuttle lines 1 and 2 run only Fri, Sat and Sun from 27 Nov to 20 Dec 2026.",
+   "status": "official 2026 (regional tourism site)",
+   "source_url": "https://www.noel-colmar.com/en/ribeauville-riquewihr/discover/riquewihr-christmas-market"
+  },
+  {
+   "market": "Kaysersberg Christmas market (day trip)",
+   "dates_2026": "Four Advent weekends, Fri to Sun: 27 to 29 Nov, 4 to 6 Dec, 11 to 13 Dec, 18 to 20 Dec 2026",
+   "hours": "10:00 to 20:00",
+   "closed_or_special": "Closed Monday to Thursday and after 20 Dec.",
+   "status": "official 2026 (Kaysersberg tourist office)",
+   "source_url": "https://www.kaysersberg.com/visiter/noel-dans-la-vallee-de-kaysersberg/"
+  },
+  {
+   "market": "Obernai Christmas market (day trip)",
+   "dates_2026": "27 Nov to 31 Dec 2026",
+   "hours": "Visit Alsace listing: Sun to Thu 10:00 to 20:00, Fri and Sat 10:00 to 21:00",
+   "closed_or_special": "Closed 25 Dec. Closes 16:00 on 24 and 31 Dec (Obernai town site).",
+   "status": "official 2026",
+   "source_url": "https://www.obernai.fr/fr/agenda?fiche=220001179"
+  },
+  {
+   "market": "Gengenbach Advent market and Advent calendar town hall (Germany, day trip)",
+   "dates_2026": "Advent market 27 Nov to 23 Dec. Window-opening ritual daily at 18:00. Town hall viewable to 6 Jan. (Page prints no year, but 27 Nov matches a Friday in 2026. A hotel listing says 27 Nov to 22 Dec 2026.)",
+   "hours": "27 Nov to 23 Dec: Mon to Fri 14:00 to 20:00, Sat and Sun 11:30 to 20:00",
+   "closed_or_special": "Travel from Strasbourg to Gengenbach (via Offenburg) NOT VERIFIED. CTS Europass 24h (from EUR 11) covers Strasbourg area plus the Ortenau (TGO) fare zone.",
+   "status": "dates match 2026 but year not printed on page; treat as likely 2026",
+   "source_url": "https://www.gengenbach.info/gengenbach-entdecken/adventskalender-1"
+  },
+  {
+   "market": "Baden-Baden Christkindelsmarkt (Germany, day trip)",
+   "dates_2026": "26 Nov 2026 to 6 Jan 2027",
+   "hours": "Daily 11:00 to 21:00",
+   "closed_or_special": "24 Dec 11:00 to 15:00. 31 Dec 11:00 to 15:00. 1 Jan 2027 13:00 to 21:00. 6 Jan 2027 11:00 to 18:00. Entry free. Travel time from Strasbourg NOT VERIFIED.",
+   "status": "official 2026 (Baden-Baden tourism)",
+   "source_url": "https://www.baden-baden.com/veranstaltungen/christkindelsmarkt"
+  }
+ ],
+ "sights": [
+  {
+   "item": "Cathedral Notre-Dame: opening hours",
+   "detail": "Mon to Sat 08:30 to 11:15 and 12:45 to 17:45; Sundays and feast days 14:00 to 17:15. During the Christmas market the cathedral is open continuously Mon to Sat on the Place du Chateau side from 08:30 to 17:45. Entry by the SOUTH door. Free, no booking, security bag check: have your bag open. Year of the page is not printed (current page, read 6 Oct 2026).",
+   "source_url": "https://www.cathedrale-strasbourg.fr/horaires_acces"
+  },
+  {
+   "item": "Cathedral: Christmas Day 2026",
+   "detail": "City of Strasbourg place page: 25 Dec 2026 'Ferme - Noel' (closed). Cathedral is open 14:00 to 17:15 on feast days. 24 Dec, 26 Dec and 1 Jan hours NOT VERIFIED separately.",
+   "source_url": "https://www.strasbourg.eu/lieu/-/entity/id/686020/la-cathedrale-notre-dame"
+  },
+  {
+   "item": "Astronomical clock: show time and price",
+   "detail": "Cathedral parish site: 'The astronomical clock show will not take place for the whole time of the Christmas market.' Outside the market it runs daily at 12:30 sharp (bell, then Procession of the Apostles). Tickets EUR 4 per person, EUR 3 for groups of 12 or more and students up to 25, EUR 2 for children 6 to 17, free under 6. Sold 10:00 to 11:00 at the Cathedral shops and from 11:30 at the Place Saint-Michel entrance (access from Place du Chateau). Card accepted. The City page still shows an older EUR 2 / 1.50 price, which conflicts; we use the cathedral's own page.",
+   "source_url": "https://www.cathedrale-strasbourg.fr/horloge-astronomique"
+  },
+  {
+   "item": "Cathedral platform climb: price, hours, closures",
+   "detail": "330 steps to 66 m. 1 Oct to 31 Mar: 10:00 to 13:00 and 13:30 to 18:00, last climb 17:15 (cathedral site). Strasbourg Tourisme: adult EUR 10, children EUR 6; closed 1 Jan, 1 May and 25 Dec. Good fitness needed, no access for reduced mobility, minors must be accompanied, access check at the door, no large bags or luggage (no left luggage), no food, drink or glass, no toilets (public toilets Place du Chateau), can close when 100 people are on the circuit. Another site quotes EUR 8, which conflicts; we use the tourist office figure.",
+   "source_url": "https://www.cathedrale-strasbourg.fr/ascension-cathedrale"
+  },
+  {
+   "item": "Platform price source (tourist office)",
+   "detail": "Adult EUR 10, children EUR 6, schools EUR 3. Closed 01/01, 01/05 and 25/12.",
+   "source_url": "https://www.visitstrasbourg.fr/fiche-sit/F223007614_la-montee-vers-la-plateforme-de-la-cathedrale-strasbourg/"
+  },
+  {
+   "item": "Musee Alsacien: CLOSED",
+   "detail": "The City lists the Musee Alsacien as closed for works from 7 July 2025 to 1 June 2028 (the museums home page says reopening is planned for 2028). It is NOT open at Christmas 2026. Do not recommend it. Alternatives: Musee Historique, Musee des Beaux-Arts, Musee de l'Oeuvre Notre-Dame.",
+   "source_url": "https://www.strasbourg.eu/lieu/-/entity/sig/945_CUL_96/musee-alsacien"
+  },
+  {
+   "item": "City museums at Christmas 2026 (example: Musee Historique)",
+   "detail": "24 Dec 2026: 10:00 to 13:00 and 14:00 to 16:00. 25 Dec 2026: closed. 31 Dec 2026: closed. 1 Jan 2027: closed. Usual hours: Tue, Thu, Fri 10:00 to 13:00 and 14:00 to 18:00; Wed 14:00 to 18:00; Sat and Sun 10:00 to 18:00 (Monday hours not shown on the page we read). Last ticket 17:30. Prices: full EUR 9, reduced EUR 5; the museums home page currently says the reduced rate EUR 5 applies to all visitors. Free under 18.",
+   "source_url": "https://noel.strasbourg.eu/lieu/-/entity/sig/944_CUL_95/musee-historique"
+  },
+  {
+   "item": "Museum prices",
+   "detail": "EUR 9 full, EUR 5 reduced for each city museum. Free for under 18s.",
+   "source_url": "https://www.musees.strasbourg.eu/tarifs-musees-de-strasbourg"
+  },
+  {
+   "item": "Batorama boat tours at Christmas",
+   "detail": "Latest year only (2025/26): Christmas boat tours 28 Nov 2025 to 3 Jan 2026, daily boats between 10:00 and 17:45, about 1 hour 10 minutes. Adult (17 and over) EUR 16, ages 13 to 17 EUR 14.70, ages 4 to 12 EUR 8.90, under 4 free, 15% off for families (1 or 2 adults with at least 3 children). Audio Christmas tale for children in 4 languages. 2026/27 prices and dates NOT VERIFIED. Batorama's own site shows a winter timetable is already on sale. Closure on 24 and 25 Dec NOT VERIFIED.",
+   "source_url": "https://www.explore-grandest.com/offres/activites/patrimoine-memoire/batobalades-visite-en-bateau-promenade-a-strasbourg-a-noel-avec-batorama/"
+  },
+  {
+   "item": "Petite France",
+   "detail": "Official 2026 page: half-timbered houses, cobbled streets on the River Ill, a swing bridge and a lock where you can watch boats pass. Christmas markets on Place Benjamin Zix and Place Saint-Thomas; Advent Village at Square Louise Weiss.",
+   "source_url": "https://noel.strasbourg.eu/en/w/petite-france-authentic-christmas-market"
+  },
+  {
+   "item": "Christmas crowds (City advice)",
+   "detail": "Quietest: Mondays, Tuesdays and mornings. Very crowded: Wednesday afternoons, Friday evenings and all weekend.",
+   "source_url": "https://noel.strasbourg.eu/en/frequently-asked-questions"
+  },
+  {
+   "item": "Day trip train: Strasbourg to Colmar",
+   "detail": "TER takes about 32 minutes, 34 daily return trips, up to 3 trains an hour; in the day departures from Strasbourg at about :21 and :51 past the hour (SNCF TER page). Fare: Carte Fluo (reduction card) EUR 7.90 per trip; standard fare NOT VERIFIED on the page. SNCF Connect shows tickets 'from EUR 6.00' (advance fare, indicative only).",
+   "source_url": "https://www.ter.sncf.com/grand-est/trajet-strasbourg-colmar"
+  },
+  {
+   "item": "Strasbourg Public holidays 25 and 26 Dec",
+   "detail": "In Alsace-Moselle, 26 December (St Stephen's Day) is a public holiday on top of the national holidays. 26 Dec 2026 is a Saturday.",
+   "source_url": "https://metz.fr/famille/ecole/vacances_jours_feries.php"
+  }
+ ]
+}

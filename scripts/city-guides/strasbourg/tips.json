@@ -1,0 +1,404 @@
+{
+ "tips": [
+  {
+   "scope": "strasbourg",
+   "category": "transport_payment",
+   "worry": "What does a tram or bus ticket cost?",
+   "tip": "A single (1 hour) is EUR 1.90 on the CTS app, on a Badgeo card or when topping up a paper-style contactless card (BSC). Buying on board a bus costs EUR 2.50. Pairs: EUR 3.60. Ten trips: EUR 17.10 (EUR 15.20 for children 4 to 11).",
+   "verified_url": "https://www.cts-strasbourg.eu/fr/acheter/nos-titres/titres-occasionnels/aller-simple/",
+   "verified_at": "2026-10-06",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "transport_payment",
+   "worry": "Is a day ticket worth it for a family?",
+   "tip": "24h Solo is from EUR 4.60 for one person. 24h Trio is EUR 10.20 for 1 to 3 people, valid 24 hours from first use on buses and trams, including the line D tram to Kehl in Germany. First purchase on a contactless card adds EUR 0.20.",
+   "verified_url": "https://www.cts-strasbourg.eu/fr/acheter/nos-titres/titres-occasionnels/24h-trio/",
+   "verified_at": "2026-10-06",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "transport_payment",
+   "worry": "Do small children need a ticket?",
+   "tip": "Children under 4 travel free without a ticket. From age 4 a ticket is required. Validate it even if it is free.",
+   "verified_url": "https://www.cts-strasbourg.eu/fr/faq/voyager-en-regle/details/A-partir-de-quel-age-doit-on-etre-en-possession-dun-titre-de-transport-/",
+   "verified_at": "2026-10-06",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "transport_payment",
+   "worry": "Can I tap my bank card on the tram?",
+   "tip": "We could not confirm on CTS pages that a bank card can be tapped on the validator. Buy a ticket on the CTS app or a contactless ticket before boarding, and validate it.",
+   "verified_url": "https://www.cts-strasbourg.eu/fr/acheter/nos-titres/",
+   "verified_at": "2026-10-06",
+   "season": "any",
+   "status": "NOT VERIFIED"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "transport_payment",
+   "worry": "Driving in: where do I park?",
+   "tip": "Park-and-ride (P+R) is EUR 4.20 and includes unlimited bus and tram for 1 to 7 people (parking valid 4:30 to 02:00 next day). The city centre inside the Grande Ile is closed to cars during market hours. In 2025 the P+R car parks ran 24 hours with an extra car park at the Zenith and a weekend shuttle. 2026 arrangements NOT VERIFIED.",
+   "verified_url": "https://www.cts-strasbourg.eu/fr/acheter/nos-titres/titres-occasionnels/pr/",
+   "verified_at": "2026-10-06",
+   "season": "christmas",
+   "status": "verified (P+R price); 2026 extras NOT VERIFIED"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "transport_payment",
+   "worry": "Trams skip the market stops",
+   "tip": "In 2025 the tram stops Broglie, Alt Winmaerik and Langstross Grand'Rue were not served during market hours (11:30 to 21:00), and Homme de Fer could be shut when crowded. Use Gallia, Gare Centrale or Republique and walk, or the line A, C, D and F stops near the venues. 2026 changes NOT VERIFIED.",
+   "verified_url": "https://france3-regions.franceinfo.fr/grand-est/bas-rhin/strasbourg-0/marche-de-noel-de-strasbourg-2025-drones-nouvelles-rues-fermees-affluence-en-hausse-ce-qu-il-faut-savoir-sur-la-securite-3251626.html",
+   "verified_at": "2026-10-06",
+   "season": "christmas",
+   "status": "latest year only (2025)"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "transport_payment",
+   "worry": "How do I get from Strasbourg station to the market?",
+   "tip": "The first chalets are about a 10 minute walk from Strasbourg Central Station. There are official information booths at Place de la Gare and Place Kleber.",
+   "verified_url": "https://noel.strasbourg.eu/en/frequently-asked-questions",
+   "verified_at": "2026-10-06",
+   "season": "christmas",
+   "status": "verified"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "transport_payment",
+   "worry": "How do I get from Strasbourg-Entzheim airport?",
+   "tip": "Train shuttle to Strasbourg station takes 8 minutes, up to 5 trains an hour. A rail-only ticket is EUR 3.20 one way. With the CTS app a combined train plus tram plus bus ticket starts at EUR 1.90. An Alsa+ 24h EMS ticket (train, tram, bus, valid 24h in the metropolitan area) is EUR 4.60.",
+   "verified_url": "https://www.strasbourg.aeroport.fr/passagers/parkings-et-acces/navette-train/",
+   "verified_at": "2026-10-06",
+   "season": "any",
+   "status": "verified (EUR 3.20 figure from the airport page snippet)"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "transport_payment",
+   "worry": "Flying into Basel-Mulhouse instead",
+   "tip": "A direct shuttle bus runs between the airport and Saint-Louis (France) station every 15 to 30 minutes from 05:00 to midnight, about 10 to 15 minutes. EuroAirport says direct trains to Strasbourg leave Saint-Louis every 30 minutes. Price and total time to Strasbourg are NOT VERIFIED on an official page (SNCF Connect lists Basel to Strasbourg from EUR 11, about 1h27, indicative only).",
+   "verified_url": "https://www.euroairport.com/transports",
+   "verified_at": "2026-10-06",
+   "season": "any",
+   "status": "partly verified"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "transport_payment",
+   "worry": "London to Strasbourg by train",
+   "tip": "Eurostar to Paris Gare du Nord, then a TGV from Gare de l'Est. Eurostar says the whole trip is about 6 hours on one booking. Gare du Nord to Gare de l'Est is a 10 minute walk or about 15 minutes by transport. The fastest TGV Paris to Strasbourg is 1h46 direct; fares start around EUR 25 on SNCF Connect (indicative).",
+   "verified_url": "https://www.eurostar.com/fr-fr/train/londres-strasbourg",
+   "verified_at": "2026-10-06",
+   "season": "any",
+   "status": "verified (time); price indicative"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "transport_payment",
+   "worry": "Hiring a bike",
+   "tip": "Velhop rental without subscription is EUR 1.20 per hour, EUR 7 for up to 24 hours, EUR 14 for up to 48 hours. Late return costs EUR 14 for each extra 24 hours. The City says Strasbourg has more than 600 km of cycle routes.",
+   "verified_url": "https://velhop.strasbourg.eu/tarifs/",
+   "verified_at": "2026-10-06",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "transport_payment",
+   "worry": "Are the cycle lanes safe for kids?",
+   "tip": "The City says it has the first cycling network in France, with more than 600 km of routes and 6,000 shared Velhop bikes. Whether each lane is suitable for children is NOT VERIFIED; in December the pedestrian Grande Ile is crowded, so push the bike.",
+   "verified_url": "https://www.strasbourg.eu/a-velo",
+   "verified_at": "2026-10-06",
+   "season": "any",
+   "status": "partly verified"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "money_tipping",
+   "worry": "Do I have to tip?",
+   "tip": "No. Menu prices must be the price you actually pay, service included ('service compris'). Tipping is optional. Leave coins for good service if you wish.",
+   "verified_url": "https://www.economie.gouv.fr/dgccrf/les-fiches-pratiques/pourboire",
+   "verified_at": "2026-10-06",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "money_tipping",
+   "worry": "Is there a hotel tax on top?",
+   "tip": "Yes. A tourist tax is charged per person per night and shown separately on the invoice. For unclassified places it is 5% of the pre-tax nightly price plus 10% county add-on, capped at EUR 5.06 per person per night. Under 18s are exempt. Classified hotels have fixed rates (not confirmed on the city page).",
+   "verified_url": "https://taxedesejourems.strasbourg.eu/",
+   "verified_at": "2026-10-06",
+   "season": "any",
+   "status": "verified (unclassified rule); star rates NOT VERIFIED"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "money_tipping",
+   "worry": "Do the market stalls take cards?",
+   "tip": "No official statement found on cash or card at the stalls. Carry some cash and a card. The EUR 1 cup deposit is refundable at any drinks stall.",
+   "verified_url": "https://noel.strasbourg.eu/en/frequently-asked-questions",
+   "verified_at": "2026-10-06",
+   "season": "christmas",
+   "status": "NOT VERIFIED (cash vs card); deposit verified"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "water_snacks",
+   "worry": "What is the cup deposit on mulled wine?",
+   "tip": "Every drink comes in a returnable cup. The deposit is EUR 1. Hand the cup back at any drinks stall for your EUR 1, or drop it at a charity collection point and the EUR 1 goes to a Strasbourg charity.",
+   "verified_url": "https://noel.strasbourg.eu/en/frequently-asked-questions",
+   "verified_at": "2026-10-06",
+   "season": "christmas",
+   "status": "verified (2026 edition page)"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "water_snacks",
+   "worry": "How much is a vin chaud?",
+   "tip": "A local guide blog (not official) found 3 to 7 EUR for a standard glass, most at EUR 5, plus the EUR 1 deposit, in 2025. A BFM report in 2023 put the 30 cl glass at EUR 5 including the deposit. 2026 prices NOT VERIFIED.",
+   "verified_url": "https://strasbourg365.com/noel/vin-chaud-manger-marche-noel-strasbourg/",
+   "verified_at": "2026-10-06",
+   "season": "christmas",
+   "status": "unofficial, latest year (2025)"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "water_snacks",
+   "worry": "Can I drink the tap water?",
+   "tip": "Yes. The Metropole says its tap water meets bacterial and chemical limits and is naturally potable, with only a light preventive chlorination. Bring a refillable bottle.",
+   "verified_url": "https://www.strasbourg.eu/eau-strasbourg-questions",
+   "verified_at": "2026-10-06",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "toilets",
+   "worry": "Where are the toilets near the market?",
+   "tip": "There are many free public toilets on the Grande Ile, some accessible for disabled visitors. Use the free 'Ici Toilettes' app or the official event map to find permanent and temporary ones and partner businesses. The cathedral platform has none; use the public toilets on Place du Chateau.",
+   "verified_url": "https://noel.strasbourg.eu/en/frequently-asked-questions",
+   "verified_at": "2026-10-06",
+   "season": "christmas",
+   "status": "verified"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "parks_play",
+   "worry": "Where can the children go?",
+   "tip": "Square Louise Weiss (Petite France) hosts the Advent Village: daily storytelling, creative workshops, concerts and games, free. A heated baby and breastfeeding area is free in the heart of the festivities; the location is marked on the official map. 2026 programme not yet published.",
+   "verified_url": "https://noel.strasbourg.eu/en/frequently-asked-questions",
+   "verified_at": "2026-10-06",
+   "season": "christmas",
+   "status": "verified (programme 2026 NOT VERIFIED)"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "parks_play",
+   "worry": "Pushchairs, wheelchairs and reduced mobility",
+   "tip": "Wheelchairs and walkers can be borrowed free at the information kiosk on Place Kleber (no booking, ID needed). The cathedral platform has no access for people with reduced mobility.",
+   "verified_url": "https://noel.strasbourg.eu/en/frequently-asked-questions",
+   "verified_at": "2026-10-06",
+   "season": "christmas",
+   "status": "verified"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "phone_data",
+   "worry": "Will my UK phone cost extra?",
+   "tip": "Roaming can bring extra charges. Ofcom says to check your package or ask your provider before you go, and check for offers. We did not check each UK network's current France rates.",
+   "verified_url": "https://www.ofcom.org.uk/phones-and-broadband/saving-money/using-your-mobile-abroad",
+   "verified_at": "2026-10-06",
+   "season": "any",
+   "status": "verified (advice); network rates NOT VERIFIED"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "phone_data",
+   "worry": "Emergency numbers",
+   "tip": "112 for all emergency services. 17 police, 15 ambulance, 18 fire. 114 for deaf and hard of hearing by SMS.",
+   "verified_url": "https://www.gov.uk/foreign-travel-advice/france/getting-help",
+   "verified_at": "2026-10-06",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "phone_data",
+   "worry": "Night chemist",
+   "tip": "Call 3237 (24 hours) to find the duty pharmacy (pharmacie de garde). The Bas-Rhin pharmacists' union says the call costs EUR 0.35 per minute and is for urgent needs.",
+   "verified_url": "http://www.pharma67.fr/",
+   "verified_at": "2026-10-06",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "local_ways",
+   "worry": "Passport and entry rules for UK visitors",
+   "tip": "On a British passport you can visit the Schengen area for up to 90 days in any 180. Passport issue date must be under 10 years before arrival and expiry at least 3 months after you leave. The EU Entry/Exit System registers fingerprints and a photo on first entry (free); children 11 and under give a photo only. If you leave from St Pancras, checks happen before you leave the UK.",
+   "verified_url": "https://www.gov.uk/foreign-travel-advice/france/entry-requirements",
+   "verified_at": "2026-10-06",
+   "season": "any",
+   "status": "verified (FCDO page updated 11 Aug 2026)"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "local_ways",
+   "worry": "Do I need ETIAS?",
+   "tip": "GOV.UK says the EU is expected to start ETIAS from autumn 2026 and that no action is needed from travellers at this point. The EU says it will announce the start date several months ahead. Exact start date NOT VERIFIED. Check gov.uk and travel-europe.europa.eu before you book.",
+   "verified_url": "https://www.gov.uk/guidance/eu-entryexit-system",
+   "verified_at": "2026-10-06",
+   "season": "any",
+   "status": "start date NOT VERIFIED"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "local_ways",
+   "worry": "Are shops open on Sundays in December?",
+   "tip": "In Alsace-Moselle shops are normally closed on Sundays and public holidays, except types such as bakeries, florists, souvenir shops, takeaway food and shops in stations. In 2025 the Prefect allowed Strasbourg shops to open on the four Advent Sundays and on 28 December (11:00 to 19:00). The 2026 order is NOT VERIFIED.",
+   "verified_url": "https://entreprendre.service-public.gouv.fr/vosdroits/F22606",
+   "verified_at": "2026-10-06",
+   "season": "christmas",
+   "status": "rule verified; 2026 dates NOT VERIFIED"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "local_ways",
+   "worry": "Is 26 December a day off?",
+   "tip": "Yes in Alsace-Moselle. 26 December (St Stephen's Day) is an extra public holiday there. In 2026 it falls on a Saturday. Expect most shops shut that day. Market opening on 25 and 26 Dec NOT VERIFIED for Strasbourg.",
+   "verified_url": "https://metz.fr/famille/ecole/vacances_jours_feries.php",
+   "verified_at": "2026-10-06",
+   "season": "christmas",
+   "status": "holiday verified; market hours NOT VERIFIED"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "safety_habits",
+   "worry": "What are the security checks at the market?",
+   "tip": "Visitors are filtered at the bridges onto the Grande Ile by private security with gendarmes in support. In 2025 large objects were searched automatically and random checks were possible. No ban on bags is stated, but leave big bags and luggage at the hotel. The 2026 plan is not published yet.",
+   "verified_url": "https://www.europe1.fr/societe/1000-personnes-mobilisees-chaque-jour-dispositif-de-securite-xxl-pour-le-marche-de-noel-de-strasbourg-872409",
+   "verified_at": "2026-10-06",
+   "season": "christmas",
+   "status": "latest year only (2025)"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "safety_habits",
+   "worry": "Can I drive into the centre?",
+   "tip": "No. Motor vehicles are prohibited on the Grande Ile during market hours, unless you hold a pass issued by the City. Walk, cycle, use public transport or the boat.",
+   "verified_url": "https://noel.strasbourg.eu/en/frequently-asked-questions",
+   "verified_at": "2026-10-06",
+   "season": "christmas",
+   "status": "verified"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "safety_habits",
+   "worry": "Pickpockets in the crowds",
+   "tip": "The UK Foreign Office warns pickpockets work in gangs, one distracts you while another takes from your bag. Keep passport, cards and valuables in separate bags or pockets, carry the bag across your body, keep items close in cafes, and do not get distracted around tourist sights and cash machines. SSMSI recorded 25.8 thefts without violence per 1,000 residents in Strasbourg in 2025, up 16% on 2024.",
+   "verified_url": "https://www.gov.uk/foreign-travel-advice/france/safety-and-security",
+   "verified_at": "2026-10-06",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "safety_habits",
+   "worry": "Terrorism risk at the markets",
+   "tip": "FCDO says terrorists are very likely to try to attack in France, including crowded places and cultural events. Stay aware, follow local authority advice and any police instruction. A gunman killed five people at the Strasbourg market on 11 December 2018; a memorial stele is at Place de la Republique.",
+   "verified_url": "https://www.gov.uk/foreign-travel-advice/france/safety-and-security",
+   "verified_at": "2026-10-06",
+   "season": "christmas",
+   "status": "verified"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "safety_habits",
+   "worry": "Knives, pepper spray and self-defence items",
+   "tip": "Carrying a category D weapon, including a knife or spray, outside your home without a legitimate reason is banned. Self-defence is not accepted as a legitimate reason. Penalty up to EUR 15,000 and 1 year in prison (EUR 30,000 and 2 years if with another person). Leave them at home.",
+   "verified_url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F33658",
+   "verified_at": "2026-10-06",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "safety_habits",
+   "worry": "Is it safe to drive after a vin chaud?",
+   "tip": "France has strict drink-driving laws; the legal limit is a third lower than in England and Wales. Police run roadside checks for alcohol and drugs. Penalties include fines, loss of licence and prison. Drinks in French bars are often stronger than in the UK.",
+   "verified_url": "https://www.gov.uk/foreign-travel-advice/france/safety-and-security",
+   "verified_at": "2026-10-06",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "safety_habits",
+   "worry": "New Year's Eve in Strasbourg",
+   "tip": "On 31 Dec 2025 most petards and fireworks were banned in Bas-Rhin to 3 Jan 2026, under-16s not accompanied had a curfew in Strasbourg and six nearby towns, and 117 to 123 cars were burnt in the area depending on the count. Trouble was mostly between 23:00 and 02:00 in suburbs; Place Kleber was cleared at about 00:20. Avoid parking in suburbs, avoid fireworks crowds. 2026/27 rules NOT yet announced.",
+   "verified_url": "https://www.dna.fr/culture-loisirs/2025/12/31/suivez-en-direct-la-soiree-du-31-decembre-dans-notre-region",
+   "verified_at": "2026-10-06",
+   "season": "winter",
+   "status": "latest year only (2025/26)"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "safety_habits",
+   "worry": "Must I carry ID?",
+   "tip": "Yes. You must be able to prove who you are when asked, or within 4 hours at a police station. A passport, photocard driving licence or other government document is accepted. Covering your face in public is illegal, with a fine up to EUR 150.",
+   "verified_url": "https://www.gov.uk/foreign-travel-advice/france/safety-and-security",
+   "verified_at": "2026-10-06",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "local_ways",
+   "worry": "How do I avoid the crowds?",
+   "tip": "The City says Mondays, Tuesdays and mornings are quietest. Wednesday afternoons, Friday evenings and the whole weekend are very crowded. In 2024 the market had more than 3.4 million visitors. In 2025 some streets were one-way at weekends and the Place Kleber social zone was closed.",
+   "verified_url": "https://noel.strasbourg.eu/en/frequently-asked-questions",
+   "verified_at": "2026-10-06",
+   "season": "christmas",
+   "status": "verified"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "local_ways",
+   "worry": "Do the opening hours change on Christmas Eve?",
+   "tip": "The City says stalls open 11:30 to 21:00 daily, but close at 18:00 on 24 December so vendors can celebrate. City museums close early (16:00) on 24 Dec and are shut on 25 and 31 Dec and 1 Jan. The cathedral is closed on 25 Dec 2026. Opening on 25 Dec for stalls NOT VERIFIED.",
+   "verified_url": "https://noel.strasbourg.eu/en/frequently-asked-questions",
+   "verified_at": "2026-10-06",
+   "season": "christmas",
+   "status": "verified (24 Dec); 25 Dec NOT VERIFIED"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "local_ways",
+   "worry": "Are dogs allowed at the market?",
+   "tip": "Yes, on a leash. The City suggests mornings or early in the week because of the crowds.",
+   "verified_url": "https://noel.strasbourg.eu/en/frequently-asked-questions",
+   "verified_at": "2026-10-06",
+   "season": "christmas",
+   "status": "verified"
+  },
+  {
+   "scope": "strasbourg",
+   "category": "local_ways",
+   "worry": "Cathedral clock show at Christmas",
+   "tip": "The astronomical clock show at 12:30 will not take place during the Christmas market, according to the cathedral parish site. Do not plan around it. The cathedral itself opens Mon to Sat; the platform climb (330 steps, EUR 10 adult) closes 25 Dec.",
+   "verified_url": "https://www.cathedrale-strasbourg.fr/horloge-astronomique",
+   "verified_at": "2026-10-06",
+   "season": "christmas",
+   "status": "verified (current page, year not printed)"
+  }
+ ]
+}

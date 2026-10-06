@@ -1,0 +1,514 @@
+{
+ "generated": "2026-10-06",
+ "source_note": "Main source: SSMSI (Ministere de l'Interieur) commune and department databases on recorded crime, 2025 geography edition, produced 25 June 2026 and published on data.gouv.fr on 9 July 2026. We downloaded the commune CSV (code commune 67482 = Strasbourg) and the department CSV and read the rows directly. Dataset page: https://www.data.gouv.fr/datasets/bases-statistiques-communale-departementale-et-regionale-de-la-delinquance-enregistree-par-la-police-et-la-gendarmerie-nationales . Method note: https://www.interieur.gouv.fr/actualites/communiques-de-presse/geographie-de-delinquance-a-lechelle-communale-en-2025",
+ "scope_warning": "These are offences recorded by police and gendarmerie, counted by place of offence, divided by INSEE residents (2023 population for Strasbourg: 293,771) or by homes for burglary. They do not count the millions of visitors in December, so rates can look higher in a tourist city. Recorded crime also depends on how often people report it. Rates are not the risk to one visitor. France publishes no street-level crime map (see no_street_level_data), so the guide uses map pins instead.",
+ "headline": {
+  "summary": "Strasbourg 2025 (recorded crime per 1,000 residents): theft without violence 25.8 (up 16% on 2024), theft from vehicles 6.9 (up 32%), violent theft without a weapon 1.3 (up 26%), assault outside the family 4.9 (down 3%), home burglary 4.3 per 1,000 homes (down 4%). Strasbourg is above its department (Bas-Rhin) on every line shown. It is below Paris, Lyon, Lille and Bordeaux on theft without violence and on violent theft without a weapon. On theft from vehicles it is below Lyon, Lille and Bordeaux but slightly above Paris (6.89 vs 6.61).",
+  "pickpocket_relevant_line": "Theft without violence against people (this category includes pickpocketing): Strasbourg 25.81 per 1,000 in 2025 vs 22.18 in 2024. Bas-Rhin 10.04. France (all departments, our calculation) 9.22. Paris 45.12, Lyon 39.32, Bordeaux 39.06, Lille 30.54 (2025).",
+  "source_url": "https://www.data.gouv.fr/datasets/bases-statistiques-communale-departementale-et-regionale-de-la-delinquance-enregistree-par-la-police-et-la-gendarmerie-nationales"
+ },
+ "indicators": [
+  {
+   "indicator_fr": "Vols sans violence contre des personnes",
+   "indicator_en": "Thefts without violence against people (pickpocketing, bag snatching etc.)",
+   "unit": "per 1,000 residents",
+   "strasbourg": {
+    "2024": {
+     "count": 6516,
+     "rate": 22.18
+    },
+    "2025": {
+     "count": 7582,
+     "rate": 25.81
+    },
+    "change_rate_2025_vs_2024_pct": 16.4
+   },
+   "bas_rhin_dept_rate": {
+    "2024": 9.03,
+    "2025": 10.04
+   },
+   "france_all_departments_rate_calculated": {
+    "2024": 9.01,
+    "2025": 9.22
+   },
+   "other_communes_2025_rate": {
+    "Lyon": 39.32,
+    "Lille": 30.54,
+    "Paris": 45.12,
+    "Marseille": 19.32,
+    "Toulouse": 20.5,
+    "Bordeaux": 39.06,
+    "Mulhouse": 14.69,
+    "Colmar": 17.6
+   }
+  },
+  {
+   "indicator_fr": "Vols violents sans arme",
+   "indicator_en": "Violent theft without a weapon (robbery, snatch with force)",
+   "unit": "per 1,000 residents",
+   "strasbourg": {
+    "2024": {
+     "count": 298,
+     "rate": 1.01
+    },
+    "2025": {
+     "count": 376,
+     "rate": 1.28
+    },
+    "change_rate_2025_vs_2024_pct": 26.2
+   },
+   "bas_rhin_dept_rate": {
+    "2024": 0.34,
+    "2025": 0.43
+   },
+   "france_all_departments_rate_calculated": {
+    "2024": 0.7,
+    "2025": 0.71
+   },
+   "other_communes_2025_rate": {
+    "Lyon": 6.1,
+    "Lille": 3.5,
+    "Paris": 3.45,
+    "Marseille": 2.88,
+    "Toulouse": 2.05,
+    "Bordeaux": 3.83,
+    "Mulhouse": 1.28,
+    "Colmar": 0.43
+   }
+  },
+  {
+   "indicator_fr": "Violences physiques hors cadre familial",
+   "indicator_en": "Physical violence outside the family (assault)",
+   "unit": "per 1,000 residents",
+   "strasbourg": {
+    "2024": {
+     "count": 1491,
+     "rate": 5.08
+    },
+    "2025": {
+     "count": 1443,
+     "rate": 4.91
+    },
+    "change_rate_2025_vs_2024_pct": -3.2
+   },
+   "bas_rhin_dept_rate": {
+    "2024": 2.83,
+    "2025": 2.81
+   },
+   "france_all_departments_rate_calculated": {
+    "2024": 2.93,
+    "2025": 3.07
+   },
+   "other_communes_2025_rate": {
+    "Lyon": 5.31,
+    "Lille": 6.55,
+    "Paris": 5.27,
+    "Marseille": 5.03,
+    "Toulouse": 4.96,
+    "Bordeaux": 5.09,
+    "Mulhouse": 8.06,
+    "Colmar": 5.36
+   }
+  },
+  {
+   "indicator_fr": "Cambriolages de logement",
+   "indicator_en": "Home burglary",
+   "unit": "per 1,000 homes",
+   "strasbourg": {
+    "2024": {
+     "count": 724,
+     "rate": 4.43
+    },
+    "2025": {
+     "count": 697,
+     "rate": 4.27
+    },
+    "change_rate_2025_vs_2024_pct": -3.7
+   },
+   "bas_rhin_dept_rate": {
+    "2024": 3.98,
+    "2025": 4.37
+   },
+   "france_all_departments_rate_calculated": {
+    "2024": 5.84,
+    "2025": 5.66
+   },
+   "other_communes_2025_rate": {
+    "Lyon": 6.88,
+    "Lille": 8.96,
+    "Paris": 5.05,
+    "Marseille": 9.32,
+    "Toulouse": 6.39,
+    "Bordeaux": 6.88,
+    "Mulhouse": 5.9,
+    "Colmar": 3.71
+   }
+  },
+  {
+   "indicator_fr": "Vols dans les véhicules",
+   "indicator_en": "Thefts from vehicles",
+   "unit": "per 1,000 residents",
+   "strasbourg": {
+    "2024": {
+     "count": 1533,
+     "rate": 5.22
+    },
+    "2025": {
+     "count": 2025,
+     "rate": 6.89
+    },
+    "change_rate_2025_vs_2024_pct": 32.1
+   },
+   "bas_rhin_dept_rate": {
+    "2024": 2.53,
+    "2025": 3.24
+   },
+   "france_all_departments_rate_calculated": {
+    "2024": 3.76,
+    "2025": 3.44
+   },
+   "other_communes_2025_rate": {
+    "Lyon": 23.33,
+    "Lille": 18.96,
+    "Paris": 6.61,
+    "Marseille": 10.34,
+    "Toulouse": 8.31,
+    "Bordeaux": 20.94,
+    "Mulhouse": 7.59,
+    "Colmar": 2.75
+   }
+  },
+  {
+   "indicator_fr": "Vols de véhicule",
+   "indicator_en": "Vehicle theft",
+   "unit": "per 1,000 residents",
+   "strasbourg": {
+    "2024": {
+     "count": 311,
+     "rate": 1.06
+    },
+    "2025": {
+     "count": 296,
+     "rate": 1.01
+    },
+    "change_rate_2025_vs_2024_pct": -4.8
+   },
+   "bas_rhin_dept_rate": {
+    "2024": 0.68,
+    "2025": 0.71
+   },
+   "france_all_departments_rate_calculated": {
+    "2024": 2.02,
+    "2025": 1.83
+   },
+   "other_communes_2025_rate": {
+    "Lyon": 2.88,
+    "Lille": 3.63,
+    "Paris": 1.73,
+    "Marseille": 6.45,
+    "Toulouse": 2.08,
+    "Bordeaux": 3.14,
+    "Mulhouse": 1.01,
+    "Colmar": 1.51
+   }
+  },
+  {
+   "indicator_fr": "Destructions et dégradations volontaires",
+   "indicator_en": "Criminal damage",
+   "unit": "per 1,000 residents",
+   "strasbourg": {
+    "2024": {
+     "count": 3105,
+     "rate": 10.57
+    },
+    "2025": {
+     "count": 3322,
+     "rate": 11.31
+    },
+    "change_rate_2025_vs_2024_pct": 7.0
+   },
+   "bas_rhin_dept_rate": {
+    "2024": 6.72,
+    "2025": 7.11
+   },
+   "france_all_departments_rate_calculated": {
+    "2024": 7.78,
+    "2025": 7.94
+   },
+   "other_communes_2025_rate": {
+    "Lyon": 11.19,
+    "Lille": 12.77,
+    "Paris": 8.97,
+    "Marseille": 13.36,
+    "Toulouse": 11.45,
+    "Bordeaux": 14.72,
+    "Mulhouse": 11.77,
+    "Colmar": 10.96
+   }
+  },
+  {
+   "indicator_fr": "Trafic de stupéfiants",
+   "indicator_en": "Drug trafficking (people charged, cleared cases)",
+   "unit": "per 1,000 residents",
+   "strasbourg": {
+    "2024": {
+     "count": 267,
+     "rate": 0.91
+    },
+    "2025": {
+     "count": 260,
+     "rate": 0.89
+    },
+    "change_rate_2025_vs_2024_pct": -2.6
+   },
+   "bas_rhin_dept_rate": {
+    "2024": 0.41,
+    "2025": 0.41
+   },
+   "france_all_departments_rate_calculated": {
+    "2024": 0.76,
+    "2025": 0.84
+   },
+   "other_communes_2025_rate": {
+    "Lyon": 1.2,
+    "Lille": 2.8,
+    "Paris": 2.65,
+    "Marseille": 4.12,
+    "Toulouse": 2.56,
+    "Bordeaux": 1.34,
+    "Mulhouse": 1.12,
+    "Colmar": 1.91
+   }
+  },
+  {
+   "indicator_fr": "Violences sexuelles",
+   "indicator_en": "Sexual violence",
+   "unit": "per 1,000 residents",
+   "strasbourg": {
+    "2024": {
+     "count": 546,
+     "rate": 1.86
+    },
+    "2025": {
+     "count": 658,
+     "rate": 2.24
+    },
+    "change_rate_2025_vs_2024_pct": 20.5
+   },
+   "bas_rhin_dept_rate": {
+    "2024": 1.56,
+    "2025": 1.65
+   },
+   "france_all_departments_rate_calculated": {
+    "2024": 1.77,
+    "2025": 1.92
+   },
+   "other_communes_2025_rate": {
+    "Lyon": 2.38,
+    "Lille": 3.45,
+    "Paris": 3.0,
+    "Marseille": 1.87,
+    "Toulouse": 2.28,
+    "Bordeaux": 2.84,
+    "Mulhouse": 2.97,
+    "Colmar": 2.39
+   }
+  }
+ ],
+ "rate_units_note": "Burglary is per 1,000 homes. All other lines are per 1,000 residents. Drug trafficking counts people charged in cleared cases, not drug activity seen on the street.",
+ "france_average_note": "The 'France' figure is calculated by Wiley Fox as the sum of department counts divided by the sum of department populations (or homes for burglary) in the DEP file, all 101 departments including overseas. SSMSI does not publish this exact national rate in the file. Treat as indicative.",
+ "data_quality_flags": [
+  "Lyon violent theft without a weapon jumps from 3.48 (2024) to 6.10 (2025) per 1,000. Check before quoting Lyon on that line.",
+  "Paris, Lyon and Marseille are commune-level codes (75056, 69123, 13055). SSMSI notes arrondissements are included in the base. Population double-count was corrected in June 2022 (see documentation PDF).",
+  "Communes are only published when more than 5 offences were recorded in 3 successive years. Strasbourg is published for all lines used here.",
+  "2025 counts include requalifications up to early April 2026, so 2024 and 2025 are on the same basis but 2025 may still move in the next edition."
+ ],
+ "eurostat_bas_rhin": {
+  "dataset": "crim_gen_reg (Police-recorded offences by NUTS 3 region), dataset last updated 2026-06-29",
+  "geo": "FRF11 Bas-Rhin (department, not the city)",
+  "latest_year_available": "2024 (2025 not yet in the dataset at 6 Oct 2026)",
+  "source_url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/crim_gen_reg?format=JSON&lang=EN&geo=FRF11&geo=FR",
+  "browse_url": "https://ec.europa.eu/eurostat/databrowser/view/crim_gen_reg/default/table",
+  "values_2024": {
+   "intentional_homicide": {
+    "count": 5,
+    "per_100k": 0.43,
+    "france_per_100k": 1.19
+   },
+   "assault": {
+    "count": 6358,
+    "per_100k": 544.57,
+    "france_per_100k": 613.21,
+    "per_100k_2023": 509.88
+   },
+   "robbery": {
+    "count": 487,
+    "per_100k": 41.71,
+    "france_per_100k": 82.81,
+    "per_100k_2023": 43.22
+   },
+   "burglary": {
+    "count": 3139,
+    "per_100k": 268.86,
+    "france_per_100k": 443.98,
+    "per_100k_2023": 309.33
+   },
+   "burglary_private_residential": {
+    "count": 2122,
+    "per_100k": 181.75,
+    "france_per_100k": 295.47
+   },
+   "theft_all": {
+    "count": 18689,
+    "per_100k": 1600.72,
+    "france_per_100k": 1911.46,
+    "per_100k_2023": 1537.02
+   },
+   "theft_of_motorised_land_vehicle": {
+    "count": 788,
+    "per_100k": 67.49,
+    "france_per_100k": 198.41
+   }
+  },
+  "note": "Eurostat classification (ICCS) differs from the SSMSI indicators, so do not mix the two. Bas-Rhin 2024 is below the France rate on every line shown. Department level hides the city."
+ },
+ "christmas_market_security": {
+  "checkpoints_and_perimeter": {
+   "fact": "Access controls with filtering and searching of visitors by private security (supported by mobile gendarmes) at every bridge leading to the Grande Ile, where the market is concentrated. Large objects and very large bags are searched. Random checks possible.",
+   "year": "2025 edition (latest published). 2026 plan NOT VERIFIED: the Prefecture normally presents it in mid-November (2025: 18 Nov).",
+   "sources": [
+    "https://france3-regions.franceinfo.fr/grand-est/bas-rhin/strasbourg-0/marche-de-noel-de-strasbourg-2025-drones-nouvelles-rues-fermees-affluence-en-hausse-ce-qu-il-faut-savoir-sur-la-securite-3251626.html",
+    "https://www.gendarmerie.interieur.gouv.fr/gendinfo/en-images/les-marches-de-noel-sous-haute-protection",
+    "https://www.europe1.fr/societe/1000-personnes-mobilisees-chaque-jour-dispositif-de-securite-xxl-pour-le-marche-de-noel-de-strasbourg-872409"
+   ]
+  },
+  "hours_of_checks": "NOT VERIFIED as a separate set of hours. The vehicle ban applies during market hours (11:30 to 21:00 daily in 2025, per Europe 1 quoting the Prefecture). Official FAQ for 2026: stalls open daily 11:30 to 21:00, opening day from 14:00, closing 18:00 on 24 Dec.",
+  "numbers_2025": {
+   "total_mobilised_per_day": "More than 1,000 people each day (Sub-prefect Cecile Rackette, quoted by Europe 1 and France 3, Nov 2025)",
+   "who": "Bas-Rhin police, CRS companies, soldiers of Operation Sentinelle, bomb-disposal teams, municipal police, private security agents, firefighters and Red Cross volunteers (Europe 1, Nov 2025)",
+   "split_police_gendarmes_soldiers": "NOT VERIFIED: no breakdown by service found for 2025.",
+   "drones": "Real-time drone monitoring of crowd flow, repeated from 2024 (France 3, 18 Nov 2025)",
+   "attendance": "More than 3.4 million people in 2024, a record (France 3, 18 Nov 2025)"
+  },
+  "bans_and_rules_2025": [
+   "No cars on the Grande Ile during market hours unless you hold a pass (macaron) issued by the city (France 3, Nov 2025; also official FAQ: motor traffic prohibited on the Grande Ile during market hours).",
+   "Cathedral entry and exit on the south side from Place du Chateau during the market (France 3, Nov 2025). Cathedral asks visitors to prepare an open bag for inspection (cathedrale-strasbourg.fr).",
+   "Some pedestrian bridges may be closed temporarily on the Prefect's decision (France 3, Nov 2025).",
+   "Weekend crowd measures in 2025: one-way streets (rue des Dominicains, rue des Orfevres, rue du Maroquin, rue de l'Outre) and the Place Kleber 'convivial zone' closed on weekends.",
+   "Tram stops Broglie, Alt Winmaerik and Langstross Grand'Rue not served during market hours, 26 Nov to 24 Dec 2025. Homme de Fer may be closed if crowded."
+  ],
+  "bag_rule": "No fixed 'no large bag' ban found in official sources. Official wording: large objects are 'systematically searched' (France 3) and 'automatic searches of very bulky bags' (Europe 1). Cathedral platform: do not come with large bags or luggage, no left-luggage (oeuvre-notre-dame.org).",
+  "2018_attack": {
+   "fact": "On 11 December 2018 a gunman attacked people at the Strasbourg Christmas market. Five people were killed. The City names them as Kamal, Bartek, Antonio, Pascal and Anupong.",
+   "injured_count": "NOT VERIFIED in this research pass",
+   "memorial": "A stele stands at the foot of the Palais du Rhin, Place de la Republique. The City, Prefecture and victims' associations laid flowers there on 11 December 2025.",
+   "source_url": "https://www.strasbourg.eu/-/strasbourg-rend-hommage-aux-victimes-de-l-attentat-de-decembre-2018"
+  },
+  "official_statements_found": [
+   {
+    "who": "Prefecture du Bas-Rhin and Ville de Strasbourg (mayor Jeanne Barseghian and sub-prefect Cecile Rackette)",
+    "when": "18 Nov 2025 press conference",
+    "what": "Security plan repeated from 2024 with drones, access controls, vehicle ban.",
+    "url": "https://france3-regions.franceinfo.fr/grand-est/bas-rhin/strasbourg-0/marche-de-noel-de-strasbourg-2025-drones-nouvelles-rues-fermees-affluence-en-hausse-ce-qu-il-faut-savoir-sur-la-securite-3251626.html"
+   },
+   {
+    "who": "Ville de Strasbourg (noel.strasbourg.eu FAQ)",
+    "when": "2026 edition page",
+    "what": "Access controls at the entrances to the bridges; motor traffic prohibited on the Grande Ile during market hours; Mondays, Tuesdays and mornings quietest; crowded Wednesday afternoons, Friday evenings and weekends.",
+    "url": "https://noel.strasbourg.eu/en/frequently-asked-questions"
+   }
+  ],
+  "2026_plan": "NOT ANNOUNCED as at 6 Oct 2026. Re-check in mid-November."
+ },
+ "fcdo_france": {
+  "page": "https://www.gov.uk/foreign-travel-advice/france",
+  "page_last_updated": "2026-08-11 (change note: updated information on the European Entry/Exit System; read from the GOV.UK content API on 6 Oct 2026)",
+  "terrorism": "'Terrorists are very likely to try to carry out attacks in France.' Attacks could be indiscriminate, including crowded places and public gatherings, cultural events and transport hubs. Methods have included knife attacks, shootings, bombings and vehicle attacks. Be vigilant and follow local authorities.",
+  "crime": "'Take sensible precautions against street crime and car crime. Pickpockets can work in gangs; one distracts you while the other one goes into your bag.' Keep passport, cards and valuables in separate bags or pockets; carry bag across the body; keep belongings close in restaurants and bars; do not get distracted around tourist attractions and ATMs; do not leave valuables in a vehicle. Be alert to drink spiking.",
+  "other_lines": "Demonstrations and industrial action can happen at short notice. France has strict drink-driving laws and the legal limit is a third lower than England and Wales. You must be able to prove identity on request.",
+  "emergency_numbers": "112 (all services), 17 police, 15 ambulance, 18 fire, 114 for deaf and hard of hearing (SMS)."
+ },
+ "police_focus_areas": {
+  "note": "Only items with a dated official or press source are listed. No official source found naming Quartier Gare, Place de l'Homme de Fer, Neuhof or Elsau as current focus areas for 2026.",
+  "items": [
+   {
+    "area": "Central Strasbourg, Grand'Rue (shop licence)",
+    "what": "The Prefecture withdrew a Grand'Rue convenience store's licence to sell alcohol, saying staff were told to sell to people already drunk (reported 27 Nov 2025; press headline links it to 'insecurities in Strasbourg').",
+    "date": "27 Nov 2025",
+    "sources": [
+     "https://pokaa.fr/2025/11/27/insecurites-a-strasbourg-le-u-express-de-la-grand-rue-ne-peut-plus-vendre-de-l-alcool/",
+     "https://actu.fr/grand-est/strasbourg_67482/strasbourg-la-prefecture-interdit-la-vente-d-alcool-dans-ce-magasin-les-clients-sont-en-colere-une-honte_63497176.html"
+    ]
+   },
+   {
+    "area": "Place Kleber on New Year's Eve",
+    "what": "Around 00:20 on 1 Jan 2026 dozens of helmeted municipal police and CRS cleared the square of people firing fireworks and mortars; the square was almost calm by 00:35.",
+    "date": "1 Jan 2026",
+    "sources": [
+     "https://www.dna.fr/culture-loisirs/2025/12/31/suivez-en-direct-la-soiree-du-31-decembre-dans-notre-region"
+    ]
+   },
+   {
+    "area": "Hautepierre, Cronenbourg, Koenigshoffen (police checks on motorists, evening of 31 Dec 2025); Gravieres and Port du Rhin (vehicle and flat fires); Schiltigheim (Quartier des Ecrivains)",
+    "what": "Named by DNA live blog as places of police checks or fire call-outs on New Year's Eve 2025. DNA says several districts of the Eurometropole saw urban violence, mainly 23:00 to 02:00.",
+    "date": "31 Dec 2025 to 1 Jan 2026",
+    "sources": [
+     "https://www.dna.fr/culture-loisirs/2025/12/31/suivez-en-direct-la-soiree-du-31-decembre-dans-notre-region"
+    ]
+   },
+   {
+    "area": "Neuhof, Elsau, Quartier Gare, Homme de Fer",
+    "what": "NOT VERIFIED for 2025/26 with a dated source. Do not state these as hot spots without a source.",
+    "date": "n/a",
+    "sources": []
+   }
+  ]
+ },
+ "new_years_eve_2025_26": {
+  "measures": [
+   "Ban on buying, selling, holding, carrying and using most petards and fireworks in Bas-Rhin and Haut-Rhin until 3 January 2026 (DNA live blog).",
+   "Ban on distributing, take-away sale, buying and carrying fuel in any portable container until 3 January 2026 (DNA).",
+   "Curfew for under-16s not with a parent or authorised adult, until 06:00 on 1 Jan, in Strasbourg, Hoenheim, Bischheim, Schiltigheim, Illkirch-Graffenstaden, Lingolsheim and Ostwald (DNA; 20 Minutes).",
+   "Prefecture order allowing police drone cameras (DNA). About 400 gendarmes mobilised across Bas-Rhin (DNA). 90,000 police and gendarmes across France (20 Minutes).",
+   "CTS ran a reduced night service, 19:30 to 22:30 and 02:30 to 04:30, normal service from 05:00 on 1 Jan (DNA)."
+  ],
+  "outcomes": [
+   {
+    "fact": "117 cars burnt in Bas-Rhin, nearly a quarter of the national total of 460 in police zones (RTL via 20 Minutes, 2 Jan 2026). 25 police injured and 30 arrests are given for the Strasbourg area in the same article.",
+    "url": "https://www.20minutes.fr/faits_divers/4194050-20260102-bas-rhin-plus-centaine-vehicules-incendies-pendant-reveillon"
+   },
+   {
+    "fact": "Strasbourg prosecutor: 123 cars burnt in the police zone (Haguenau and Strasbourg area) and Strasbourg gendarmerie company, and 23 custody placements for urban violence (DNA, 1 Jan 2026). The two counts use different areas and times, so they differ.",
+    "url": "https://www.dna.fr/culture-loisirs/2025/12/31/suivez-en-direct-la-soiree-du-31-decembre-dans-notre-region"
+   },
+   {
+    "fact": "Interior Ministry national consolidated figure: 1,173 vehicles burnt (984 the year before), 505 arrests (420 before), 403 custody placements (310 before). In Bas-Rhin 9 injured people aged 18 to 44 are reported.",
+    "url": "https://www.interieur.gouv.fr/actualites/communiques-de-presse/bilan-de-nuit-de-saint-sylvestre-chiffres-consolides-a-17h"
+   },
+   {
+    "fact": "34 people injured by fireworks in Bas-Rhin, about a third minors (ARS data given to the Prefecture, DNA).",
+    "url": "https://www.dna.fr/culture-loisirs/2025/12/31/suivez-en-direct-la-soiree-du-31-decembre-dans-notre-region"
+   },
+   {
+    "fact": "Previous year, 31 Dec 2024: 51 arrests in Bas-Rhin, 22 of them minors (DNA).",
+    "url": "https://www.dna.fr/culture-loisirs/2025/12/31/suivez-en-direct-la-soiree-du-31-decembre-dans-notre-region"
+   }
+  ],
+  "2026_27_measures": "NOT ANNOUNCED as at 6 Oct 2026. Prefecture orders for 2025/26 were published in the final days of December."
+ },
+ "no_street_level_data": {
+  "finding": "The SSMSI publishes recorded crime by commune (and by department and region) at annual level. The dataset documentation describes commune, department and region files only; there is no point-level or street-level file. Commune data are even withheld unless more than 5 offences were recorded in 3 successive years. So the guide uses map pins from creators and reputable sources, not crime-by-street data.",
+  "checked": "Dataset resource list on data.gouv.fr (10 resources: commune, department and region bases, complementary file, documentation and atlas PDFs). A full search of data.gouv.fr for a street-level crime file was NOT done.",
+  "url": "https://www.data.gouv.fr/datasets/bases-statistiques-communale-departementale-et-regionale-de-la-delinquance-enregistree-par-la-police-et-la-gendarmerie-nationales"
+ },
+ "transport_crime_lead": "SSMSI published 'La delinquance enregistree dans les reseaux de transports en commun en 2025' (Interstats Info rapide n67) on 11 Sept 2026. Not read in this pass. Could give tram or station figures. https://www.interieur.gouv.fr/actualites/communiques-de-presse/delinquance-enregistree-dans-reseaux-de-transports-en-commun-en-2025",
+ "unverified": [
+  "2026 Christmas market security plan (numbers, perimeter hours, bag rules): not published yet.",
+  "Split of the 1,000-plus daily staff between police, gendarmes and Sentinelle soldiers.",
+  "Number of people injured on 11 Dec 2018.",
+  "Any dated official statement naming Quartier Gare, Homme de Fer, Neuhof or Elsau as focus areas.",
+  "NYE 2026/27 bans, curfew and deployment.",
+  "Street-level crime data (probably does not exist).",
+  "Tram or station crime figures (SSMSI transport report not read)."
+ ]
+}

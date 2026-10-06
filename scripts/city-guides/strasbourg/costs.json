@@ -1,0 +1,104 @@
+[
+ {
+  "item": "CTS single tram/bus ticket (app, Badgéo or reloaded card)",
+  "price": "EUR 1.90",
+  "date": "2026 tariff as read; verify before print",
+  "source": "https://www.cts-strasbourg.eu/en/"
+ },
+ {
+  "item": "CTS single ticket bought on board",
+  "price": "EUR 2.50",
+  "date": "2026 tariff as read",
+  "source": "https://www.cts-strasbourg.eu/en/"
+ },
+ {
+  "item": "CTS 24h Solo pass",
+  "price": "from EUR 4.60",
+  "date": "2026 tariff as read",
+  "source": "https://www.cts-strasbourg.eu/en/"
+ },
+ {
+  "item": "CTS 24h Trio pass (up to 3 people)",
+  "price": "EUR 10.20",
+  "date": "2026 tariff as read",
+  "source": "https://www.cts-strasbourg.eu/en/"
+ },
+ {
+  "item": "CTS 72h Solo pass",
+  "price": "from EUR 10.20",
+  "date": "2026 tariff as read",
+  "source": "https://www.cts-strasbourg.eu/en/"
+ },
+ {
+  "item": "Park and ride (P+R) day ticket incl. tram",
+  "price": "EUR 4.20",
+  "date": "2025 (latest year only)",
+  "source": "https://www.cts-strasbourg.eu/en/"
+ },
+ {
+  "item": "Airport to station by TER (rail only)",
+  "price": "EUR 3.20",
+  "date": "2026 as read; verify",
+  "source": "https://www.strasbourg.aeroport.fr/"
+ },
+ {
+  "item": "TGV Paris to Strasbourg",
+  "price": "from about EUR 25 (indicative, not a fixed fare)",
+  "date": "Indicative, checked 2026-10-06",
+  "source": "https://www.sncf-connect.com/"
+ },
+ {
+  "item": "Basel to Strasbourg train",
+  "price": "from about EUR 11 (indicative)",
+  "date": "Indicative, NOT VERIFIED for Dec 2026",
+  "source": "https://www.sncf-connect.com/"
+ },
+ {
+  "item": "Cathedral platform climb (330 steps)",
+  "price": "Adult EUR 10, child EUR 6 (another site says EUR 8; conflict)",
+  "date": "2026 per Strasbourg Tourisme",
+  "source": "https://www.visit.alsace/"
+ },
+ {
+  "item": "Astronomical clock",
+  "price": "EUR 4; EUR 3 groups/students; EUR 2 ages 6-17; free under 6 (a city page shows an older EUR 2)",
+  "date": "2026 per cathedral site; show not held during the market",
+  "source": "https://www.cathedrale-strasbourg.fr/"
+ },
+ {
+  "item": "Batorama river cruise (1h10)",
+  "price": "Adult EUR 16; 13-17 EUR 14.70; 4-12 EUR 8.90; under 4 free",
+  "date": "2025/26 season only; 2026 NOT VERIFIED",
+  "source": "https://www.batorama.com/"
+ },
+ {
+  "item": "City museums",
+  "price": "EUR 9 full, EUR 5 reduced, free under 18",
+  "date": "2026 as read",
+  "source": "https://www.musees.strasbourg.eu/"
+ },
+ {
+  "item": "Velhop bike hire",
+  "price": "EUR 1.20/hour; EUR 7/24h; EUR 14/48h",
+  "date": "2026 as read",
+  "source": "https://www.velhop.strasbourg.eu/"
+ },
+ {
+  "item": "Christmas market cup deposit",
+  "price": "EUR 1",
+  "date": "2025 (latest year only)",
+  "source": "https://noel.strasbourg.eu/"
+ },
+ {
+  "item": "Vin chaud (mulled wine)",
+  "price": "about EUR 5 plus EUR 1 deposit (unofficial 2025 blog; BFM 2023 said EUR 5 incl. deposit)",
+  "date": "2025, unofficial",
+  "source": "https://www.bfmtv.com/"
+ },
+ {
+  "item": "Tourist tax (taxe de sejour)",
+  "price": "5% of pre-tax room price plus 10% departmental, capped EUR 5.06 per person per night; under 18 exempt",
+  "date": "2026 as read; hotel star rates from a secondary source",
+  "source": "https://www.strasbourg.eu/"
+ }
+]

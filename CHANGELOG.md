@@ -2,6 +2,10 @@
 
 All notable changes to the WF-mapping repo. Newest first. Dates are commit dates (UTC). Design and architecture notes live in `Wiley-Fox-Dev-Handoff-v1.md` (§20 covers September 2026).
 
+## 2026-10-06 (Strasbourg)
+
+- **feat:** Strasbourg Christmas 2026 guide build script and source data (`scripts/city-guides/strasbourg/`): first French city. ~475 creator facts from 112 videos, SSMSI 2025 commune crime data with a custom French-cities comparison box (built in `build_guide.py`, not `make_compare.py`), Préfecture 2025 market security plan, verified 2026 dates (market opens 27 Nov) and 40 checked tips. Preview only (`/guides/strasbourg/`), new city-list entry on the preview map. New queue: Strasbourg, Vienna, Prague, Edinburgh.
+
 ## 2026-10-05 (Chicago publish)
 
 - **feat:** Chicago Christmas 2026 guide approved and live at `/new/guides/chicago/`; `/new` map links it (`GUIDE_LINKS`) and the city list entry is updated (rating 2 -> 3, 'Stay aware', Chicago Police 2025 / Data Portal 2026).

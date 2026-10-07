@@ -4,7 +4,8 @@ const d = require('docx');
 const { Document, Packer, Paragraph, TextRun, HeadingLevel, Table, TableRow, TableCell, WidthType, ShadingType,
         AlignmentType, BorderStyle, ExternalHyperlink, LevelFormat, PageBreak, Footer, PageNumber } = d;
 const D = process.argv[2].replace(/\/$/, '');
-const G = JSON.parse(fs.readFileSync(D + '/guide.json', 'utf8'));
+const NV = t => t.replace(/(^|[.:]\s*)NOT VERIFIED/gm, '$1Not yet confirmed').replace(/NOT VERIFIED/g, 'not yet confirmed');
+const G = JSON.parse(NV(fs.readFileSync(D + '/guide.json', 'utf8')));
 const CITY = G.city, FN = CITY.replace(/ /g, '_') + '_Guide';
 const WORDS = ['one','two','three','four','five','six','seven','eight','nine','ten']; let CH = 0;
 const chap = t => label(`Chapter ${WORDS[CH++]} · ${t}`);
@@ -137,7 +138,7 @@ G.tips.forEach(t => kids.push(bullet(t.title + '.', t.text)));
 kids.push(space(), cta('community'));
 
 // Local tips (verified)
-const LT = JSON.parse(fs.readFileSync(D + '/tips.json', 'utf8')).tips;
+const LT = JSON.parse(NV(fs.readFileSync(D + '/tips.json', 'utf8'))).tips;
 const CATS = [['transport_payment','Paying for transport'],['water_snacks','Water & snacks'],['toilets','Toilets'],['parks_play','Parks & play'],
   ['money_tipping','Money & tipping'],['phone_data','Phones & data'],['safety_habits','Safety habits'],['local_ways','Local ways']];
 kids.push(new Paragraph({ children: [new PageBreak()] }), chap('Local tips'), h1('Local tips for ' + CITY));

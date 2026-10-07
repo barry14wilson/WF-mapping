@@ -1,7 +1,9 @@
 # Renders a city's guide.json into the Wiley Fox travel-guide web page. Usage: python3 render_city.py <city_dir>
 import json, html, sys, os
 D = sys.argv[1].rstrip('/')
-G = json.load(open(f'{D}/guide.json'))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import affiliate
+_raw = open(f'{D}/guide.json').read()
+G = json.loads(affiliate.rewrite(_raw, json.loads(_raw)['city']))
 CITY = G['city']; FN = CITY.replace(' ', '_') + '_Guide'
 CS = G.get('crime_source', {'name': 'data.police.uk', 'citation': ''})
 MAPC = G.get('map', {'center': [-0.13, 51.49], 'zoom': 10.6})
@@ -238,7 +240,7 @@ page = f'''<!DOCTYPE html>
 <div class="affiliate-note">Wiley Fox may earn a small commission if you book through these links. Your price stays the same.</div>
 <div class="hotel-grid">{hotel_cards}
 <article class="hotel-card search-card"><div class="hotel-name">Search all {e(CITY)} hotels</div><p class="hotel-desc">Compare live prices, then check the street on the Wiley Fox map before you book.</p>
-<a href="https://www.booking.com/searchresults.html?ss={CITY.replace(" ","+")}&aid=YOUR_AID_HERE" target="_blank" rel="noopener sponsored" class="btn btn-primary">Search Booking.com</a></article></div>
+<a href="{affiliate.wrap("https://www.booking.com/searchresults.html?ss="+CITY.replace(" ","+"), CITY)}" target="_blank" rel="noopener sponsored" class="btn btn-primary">Search Booking.com</a></article></div>
 {cta("families")}
 </div></section>
 
@@ -310,5 +312,9 @@ map.on('load',()=>{{
 }})();
 </script>
 </body></html>'''
+import re as _r2
+# Research shorthand never reaches readers
+page = _r2.sub(r'(^|[.>:]\s*)NOT VERIFIED', lambda m: m.group(1) + 'Not yet confirmed', page)
+page = page.replace('NOT VERIFIED', 'not yet confirmed')
 open(f'{D}/{FN}.html', 'w').write(page)
 print('html', len(page))

@@ -2282,9 +2282,14 @@ const POLICE_API = 'https://data.police.uk/api';
 
 // Booking.com affiliate — replace AID with your live affiliate ID once approved
 // Apply: https://partners.booking.com  (affiliate marketing programme)
-const BOOKING_AFFILIATE_ID = 'YOUR_AID_HERE'; // <-- DEV: replace with real AID
+const BOOKING_AFFILIATE_ID = ''; // retired: Booking.com now runs through CJ (see wfBook)
+// Booking.com affiliate via CJ (publisher 101838202, ad 15734754). Every Booking link goes through wfBook().
+const WF_CJ = 'https://www.jdoqocy.com/click-101838202-15734754';
+function wfBook(u, sid) { u = String(u).replace(/[&?]aid=[^&]*/, ''); return WF_CJ + '?sid=' + (sid || 'wf-map') + '&url=' + encodeURIComponent(u); }
+// Safety net: any raw booking.com link clicked anywhere is wrapped before the browser follows it.
+document.addEventListener('click', function (e) { const a = e.target.closest && e.target.closest('a[href*="booking.com"]'); if (a && a.href.indexOf('jdoqocy') < 0) a.href = wfBook(a.href); }, true);
 const bookingSearchUrl = (city) =>
-  `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(city + ', United Kingdom')}&aid=${BOOKING_AFFILIATE_ID}`;
+  wfBook(`https://www.booking.com/searchresults.html?ss=${encodeURIComponent(city + ', United Kingdom')}`);
 
 // Sample featured stays per city — REPLACE WITH BOOKING.COM DEMAND API IN PROD
 // For prototype demonstration only.
@@ -2394,11 +2399,11 @@ const CITY_DATA = {
       {emoji:'🍛', name:'Dishoom Covent Garden',   area:'Covent Garden',  cuisine:'Bombay café',       price:'££',   desc:"London\'s best-loved Indian restaurant. The bacon naan breakfast is legendary. Expect queues — the wait is always worth it.",                      flag:'🇮🇳 Bombay',   tag1:'Queue-worthy',    tag2:'Breakfast menu',url:'https://www.dishoom.com/'},
     ],
     stayIntro:"London has more great hotels than almost any city on earth. WileyFox picks for safe, well-located stays.",
-    bookingSearchUrl:'https://www.booking.com/searchresults.html?ss=London%2C+England&aid=YOUR_AID_HERE',
+    bookingSearchUrl:wfBook('https://www.booking.com/searchresults.html?ss=London%2C+England'),
     hotels:[
-      {image:'', emoji:'🏛️', badge:'WileyFox Pick',   area:'Bloomsbury',   name:'The Hoxton, Holborn',          desc:'Industrial-chic rooms, excellent coffee shop, five minutes from the British Museum.',           price:'From £150', url:'https://www.booking.com/hotel/gb/the-hoxton-holborn.html?aid=YOUR_AID_HERE'},
-      {image:'', emoji:'🏰', badge:'Best for families',area:'Victoria',     name:'The Rubens at the Palace',     desc:"Kids eat free, Director of Fun programme, opposite Buckingham Palace. London\'s best family hotel.",price:'From £200', url:'https://www.booking.com/hotel/gb/the-rubens-at-the-palace.html?aid=YOUR_AID_HERE'},
-      {image:'', emoji:'🌆', badge:'Best views',       area:'City of London',name:'citizenM Tower of London',    desc:'Pod-style rooms with huge windows and views of Tower Bridge. Smart, tech-forward, great value.',   price:'From £130', url:'https://www.booking.com/hotel/gb/citizenm-tower-of-london.html?aid=YOUR_AID_HERE'},
+      {image:'', emoji:'🏛️', badge:'WileyFox Pick',   area:'Bloomsbury',   name:'The Hoxton, Holborn',          desc:'Industrial-chic rooms, excellent coffee shop, five minutes from the British Museum.',           price:'From £150', url:wfBook('https://www.booking.com/hotel/gb/the-hoxton-holborn.html')},
+      {image:'', emoji:'🏰', badge:'Best for families',area:'Victoria',     name:'The Rubens at the Palace',     desc:"Kids eat free, Director of Fun programme, opposite Buckingham Palace. London\'s best family hotel.",price:'From £200', url:wfBook('https://www.booking.com/hotel/gb/the-rubens-at-the-palace.html')},
+      {image:'', emoji:'🌆', badge:'Best views',       area:'City of London',name:'citizenM Tower of London',    desc:'Pod-style rooms with huge windows and views of Tower Bridge. Smart, tech-forward, great value.',   price:'From £130', url:wfBook('https://www.booking.com/hotel/gb/citizenm-tower-of-london.html')},
     ],
     itineraryIntro:'Whether you have 24 hours or a full week, London rewards every minute.',
     itin1Day:{
@@ -2448,7 +2453,7 @@ const CITY_DATA = {
       {icon:'💳', title:'Contactless everywhere',     text:'Your phone or contactless card works on every bus, Tube and Overground train. No Oyster card needed.'},
     ],
     mapIntro:'London spans 50km east to west. The key areas covered in this guide are shown below.',
-    ctaSecondaryUrl:'https://www.booking.com/searchresults.html?ss=London%2C+England&aid=YOUR_AID_HERE',
+    ctaSecondaryUrl:wfBook('https://www.booking.com/searchresults.html?ss=London%2C+England'),
     ctaSecondaryLabel:'Find hotels in London',
     dataSources:'data.police.uk (Open Government Licence v3.0) · Metropolitan Police Crime Statistics 2024–25 · UNODC Global Crime Database 2023 · ONS Crime Survey for England & Wales.',
   }),
@@ -2493,11 +2498,11 @@ const CITY_DATA = {
       {emoji:'🍺', name:'Bundobust',         area:'Northern Quarter',cuisine:'Indian street food', price:'££',  desc:'Indian street food (fried okra, bhel puri) and craft beer under one roof. One of the most joyful eating experiences in the city.',                               flag:'🇮🇳 Indian',   tag1:'Craft beer',      tag2:'No bookings',      url:'https://bundobust.com/manchester/'},
     ],
     stayIntro:'Manchester has excellent hotels for every budget — from design-led boutiques to grand Victorian five-stars.',
-    bookingSearchUrl:'https://www.booking.com/searchresults.html?ss=Manchester%2C+England&aid=YOUR_AID_HERE',
+    bookingSearchUrl:wfBook('https://www.booking.com/searchresults.html?ss=Manchester%2C+England'),
     hotels:[
-      {image:'', emoji:'🏛️', badge:'WileyFox Pick',   area:'St Ann Square',  name:'Stock Exchange Hotel', desc:'Converted Victorian trading floor — jaw-dropping architecture, exceptional restaurant, and rooms unlike anywhere else in the UK.',   price:'From £200', url:'https://www.booking.com/hotel/gb/stock-exchange.html?aid=YOUR_AID_HERE'},
-      {image:'', emoji:'🏡', badge:'Best boutique',    area:'Ducie Street',   name:'Native Manchester',    desc:'Spacious apartment-style rooms in a converted Victorian warehouse. Kitchen facilities, great location, and outstanding value.',           price:'From £120', url:'https://www.booking.com/hotel/gb/native-manchester.html?aid=YOUR_AID_HERE'},
-      {image:'', emoji:'🌟', badge:'Best luxury',      area:'City Centre',    name:'King Street Townhouse',desc:'Rooftop infinity pool overlooking the city, outstanding restaurant, and rooms with a classic Manchester elegance.',                     price:'From £180', url:'https://www.booking.com/hotel/gb/king-street-townhouse.html?aid=YOUR_AID_HERE'},
+      {image:'', emoji:'🏛️', badge:'WileyFox Pick',   area:'St Ann Square',  name:'Stock Exchange Hotel', desc:'Converted Victorian trading floor — jaw-dropping architecture, exceptional restaurant, and rooms unlike anywhere else in the UK.',   price:'From £200', url:wfBook('https://www.booking.com/hotel/gb/stock-exchange.html')},
+      {image:'', emoji:'🏡', badge:'Best boutique',    area:'Ducie Street',   name:'Native Manchester',    desc:'Spacious apartment-style rooms in a converted Victorian warehouse. Kitchen facilities, great location, and outstanding value.',           price:'From £120', url:wfBook('https://www.booking.com/hotel/gb/native-manchester.html')},
+      {image:'', emoji:'🌟', badge:'Best luxury',      area:'City Centre',    name:'King Street Townhouse',desc:'Rooftop infinity pool overlooking the city, outstanding restaurant, and rooms with a classic Manchester elegance.',                     price:'From £180', url:wfBook('https://www.booking.com/hotel/gb/king-street-townhouse.html')},
     ],
     itineraryIntro:'A compact, walkable city — one day covers the highlights; three days reveals the character.',
     itin1Day:{
@@ -2545,7 +2550,7 @@ const CITY_DATA = {
       {icon:'🚕', title:'Uber works well here',    text:'Uber is widely available and reasonably priced. Avoid unbooked private hire cars — always pre-book.'},
     ],
     mapIntro:'Manchester city centre is compact and very walkable. Key areas are within 20 minutes on foot.',
-    ctaSecondaryUrl:'https://www.booking.com/searchresults.html?ss=Manchester%2C+England&aid=YOUR_AID_HERE',
+    ctaSecondaryUrl:wfBook('https://www.booking.com/searchresults.html?ss=Manchester%2C+England'),
     ctaSecondaryLabel:'Find hotels in Manchester',
     dataSources:'data.police.uk (Open Government Licence v3.0) · Greater Manchester Police Crime Statistics 2024–25 · ONS Crime Survey for England & Wales.',
   }),
@@ -2584,11 +2589,11 @@ const CITY_DATA = {
         {emoji:'🍜',name:'Carters of Moseley',area:'Moseley',cuisine:'Modern British',price:'£££',desc:"Chef Brad Carter\'s neighbourhood restaurant showcases the best of British produce with honest, seasonal cooking. A Birmingham institution.",flag:'🇬🇧 British',tag1:'Michelin Starred',tag2:'Seasonal menu',url:'https://www.cartersofmoseley.co.uk/'},
       ],
       stayIntro:'Birmingham has excellent options across all budgets, with the best hotels clustered around Broad Street and the city centre.',
-      bookingUrl:'https://www.booking.com/searchresults.html?ss=Birmingham%2C+England&aid=YOUR_AID_HERE',
+      bookingUrl:wfBook('https://www.booking.com/searchresults.html?ss=Birmingham%2C+England'),
       hotels:[
-        {image:'',emoji:'🏛️',badge:'WileyFox Pick',area:'Colmore Row',name:'The Grand Hotel Birmingham',desc:'Birmingham\'s most storied hotel — restored Victorian grandeur with a spectacular ballroom and excellent city-centre location.',price:'From £150',url:'https://www.booking.com/hotel/gb/thegrandbirmingham.html?aid=YOUR_AID_HERE'},
-        {image:'',emoji:'🌟',badge:'Best value',area:'Broad Street',name:'Hyatt Regency Birmingham',desc:'Large, well-run hotel with a rooftop pool, excellent central location and competitive rates — a solid choice for business and leisure.',price:'From £110',url:'https://www.booking.com/hotel/gb/hyatt-regency-birmingham.html?aid=YOUR_AID_HERE'},
-        {image:'',emoji:'🏡',badge:'Best boutique',area:'City Centre',name:'Hotel Indigo Birmingham',desc:'Smart boutique hotel with locally-inspired rooms, independent character and great access to the Jewellery Quarter.',price:'From £130',url:'https://www.booking.com/hotel/gb/indigo-birmingham.html?aid=YOUR_AID_HERE'},
+        {image:'',emoji:'🏛️',badge:'WileyFox Pick',area:'Colmore Row',name:'The Grand Hotel Birmingham',desc:'Birmingham\'s most storied hotel — restored Victorian grandeur with a spectacular ballroom and excellent city-centre location.',price:'From £150',url:wfBook('https://www.booking.com/hotel/gb/thegrandbirmingham.html')},
+        {image:'',emoji:'🌟',badge:'Best value',area:'Broad Street',name:'Hyatt Regency Birmingham',desc:'Large, well-run hotel with a rooftop pool, excellent central location and competitive rates — a solid choice for business and leisure.',price:'From £110',url:wfBook('https://www.booking.com/hotel/gb/hyatt-regency-birmingham.html')},
+        {image:'',emoji:'🏡',badge:'Best boutique',area:'City Centre',name:'Hotel Indigo Birmingham',desc:'Smart boutique hotel with locally-inspired rooms, independent character and great access to the Jewellery Quarter.',price:'From £130',url:wfBook('https://www.booking.com/hotel/gb/indigo-birmingham.html')},
       ],
       safeAreas:[{name:'Edgbaston',note:'Consistently lowest crime in the city',rate:'Very low'},{name:'Harborne',note:'Safe village suburb — excellent for families',rate:'Very low'},{name:'Moseley',note:'Bohemian, safe and excellent restaurants',rate:'Low crime'},{name:'Jewellery Quarter',note:'Gentrified, well-lit, well-policed',rate:'Low crime'}],
       cautionAreas:[{name:'Aston & Handsworth',note:'Higher robbery rates — avoid after dark',rate:'Elevated'},{name:'City Centre late night',note:'Stay aware around Broad Street after midnight',rate:'Moderate'}],
@@ -2627,11 +2632,11 @@ const CITY_DATA = {
         {emoji:'🍔',name:'Santa Maluco',area:'Hardman Street',cuisine:'Brazilian BBQ',price:'££',desc:'Brazilian-inspired burgers and ribs cooked over coals. A Liverpool original with superb value and consistently packed tables.',flag:'🇧🇷 Brazilian',tag1:'Meaty',tag2:'Great value',url:'https://www.santamaluco.co.uk/'},
       ],
       stayIntro:'Liverpool has exceptional hotels for every budget — the Albert Dock area is the best location for visitors.',
-      bookingUrl:'https://www.booking.com/searchresults.html?ss=Liverpool%2C+England&aid=YOUR_AID_HERE',
+      bookingUrl:wfBook('https://www.booking.com/searchresults.html?ss=Liverpool%2C+England'),
       hotels:[
-        {image:'',emoji:'🏭',badge:'WileyFox Pick',area:'Stanley Dock',name:'Titanic Hotel Liverpool',desc:'Set inside a spectacular Victorian tobacco warehouse — dramatic architecture, superb food and a spa. One of the UK\'s most striking hotel conversions.',price:'From £120',url:'https://www.booking.com/hotel/gb/titanic.html?aid=YOUR_AID_HERE'},
-        {image:'',emoji:'🏠',badge:'Best boutique',area:'Georgian Quarter',name:'Hope Street Hotel',desc:'Liverpool\'s original boutique hotel — artisan rooms, excellent restaurant and the best location in the Georgian Quarter.',price:'From £130',url:'https://www.booking.com/hotel/gb/hope-street.html?aid=YOUR_AID_HERE'},
-        {image:'',emoji:'🌟',badge:'Best central',area:'Old Hall Street',name:'INNSiDE Liverpool',desc:'Modern, design-led hotel with rooftop terrace and excellent central location — great value for a quality stay.',price:'From £100',url:'https://www.booking.com/hotel/gb/innside-liverpool.html?aid=YOUR_AID_HERE'},
+        {image:'',emoji:'🏭',badge:'WileyFox Pick',area:'Stanley Dock',name:'Titanic Hotel Liverpool',desc:'Set inside a spectacular Victorian tobacco warehouse — dramatic architecture, superb food and a spa. One of the UK\'s most striking hotel conversions.',price:'From £120',url:wfBook('https://www.booking.com/hotel/gb/titanic.html')},
+        {image:'',emoji:'🏠',badge:'Best boutique',area:'Georgian Quarter',name:'Hope Street Hotel',desc:'Liverpool\'s original boutique hotel — artisan rooms, excellent restaurant and the best location in the Georgian Quarter.',price:'From £130',url:wfBook('https://www.booking.com/hotel/gb/hope-street.html')},
+        {image:'',emoji:'🌟',badge:'Best central',area:'Old Hall Street',name:'INNSiDE Liverpool',desc:'Modern, design-led hotel with rooftop terrace and excellent central location — great value for a quality stay.',price:'From £100',url:wfBook('https://www.booking.com/hotel/gb/innside-liverpool.html')},
       ],
       safeAreas:[{name:'Georgian Quarter',note:'Safest and most characterful area to stay',rate:'Low crime'},{name:'Lark Lane / Sefton Park',note:'Bohemian and safe — excellent for longer stays',rate:'Very low'},{name:'Albert Dock',note:'Well-policed tourist area — safe day and night',rate:'Low crime'},{name:'Mossley Hill',note:'Residential suburb — very safe, quiet',rate:'Very low'}],
       cautionAreas:[{name:'Lime Street area (late night)',note:'Higher antisocial behaviour after midnight',rate:'Stay aware'},{name:'Toxteth',note:'Improving but historically elevated crime',rate:'Caution at night'}],
@@ -2680,13 +2685,13 @@ const CITY_DATA = {
       eatIntro:'Full restaurant guide for ' + c.key + ' coming soon — check local food media for current recommendations.',
       eat:[{emoji:'🍽️',name:'Local highlights',area:c.key,cuisine:'Various',price:'££',desc:'Full restaurant editorial for ' + c.key + ' is being researched and will appear in the next guide update.',flag:'🇬🇧 British',tag1:'Coming soon',tag2:'Check back',url:'https://www.visitbritain.com/'}],
       stayIntro:'Our hotel picks for ' + c.key + ' — booked via Booking.com, WileyFox\'s preferred accommodation partner.',
-      bookingSearchUrl:'https://www.booking.com/searchresults.html?ss=' + encodeURIComponent(c.key + ', ' + c.country) + '&aid=YOUR_AID_HERE',
+      bookingSearchUrl:wfBook('https://www.booking.com/searchresults.html?ss=' + encodeURIComponent(c.key + ', ' + c.country)),
       hotels: (SAMPLE_HOTELS[c.key] || []).map(h => ({
         image:'', emoji:'🏨', badge:'WileyFox listed',
         area: h.area, name: h.name,
         desc: h.stars + '-star hotel in ' + h.area + '. Book via Booking.com for the best available rate.',
         price:'Check rates',
-        url:'https://www.booking.com/search.html?ss=' + encodeURIComponent(h.name) + '&aid=YOUR_AID_HERE',
+        url:wfBook('https://www.booking.com/search.html?ss=' + encodeURIComponent(h.name)),
       })),
       itineraryIntro:'A quick-start ' + c.key + ' itinerary — full version coming soon.',
       itin1Day:{
@@ -2708,7 +2713,7 @@ const CITY_DATA = {
       transport:[{area:'Main rail station',lines:'National Rail',note:'Direct connections to London and regional hubs'},{area:'City centre bus',lines:'Local bus network',note:'Covers the whole urban area'},{area:'Airport',lines:'Taxi / bus',note:'Check local transport for latest connections'},{area:'City centre',lines:'Walking / cycle',note:'Most city centres are walkable within 20–30 minutes'}],
       tips:[{icon:'🚆',title:'Use the train',text:'National Rail connects all UK cities well — book in advance for the best prices.'},{icon:'🎒',title:'City centre awareness',text:'Petty theft and pickpocketing occur in all UK city centres. Keep bags zipped and phones pocketed in busy areas.'},{icon:'🏥',title:'NHS emergency care',text:'All UK A&E departments provide free emergency treatment to visitors. Dial 999 for emergencies, 111 for urgent care.'},{icon:'💳',title:'Contactless payments',text:'Contactless card and mobile payments are accepted almost everywhere in the UK.'},{icon:'🚕',title:'Uber is widely available',text:'Uber operates in all major UK cities — pre-book rather than hailing unlicensed private hire.'},{icon:'📶',title:'Good mobile coverage',text:'4G/5G coverage is generally excellent across UK city centres.'}],
       mapIntro: c.key + ' city centre map and key areas.',
-      ctaSecondaryUrl:'https://www.booking.com/searchresults.html?ss=' + encodeURIComponent(c.key + ', ' + c.country) + '&aid=YOUR_AID_HERE',
+      ctaSecondaryUrl:wfBook('https://www.booking.com/searchresults.html?ss=' + encodeURIComponent(c.key + ', ' + c.country)),
       ctaSecondaryLabel:'Find hotels in ' + c.key,
       dataSources:'data.police.uk (Open Government Licence v3.0) · ONS Crime Survey for England & Wales.',
     });
@@ -7711,7 +7716,7 @@ function renderCountrySidebar(geoName) {
   hotelsHost.innerHTML = `
     <div class="section">
       <h2>Plan your stay</h2>
-      <a class="booking-cta" href="https://www.booking.com/searchresults.html?ss=${encodeURIComponent(displayName)}&aid=${BOOKING_AFFILIATE_ID}" target="_blank" rel="noopener sponsored">
+      <a class="booking-cta" href="${wfBook(`https://www.booking.com/searchresults.html?ss=${encodeURIComponent(displayName)}`)}" target="_blank" rel="noopener sponsored">
         Search hotels in ${escapeHtml(displayName)} →
       </a>
       <div style="font-size:10px;color:var(--charcoal-soft);margin-top:8px;line-height:1.4">

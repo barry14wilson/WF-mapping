@@ -34,7 +34,7 @@ If a rule below mentions "the prototype", it applies to the HTML file. If it men
 - Covers England, Wales & Northern Ireland — Scotland is deferred to v2.
 - Displays crime heat-map dots on a MapLibre GL map (OpenStreetMap tiles).
 - Sidebar shows: city search, safety rating (1–5 scale), crime breakdown by category, hotel suggestions, and a link to the travel guide.
-- Hotel cards link to Booking.com via affiliate URL (AID placeholder — `YOUR_AID_HERE` must be replaced with the live affiliate ID when approved).
+- Hotel cards link to Booking.com through the CJ affiliate programme: every Booking URL is wrapped by `wfBook()` in `/new/index.html` (SID `wf-map`) and by `scripts/city-guides/affiliate.py` in the guides (SID `wf-xmas-<city>`).
 
 ### Key dependencies (CDN — do not change versions without checking)
 - MapLibre GL 4.7.1 — map rendering
@@ -101,7 +101,7 @@ If a rule below mentions "the prototype", it applies to the HTML file. If it men
 3. **CDN-only for libraries.** No npm, no build pipeline in the prototype.
 4. **Mobile-first responsive.** The breakpoint is 900px (already in the CSS). Preserve it.
 5. **data.police.uk is the authoritative data source for UK crime** until the pipeline ships. Do not swap it out.
-6. **Affiliate links:** Booking.com links are monetisation-critical. Never remove them. The AID placeholder `YOUR_AID_HERE` is intentional — leave it until Barry provides the live ID.
+6. **Affiliate links:** Booking.com links are monetisation-critical. Never remove them. They run through CJ (publisher 101838202, ad 15734754): wrap new Booking URLs with `wfBook()` (map) or `affiliate.wrap()` (guides). Never hand-write a raw booking.com link.
 7. **Scotland excluded** — `data.police.uk` does not cover Scotland. Do not add Scottish cities to the city grid without flagging this limitation.
 
 ### Pipeline

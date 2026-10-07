@@ -306,7 +306,7 @@ The hexagon overlay colours each hex by running its severity-weighted density th
 - Cache pricing for max 15 minutes — pricing changes fast.
 
 **What's in the prototype:**
-- `BOOKING_AFFILIATE_ID = 'YOUR_AID_HERE'` placeholder — **dev: replace with live AID** once approved.
+- Booking.com affiliate is live via CJ: `wfBook(url, sid)` wraps every Booking link (Oct 2026); `BOOKING_AFFILIATE_ID` is retired.
 - Search deep-links built via `bookingSearchUrl(city)` helper.
 - Sample featured hotels per city in `SAMPLE_HOTELS` constant — **dev: replace with Demand API call** keyed off the search city, returning live availability + pricing.
 - Hotel cards link to Booking with `rel="sponsored"` (correct affiliate disclosure for SEO).
@@ -469,7 +469,7 @@ Everything that feeds a city view, and whether it is fetched **live** at runtime
 |---|---|---|
 | **Numbeo** crime/safety index | `NUMBEO` | UK refreshed 17 Apr 2026. **Move to licensed Numbeo API / refresh job** (licence required — §9). |
 | **ONS/NISRA** population density | `POP_DENSITY` | 10 cities. Replace with ONS dataset; upgrade to LSOA footfall (§5.2). |
-| Hotels | `SAMPLE_HOTELS` | Placeholders → **Booking.com Demand API**; replace `YOUR_AID_HERE`. |
+| Hotels | `SAMPLE_HOTELS` | Placeholders → **Booking.com Demand API**; links go through `wfBook()` (CJ). |
 | Editorial guide content | `CITY_DATA` | Hand-written. Keep curated or move to CMS/Supabase. |
 | Safe/alert neighbourhoods | `CITY_INTEL` | Curated; also powers area-rating chips (§13). |
 | Global cities + homicide | `GLOBAL_CITIES` | Attributed to UNODC / World Bank / FBI; refresh annually. |
@@ -497,7 +497,7 @@ Everything that feeds a city view, and whether it is fetched **live** at runtime
 |---|---|---|
 | `YOUTUBE_API_KEY` | `.env.pipeline` (local, **gitignored**) | Used by the content/social pipeline, not the map. |
 | `GITHUB_TOKEN` | `.env.pipeline` (local, **gitignored**) | Repo automation. |
-| Booking.com `AID` | hardcoded placeholder `YOUR_AID_HERE` in the prototype | **Move to env var before any real deploy.** |
+| Booking.com affiliate | CJ publisher/ad IDs hardcoded in `wfBook()` (public tracking IDs, not secrets) | Fine client-side; move to config if the programme changes. |
 | GetYourGuide partner id `WXZGXR9` | hardcoded in prototype | Public partner id (not secret), but parameterise. |
 
 `.gitignore` already excludes `.env`, `.env.*` and `.env.pipeline` — confirmed. **Never** commit these.
@@ -922,7 +922,7 @@ Queue (1 Oct 2026): Nuremberg (done) → **Berlin (current focus)** → Munich (
 
 ### 20.7 Open items for the dev
 
-1. Booking.com affiliate ID — guide hotel links still carry `aid=YOUR_AID_HERE`.
+1. ~~Booking.com affiliate ID~~ — done 7 Oct 2026: all guide and map links run through CJ.
 2. Preview-only prototype edits (Cologne in the city list; New York guide link) move to `/new` when those guides are approved.
 3. Quarterly refresh job for the Eurostat and FBI comparison data (both APIs are free).
 4. Optional: a `/api/fbi-agency` proxy op so guide builds can use the server-side FBI key.

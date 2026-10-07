@@ -6,7 +6,8 @@ tips = json.load(open(f'{D}/tips.json'))['tips']
 costs = json.load(open(f'{D}/costs.json'))
 key = lambda n: re.sub(r'[^a-z0-9]', '', n.lower())[:14]
 maps = lambda q: 'https://www.google.com/maps/search/?api=1&query=' + urllib.parse.quote(q + ' Köln')
-book = lambda q: 'https://www.booking.com/searchresults.html?ss=' + urllib.parse.quote(q + ' Köln') + '&aid=YOUR_AID_HERE'
+import sys as _s, os as _o; _s.path.insert(0, _o.path.dirname(_o.path.dirname(_o.path.abspath(__file__)))); import affiliate
+book = lambda q: affiliate.wrap('https://www.booking.com/searchresults.html?ss=' + urllib.parse.quote(q + ' Köln'), 'Cologne')
 
 # creators + sources from the DB export (only videos that yielded facts)
 srcs = {s['id']: s for s in api['sources']}

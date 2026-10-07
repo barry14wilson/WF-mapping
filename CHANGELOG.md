@@ -2,6 +2,12 @@
 
 All notable changes to the WF-mapping repo. Newest first. Dates are commit dates (UTC). Design and architecture notes live in `Wiley-Fox-Dev-Handoff-v1.md` (§20 covers September 2026).
 
+## 2026-10-07 (affiliate links + review fixes)
+
+- **feat:** Booking.com affiliate links live via CJ (publisher 101838202, ad 15734754). Guides: `scripts/city-guides/affiliate.py` wraps every Booking URL with SID `wf-xmas-<city>`; all 8 guides re-rendered (HTML, Word, PDF), London patched in place. `/new` map: `wfBook()` helper wraps all 22 Booking links (SID `wf-map`) plus a click-time safety net. Munich links match the CJ sheet exactly. Re-rendered guides diffed against live: only links and wording changed.
+- **fix:** research shorthand "NOT VERIFIED" no longer reaches readers; renderers print "not yet confirmed" (Berlin, Chicago, Munich, Strasbourg).
+- **fix (Strasbourg, preview):** Marché OFF pin moved to Place Grimmeissen, Petite France (OSM 48.5816, 7.7406) and removed from the Krutenau text; cathedral on 25 Dec now says sources differ (City: closed; cathedral feast-day hours 14:00-17:15); tram text no longer implies bank-card tap; security figure dated 2025; "street robbery" → "violent theft without a weapon"; Hotel Leonor tag "Close to the markets"; Gengenbach date marked likely; compare rows sorted by theft.
+
 ## 2026-10-06 (Strasbourg)
 
 - **feat:** Strasbourg Christmas 2026 guide build script and source data (`scripts/city-guides/strasbourg/`): first French city. ~475 creator facts from 112 videos, SSMSI 2025 commune crime data with a custom French-cities comparison box (built in `build_guide.py`, not `make_compare.py`), Préfecture 2025 market security plan, verified 2026 dates (market opens 27 Nov) and 40 checked tips. Preview only (`/guides/strasbourg/`), new city-list entry on the preview map. New queue: Strasbourg, Vienna, Prague, Edinburgh.

@@ -2,6 +2,10 @@
 
 All notable changes to the WF-mapping repo. Newest first. Dates are commit dates (UTC). Design and architecture notes live in `Wiley-Fox-Dev-Handoff-v1.md` (§20 covers September 2026).
 
+## 2026-10-08 (Strasbourg publish)
+
+- **feat:** Strasbourg Christmas 2026 guide approved and live at `/new/guides/strasbourg/`; `/new` map links it (`GUIDE_LINKS`) and adds the Strasbourg city-list entry (rating 3, SSMSI 2025). Queue status set to done.
+
 ## 2026-10-07 (affiliate links + review fixes)
 
 - **feat:** Booking.com affiliate links live via CJ (publisher 101838202, ad 15734754). Guides: `scripts/city-guides/affiliate.py` wraps every Booking URL with SID `wf-xmas-<city>`; all 8 guides re-rendered (HTML, Word, PDF), London patched in place. `/new` map: `wfBook()` helper wraps all 22 Booking links (SID `wf-map`) plus a click-time safety net. Munich links match the CJ sheet exactly. Re-rendered guides diffed against live: only links and wording changed.

@@ -1,0 +1,385 @@
+{
+ "generated": "2026-10-08",
+ "source_note": "Main source: Austrian Federal Criminal Police Office (Bundeskriminalamt, BMI) 'Kriminalpolizeiliche Anzeigenstatistik - Kriminalitaetsbericht 2025', presented by Interior Minister Gerhard Karner on 31 March 2026. We downloaded the PDF and read the Vienna (Wien) chapter (printed pp. 154-156) and the national chapters directly: https://www.bundeskriminalamt.at/501/files/kriminalpolizeiliche_anzeigenstatistik_2025_bf.pdf . Short BMI summary (Oeffentliche Sicherheit 5-6/26): https://www.bmi.gv.at/magazinfiles/2026/05_06/01_kriminalstatistik_2025.pdf . Population: Statistik Austria press release of 9 Feb 2026, provisional population on 1 Jan 2026: Vienna 2,042,036 (1 Jan 2025: 2,028,289), Austria 9,219,113: https://www.statistik.at/fileadmin/announcement/2026/02/20260209Bevoelkerung1.1.2026.pdf . Rates per 100,000 in this file are WILEY FOX CALCULATIONS (count divided by the 1 Jan 2026 provisional population). The BK report itself uses the previous year's average population (report footnote 4, p.23), so the report's own rates would differ slightly. Indicative only. The report is a police REPORTED-offences statistic (Anzeigenstatistik), not a victim survey. Latest published year is 2025; the 2026 report is due around March 2027.",
+ "scope_warning": "These are offences reported to Austrian police (Anzeigen), counted where the offence happened. The report states that offences committed by tourists and against them are counted, but residents only are in the population base (BK report p.23, footnote 4). Vienna is a capital with millions of visitors and commuters, so per-resident rates look higher than for rural states. Rates are not the risk to one visitor. Austria publishes this statistic by Bundesland (state), not by city. Vienna is both a city and a state, so Vienna figures are city figures. Graz, Linz, Salzburg city and Innsbruck city are NOT published separately in the report we read (see comparators). Rates are not directly comparable with German 'Haeufigkeitszahl' figures because offence catalogues and counting rules may differ (NOT VERIFIED either way).",
+ "headline": {
+  "summary": "Vienna 2025: 194,625 reported offences, down 0.2% on 2024 (194,981), clearance rate 44.6% (2024: 43.4%). That is about 9,530 per 100,000 residents (Wiley Fox calculation), versus about 5,840 for Austria as a whole (538,656 offences, up 0.8%, clearance 53.6%). Pickpocketing and trick theft (Taschen- und Trickdiebstahl) in Vienna: 5,448 cases, down 7.8% on 2024 (5,908); about 267 per 100,000 residents versus about 99 nationally, and Vienna accounts for about 60% of all such cases in Austria (5,448 of 9,105). Robbery in Vienna: 1,369, down 1.8% (1,394). Violent offences (Gewaltkriminalitaet): 31,430, up 1.4% (31,006). Knife is the most common weapon used (1,168 cases, up from 1,121). Attacks on officers: 814, up 22.4%.",
+  "pickpocket_relevant_line": "Taschen- und Trickdiebstahl, Wien 2025: 5,448 (2024: 5,908), -7.8%. Austria 2025: 9,105 (2024: 9,849), -7.6%. Nationally the number has fallen from 31,602 in 2016. The BK explains the long-term fall partly by people carrying less cash and by prevention work. Source: BK report printed p.156 (Wien) and p.79 (Austria, Table 20).",
+  "source_url": "https://www.bundeskriminalamt.at/501/files/kriminalpolizeiliche_anzeigenstatistik_2025_bf.pdf"
+ },
+ "indicators": [
+  {
+   "name": "Total reported offences, Austria 2025",
+   "value": "538,656",
+   "unit": "offences",
+   "change": "+0.8% on 2024 (534,193). Clearance rate 53.6% (2024: 52.9%). Highest total in ten years per BMI.",
+   "source_url": "https://www.bundeskriminalamt.at/501/files/kriminalpolizeiliche_anzeigenstatistik_2025_bf.pdf"
+  },
+  {
+   "name": "Total reported offences, Vienna (Wien) 2025",
+   "value": "194,625",
+   "unit": "offences",
+   "change": "-0.2% on 2024 (194,981). Clearance rate 44.6% (2024: 43.4%). Vienna = 36.1% of the Austrian total with 22.2% of the population.",
+   "source_url": "https://www.bundeskriminalamt.at/501/files/kriminalpolizeiliche_anzeigenstatistik_2025_bf.pdf",
+   "note": "Vienna total per 1,000 residents about 95.3 (Wiley Fox calculation using 2,042,036 residents)."
+  },
+  {
+   "name": "Total offences per 100,000 residents: Vienna",
+   "value": "about 9,531",
+   "unit": "per 100,000 residents (Wiley Fox calculation)",
+   "change": "n/a (2024 rate not calculated)",
+   "source_url": "https://www.bundeskriminalamt.at/501/files/kriminalpolizeiliche_anzeigenstatistik_2025_bf.pdf ; population https://www.statistik.at/fileadmin/announcement/2026/02/20260209Bevoelkerung1.1.2026.pdf",
+   "note": "194,625 / 2,042,036 x 100,000. Indicative only, see scope_warning."
+  },
+  {
+   "name": "Total offences per 100,000 residents: Austria",
+   "value": "about 5,843",
+   "unit": "per 100,000 residents (Wiley Fox calculation)",
+   "change": "n/a",
+   "source_url": "https://www.bundeskriminalamt.at/501/files/kriminalpolizeiliche_anzeigenstatistik_2025_bf.pdf ; population https://www.statistik.at/fileadmin/announcement/2026/02/20260209Bevoelkerung1.1.2026.pdf",
+   "note": "538,656 / 9,219,113 x 100,000."
+  },
+  {
+   "name": "Pickpocketing and trick theft (Taschen- und Trickdiebstahl), Vienna 2025",
+   "value": "5,448",
+   "unit": "offences",
+   "change": "-7.8% on 2024 (5,908)",
+   "source_url": "https://www.bundeskriminalamt.at/501/files/kriminalpolizeiliche_anzeigenstatistik_2025_bf.pdf",
+   "note": "Category combines pocket theft and distraction/trick theft. Per 100,000 residents about 267 (Wiley Fox calculation). Printed p.156."
+  },
+  {
+   "name": "Pickpocketing and trick theft, Austria 2025",
+   "value": "9,105",
+   "unit": "offences",
+   "change": "-7.6% on 2024 (9,849). 2016: 31,602. Clearance only 10.5% (2024: 10.0%).",
+   "source_url": "https://www.bundeskriminalamt.at/501/files/kriminalpolizeiliche_anzeigenstatistik_2025_bf.pdf",
+   "note": "Per 100,000 residents about 99 (Wiley Fox calculation). Vienna share of national cases about 59.8% (5,448 of 9,105; Wiley Fox calculation). Table 20, printed p.79."
+  },
+  {
+   "name": "Robbery (Raub, sections 142 and 143 StGB), Vienna 2025",
+   "value": "1,369",
+   "unit": "offences",
+   "change": "-1.8% on 2024 (1,394)",
+   "source_url": "https://www.bundeskriminalamt.at/501/files/kriminalpolizeiliche_anzeigenstatistik_2025_bf.pdf",
+   "note": "Three quarters happened in public places, streets, car parks, public transport and stops (report text). Per 100,000 residents about 67 (Wiley Fox calculation). Printed p.155."
+  },
+  {
+   "name": "Robbery, Austria 2025",
+   "value": "2,269",
+   "unit": "offences",
+   "change": "-7.4% on 2024 (2,450). Clearance 50.9%.",
+   "source_url": "https://www.bundeskriminalamt.at/501/files/kriminalpolizeiliche_anzeigenstatistik_2025_bf.pdf",
+   "note": "Austria top locations 2025: public place/street/car park 1,433; public transport/stop 152 (+14.3%); railway station 123 (-7.5%). The BK attributes the fall partly to the youth-crime task force and more patrols. Tables 12-13, printed pp.64-65. Per 100,000 about 24.6 nationally (Wiley Fox calculation)."
+  },
+  {
+   "name": "Violent offences (Gewaltkriminalitaet), Vienna 2025",
+   "value": "31,430",
+   "unit": "offences",
+   "change": "+1.4% on 2024 (31,006)",
+   "source_url": "https://www.bundeskriminalamt.at/501/files/kriminalpolizeiliche_anzeigenstatistik_2025_bf.pdf",
+   "note": "Broad category (includes domestic violence 7,206, down from 7,530; 54.7% of cases the suspect knew the victim). Stabbing/cutting weapon most common tool: 1,168 cases (2024: 1,121). Rape reports 467 (-10% from 519). Completed murder victims 22 (12 male, 10 female; 2024: 31). Violence against officers 814 (+22.4% from 665). Printed p.155."
+  },
+  {
+   "name": "Violent offences, Austria 2025",
+   "value": "88,133",
+   "unit": "offences",
+   "change": "+2.2% on 2024. Highest in 25 years per the BMI summary.",
+   "source_url": "https://www.bmi.gv.at/magazinfiles/2026/05_06/01_kriminalstatistik_2025.pdf",
+   "note": "About 4% of cases involved a firearm, knife or blunt weapon (ten years ago: 5.4%). 74 murder victims (2024: 76)."
+  },
+  {
+   "name": "Property crime (Eigentumskriminalitaet), Vienna 2025",
+   "value": "70,940",
+   "unit": "offences",
+   "change": "-0.6% on 2024 (71,387)",
+   "source_url": "https://www.bundeskriminalamt.at/501/files/kriminalpolizeiliche_anzeigenstatistik_2025_bf.pdf",
+   "note": "Vehicle theft (Kfz-Diebstahl) in Vienna 582 (-18.7% from 716). Printed p.156."
+  },
+  {
+   "name": "Home burglary (Wohnraumeinbruch), Austria 2025",
+   "value": "6,828",
+   "unit": "offences",
+   "change": "2024: 6,930; 2016: 12,975",
+   "source_url": "https://www.bmi.gv.at/magazinfiles/2026/05_06/01_kriminalstatistik_2025.pdf",
+   "note": "Vienna figure for home burglary NOT VERIFIED in the pages we read.",
+   "status": " "
+  },
+  {
+   "name": "Drug-law offences (Suchtmittelgesetz), Vienna 2025",
+   "value": "11,204",
+   "unit": "offences",
+   "change": "+3.7% on 2024 (10,802)",
+   "source_url": "https://www.bundeskriminalamt.at/501/files/kriminalpolizeiliche_anzeigenstatistik_2025_bf.pdf",
+   "note": "A control offence: more checks produce more reports (Vienna police president said this in Jan 2025, see police_focus_areas). Printed p.156."
+  },
+  {
+   "name": "Internet crime, Vienna 2025",
+   "value": "19,683",
+   "unit": "offences",
+   "change": "-7.2% on 2024 (21,210)",
+   "source_url": "https://www.bundeskriminalamt.at/501/files/kriminalpolizeiliche_anzeigenstatistik_2025_bf.pdf",
+   "note": "Not directly relevant to street safety. Included because online ticket and accommodation scams sit here. Printed p.154."
+  },
+  {
+   "name": "Assault / bodily harm (Koerperverletzung) as a separate line, Vienna 2025",
+   "value": "NOT VERIFIED",
+   "unit": "n/a",
+   "change": "n/a",
+   "source_url": "https://www.bundeskriminalamt.at/501/files/kriminalpolizeiliche_anzeigenstatistik_2025_bf.pdf",
+   "note": "The Vienna chapter gives the broad 'violent offences' total, not assault alone. We did not find an assault-only Vienna figure in the pages read.",
+   "status": "NOT VERIFIED"
+  }
+ ],
+ "comparators_by_state_2025": {
+  "note": "The BK report gives totals and pickpocketing by Bundesland. City-only figures for Graz, Linz, Salzburg and Innsbruck were NOT found in the report. State figures include the surrounding region, so they are NOT city figures. Per-100,000 values are Wiley Fox calculations using Statistik Austria provisional 1 Jan 2026 population.",
+  "table": [
+   {
+    "area": "Vienna (city and state)",
+    "total": 194625,
+    "change_total": "-0.2%",
+    "pickpocket_trick_theft": 5448,
+    "change_pickpocket": "-7.8%",
+    "pop_1jan2026": 2042036,
+    "total_per_100k": 9531,
+    "pickpocket_per_100k": 266.8
+   },
+   {
+    "area": "Styria (Steiermark; includes Graz)",
+    "total": 61372,
+    "change_total": "+5.1% (2024: 58,378)",
+    "pickpocket_trick_theft": 734,
+    "change_pickpocket": "+4.3% (2024: 704)",
+    "pop_1jan2026": 1272195,
+    "total_per_100k": 4824,
+    "pickpocket_per_100k": 57.7,
+    "note": "Styria clearance rate 58.7%. Graz city alone: NOT VERIFIED."
+   },
+   {
+    "area": "Upper Austria (Oberoesterreich; includes Linz)",
+    "total": 66784,
+    "change_total": "-1.4% (2024: 67,733)",
+    "pickpocket_trick_theft": 704,
+    "change_pickpocket": "-12.5% (2024: 805)",
+    "pop_1jan2026": 1537669,
+    "total_per_100k": 4343,
+    "pickpocket_per_100k": 45.8,
+    "note": "Clearance 60.7%. Linz city alone: NOT VERIFIED."
+   },
+   {
+    "area": "Salzburg (state; includes Salzburg city)",
+    "total": 32708,
+    "change_total": "-2.7% (2024: 33,617)",
+    "pickpocket_trick_theft": 314,
+    "change_pickpocket": "-35.7% (2024: 488)",
+    "pop_1jan2026": 573748,
+    "total_per_100k": 5701,
+    "pickpocket_per_100k": 54.7,
+    "note": "Clearance 58.2%. Salzburg city alone: NOT VERIFIED."
+   },
+   {
+    "area": "Tyrol (Tirol; includes Innsbruck)",
+    "total": 42860,
+    "change_total": "+2.1% (2024: 41,975)",
+    "pickpocket_trick_theft": 306,
+    "change_pickpocket": "-7.8% (2024: 332)",
+    "pop_1jan2026": 779174,
+    "total_per_100k": 5501,
+    "pickpocket_per_100k": 39.3,
+    "note": "Clearance 59.5%. Innsbruck city alone: NOT VERIFIED."
+   },
+   {
+    "area": "Austria",
+    "total": 538656,
+    "change_total": "+0.8%",
+    "pickpocket_trick_theft": 9105,
+    "change_pickpocket": "-7.6%",
+    "pop_1jan2026": 9219113,
+    "total_per_100k": 5843,
+    "pickpocket_per_100k": 98.8
+   }
+  ],
+  "source_url": "https://www.bundeskriminalamt.at/501/files/kriminalpolizeiliche_anzeigenstatistik_2025_bf.pdf",
+  "reading_note": "On these figures Vienna's reported pickpocketing rate is about 5 to 7 times that of the other state-level figures shown. Vienna is the main tourist destination and transport hub, and the tourist effect cannot be separated out (NOT VERIFIED)."
+ },
+ "comparators_germany_from_sibling_files": {
+  "note": "Copied from the sibling Wiley Fox files for Munich and Berlin. We did NOT re-fetch those German sources in this pass. German 'Haeufigkeitszahl' and Austrian reported-offence rates may not be like for like (NOT VERIFIED).",
+  "munich_city_hz_2025": {
+   "value": "5,798 offences per 100,000 residents (city area), -2.7% on 2024 (5,957)",
+   "source_url": "https://www.polizei.bayern.de/mam/kriminalitaet/sicherheitsreport_2025_pp_m%C3%BCnchen.pdf"
+  },
+  "munich_pickpocketing_2025": {
+   "value": "1,489 (2024: 1,665), -10.6%",
+   "source_url": "https://www.polizei.bayern.de/mam/kriminalitaet/sicherheitsreport_2025_pp_m%C3%BCnchen.pdf"
+  },
+  "berlin_hz_2025": {
+   "value": "13,642 offences per 100,000 residents, -7.3% on 2024 (14,719)",
+   "source_url": "https://www.berlin.de/polizei/_assets/verschiedenes/pks/pks-kurzbericht-2025.pdf"
+  },
+  "berlin_pickpocketing_2025": {
+   "value": "13,621 (2024: 15,943), -14.6%",
+   "source_url": "https://www.berlin.de/polizei/_assets/verschiedenes/pks/pks-kurzbericht-2025.pdf"
+  },
+  "berlin_note": "Munich file quotes a different Berlin figure (13,233); Berlin's own report says 13,642. Use 13,642."
+ },
+ "data_quality_flags": [
+  "Per-100,000 rates are Wiley Fox calculations on provisional 1 Jan 2026 population. The BK report uses a different (previous-year average) population base, so its own rates would differ slightly.",
+  "Only the BK Anzeigenstatistik was read in full for Vienna. The separate Sicherheitsbericht (Ministry of Justice/Interior security report) and Statistik Austria's court statistics were NOT consulted.",
+  "The Vienna chapter gives no assault-only, no Wohnraumeinbruch and no district-level (Bezirk) figures. NOT VERIFIED.",
+  "Pickpocketing and trick theft are one category. It also includes distraction thefts such as bumping or spilling drinks.",
+  "Graz, Linz, Salzburg city and Innsbruck city are not published separately in the report read; only state totals.",
+  "Clearance rates differ strongly (Vienna 44.6% vs Austria 53.6%) and say nothing about risk to a visitor.",
+  "A news report (vienna.at, 31 Mar 2026) says the 10-14 age group rose 9.4% but also gives '55 percent' in the same paragraph; that article is inconsistent on youth figures, so we do not use its youth numbers.",
+  "Press links used in this file (vienna.at, ORF, MeinBezirk, 5min.at) are news reports, not official pages. They are marked where used."
+ ],
+ "weapon_ban_zones": {
+  "legal_basis": "Section 36b SPG (Sicherheitspolizeigesetz), ordinance of the Landespolizeidirektion (LPD) Wien. Applies 00:00 to 24:00, Monday to Sunday. Fine up to EUR 1,000, repeat up to EUR 4,600. Police may search clothing, vehicles and containers on concrete suspicion. Pepper spray is exempt only for people licensed to hold weapons.",
+  "note": "Ordinances run for 3 months and have been renewed repeatedly. Check dates again in November.",
+  "zones": [
+   {
+    "zone": "Praterstern (Leopoldstadt)",
+    "scope": "Northern Praterstern, southern Praterstern including the OeBB pedestrian underpass, Hauptallee start, Kaiserwiese, Riesenradplatz wall to Ausstellungsstrasse, Venediger Au park.",
+    "current_ordinance": "In force from 7 Sept 2026 00:00, expires at the end of 7 Dec 2026 unless lifted earlier. It does NOT cover Christmas Day unless renewed. Renewal not yet published (NOT VERIFIED).",
+    "source_url": "https://www.polizei.gv.at/lpd_docs/4537.pdf",
+    "extra": "Police president Puerstl (APA interview, 12 Jan 2025): 95 weapons seized in the Praterstern zone in 2024, 73 of them knives; 2023: 108, of which 92 knives. He said the scene 'has calmed' and violent crime was 'slightly falling'. Press: https://wien.orf.at/stories/3288690/"
+   },
+   {
+    "zone": "Inner Favoriten: Reumannplatz area between Platz der Kulturen and Reumannplatz (press also names Keplerplatz)",
+    "scope": "Defined by house fronts around Suedtirolerplatz, Herndlgasse, Reumannplatz, Buergergasse, Waldgasse, Favoritenstrasse/Schroettergasse, Antonsplatz, Arthaberplatz, Laxenburger Strasse.",
+    "current_ordinance": "In force 9 July 2026, expires end of 9 Oct 2026 (tomorrow) unless renewed. Renewal NOT VERIFIED. Previous ordinance: 7 Jan to 7 Apr 2026.",
+    "source_url": "https://www.polizei.gv.at/lpd_docs/4489.pdf",
+    "extra": "Zone has existed since spring 2024 (vienna.at headline: 'gilt ab 30. Maerz'; ORF says early March 2024; dates differ, NOT VERIFIED which). 118 weapons/similar items seized by end of 2024, 80 of them knives (Puerstl, ORF 12 Jan 2025). May to July 2025: violent-crime reports in the zone down about 10% on May to July 2024 (Puerstl, vienna.at 22 Aug 2025). Sources: https://wien.orf.at/stories/3288690/ ; https://www.vienna.at/wiens-polizeichef-puerstl-waffenverbotszonen-bei-kontrollen-wirskam/9622391"
+   },
+   {
+    "zone": "Yppenplatz (Ottakring) weapon ban zone plus child protection zone",
+    "scope": "Weapon ban area around Yppenplatz; protection zone covers the playground and park plus a 150 m radius.",
+    "current_ordinance": "Weapon ban extended until Thursday 5 Nov 2026; protection zone until 3 Feb 2027 (MeinBezirk, 11 Aug 2026). The LPD ordinance itself was not found, so the 5 Nov date is from press only.",
+    "source_url": "https://www.meinbezirk.at/ottakring/c-lokales/seit-august-2025-wurden-am-yppenplatz-92-waffen-sichergestellt_a8843825",
+    "extra": "Police figures given to MeinBezirk: 1 Aug 2025 to 31 Jul 2026, 75 violations and 92 weapons or dangerous items seized, 66 of them knives. First started 1 Aug 2025 (vienna.at, 30 Jul 2025)."
+   },
+   {
+    "zone": "Westbahnhof / Guertel, Karlsplatz",
+    "scope": "NO weapon ban zone found at Westbahnhof or Karlsplatz. The BMI magazine (7-8/26, p.21) lists existing weapon ban zones as Yppenplatz, Reumannplatz and Keplerplatz, and says protection zones are not to be confused with them.",
+    "current_ordinance": "NOT VERIFIED for any Westbahnhof or Karlsplatz weapon ban.",
+    "source_url": "https://www.bmi.gv.at/magazinfiles/2026/07_08/07_wien.pdf"
+   }
+  ],
+  "alcohol_and_protection_zones": {
+   "westbahnhof": "Alcohol consumption ban in and around Westbahnhof from 8 May 2026 (hospitality venues exempt). Protection zone around Fritz-Imhoff-Park and U-Bahn station Gumpendorfer Strasse (Mariahilf) from 8 May 2026: police can issue exclusion orders on reasonable suspicion of drug offences. Park fenced and locked at dusk. Gumpendorfer Strasse is the only Vienna station with a fixed Wiener Linien security post. Alcohol ban zones already existed at Franz-Jonas-Platz (Floridsdorf) and Praterstern. Sources: BMI Oeffentliche Sicherheit 7-8/26 p.21 https://www.bmi.gv.at/magazinfiles/2026/07_08/07_wien.pdf ; press https://www.vienna.at/new-alcohol-prohibition-and-protection-zones-in-vienna-from-may/10136231",
+   "first_action_results": "Focus action at start of measures: 58 reports under protection-zone and aliens rules, 288 people checked, 21 drug seizures, 15 drug-law reports (BMI magazine 7-8/26)."
+  },
+  "national_knife_ban": "Interior Minister Karner planned a nationwide knife-carrying ban, 'still under negotiation with the coalition partner' as at 31 Mar 2026 (vienna.at). Whether it has since become law: NOT VERIFIED."
+ },
+ "christmas_market_security": {
+  "2025_edition": {
+   "fact": "On 6 Nov 2025 Interior Minister Karner said police would again show increased presence at Vienna Advent markets, with uniformed and plain-clothes officers and specialised task forces. The State Protection and Intelligence Directorate (DSN) saw no indication of a specific terror threat related to Advent markets, but the general threat from Islamist-motivated actors stays high in a European comparison.",
+   "pickpocket_warning": "Police and the Interior Ministry named Advent the high season for pickpockets, especially in crowds, at sales stalls and queues, with trick thefts such as bumping, spilling drinks and distraction with cards or flyers. Advice: valuables close to the body in zipped inner pockets, bags fully closed, be suspicious of distractions, carry little cash, block bank/SIM cards at once if robbed, call police.",
+   "source_url": "https://www.vienna.at/?p=9787604",
+   "source_type": "News report (vienna.at, 6 Nov 2025) of a ministry statement. The ministry page itself was not found. Status: latest year only (2025)."
+  },
+  "dec_2024": {
+   "fact": "After the Magdeburg attack (20 Dec 2024) the Vienna police spokesman said the extensive measures in place since the start of Advent were 'intensified at a high level'; no link or concrete threat to Austria. He said Austria had been on terror warning level 4 without interruption since October 2023.",
+   "source_url": "https://www.vienna.at/weihnachtsmarkte-nachscharfungen-in-osterreich-nach-todesfahrt-in-deutschland/9126820",
+   "status": "latest year only (2024). Current 2026 warning level: NOT VERIFIED."
+  },
+  "2026_plan": "NOT VERIFIED. No 2026 police numbers, bollard plan, bag-check rule or perimeter hours found as at 8 Oct 2026. Markets open from 6 Nov 2026.",
+  "numbers": "No official count of officers on Vienna Christmas markets found for 2025 or 2026. NOT VERIFIED.",
+  "bag_checks_rathausplatz": "NOT VERIFIED for the Christkindlmarkt. Bag and access checks by police and security are a stated possibility at the Silvesterpfad (see new_years_eve_2025_26)."
+ },
+ "fcdo_austria": {
+  "page": "https://www.gov.uk/foreign-travel-advice/austria",
+  "page_last_updated": "2026-08-11 (change note: updated information on the European Entry/Exit System, 'Entry requirements' page; read from the GOV.UK content API on 8 Oct 2026)",
+  "terrorism": "'Terrorists are likely to try to carry out attacks in Austria.' Attacks could be indiscriminate, including public transport, transport hubs, music, sporting and cultural events, entertainment and nightlife venues, government buildings, places of worship. Be vigilant and follow local authorities. Recent examples listed: 15 Feb 2025 knife attack in Villach (1 killed, 5 injured); 2 Nov 2020 shooting in central Vienna (4 killed, 23 injured). The page says Austrian authorities have disrupted various attack plans and you can expect increased police presence and extra safety measures.",
+  "terrorism_level_note": "FCDO wording for Austria is 'likely' (the France page says 'very likely'). Its Austria page does not mention Christmas markets by name.",
+  "crime": "'Crime levels are generally low. However, there are higher levels of petty crime, particularly pickpocketing, in the big city centres and city parks after dark. Thieves use a variety of methods to distract people.' Take care on public transport and in crowded city centres, including main stations; be careful on international trains and when taking baggage from trains and coaches.",
+  "drink_spiking": "Drinks in bars overseas are often stronger than in the UK. Be careful taking drinks from strangers or leaving drinks unattended; criminals have robbed and assaulted people after spiking drinks.",
+  "other_lines": "Demonstrations may happen with little or no warning. You must have easy access to your passport (UK driving licence is not accepted as ID). Face covering ban: fine up to EUR 150. Validate your public transport ticket before travel: on-the-spot fine EUR 100 to 500. Illegal drugs including cannabis carry severe penalties.",
+  "emergency_numbers": "112 (EU), police 133, ambulance 144, fire 122. FCDO London 24-hour line +44 20 7008 5000."
+ },
+ "police_focus_areas": {
+  "note": "Only items with a dated source are listed. We found no official 2026 statement naming Karlsplatz as a police focus area.",
+  "items": [
+   {
+    "area": "Westbahnhof, Fritz-Imhoff-Park, U6 Gumpendorfer Strasse",
+    "what": "Alcohol ban and protection zone from 8 May 2026; strengthened police presence; focus action at start (58 reports, 288 checks). Earlier focus action at Westbahnhof on 2 June 2025 (drugs, violence, aliens-law checks, radicalisation signs).",
+    "date": "8 May 2026; 2 Jun 2025",
+    "sources": [
+     "https://www.bmi.gv.at/magazinfiles/2026/07_08/07_wien.pdf",
+     "https://www.vienna.at/drogen-gewalt-terror-aktion-scharf-der-polizei-am-wiener-westbahnhof/9449483"
+    ]
+   },
+   {
+    "area": "Praterstern",
+    "what": "Weapon ban zone (see weapon_ban_zones) and alcohol ban zone; 95 weapons seized in 2024.",
+    "date": "ordinance 7 Sep to 7 Dec 2026",
+    "sources": [
+     "https://www.polizei.gv.at/lpd_docs/4537.pdf",
+     "https://wien.orf.at/stories/3288690/"
+    ]
+   },
+   {
+    "area": "Favoriten (Reumannplatz, Keplerplatz), Ottakring (Yppenplatz)",
+    "what": "Weapon ban zones; Yppenplatz also a child protection zone to 3 Feb 2027.",
+    "date": "2026",
+    "sources": [
+     "https://www.polizei.gv.at/lpd_docs/4489.pdf",
+     "https://www.meinbezirk.at/ottakring/c-lokales/seit-august-2025-wurden-am-yppenplatz-92-waffen-sichergestellt_a8843825"
+    ]
+   },
+   {
+    "area": "Vienna-wide focus actions",
+    "what": "Interior Ministry: 2,192 focus actions (Schwerpunktaktionen) in Vienna from 1 Jan to about 2 Jun 2025, with reports against 1,198 people, 198 arrests (30 minors) and 32 weapons seized.",
+    "date": "1 Jan to 2 Jun 2025 (latest year only (2025))",
+    "sources": [
+     "https://www.vienna.at/drogen-gewalt-terror-aktion-scharf-der-polizei-am-wiener-westbahnhof/9449483"
+    ]
+   },
+   {
+    "area": "Public space generally",
+    "what": "Vienna police president Puerstl (Jan 2025): public space has been the first police priority for many years because it affects residents' sense of safety most.",
+    "date": "Jan 2025",
+    "sources": [
+     "https://www.vienna.at/szene-hat-sich-beruhigt-positive-bilanz-zu-wiener-waffenverbotszonen/9155887"
+    ]
+   },
+   {
+    "area": "Karlsplatz, Guertel generally",
+    "what": "NOT VERIFIED with a dated 2025/26 official source. Do not describe as a current focus area without one.",
+    "date": "n/a",
+    "sources": []
+   }
+  ]
+ },
+ "new_years_eve_2025_26": {
+  "event": "Wiener Silvesterpfad 31 Dec 2025: opened 14:00; locations Rathausplatz, Freyung, Am Hof, Graben, Stephansplatz, Neuer Markt, Kaerntner Strasse and the Winter Market at Riesenradplatz (Prater); more than 100 hours of free programme until 02:00.",
+  "outcome": "About 550,000 visitors (organiser/City of Vienna; previous year about 800,000 in milder weather). Whole event area shut to further visitors shortly before midnight because it was full. City: atmosphere 'calm, relaxed, peaceful'. Police told APA there were no notable incidents. Sources (news reports of City/police statements): https://wien.orf.at/stories/3336130/ ; https://www.vienna.at/rund-550-000-menschen-begruessten-beim-wiener-silvesterpfad-das-jahr-2026/9897704",
+  "official_police_statistics": "Vienna police NYE statistics (arrests, injuries, fireworks reports): NOT VERIFIED, not found.",
+  "site_rules": "Prohibited across the event area: weapons of all kinds, sprays and gases, glass and cans, pyrotechnics, megaphones, laser pointers, bulky items, vehicles and sports equipment such as bikes and scooters. Strollers and dogs temporarily banned in busy areas. Bag and access checks may be carried out by police and security. Source: https://www.vienna.at/?p=9897233 (vienna.at, 31 Dec 2025, quoting the organiser).",
+  "traffic_and_transport": "Universitaetsring at Rathausplatz closed to all traffic including trams from 19:00; U-Bahn Stephansplatz (U1, U3) closed from 21:00 (planned). Source: https://wien.orf.at/stories/3336130/",
+  "fireworks_rules": "Only category F1 (table fireworks, sparklers, bang snaps, confetti) allowed in Vienna. F2 (rockets, bangers, jumping jacks, etc.) banned throughout the built-up area; any pyrotechnics banned near petrol stations. Fines up to EUR 3,600 (LPD Wien, reported by ORF 30 Dec 2025). Source: https://wien.orf.at/stories/3335195/ ; wien.info repeats that rockets and bangers from F2 are banned in all of Vienna: https://www.wien.info/de/aktuell/weihnachten/silvester-358870",
+  "2026_27": "Silvesterpfad scheduled 31 Dec 2026, 14:00 to 02:00, food and drink from 11:00, free entry (wien.info). 2026/27 security rules, bans and closures: NOT VERIFIED (normally announced in the last days of December). Check the 2026 Silvesterpfad site wienersilvesterpfad.at in December."
+ },
+ "taylor_swift_2024_context": {
+  "fact": "On 7 Aug 2024 the promoter cancelled three Taylor Swift concerts at the Ernst Happel Stadium after the arrest of terror suspects who allegedly planned an attack; about 170,000 fans were expected (news.ORF.at, 7-8 Aug 2024).",
+  "source_url": "https://orf.at/stories/3365959/",
+  "status": "News report, NOT an official page. Trial outcome NOT VERIFIED. Relevance: shows Austrian authorities disrupted a plot aimed at a mass event; FCDO's Austria page says authorities have 'successfully disrupted various attack plans' without naming this one. Use with caution in the guide."
+ },
+ "no_street_level_data": {
+  "finding": "The BK publishes totals by Bundesland, not by street, district or city except Vienna. We found no official street-level or district-level (Bezirk) crime map for Vienna. Not exhaustively searched (NOT VERIFIED). The guide should use map pins and the named police zones, not crime-by-street.",
+  "checked": "BK Kriminalitaetsbericht 2025 (Vienna chapter, contents list). A search of data.gv.at / wien.gv.at open data for district crime tables was NOT done.",
+  "url": "https://www.bundeskriminalamt.at/501/files/kriminalpolizeiliche_anzeigenstatistik_2025_bf.pdf"
+ },
+ "unverified": [
+  "Vienna 2025 assault-only (Koerperverletzung) and home burglary (Wohnraumeinbruch) figures.",
+  "City-only figures for Graz, Linz, Salzburg city and Innsbruck city (only state totals found).",
+  "District (Bezirk) level crime for Vienna, or any street-level data.",
+  "Vienna Sicherheitsbericht (Justice/Interior security report) figures; Statistik Austria data.",
+  "2026 Christmas market security plan, officer numbers, bag-check or bollard measures.",
+  "Current terror warning level for 2026 (level 4 was quoted for Dec 2024).",
+  "Whether the Praterstern weapon ban is renewed after 7 Dec 2026, the Inner Favoriten ban after 9 Oct 2026, the Yppenplatz ban after 5 Nov 2026.",
+  "Whether the nationwide knife-carrying ban has been legislated since 31 Mar 2026.",
+  "Vienna police New Year's Eve 2025/26 statistics; New Year's Eve 2026/27 measures.",
+  "Karlsplatz or Guertel as a dated 2025/26 police focus area.",
+  "Outcome of the 2024 Taylor Swift plot case.",
+  "German comparators (Munich, Berlin) were taken from sibling files and not re-fetched here."
+ ]
+}

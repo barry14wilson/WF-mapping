@@ -1,0 +1,219 @@
+{
+ "generated": "2026-10-08",
+ "note": "Researched 8 Oct 2026. Status labels: 'official 2026' = on an official 2026 page (organiser, Vienna Tourist Board wien.info, Austrian National Tourist Office austria.info, operator site); 'latest year only (2025)' = only last year's information found; 'NOT VERIFIED' = not confirmed on an official page. wien.info and austria.info are tourist-board pages, not the market organisers; where an organiser site was read it is named. Hours can change: re-check in mid-November.",
+ "calendar_note": "2026-27 weekdays: 13 Nov 2026 Friday (Christkindlmarkt opens). 8 Dec Tuesday. 24 Dec Thursday. 25 Dec Friday. 26 Dec Saturday. 27 Dec Sunday. 31 Dec Thursday. 1 Jan 2027 Friday. 6 Jan 2027 Wednesday.",
+ "public_holidays": [
+  {
+   "date": "Tue 8 Dec 2026",
+   "name": "Immaculate Conception (Maria Empfaengnis)",
+   "shops": "Public holiday, but trade may open 10:00-18:00 on 8 Dec; staff may decline (WKO, 5 Aug 2026). Many large shops open, many small ones shut. Markets open normally.",
+   "source_url": "https://www.wko.at/oe/handel/oeffnungszeiten-im-handel-am-8-dezember",
+   "status": "official 2026 (weekday and trade hours); holiday status itself not fetched from a statute page"
+  },
+  {
+   "date": "Thu 24 Dec 2026",
+   "name": "Christmas Eve (not a public holiday)",
+   "shops": "General retail until 14:00 (13:00 if staff employed); sweets and cut flowers until 18:00; Christmas trees until 20:00 (WKO Vienna rule, page dated 16 Jan 2026, rule valid since 2008).",
+   "source_url": "https://www.wko.at/wien/handel/oeffnungszeiten-in-wien",
+   "status": "official rule; 2026 not separately restated"
+  },
+  {
+   "date": "Fri 25 Dec 2026",
+   "name": "Christmas Day",
+   "shops": "Shops closed (public holiday); only exempt outlets such as station and airport shops (max 80 sq m) open under the Vienna opening-hours rule.",
+   "source_url": "https://www.wko.at/wien/handel/oeffnungszeiten-in-wien",
+   "status": "holiday status NOT fetched from a statute page in this pass; well known (Arbeitsruhegesetz)"
+  },
+  {
+   "date": "Sat 26 Dec 2026",
+   "name": "St Stephen's Day (Stefanitag)",
+   "shops": "Shops closed (public holiday on a Saturday).",
+   "source_url": "https://www.wko.at/wien/handel/oeffnungszeiten-in-wien",
+   "status": "holiday status NOT fetched from a statute page in this pass"
+  },
+  {
+   "date": "Thu 31 Dec 2026",
+   "name": "New Year's Eve (not a public holiday)",
+   "shops": "General retail until 17:00, food shops until 18:00, sweets, cut flowers and New Year's Eve items until 20:00 (WKO Vienna rule).",
+   "source_url": "https://www.wko.at/wien/handel/oeffnungszeiten-in-wien",
+   "status": "official rule; 2026 not separately restated"
+  },
+  {
+   "date": "Fri 1 Jan 2027",
+   "name": "New Year's Day",
+   "shops": "Shops closed.",
+   "source_url": "https://www.wko.at/wien/handel/oeffnungszeiten-in-wien",
+   "status": "holiday status NOT fetched from a statute page in this pass"
+  },
+  {
+   "date": "Wed 6 Jan 2027",
+   "name": "Epiphany",
+   "shops": "Shops closed.",
+   "source_url": "n/a",
+   "status": "NOT VERIFIED on an official page"
+  }
+ ],
+ "overall": {
+  "name": "Vienna Advent markets 2026 (more than 20 official markets per austria.info)",
+  "opening": "Earliest: Stephansplatz and Schoenbrunn from Fri 6 Nov 2026. Wiener Christkindlmarkt (Rathausplatz) from Fri 13 Nov 2026.",
+  "closing": "Most close 23 Dec; Rathausplatz, Stephansplatz, Maria-Theresien-Platz and Schwarzenbergplatz close 26 Dec; Belvedere 31 Dec; Schoenbrunn and Riesenradplatz winter market 6 Jan 2027.",
+  "daily_hours": "Varies by market, see markets. Rathausplatz 10:00-22:00 daily.",
+  "source_urls": [
+   "https://www.christkindlmarkt.at/en/",
+   "https://www.wien.info/en/now-on/christmas/christmas-markets-342664",
+   "https://www.austria.info/en-gb/highlights/christmas-markets-in-vienna/"
+  ]
+ },
+ "markets": [
+  {
+   "market": "Wiener Christkindlmarkt, Rathausplatz (1010)",
+   "dates_2026": "Fri 13 Nov to Sat 26 Dec 2026",
+   "hours": "Daily 10:00-22:00",
+   "closed_or_special": "Thu 24 Dec: 10:00-18:30. 25 and 26 Dec open normal hours (no exception listed). Ice skating 'Eistraum am Christkindlmarkt': 13 Nov 2026 to 6 Jan 2027, daily 10:00-22:00, 24 Dec 10:00-18:30, CLOSED 31 Dec. 'Wiener Eistraum' (the big rink in front of the Rathaus, separate from the Christmas rink): Fri 22 Jan to Sun 7 Mar 2027, 10:00-22:00. So the Wiener Eistraum is NOT open at Christmas; the Eistraum at the Christkindlmarkt is. Trams 1, 71, D (Rathausplatz/Burgtheater), U2 Rathaus, U3 Volkstheater.",
+   "status": "official 2026 (organiser site, page timestamp 5 Oct 2026)",
+   "source_url": "https://www.christkindlmarkt.at/en/"
+  },
+  {
+   "market": "Schoenbrunn Palace Christmas market (Ehrenhof, 1130)",
+   "dates_2026": "Fri 6 Nov 2026 to Wed 6 Jan 2027",
+   "hours": "6 Nov-23 Dec: 10:00-21:00. 25 Dec-6 Jan: 10:00-19:00",
+   "closed_or_special": "Thu 24 Dec: 10:00-16:00. Open 25, 26 and 31 Dec (10:00-19:00) and 1 Jan 10:00-19:00. Over 90 huts; Glice ice rink (free for children), curling lanes, carousel, Ferris wheel, children's train.",
+   "status": "official 2026 (wien.info day-by-day listing; organiser site not read)",
+   "source_url": "https://www.wien.info/de/aktuell/veranstaltungen/weihnachtsmarkt-schloss-schoenbrunn-1133662"
+  },
+  {
+   "market": "K&K Christmas Market, Belvedere (Prinz-Eugen-Strasse 27, 1030)",
+   "dates_2026": "Fri 20 Nov to Thu 31 Dec 2026",
+   "hours": "Mon-Fri 11:00-21:00; Sat, Sun and holidays 10:00-21:00",
+   "closed_or_special": "24 Dec and 31 Dec: 11:00-17:00. Max 35 huts, use limited to the area in front of the Upper Belvedere. CONFLICTS: austria.info says close 22:00 and 24-27 Dec 11:00-17:00; wien.info overview says Mon-Fri '11am-2pm'. We use the organiser's own site.",
+   "status": "official 2026 (organiser kkweihnachtsmarkt.at); tourist boards conflict",
+   "source_url": "https://www.kkweihnachtsmarkt.at/"
+  },
+  {
+   "market": "Spittelberg Christmas market (Spittelberggasse, Stiftgasse, Schrankgasse, Gutenberggasse, 1070)",
+   "dates_2026": "Fri 13 Nov to Wed 23 Dec 2026",
+   "hours": "Mon-Fri 14:00-21:30; Sat, Sun and holidays 11:00-21:30",
+   "closed_or_special": "Closed from 24 Dec (ends 23 Dec).",
+   "status": "official 2026 (tourist boards wien.info/austria.info; organiser site spittelberg.at not read)",
+   "source_url": "https://www.wien.info/en/now-on/christmas/christmas-markets-342664"
+  },
+  {
+   "market": "Art Advent, Karlsplatz (1040)",
+   "dates_2026": "Fri 13 Nov to Wed 23 Dec 2026",
+   "hours": "Daily 12:00-20:00; food served until 21:00",
+   "closed_or_special": "Closed from 24 Dec. Only Austrian Advent market with fully certified organic catering (per wien.info).",
+   "status": "official 2026 (wien.info event page)",
+   "source_url": "https://www.wien.info/en/now-on/events/art-advent-art-and-crafts-market-on-karlsplatz-2024-1001460"
+  },
+  {
+   "market": "Weihnachtsmarkt Am Hof (1010)",
+   "dates_2026": "Fri 13 Nov to Wed 23 Dec 2026",
+   "hours": "Mon-Thu 11:00-21:00; Fri-Sun and holidays 10:00-21:00; food until 22:00",
+   "closed_or_special": "Closed from 24 Dec.",
+   "status": "official 2026 (wien.info overview)",
+   "source_url": "https://www.wien.info/en/now-on/christmas/christmas-markets-342664"
+  },
+  {
+   "market": "Altwiener Christkindlmarkt, Freyung (1010)",
+   "dates_2026": "Sat 14 Nov to Wed 23 Dec 2026",
+   "hours": "Daily 10:00-21:00",
+   "closed_or_special": "Closed from 24 Dec. Note 'Altwiener Christkindlmarkt' is also the market's name on wien.info.",
+   "status": "official 2026 (wien.info event page)",
+   "source_url": "https://www.wien.info/en/now-on/events/old-style-viennese-christkindlmarkt-freyung-2024-1001458"
+  },
+  {
+   "market": "Christmas Village, Maria-Theresien-Platz (1010)",
+   "dates_2026": "Fri 20 Nov to Sat 26 Dec 2026",
+   "hours": "Mon-Fri 11:00-21:00; Sat-Sun 10:00-21:00",
+   "closed_or_special": "24, 25 and 26 Dec special hours: NOT VERIFIED (overview lists only the two ranges).",
+   "status": "official 2026 for dates and weekly hours (wien.info overview); Christmas-day hours NOT VERIFIED",
+   "source_url": "https://www.wien.info/en/now-on/christmas/christmas-markets-342664"
+  },
+  {
+   "market": "Christmas market, Tuerkenschanzpark (1180)",
+   "dates_2026": "Sat 14 Nov to Wed 23 Dec 2026",
+   "hours": "Mon-Fri 15:00-22:00; Sat, Sun and holidays 12:00-22:00",
+   "closed_or_special": "Closed from 24 Dec. Children's craft workshop at weekends (wien.info).",
+   "status": "official 2026 (wien.info overview)",
+   "source_url": "https://www.wien.info/en/now-on/christmas/christmas-markets-342664"
+  },
+  {
+   "market": "Christmas Village, Stephansplatz (1010)",
+   "dates_2026": "Fri 6 Nov to Sat 26 Dec 2026",
+   "hours": "Daily 11:00-21:00",
+   "closed_or_special": "24 Dec: 11:00-16:00. 25 and 26 Dec: 11:00-19:00. About 40 huts at the foot of St Stephen's Cathedral.",
+   "status": "official 2026 (wien.info overview and event page)",
+   "source_url": "https://www.wien.info/en/now-on/events/christmas-village-stephansplatz-1133668"
+  },
+  {
+   "market": "Other markets (for reference)",
+   "dates_2026": "Winter Market, Riesenradplatz (Prater): Fri 20 Nov 2026 to Wed 6 Jan 2027. Christmas Village at University Campus (Alserstrasse): 13 Nov-23 Dec. Christmas Magic, Schwarzenbergplatz (new in 2026): 13 Nov-26 Dec.",
+   "hours": "Riesenradplatz: Mon-Fri 12:00-22:00; Sat, Sun and holidays 11:00-22:00; 24 Dec 11:00-17:00; 31 Dec 12:00-02:00. Campus: Mon-Thu 14:00-22:00, Fri 14:00-23:00, Sat 11:00-23:00, Sun 11:00-21:00, 23 Dec 14:00-20:00. Schwarzenbergplatz: Mon-Fri 11:00-21:00, Sat-Sun 10:00-21:00.",
+   "closed_or_special": "",
+   "status": "official 2026 (wien.info overview)",
+   "source_url": "https://www.wien.info/en/now-on/christmas/christmas-markets-342664"
+  }
+ ],
+ "silvesterpfad": {
+  "dates_2026": "Thu 31 Dec 2026, 14:00 to Fri 1 Jan 2027 02:00; food and drink stands from 11:00; free entry.",
+  "locations": "Freyung, Am Hof, Graben, Stephansplatz, Kaerntner Strasse, Neuer Markt, plus Rathausplatz and Riesenradplatz in the Prater (eight locations per wien.info; 2025 list in the vienna.at report matches).",
+  "midnight": "Pummerin bell of St Stephen's and the Blue Danube waltz at midnight. Neujahrskonzert (Vienna Philharmonic) broadcast live on screens at Stephansplatz and Riesenradplatz from 11:15 on 1 Jan 2027.",
+  "fireworks": "Rockets and bangers (F2 and above) banned throughout Vienna (wien.info).",
+  "security_2026": "NOT VERIFIED. 2025 rules in official crime file (prohibited items, bag checks, Stephansplatz U-Bahn closed from 21:00).",
+  "other": "Eistraum at the Christkindlmarkt is closed on 31 Dec. Silvesterlauf (49th in 2025, Ringstrasse, 11:00): 2026 edition NOT VERIFIED.",
+  "status": "official 2026 (wien.info)",
+  "source_url": "https://www.wien.info/de/aktuell/weihnachten/silvester-358870"
+ },
+ "sights": [
+  {
+   "item": "St Stephen's Cathedral (Stephansdom): general hours",
+   "detail": "Church open Mon-Sat 06:00-22:00, Sundays and public holidays 07:00-22:00. Sightseeing times: Mon-Sat 09:00-11:30 and 13:00-16:30; Sundays and public holidays 13:00-16:30. 'Subject to change for liturgical reasons.' Page undated (read 8 Oct 2026). Public catacomb tours Mon-Sat 10:00, 11:00, 11:30, 13:30, 14:30, 15:30, 16:30; Sundays and holidays 13:30-16:30. Self-guided visit EUR 8 adult, EUR 3 child (to 14); All-Inclusive ticket EUR 29.",
+   "source_url": "https://www.stephanskirche.at/visit.php and https://www.stephanskirche.at/info.php"
+  },
+  {
+   "item": "St Stephen's Cathedral: Christmas Eve, Christmas Day, 26 Dec visitor hours and Mass/Christmette times",
+   "detail": "NOT VERIFIED. The cathedral site says restrictions may apply for liturgical reasons and refers to its 'Termine' page, which we could not load. Assume sightseeing is closed during services and heavily restricted on 24-25 Dec.",
+   "source_url": "https://www.stephanskirche.at/"
+  },
+  {
+   "item": "Schoenbrunn Palace: 24, 25, 26 Dec",
+   "detail": "Palace is 'open daily, including public holidays'. 3 Nov 2026 to 31 Mar 2027: 08:30-17:00 (last admission 45 minutes before closing). No separate 24/25/26 Dec exception is printed, so general hours apply; shorter hours on 24 Dec cannot be ruled out (NOT VERIFIED). Park gates open 06:30; Nov-Dec park closes 17:30. Fountains off mid-Oct to mid-April; palace and Gloriette festive lighting suspended for energy saving. Children's Museum 10:00-17:00. Tickets only from official shop (site warns of fake ticket sites).",
+   "source_url": "https://www.schoenbrunn.at/en/visitor-information/opening-times"
+  },
+  {
+   "item": "Spanish Riding School: visitor centre",
+   "detail": "Visitor centre (Michaelerplatz 1, under the Michaelerkuppel) Mon-Sun 09:00-16:00; souvenir shop 09:00-16:30. Children under 3 not admitted. Performance and Morgenarbeit dates for 24-26 Dec 2026: NOT VERIFIED (calendar not loaded).",
+   "source_url": "https://www.srs.at/en/visitor-information/vienna/opening-hours"
+  },
+  {
+   "item": "Vienna Boys' Choir: Christmas",
+   "detail": "Hofburgkapelle Mass with the Boys' Choir / Vienna Choir Girls at 09:15 on Sundays 6, 13, 20 and 27 Dec 2026, on Friday 25 Dec 2026 and Sunday 3 Jan 2027 (wien.info listing). Mass is a religious service; seating limited. Christmas concerts at Konzerthaus/MuTh and Christmette on 24 Dec: NOT VERIFIED.",
+   "source_url": "https://www.wien.info/de/aktuell/veranstaltungen/die-wiener-sangerknaben-in-der-hofburgkapelle-935516"
+  },
+  {
+   "item": "Prater Riesenrad (Giant Ferris Wheel): December 2026",
+   "detail": "From the operator's own calendar (read 8 Oct 2026): 7 Dec 10:00-22:15; 8 Dec 10:00-22:15; 23 Dec 10:00-22:15; Thu 24 Dec 10:00-16:45; Fri 25 Dec 10:00-22:15; Sat 26 Dec 10:00-22:15; 30 Dec 10:00-22:15; Thu 31 Dec 10:00-02:00; Fri 1 Jan 2027 10:00-22:15. Weather closures possible. Winter Market at Riesenradplatz: see markets.",
+   "source_url": "https://www.wienerriesenrad.com/en/opening-times/"
+  },
+  {
+   "item": "Wiener Linien: 24 and 31 Dec 2026",
+   "detail": "2026 timetable NOT published yet. Pattern last year, latest year only (2025), from the official Wiener Linien page published 22 Dec 2025: on 24 Dec Saturday timetable until 18:00; then trams and buses at least every 15 minutes; U-Bahn runs through the night 24 to 25 Dec. On 31 Dec Saturday timetable by day (diversions around Ring/Kai in the morning because of the Silvesterlauf); U-Bahn as usual overnight and many tram/bus lines run all night with shorter intervals; Stephansplatz U-Bahn closed from 21:00. Expect the same pattern in 2026 but confirm in December.",
+   "source_url": "https://www.wienerlinien.at/web/wl-en/christmas-and-new-year-travel"
+  },
+  {
+   "item": "Prater amusement park, general December opening",
+   "detail": "NOT VERIFIED. Only the Riesenrad calendar and the Riesenradplatz Winter Market hours were confirmed.",
+   "source_url": "n/a"
+  }
+ ],
+ "not_verified": [
+  "Cathedral hours and Mass times on 24, 25, 26 Dec and 1 Jan.",
+  "Schoenbrunn Palace exact hours on 24 Dec (general winter hours 08:30-17:00 apply per the opening-times page).",
+  "Spanish Riding School performances and morning training on 24-26 Dec and 31 Dec 2026.",
+  "Vienna Boys' Choir Christmas concerts and Christmette.",
+  "Maria-Theresien-Platz hours on 24-26 Dec.",
+  "Organiser sites for Spittelberg, Am Hof, Karlsplatz, Freyung, Tuerkenschanzpark were not read (tourist-board listings used).",
+  "Wiener Linien 2026 holiday timetable; Silvesterpfad 2026 rules and closures.",
+  "Public holiday status of 25 Dec, 26 Dec, 1 Jan and 6 Jan was not read from a statute page."
+ ]
+}

@@ -1,0 +1,116 @@
+[
+ {
+  "item": "Single ticket, Kernzone Wien (paper / digital)",
+  "price": "EUR 3.20 paper, EUR 3.00 digital; reduced (6 to 15) EUR 1.60 / EUR 1.50",
+  "date": "2026 tariff from 1 Jan 2026",
+  "source": "https://www.wienerlinien.at/web/wl-en/news/new-fare-structure-from-1-january-2026"
+ },
+ {
+  "item": "24 hour ticket (24 Stunden WIEN)",
+  "price": "EUR 10.20 paper, EUR 9.70 digital",
+  "date": "2026 tariff (digital price 'from EUR 9.70' on shop page)",
+  "source": "https://www.wienerlinien.at/24-stunden-wien"
+ },
+ {
+  "item": "7 day ticket (7 Tage WIEN)",
+  "price": "EUR 28.90 paper, EUR 25.20 digital",
+  "date": "2026 tariff",
+  "source": "https://www.wienerlinien.at/web/wl-en/news/new-fare-structure-from-1-january-2026"
+ },
+ {
+  "item": "Vienna City Card (24 hours or 7 days)",
+  "price": "from EUR 19.00; one child to 15th birthday free with card holder",
+  "date": "2026 shop price as read 8 Oct 2026; Dec 2026 price NOT VERIFIED",
+  "source": "https://www.wienerlinien.at/tickets/viennacitycard"
+ },
+ {
+  "item": "Airport to city: CAT by premium bus to Wien Mitte",
+  "price": "Single EUR 14.90, return EUR 24.90; under 15 free",
+  "date": "2026 (train replaced by bus until about end Oct 2027)",
+  "source": "https://www.wien.info/en/travel-info/arrival-departure/airport-to-center/city-airport-train-343124"
+ },
+ {
+  "item": "Airport to city: REX7 / S7 / Railjet",
+  "price": "Adult EUR 5.50; ages 6 to 14 EUR 2.80; under 6 free",
+  "date": "2026 (S7 only to St. Marx until about end Oct 2027)",
+  "source": "https://www.wien.info/en/travel-info/arrival-departure/airport-to-center/express-train-s7-345644"
+ },
+ {
+  "item": "Punsch (hot spiced fruit drink) at Christmas markets",
+  "price": "EUR 4.50 to EUR 10.50 (cheapest/dearest cup surveyed)",
+  "date": "2024 (latest year found); 2026 NOT VERIFIED",
+  "source": "https://www.vienna.at/groser-punsch-test-wiener-weihnachtsmarkte-im-preisvergleich/9093013"
+ },
+ {
+  "item": "Glühwein (mulled wine) at Christmas markets",
+  "price": "EUR 4.80 to EUR 7.50; Rathausplatz average about EUR 6.25",
+  "date": "2024 (latest year found); 2026 NOT VERIFIED",
+  "source": "https://www.vienna.at/groser-punsch-test-wiener-weihnachtsmarkte-im-preisvergleich/9093013"
+ },
+ {
+  "item": "Mug deposit (Häferlpfand)",
+  "price": "EUR 5 at most markets; about EUR 4 Karlsplatz; EUR 3 Spittelberg",
+  "date": "2024 (latest year found); 2026 NOT VERIFIED",
+  "source": "https://www.vienna.at/groser-punsch-test-wiener-weihnachtsmarkte-im-preisvergleich/9093013"
+ },
+ {
+  "item": "Käsekrainer sausage and roast chestnuts (Maroni)",
+  "price": "NOT VERIFIED (no reliable current price found)",
+  "date": "not found",
+  "source": "https://www.1000thingsmagazine.com/de/a/2159499/community-awards-2025-beliebtestes-wuerstel-wien/"
+ },
+ {
+  "item": "Sachertorte slice at Café Sacher (Café Bel Étage)",
+  "price": "EUR 10.50 per slice (cream included)",
+  "date": "Sept 2025; 2026 NOT VERIFIED",
+  "source": "https://www.1000thingsmagazine.com/de/a/2164270/sachertorte-wien-innenstadt-preise/"
+ },
+ {
+  "item": "Wiener Riesenrad, adult ticket",
+  "price": "from EUR 14.50 online; flexible single ticket EUR 17.00; a second tier 'from EUR 6.50' is listed (child price assumed, label not shown)",
+  "date": "2026 (page modified 28 Jul 2026); December price NOT VERIFIED",
+  "source": "https://wienerriesenrad.com/tickets/"
+ },
+ {
+  "item": "Schönbrunn Palace Ticket (about 75 min, audio guide)",
+  "price": "Adult EUR 42.00; child 6 to 18 EUR 30.00; Classic Pass EUR 49.00 / EUR 36.00",
+  "date": "Summer season 2026 (27 Mar to 2 Nov); winter 2026/27 prices NOT VERIFIED",
+  "source": "https://www.schoenbrunn.at/en/tickets-and-prices/all-tickets-tours"
+ },
+ {
+  "item": "Schönbrunn State Apartments ticket (shorter visit)",
+  "price": "Adult EUR 30.00; child 6 to 18 EUR 20.00",
+  "date": "Summer season 2026; winter 2026/27 NOT VERIFIED. 'Imperial Tour' is no longer a named ticket on the site",
+  "source": "https://www.schoenbrunn.at/en/tickets-and-prices/all-tickets-tours"
+ },
+ {
+  "item": "Spanish Riding School, cheapest tickets",
+  "price": "Performance from EUR 26; Morgenarbeit from EUR 17; children's tour from EUR 11; 'Briefe ans Christkind' (ages 3 to 11) from EUR 15",
+  "date": "Price list read 8 Oct 2026, year of prices not printed; December 2026 availability NOT VERIFIED",
+  "source": "https://www.srs.at/de/tickets"
+ },
+ {
+  "item": "St Stephen's Cathedral towers",
+  "price": "Official price NOT VERIFIED. Secondary 2024 source: North Tower EUR 7 adult, EUR 2.50 child; cathedral interior free",
+  "date": "Aug 2024, secondary source",
+  "source": "https://www.wandernundmehr.at/faq/was-kostet-der-eintritt-in-den-stephansdom"
+ },
+ {
+  "item": "Wiener Eistraum ice rink (not open at Christmas)",
+  "price": "Adult EUR 9.50 online, EUR 10.50 box office; child EUR 6.70",
+  "date": "Season 22 Jan to 8 Mar 2026; next season NOT VERIFIED",
+  "source": "https://www.1000thingsmagazine.com/de/a/2031815/wiener-eistraum/"
+ },
+ {
+  "item": "Albertina museum",
+  "price": "Visitors under 26 EUR 17.50; under 19 free (adult price not shown in the excerpt)",
+  "date": "2026 page as read 8 Oct 2026",
+  "source": "https://www.albertina.at/besuch/tickets/"
+ },
+ {
+  "item": "Kunsthistorisches Museum",
+  "price": "Shop shows EUR 22.00 and EUR 24.00 for an entrance ticket (labels unclear); Masterticket EUR 37",
+  "date": "2026 page as read 8 Oct 2026; verify before print",
+  "source": "https://shop.khm.at/en/tickets"
+ }
+]

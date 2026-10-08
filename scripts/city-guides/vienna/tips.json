@@ -1,0 +1,414 @@
+{
+ "tips": [
+  {
+   "scope": "vienna",
+   "category": "transport_payment",
+   "worry": "What does a single ticket cost in Vienna?",
+   "tip": "From 1 January 2026 a single trip (Kernzone Wien, one direction, transfers allowed) is EUR 3.20 on paper or EUR 3.00 digital. The reduced single for children aged 6 to 15 is EUR 1.60 (EUR 1.50 digital). Two trips cost EUR 6.40.",
+   "verified_url": "https://www.wienerlinien.at/web/wl-en/news/new-fare-structure-from-1-january-2026",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "vienna",
+   "category": "transport_payment",
+   "worry": "Is there a 48 or 72 hour pass?",
+   "tip": "No. The 48 and 72 hour tickets, including the Vienna City Card, EasyCityPass and QueerCityPass versions, were discontinued on 1 January 2026. Use the 24 hour ticket (EUR 10.20, or EUR 9.70 digital) or the 7 day ticket (EUR 28.90, or EUR 25.20 digital).",
+   "verified_url": "https://www.wienerlinien.at/web/wl-en/news/new-fare-structure-from-1-january-2026",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "vienna",
+   "category": "transport_payment",
+   "worry": "Is a 24 hour pass worth it for a family?",
+   "tip": "A 24 hour ticket is per person: EUR 10.20 on paper or EUR 9.70 digital, valid for 24 hours from a start time you choose. Digital tickets are personal and need a photo ID. With children free on many days (see the free-travel tip), single tickets can be cheaper for short trips.",
+   "verified_url": "https://www.wienerlinien.at/24-stunden-wien",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "vienna",
+   "category": "transport_payment",
+   "worry": "What is the Vienna City Card and do children get free travel on it?",
+   "tip": "The Vienna City Card costs from EUR 19.00 and covers public transport for 24 hours or 7 days plus discounts at museums, cafes and shops. One child up to their 15th birthday (or one dog) can travel free with the card holder. It is personal and cannot be passed on.",
+   "verified_url": "https://www.wienerlinien.at/tickets/viennacitycard",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "vienna",
+   "category": "transport_payment",
+   "worry": "Do small children need a ticket?",
+   "tip": "Children under 6 travel free on Wiener Linien, and this continues to the end of the school year in which they turn 6. On ÖBB trains the free age ends on the 6th birthday. Ages 6 to 15 need the reduced ticket, with photo ID.",
+   "verified_url": "https://www.wienerlinien.at/kinder-jugendliche",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "vienna",
+   "category": "transport_payment",
+   "worry": "When do children travel free on Sundays and holidays?",
+   "tip": "Children and teenagers up to their 15th birthday travel free on Sundays, public holidays, Vienna school holidays, and 2 and 15 November. Carry photo ID in case you are asked. The exact dates of the Vienna Christmas school holidays NOT VERIFIED.",
+   "verified_url": "https://www.wienerlinien.at/faq",
+   "verified_at": "2026-10-08",
+   "season": "christmas",
+   "status": "verified (rule); Christmas holiday dates NOT VERIFIED"
+  },
+  {
+   "scope": "vienna",
+   "category": "transport_payment",
+   "worry": "How do I buy tickets on my phone?",
+   "tip": "Use the WienMobil app or the WienMobil ticket shop (shop.wienmobil.at). The ticket shows in the app and you pay by credit card. Paper tickets are also sold at machines, Wiener Linien info points, tobacconists (Trafik) and in tram ticket machines.",
+   "verified_url": "https://www.wienerlinien.at/einzelfahrten",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "vienna",
+   "category": "transport_payment",
+   "worry": "Can I tap my bank card to travel?",
+   "tip": "Only in a trial. Tap+Ride is a one-year pilot started on 28 May 2026 at 9 U-Bahn stations (including Stephansplatz, Schwedenplatz, Hauptbahnhof and Westbahnhof). Visa and Mastercard, Apple Pay and Google Pay work; you keep the same card to show if checked. Not available on trams or buses.",
+   "verified_url": "https://www.wienerlinien.at/de/tapandride",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified (pilot, 2026)"
+  },
+  {
+   "scope": "vienna",
+   "category": "transport_payment",
+   "worry": "Do I have to validate my ticket?",
+   "tip": "Paper tickets must be validated before the first journey; validity starts at validation. A single ticket must be started straight after purchase or validation and the trip can last at most 80 minutes with no break in the journey.",
+   "verified_url": "https://www.wienerlinien.at/einzelfahrten",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "vienna",
+   "category": "transport_payment",
+   "worry": "What happens if I am caught without a valid ticket?",
+   "tip": "The terms of carriage list a surcharge of EUR 131.60 if paid on the spot, EUR 141.60 within two weeks and EUR 181.60 later, on top of the fare, plus a possible EUR 15 processing fee. Press reports in September 2025 put the fine at about EUR 135. Paying on the spot lets you stay anonymous.",
+   "verified_url": "https://www.wienerlinien.at/befoerderungsbedingungen",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified (terms of carriage; year of table not printed)"
+  },
+  {
+   "scope": "vienna",
+   "category": "transport_payment",
+   "worry": "What is the best way from the airport to the city in 2026?",
+   "tip": "The airport trains are disrupted until about the end of October 2027. REX7 runs to Wien Hauptbahnhof in about 20 minutes; the S7 only goes as far as St. Marx, where you change to tram 18 or 71. CAT is now a non-stop bus to Wien Mitte (about 21 minutes). Trains cost EUR 5.50 for adults.",
+   "verified_url": "https://www.wien.info/en/travel-info/arrival-departure/airport-to-center/express-train-s7-345644",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "vienna",
+   "category": "transport_payment",
+   "worry": "How much is the CAT airport transfer?",
+   "tip": "CAT runs as a premium coach (not a train) to Wien Mitte, about every 12 minutes between 07:00 and 19:00 and every 15 minutes otherwise, until about the end of October 2027. Single EUR 14.90, return EUR 24.90 (return valid 6 months). Children under 15 travel free.",
+   "verified_url": "https://www.wien.info/en/travel-info/arrival-departure/airport-to-center/city-airport-train-343124",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "vienna",
+   "category": "transport_payment",
+   "worry": "What does the cheap train from the airport cost for a family?",
+   "tip": "The REX7, S7 and ÖBB Railjet ticket is EUR 5.50 for adults (EUR 2.30 airport to city boundary plus EUR 3.20 within Vienna). Ages 6 to 14 pay EUR 2.80; under 6 free. If you already hold a Vienna multi-day ticket you only need the EUR 2.30 airport ticket.",
+   "verified_url": "https://www.wien.info/en/travel-info/arrival-departure/airport-to-center/express-train-s7-345644",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "vienna",
+   "category": "transport_payment",
+   "worry": "Are there train closures in the city this winter?",
+   "tip": "Yes. From 7 September 2026 to the end of October 2027 the central S-Bahn section between Praterstern and Wien Hauptbahnhof is closed to all rail services. Use the U-Bahn, trams or buses instead.",
+   "verified_url": "https://www.wien.info/en/travel-info/arrival-departure/airport-to-center/express-train-s7-345644",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "vienna",
+   "category": "transport_payment",
+   "worry": "Can I take a pushchair on the U-Bahn and tram?",
+   "tip": "Yes, using the marked entrances and spaces, with the brake on and the straps fastened. Pushchairs must not go on escalators; double pushchairs use the wheelchair entrances. Many trams now have no step; on older ones the driver helps where possible.",
+   "verified_url": "https://www.wienerlinien.at/befoerderungsbedingungen",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "vienna",
+   "category": "transport_payment",
+   "worry": "Are U-Bahn stations step-free and which lifts are out?",
+   "tip": "Wiener Linien says all U-Bahn stations are reachable step-free. Planned 2026 lift works include Westbahnhof U6/U3 (4 May to 14 December, at least one lift per platform stays open) and Keplerplatz U1 (19 October to mid-December). Check Betriebsinfo on the day.",
+   "verified_url": "https://www.wienerlinien.at/modernisierungen/aufzuege-rolltreppen",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified (page updated 16 Sep 2026)"
+  },
+  {
+   "scope": "vienna",
+   "category": "transport_payment",
+   "worry": "Can I bring a dog on public transport?",
+   "tip": "Yes, with a reduced single ticket for the dog (free for annual pass holders). Dogs not in a closed carrier need a lead and muzzle, including in station lifts. Small dogs in a proper carrier need no ticket.",
+   "verified_url": "https://www.wienerlinien.at/einzelfahrten",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "vienna",
+   "category": "water_snacks",
+   "worry": "What does a Punsch or Glühwein cost and what is the mug deposit?",
+   "tip": "In 2024 Punsch ranged EUR 4.50 to EUR 10.50 and Glühwein EUR 4.80 to EUR 7.50 (Rathausplatz average Glühwein about EUR 6.25). The Häferl deposit was EUR 5 at most markets, about EUR 4 at Karlsplatz and EUR 3 at Spittelberg. 2025 and 2026 prices NOT VERIFIED.",
+   "verified_url": "https://www.vienna.at/groser-punsch-test-wiener-weihnachtsmarkte-im-preisvergleich/9093013",
+   "verified_at": "2026-10-08",
+   "season": "christmas",
+   "status": "latest year only (2024); 2026 NOT VERIFIED"
+  },
+  {
+   "scope": "vienna",
+   "category": "water_snacks",
+   "worry": "Do I get the deposit back and is there a child drink?",
+   "tip": "You get the deposit back when you return the mug, or you can keep it (travel blog, year not stated). In 2023 Spittelberg sold Kinderpunsch at EUR 2.20 (basic Punsch EUR 4.20) with a EUR 2 mug deposit. Check the price board before you order.",
+   "verified_url": "https://wien.orf.at/stories/3230491/",
+   "verified_at": "2026-10-08",
+   "season": "christmas",
+   "status": "latest year only (2023); mug return rule from a blog, 2026 NOT VERIFIED"
+  },
+  {
+   "scope": "vienna",
+   "category": "water_snacks",
+   "worry": "Is the tap water safe to drink?",
+   "tip": "Yes. Austrian tap water is safe, tested regularly, and Vienna's comes mostly from mountain springs in the Rax, Schneeberg and Hochschwab areas. Historic decorative fountains are not for drinking. Whether the public drinking fountains run in December NOT VERIFIED.",
+   "verified_url": "https://www.austria.info/en-gb/planning/drinking-water/",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified (tap water); winter fountain use NOT VERIFIED"
+  },
+  {
+   "scope": "vienna",
+   "category": "toilets",
+   "worry": "Are public toilets free in Vienna?",
+   "tip": "Mostly. City-run toilets (167 sites, over 80 percent free) charge EUR 0.50 for a cabin at paid sites and urinals are free; many paid sites are free at night. Wiener Linien toilets in the Öffi network charge at the entrance, amount NOT VERIFIED. Carry a few coins.",
+   "verified_url": "https://wien.orf.at/stories/3368834/",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified (city toilets, Aug 2026); Wiener Linien fee amount NOT VERIFIED"
+  },
+  {
+   "scope": "vienna",
+   "category": "money_tipping",
+   "worry": "Do markets and stands take cards?",
+   "tip": "Police advise carrying little cash and paying by card where possible, but which stands accept cards NOT VERIFIED. Some cafes in Vienna are cash only, usually with a sign. Carry some euros in small notes and coins for mug deposits and snacks.",
+   "verified_url": "https://www.vienna.at/polizei-warnt-vor-taschendieben-und-trickbetruegern-auf-adventmaerkten/9787424",
+   "verified_at": "2026-10-08",
+   "season": "christmas",
+   "status": "NOT VERIFIED (card acceptance at stands)"
+  },
+  {
+   "scope": "vienna",
+   "category": "money_tipping",
+   "worry": "How much should I tip?",
+   "tip": "Tip about 5 to 15 percent, usually by rounding up. Say the total you want to pay when you hand over the money (for a EUR 6.50 bill with a EUR 10 note, say 'eight'); do not leave coins on the table. Tip hotel cleaning staff when you leave.",
+   "verified_url": "https://visitingvienna.com/eatingdrinking/tipping",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified (secondary source, year not printed)"
+  },
+  {
+   "scope": "vienna",
+   "category": "money_tipping",
+   "worry": "Are shops open on Sundays and on 8 December?",
+   "tip": "Most shops close on Sundays; large railway stations, the airport and museum shops stay open. On 8 December 2025 (a public holiday) shops such as Hofer, dm and big malls opened 10:00 to 18:00; 8 December 2026 is a Tuesday and the 2026 list NOT VERIFIED.",
+   "verified_url": "https://www.vol.at/shopping-on-december-8-2025-in-vienna-the-store-opening-hours/9846239",
+   "verified_at": "2026-10-08",
+   "season": "christmas",
+   "status": "latest year only (2025); 2026 NOT VERIFIED"
+  },
+  {
+   "scope": "vienna",
+   "category": "money_tipping",
+   "worry": "What are the opening hours of the main Christmas market?",
+   "tip": "The Christkindlmarkt on Rathausplatz runs daily from Friday 13 November to Saturday 26 December 2026, 10:00 to 22:00, closing at 18:30 on 24 December. Whether entry is free in 2026 is not stated on the official page.",
+   "verified_url": "https://www.wien.info/de/aktuell/veranstaltungen/wiener-christkindlmarkt-1001446",
+   "verified_at": "2026-10-08",
+   "season": "christmas",
+   "status": "verified (hours); entry fee NOT VERIFIED"
+  },
+  {
+   "scope": "vienna",
+   "category": "local_ways",
+   "worry": "When do the other main markets open in 2026?",
+   "tip": "Schönbrunn 6 Nov to 6 Jan; Stephansplatz 6 Nov to 26 Dec; Spittelberg 13 Nov to 23 Dec; Am Hof 13 Nov to 23 Dec; Belvedere 20 Nov to 31 Dec. Most close early on 24 December (Schönbrunn 16:00, Stephansplatz 16:00, Belvedere 17:00).",
+   "verified_url": "https://www.wien.info/de/aktuell/weihnachten/weihnachtsmaerkte-365008",
+   "verified_at": "2026-10-08",
+   "season": "christmas",
+   "status": "verified"
+  },
+  {
+   "scope": "vienna",
+   "category": "phone_data",
+   "worry": "Will my UK phone roam for free in Austria?",
+   "tip": "Not guaranteed. UK networks set their own rules and some charge a daily fee in the EU. Ofcom says providers must publish roaming charges, send a text on arrival and let you set a spending limit. Check your own network's rates before you go; the current network rates are NOT VERIFIED.",
+   "verified_url": "https://www.ofcom.org.uk/phones-and-broadband/saving-money/using-your-mobile-abroad",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified (advice); network rates NOT VERIFIED"
+  },
+  {
+   "scope": "vienna",
+   "category": "safety_habits",
+   "worry": "Is Vienna safe from pickpockets at Christmas markets?",
+   "tip": "Crime is generally low, but the FCDO warns of pickpocketing in city centres and parks after dark. Vienna police warned in November 2025 of distraction theft in crowds, stalls and queues. Keep bags zipped and in front, and carry little cash.",
+   "verified_url": "https://www.vienna.at/polizei-warnt-vor-taschendieben-und-trickbetruegern-auf-adventmaerkten/9787424",
+   "verified_at": "2026-10-08",
+   "season": "christmas",
+   "status": "verified (warning dated 6 Nov 2025)"
+  },
+  {
+   "scope": "vienna",
+   "category": "safety_habits",
+   "worry": "Which places need extra care in the evening?",
+   "tip": "Praterstern is a weapons-ban zone from 7 September to 7 December 2026 unless lifted or extended earlier. The FCDO advises care on public transport and at stations. We found no official source naming Karlsplatz or the Gürtel for evening risk, so we make no claim on them.",
+   "verified_url": "https://www.polizei.gv.at/lpd_docs/4537.pdf",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "Praterstern verified; Karlsplatz and Gürtel NOT VERIFIED"
+  },
+  {
+   "scope": "vienna",
+   "category": "safety_habits",
+   "worry": "Is there a terrorism risk?",
+   "tip": "The FCDO says terrorists are likely to try to carry out attacks in Austria, including at transport hubs and events. Police presence is higher in Advent; police said in November 2025 there was no specific threat to the markets. Follow staff instructions and stay alert.",
+   "verified_url": "https://www.gov.uk/foreign-travel-advice/austria/safety-and-security",
+   "verified_at": "2026-10-08",
+   "season": "christmas",
+   "status": "verified (FCDO page updated 11 Aug 2026)"
+  },
+  {
+   "scope": "vienna",
+   "category": "safety_habits",
+   "worry": "What are the emergency numbers?",
+   "tip": "112 for any emergency (the 112 Where Are U app also works), 133 for police, 144 for an ambulance, 122 for the fire brigade. For help from the UK government call the FCDO on +44 20 7008 5000.",
+   "verified_url": "https://www.gov.uk/foreign-travel-advice/austria/getting-help",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "vienna",
+   "category": "local_ways",
+   "worry": "What are the passport and border rules for UK travellers?",
+   "tip": "Your passport must be issued less than 10 years before you arrive and valid for at least 3 months after you leave. You can stay 90 days in any 180 without a visa. At the border you may be asked for proof of accommodation, travel insurance, a return ticket and enough money.",
+   "verified_url": "https://www.gov.uk/foreign-travel-advice/austria/entry-requirements",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "vienna",
+   "category": "local_ways",
+   "worry": "What is the EES and will it slow us down?",
+   "tip": "The EU Entry/Exit System started on 12 October 2025. On your first visit you may be asked for fingerprints and a photo at a booth; it is free and children aged 11 or younger are photographed but not fingerprinted. Allow extra time at arrival and departure.",
+   "verified_url": "https://www.gov.uk/guidance/eu-entryexit-system",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "vienna",
+   "category": "local_ways",
+   "worry": "Do we need ETIAS for December 2026?",
+   "tip": "GOV.UK says ETIAS is expected from autumn 2026 but the EU has not announced the start date, no action is needed yet, the fee will be EUR 20, and any website selling it now is fraudulent. Press reports of a delay to 2027 could not be confirmed. Check GOV.UK again before travel.",
+   "verified_url": "https://www.gov.uk/guidance/eu-entryexit-system",
+   "verified_at": "2026-10-08",
+   "season": "any",
+   "status": "start date NOT VERIFIED (GOV.UK page updated 10 Apr 2026)"
+  },
+  {
+   "scope": "vienna",
+   "category": "parks_play",
+   "worry": "What can children do at the Rathausplatz market?",
+   "tip": "The Weihnachtswelt in Rathauspark has a 12 metre multi-level carousel, a reindeer train, a nativity trail (Krippenpfad), a children's hut and its own ice rink. The old Christkindlwerkstatt crafts workshop at the Rathaus was closed years ago, and a 2026 Kinderwerkstatt NOT VERIFIED.",
+   "verified_url": "https://www.wien.info/de/aktuell/veranstaltungen/wiener-christkindlmarkt-1001446",
+   "verified_at": "2026-10-08",
+   "season": "christmas",
+   "status": "verified (2026 attractions); Kinderwerkstatt NOT VERIFIED"
+  },
+  {
+   "scope": "vienna",
+   "category": "parks_play",
+   "worry": "Is there a children's activity at Schönbrunn market?",
+   "tip": "Schönbrunn market lists a carousel, a Ferris wheel, a children's railway and a craft workshop (Bastelwerkstatt). No workshop hours or prices are given, so check the market's own site.",
+   "verified_url": "https://www.wien.info/de/aktuell/weihnachten/weihnachtsmaerkte-365008",
+   "verified_at": "2026-10-08",
+   "season": "christmas",
+   "status": "verified (listing); workshop times NOT VERIFIED"
+  },
+  {
+   "scope": "vienna",
+   "category": "parks_play",
+   "worry": "Where are good playgrounds in the city centre?",
+   "tip": "Wien.info lists the MuseumsQuartier courtyard, Stadtpark, Rathauspark, Liechtensteinpark and Augarten in the centre, plus the Labyrinthikon playground in Schönbrunn park. Water playgrounds are summer only. In winter the Prater Jesuitenwiese hill becomes a sledge run with snow cannon.",
+   "verified_url": "https://www.wien.info/de/sehen-erleben/familien/outdoor/spielplaetze-359500",
+   "verified_at": "2026-10-08",
+   "season": "winter",
+   "status": "verified (listing); opening hours in December NOT VERIFIED"
+  },
+  {
+   "scope": "vienna",
+   "category": "parks_play",
+   "worry": "What can we do with children at the Spanish Riding School?",
+   "tip": "Besides the performance (from EUR 26) and Morgenarbeit (from EUR 17), there is a children's tour for ages 3 to 11 from EUR 11 and 'Briefe ans Christkind' for ages 3 to 11 from EUR 15. The Christkind programme page carried a 2025 picture, so 2026 dates NOT VERIFIED.",
+   "verified_url": "https://www.srs.at/de/tickets",
+   "verified_at": "2026-10-08",
+   "season": "christmas",
+   "status": "verified (listing); 2026 Christkind dates NOT VERIFIED"
+  },
+  {
+   "scope": "vienna",
+   "category": "local_ways",
+   "worry": "What is the weather like in December?",
+   "tip": "Cold and often grey. Snow on 24 December is now rare: Vienna Hohe Warte recorded snow cover on 24 December in 2 of the 10 years in each decade from the 1980s to the 2010s, and none from 2020 to 2024. An average December temperature NOT VERIFIED; pack layers and waterproof shoes.",
+   "verified_url": "https://www.geosphere.at/de/dokumente/news/news_presse/geosphere_weiwei-statistik_251211_final.pdf/@@download/file/geosphere_weiwei-statistik_251211_final.pdf",
+   "verified_at": "2026-10-08",
+   "season": "christmas",
+   "status": "verified (snow history to 2024); average temperature NOT VERIFIED"
+  },
+  {
+   "scope": "vienna",
+   "category": "local_ways",
+   "worry": "Can we set off fireworks on New Year's Eve?",
+   "tip": "No. Within Vienna the city bans firecrackers, rockets and other pyrotechnics (reported for New Year's Eve 2023). The Silvesterpfad rules for 2026, and advice for dogs on the night, NOT VERIFIED.",
+   "verified_url": "https://www.vienna.at/stadt-wien-verbietet-feuerwerke-zu-silvester/8480830",
+   "verified_at": "2026-10-08",
+   "season": "christmas",
+   "status": "latest year only (2023); 2026 NOT VERIFIED"
+  },
+  {
+   "scope": "vienna",
+   "category": "local_ways",
+   "worry": "What is open on 24, 25 and 26 December?",
+   "tip": "Rathausplatz closes 18:30 on 24 December and is open 10:00 to 22:00 on 25 and 26 December; Schönbrunn closes 16:00 on 24 December and runs 10:00 to 19:00 from 25 December. Spittelberg, Am Hof and Karlsplatz end on 23 December. Shop opening on these days NOT VERIFIED.",
+   "verified_url": "https://www.wien.info/de/aktuell/weihnachten/weihnachtsmaerkte-365008",
+   "verified_at": "2026-10-08",
+   "season": "christmas",
+   "status": "market hours verified; shop hours NOT VERIFIED"
+  }
+ ]
+}

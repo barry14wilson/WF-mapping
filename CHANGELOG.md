@@ -2,6 +2,10 @@
 
 All notable changes to the WF-mapping repo. Newest first. Dates are commit dates (UTC). Design and architecture notes live in `Wiley-Fox-Dev-Handoff-v1.md` (§20 covers September 2026).
 
+## 2026-10-08 (Vienna publish)
+
+- **feat:** Vienna Christmas 2026 guide approved and live at `/new/guides/vienna/`; `/new` map links it (`GUIDE_LINKS`) and the Vienna city-list entry moves from 5 'Very safe' (Eurostat 2023) to 4 'Generally safe' (Bundeskriminalamt 2025, homicide 1.1 per 100,000). Queue status set to done.
+
 ## 2026-10-08 (Vienna)
 
 - **feat:** Vienna Christmas 2026 guide build script and source data (`scripts/city-guides/vienna/`): 450 creator facts from 88 videos (50 creators credited), Bundeskriminalamt 2025 report (Vienna pickpocketing 5,448, -7.8%; all offences ~9,530 per 100,000, Wiley Fox calculation), LPD Wien weapon-ban orders, 2026 market dates from christkindlmarkt.at / wien.info / organisers, 2026 Wiener Linien fares and airport rail works. Austria-by-state compare box. Rating 4 (Low), creator feeling 5. On preview only (`/guides/vienna/`); preview map entry for Vienna changed from 5 'Very safe' (Eurostat 2023) to 4 'Generally safe' (BK 2025), pending approval.

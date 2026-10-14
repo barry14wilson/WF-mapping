@@ -1,0 +1,221 @@
+{
+ "generated": "2026-10-14",
+ "note": "Researched 14 Oct 2026. Status labels: 'official 2026' = organiser or official page with 2026 dates; 'secondary 2026' = 2026 dates only on a non-organiser page (tourism portal, blog) that cites the organiser; 'latest year only (2025)' = only 2025/26 information found; 'NOT VERIFIED' = not confirmed. Organiser pages for the Old Town and Wenceslas Square markets (trhypraha.cz, Taiko a.s.) were read. vanocnitrhy.cz (Náměstí Míru, Republiky, Tylovo) could not be fetched directly. Hours can change: re-check in mid-November.",
+ "calendar_note": "Weekdays: Fri 20 Nov 2026; Wed 25 Nov; Thu 26 Nov; Sat 28 Nov (Old Town and Wenceslas Square markets open, tree lighting); Thu 24 Dec; Fri 25 Dec; Sat 26 Dec; Thu 31 Dec; Fri 1 Jan 2027; Wed 6 Jan 2027.",
+ "public_holidays": [
+  {
+   "date": "Thu 24 Dec 2026",
+   "name": "Christmas Eve (Štědrý den)",
+   "shops": "Shops over 200 sq m must close from 12:00 (finance.cz, 19 Dec 2024, citing the retail opening-hours act, which is Act 223/2016 Coll.; the article prints '223/2026', a typo). Smaller shops, petrol stations, pharmacies and shops at stations/airports are exempt. Markets on Old Town and Wenceslas Squares: see markets.",
+   "source_url": "https://www.finance.cz/novinky/otevrene-obchody-vanocni-svatky-silvestr-novy-rok/",
+   "status": "secondary source (news article); statute text NOT fetched (zakonyprolidi.cz fetch failed). Whether 24 Dec is formally a public holiday: NOT VERIFIED on an official page in this pass"
+  },
+  {
+   "date": "Fri 25 Dec 2026",
+   "name": "Christmas Day (1st Christmas holiday)",
+   "shops": "Shops over 200 sq m closed.",
+   "source_url": "https://www.finance.cz/novinky/otevrene-obchody-vanocni-svatky-silvestr-novy-rok/",
+   "status": "secondary source; statute NOT fetched"
+  },
+  {
+   "date": "Sat 26 Dec 2026",
+   "name": "St Stephen's Day (2nd Christmas holiday)",
+   "shops": "Shops over 200 sq m closed.",
+   "source_url": "https://www.finance.cz/novinky/otevrene-obchody-vanocni-svatky-silvestr-novy-rok/",
+   "status": "secondary source; statute NOT fetched"
+  },
+  {
+   "date": "Thu 31 Dec 2026",
+   "name": "New Year's Eve (working day)",
+   "shops": "No legal closure; many shops shorten hours (finance.cz). Individual shop hours NOT VERIFIED.",
+   "source_url": "https://www.finance.cz/novinky/otevrene-obchody-vanocni-svatky-silvestr-novy-rok/",
+   "status": "secondary source"
+  },
+  {
+   "date": "Fri 1 Jan 2027",
+   "name": "New Year's Day",
+   "shops": "Shops over 200 sq m closed.",
+   "source_url": "https://www.finance.cz/novinky/otevrene-obchody-vanocni-svatky-silvestr-novy-rok/",
+   "status": "secondary source; statute NOT fetched"
+  },
+  {
+   "date": "Wed 6 Jan 2027",
+   "name": "Epiphany (not a public holiday in Czechia)",
+   "shops": "Normal. Old Town and Wenceslas Square markets close this day.",
+   "source_url": "https://trhypraha.cz/en/markets/list-of-markets/christmas-markets-2026",
+   "status": "market closing date official 2026; holiday status NOT VERIFIED on an official page"
+  }
+ ],
+ "overall": {
+  "name": "Prague Christmas markets 2026",
+  "opening": "Main markets (Old Town Square, Wenceslas Square): Sat 28 Nov 2026. Smaller markets: Náměstí Míru Fri 20 Nov; Náměstí Republiky Wed 25 Nov; Tylovo náměstí Thu 26 Nov (secondary 2026).",
+  "closing": "Old Town Square and Wenceslas Square: Wed 6 Jan 2027. Náměstí Míru, Republiky, Tylovo: Thu 24 Dec 2026 (secondary 2026).",
+  "daily_hours": "Old Town and Wenceslas Square: 10:00-22:00 (organiser). Food stalls may stay open later (secondary).",
+  "source_urls": [
+   "https://trhypraha.cz/en/markets/list-of-markets/christmas-markets-2026",
+   "https://trhypraha.cz/terminy-vanocnich-trhu",
+   "https://trhypraha.cz/vanocni-strom"
+  ]
+ },
+ "markets": [
+  {
+   "market": "Old Town Square (Staroměstské náměstí), Prague 1",
+   "dates_2026": "Sat 28 Nov 2026 to Wed 6 Jan 2027",
+   "hours": "Daily 10:00-22:00",
+   "closed_or_special": "24, 25, 26, 31 Dec and 1 Jan hours are NOT on the organiser's 2026 page. kudyznudy.cz (state tourism portal) lists 24 Dec 10:00-14:00 and 25-26 Dec 12:00-22:00, and says the footbridge in the central part of the square is closed to the public 22:00 on 31 Dec to 09:00 on 1 Jan. The 24 Dec 10:00-14:00 figure matches the 2025 market (České noviny, 20 Dec 2025). Treat 24-26 Dec hours as 'secondary / latest year (2025)'. Tree lighting Sat 28 Nov 2026 (organiser): time NOT stated; the tree is lit hourly in the evening daily 16:30-21:30 per kudyznudy (2026 time not confirmed). Tree contest results announced 1 Nov 2026.",
+   "status": "official 2026 (dates, 10-22 hours, tree date); 24-26 Dec hours secondary",
+   "source_url": "https://trhypraha.cz/en/markets/list-of-markets/christmas-markets-2026 ; https://trhypraha.cz/vanocni-strom ; https://www.kudyznudy.cz/akce/vanocni-trhy-v-praze ; https://www.ceskenoviny.cz/zpravy/na-stedry-den-mohou-prazane-navstivit-pamatky-zoo-i-botanickou-zahradu/2763156"
+  },
+  {
+   "market": "Wenceslas Square (Václavské náměstí), Prague 1 and 2",
+   "dates_2026": "Sat 28 Nov 2026 to Wed 6 Jan 2027",
+   "hours": "Daily 10:00-22:00",
+   "closed_or_special": "24 Dec 2025 hours were 10:00-14:00 (České noviny, latest year only). 2026 holiday hours NOT VERIFIED.",
+   "status": "official 2026 (dates and hours)",
+   "source_url": "https://trhypraha.cz/en/markets/list-of-markets/christmas-markets-2026"
+  },
+  {
+   "market": "Náměstí Míru (Vinohrady, Prague 2)",
+   "dates_2026": "Fri 20 Nov to Thu 24 Dec 2026",
+   "hours": "NOT VERIFIED",
+   "closed_or_special": "Dates from turistika.cz and aroundprague.cz, both citing vanocnitrhy.cz",
+   "status": "secondary 2026",
+   "source_url": "https://www.turistika.cz/clanky/vanocni-trhy-advent-praha-2026/detail ; https://aroundprague.cz/en/places/razvlecheniya/prague-christmas-markets-2026"
+  },
+  {
+   "market": "Jiřího z Poděbrad Square (Prague 3)",
+   "dates_2026": "NOT VERIFIED",
+   "hours": "NOT VERIFIED",
+   "closed_or_special": "Not mentioned on any 2026 page read",
+   "status": "NOT VERIFIED",
+   "source_url": "n/a"
+  },
+  {
+   "market": "Prague Castle (Hrad)",
+   "dates_2026": "NOT VERIFIED",
+   "hours": "NOT VERIFIED",
+   "closed_or_special": "hrad.cz closures page (read 14 Oct 2026) lists nothing for Nov-Dec 2026 and no Christmas programme yet. Latest year (2025/26): 'Advent na Pražském hradě' 29 Nov 2025 to 4 Jan 2026; 29 Nov-21 Dec Mon-Fri 14:00-18:00, weekends 10:00-18:00; 22 Dec-4 Jan daily 10:00-18:00; closed 24 and 31 Dec (Prague 1 events listing; it described a programme with special openings, not a market).",
+   "status": "latest year only (2025)",
+   "source_url": "https://www.hrad.cz/cs/prazsky-hrad-pro-navstevniky/aktualni-uzavirky ; https://www.praha1.cz/?p=193779"
+  },
+  {
+   "market": "Kampa",
+   "dates_2026": "NOT VERIFIED",
+   "hours": "NOT VERIFIED",
+   "closed_or_special": "No 2026 or 2025 organiser page found.",
+   "status": "NOT VERIFIED",
+   "source_url": "n/a"
+  },
+  {
+   "market": "Republic Square (Náměstí Republiky), Prague 1",
+   "dates_2026": "Wed 25 Nov to Thu 24 Dec 2026",
+   "hours": "NOT VERIFIED",
+   "closed_or_special": "Concrete barriers were placed here on 21 Dec 2024 (ČT24).",
+   "status": "secondary 2026",
+   "source_url": "https://www.turistika.cz/clanky/vanocni-trhy-advent-praha-2026/detail ; https://aroundprague.cz/en/places/razvlecheniya/prague-christmas-markets-2026"
+  },
+  {
+   "market": "Tylovo náměstí (Prague 2)",
+   "dates_2026": "Thu 26 Nov to Thu 24 Dec 2026",
+   "hours": "NOT VERIFIED",
+   "closed_or_special": "",
+   "status": "secondary 2026",
+   "source_url": "https://www.turistika.cz/clanky/vanocni-trhy-advent-praha-2026/detail"
+  },
+  {
+   "market": "Holešovice Market (Holešovická tržnice)",
+   "dates_2026": "NOT VERIFIED",
+   "hours": "NOT VERIFIED",
+   "closed_or_special": "No page found.",
+   "status": "NOT VERIFIED",
+   "source_url": "n/a"
+  },
+  {
+   "market": "Ice rinks",
+   "dates_2026": "NOT VERIFIED for 2026/27",
+   "hours": "NOT VERIFIED",
+   "closed_or_special": "No Ovocný trh rink information found. Latest year (2025/26): Wenceslas Square rink 1 Dec 2025 to 15 Feb 2026, daily 9:00-22:00, 31 Dec 9:00-18:00 (Prague City Tourism, prague.eu). An unofficial hotel blog (15 Jan 2026) lists 10 other rinks for 2025/26 (e.g. Letná, Náplavka 'Petra', Harfa); not an official source.",
+   "status": "latest year only (2025)",
+   "source_url": "https://prague.eu/en/akce/skating-rink-wenceslas-square ; https://www.hotel-golf.cz/en/?p=2219"
+  }
+ ],
+ "sights": [
+  {
+   "item": "Prague Castle: general hours",
+   "detail": "hrad.cz (read 14 Oct 2026): winter season 1 Nov-31 Mar: castle area 6:00-22:00; St Vitus Cathedral Mon-Sat 9:00-17:00, Sun 12:00-17:00, last entry 16:40; Cathedral Great South Tower 10:00-17:00, last ascent 16:30; Royal Garden, Deer Moat and Southern Gardens closed to the public Nov-Feb. The extracted text gave Golden Lane/other visitor sites '9:00-17:00' but Prague City Tourism (prague.eu) says visitor buildings Nov-Mar 9:00-16:00: CONFLICT, verify.",
+   "status": "official 2026 (hrad.cz, undated winter schedule)",
+   "source_url": "https://www.hrad.cz/cs/prazsky-hrad-pro-navstevniky/oteviraci-doba ; https://prague.eu/cs/objevujte/prazsky-hrad/"
+  },
+  {
+   "item": "Prague Castle: 24, 25, 26, 31 Dec, 1 Jan",
+   "detail": "prague.eu: 'Zavírací den objektů: 24. prosince' (visitor buildings closed on 24 Dec, grounds stay open). 25, 26, 31 Dec and 1 Jan 2026 hours NOT VERIFIED. hrad.cz closures page lists no Nov-Dec 2026 changes yet. Separately hrad.cz lists the whole castle area closed to the public from 15:00 on 28 Oct 2026 (outside the trip).",
+   "status": "24 Dec closure official (Prague City Tourism, undated); others NOT VERIFIED",
+   "source_url": "https://prague.eu/cs/objevujte/prazsky-hrad/ ; https://www.hrad.cz/cs/prazsky-hrad-pro-navstevniky/aktualni-uzavirky"
+  },
+  {
+   "item": "St Vitus Cathedral: services and 24-26 Dec",
+   "detail": "Liturgical limits apply on some days (e.g. 16-17 Oct 2026 shortened hours per hrad.cz). Hours and Mass times on 24, 25, 26 Dec 2026: NOT VERIFIED.",
+   "status": "NOT VERIFIED",
+   "source_url": "https://www.hrad.cz/cs/prazsky-hrad-pro-navstevniky/aktualni-uzavirky"
+  },
+  {
+   "item": "Astronomical Clock and Old Town Hall tower",
+   "detail": "Prague City Tourism: tower April-December 9:00-20:00 daily; 24 Dec 2025 9:00-15:00 (latest year only). The page gives the apostles' show 'every full hour' but states 9-23 in one place and 8-23 in another: inconsistent, verify. 24 Dec 2026 hours NOT VERIFIED.",
+   "status": "latest year only (2025) for 24 Dec",
+   "source_url": "https://prague.eu/cs/objevujte/staromestska-radnice-s-orlojem/"
+  },
+  {
+   "item": "Charles Bridge",
+   "detail": "No opening hours found; it is a public pedestrian bridge. NOT VERIFIED on an official page. No 2026 closure notice found.",
+   "status": "NOT VERIFIED",
+   "source_url": "n/a"
+  },
+  {
+   "item": "Prague Zoo",
+   "detail": "Prague City Tourism: November-February daily 9:00-16:00; tickets sold until 30 minutes before closing. 24 Dec 2025: from 9:00 with reduced admission, pavilions close 14:00, grounds open to 16:00 (České noviny, 20 Dec 2025). 24 Dec 2026 NOT VERIFIED (zoopraha.cz not read).",
+   "status": "official winter hours; 24 Dec latest year only (2025)",
+   "source_url": "https://prague.eu/cs/objevujte/zoologicka-zahrada-hl-m-prahy/ ; https://www.ceskenoviny.cz/zpravy/na-stedry-den-mohou-prazane-navstivit-pamatky-zoo-i-botanickou-zahradu/2763156"
+  },
+  {
+   "item": "Petřín funicular",
+   "detail": "Prague City Tourism: daily 7:00-22:15, every 10 minutes, schedule effective from 22 Sep 2026; page mentions no Christmas variation. PID in earlier years ended the funicular around 18:00-18:30 on 24 Dec (2020, 2023 pages); 2025/26 PID page does not mention the funicular. 24 and 31 Dec 2026 NOT VERIFIED.",
+   "status": "official 2026 (regular schedule); holiday hours NOT VERIFIED",
+   "source_url": "https://prague.eu/cs/objevujte/lanova-draha-na-petrin/ ; https://pid.cz/vanocni-provoz-pid/"
+  },
+  {
+   "item": "Petřín Lookout Tower",
+   "detail": "Prague City Tourism: November-December 10:00-18:00 daily; 24 Dec 2025 10:00-15:00 (latest year only). 2026 NOT VERIFIED.",
+   "status": "latest year only (2025) for 24 Dec",
+   "source_url": "https://prague.eu/cs/objevujte/petrinska-rozhledna/"
+  },
+  {
+   "item": "Other sights open 24 Dec 2025 (latest year only)",
+   "detail": "Klementinum 9:00-15:00; Powder Gate and towers 10:00-14:30; Museum Kampa 10:00-15:00; Trója Botanical Garden 9:00-14:00; Public Transport Museum 9:00-14:00 (České noviny, 20 Dec 2025).",
+   "status": "latest year only (2025)",
+   "source_url": "https://www.ceskenoviny.cz/zpravy/na-stedry-den-mohou-prazane-navstivit-pamatky-zoo-i-botanickou-zahradu/2763156"
+  },
+  {
+   "item": "PID public transport holiday service",
+   "detail": "2026/27 timetable not yet published (NOT VERIFIED). Latest year, 2025/26 (PID page 17 Dec 2025): 24 Dec Saturday holiday timetable, daytime trams/buses/ferries end about 18:00, metro until about midnight every 20 min after 18:00, night services about 18:00-07:00, trains end 18:00-20:00. 25 and 26 Dec Sunday holiday timetables, day trams and buses start about 07:00. 31 Dec weekday holiday timetable; metro extended hours with last trips through the centre just after 02:00; day trams and buses end about 22:00; night trams every 15 min from about 22:00; trains end about 20:00, no midnight departures from Prague. 1 Jan Sunday holiday timetable. Check pid.cz and the PID/DPP app in December.",
+   "status": "latest year only (2025)",
+   "source_url": "https://pid.cz/provoz-pid-behem-vanocnich-a-novorocnich-svatku-3/"
+  }
+ ],
+ "new_years_eve_2026_27": {
+  "status": "NOT VERIFIED: no 2026/27 programme, official fireworks or security plan found on 14 Oct 2026.",
+  "latest_year": "2025/26: see official_crime.json new_years_eve_2025_26. Fireworks banned in the centre by city decree; Wenceslas Square gatherings; Wenceslas Square rink closes 18:00 on 31 Dec (2025).",
+  "source_url": "https://www.praha1.cz/silvestrovske-oslavy-2025-2026-v-praze-1-probehly-klidne-prijata-opatreni-se-osvedcila/"
+ },
+ "not_verified": [
+  "Hours of Old Town and Wenceslas Square markets on 24, 25, 26, 31 Dec 2026 and 1 Jan 2027 (organiser page gives only 10:00-22:00).",
+  "Tree-lighting time on Sat 28 Nov 2026.",
+  "Hours and any organiser page for Náměstí Míru, Republiky and Tylovo markets (organiser vanocnitrhy.cz could not be fetched; dates are secondary).",
+  "Jiřího z Poděbrad, Kampa, Holešovice and Prague Castle market 2026 dates and hours; Castle Advent programme 2026.",
+  "Any Christmas ice rink 2026/27 (including Ovocný trh).",
+  "Statute text of the retail opening-hours act (223/2016 Coll.) and formal public-holiday status of 24 Dec: not read on zakonyprolidi.cz or e-sbirka; shop closures rest on a news article.",
+  "Prague Castle, St Vitus Cathedral, Zoo, Petřín funicular and tower hours on 24-26 and 31 Dec 2026 and 1 Jan 2027.",
+  "Castle visitor-site winter closing time conflict (16:00 vs 17:00).",
+  "Charles Bridge status/hours.",
+  "PID/DPP 2026/27 holiday timetable and New Year's Eve 2026/27 plans."
+ ]
+}

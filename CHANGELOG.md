@@ -2,6 +2,11 @@
 
 All notable changes to the WF-mapping repo. Newest first. Dates are commit dates (UTC). Design and architecture notes live in `Wiley-Fox-Dev-Handoff-v1.md` (§20 covers September 2026).
 
+## 2026-10-14 (Prague)
+
+- **feat:** Prague Christmas 2026 guide build script and source data (`scripts/city-guides/prague/`): 716 creator facts from 155 videos (79 creators credited), Czech Statistical Office 2025 crime tables (Prague 34,853 registered crimes, -9.3%; 2,492 per 100,000; violent 115 per 100,000), 2026 market dates from the organiser (trhypraha.cz), 2026 PID fares, airport transfer options (taxi cap ended 1 Oct 2026), Czech National Bank exchange rules. Czech-regions compare box. Rating 4 (Low), creator feeling 4. On preview only (`/guides/prague/`); new Prague city-list entry on preview (rating 4, homicide 0.7 Eurostat 2024).
+- **ops:** discovery queue now Edinburgh, then Prague (review), Vienna and Strasbourg (done).
+
 ## 2026-10-08 (Vienna publish)
 
 - **feat:** Vienna Christmas 2026 guide approved and live at `/new/guides/vienna/`; `/new` map links it (`GUIDE_LINKS`) and the Vienna city-list entry moves from 5 'Very safe' (Eurostat 2023) to 4 'Generally safe' (Bundeskriminalamt 2025, homicide 1.1 per 100,000). Queue status set to done.

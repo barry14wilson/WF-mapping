@@ -1,0 +1,414 @@
+{
+ "tips": [
+  {
+   "scope": "prague",
+   "category": "transport_payment",
+   "worry": "What do the main Prague public transport tickets cost in 2026?",
+   "tip": "From 1 January 2026 a full-fare ticket for the whole of Prague costs: 30 minutes CZK 36 (app) or CZK 39 (paper); 90 minutes CZK 46 or CZK 50; 24 hours CZK 140 or CZK 150; 72 hours CZK 340 or CZK 350. The app price is the cheaper one. One ticket covers metro, tram, bus and the other PID services in Prague.",
+   "verified_url": "https://pid.cz/en/new-pid-tariff-from-1-january-2026-dont-pay-more-than-you-have-to/",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "prague",
+   "category": "transport_payment",
+   "worry": "Do my children need tickets in Prague?",
+   "tip": "Children under 6 travel free across the whole PID system if accompanied by someone over 10. Children aged 6 to 10 travel free in Prague, and children aged 10 to 15 travel free in Prague if they can prove their age (a document with name, date of birth and photo). Outside Prague, ages 6 to 15 pay half fare.",
+   "verified_url": "https://pid.cz/en/discounts/",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "prague",
+   "category": "transport_payment",
+   "worry": "Do grandparents get free or cheaper travel?",
+   "tip": "Anyone aged 65 or over travels free on Prague metro, trams, buses and ferries, and only needs to show proof of age if inspected (passport or national ID). Ages 60 to 65 pay half price (a 24-hour ticket is CZK 75 on the Prague transport company's page).",
+   "verified_url": "https://pid.cz/en/discounts/",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified (65+ free, PID FAQ and discounts page); 60-65 half price per PID tariff page, DPP lists the 24-hour ticket at CZK 75; year of DPP page not printed"
+  },
+  {
+   "scope": "prague",
+   "category": "transport_payment",
+   "worry": "Is a 24-hour or 72-hour pass worth it for a family?",
+   "tip": "Tickets are per person, but under-15s travel free in Prague, so a family of two adults and children needs only two adult tickets. Two adults on a 24-hour ticket cost CZK 280 (app, 2026). Single 90-minute tickets (CZK 46 each) are cheaper if you only make two or three trips.",
+   "verified_url": "https://pid.cz/en/new-pid-tariff-from-1-january-2026-dont-pay-more-than-you-have-to/",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified (arithmetic from the 2026 tariff)"
+  },
+  {
+   "scope": "prague",
+   "category": "transport_payment",
+   "worry": "What is the PID Lítačka app and does it work in English?",
+   "tip": "It is the official app for tickets, journey planning and closure alerts. It is available in English, takes cards, Apple Pay and Google Pay, and lets you buy now and activate later, or set a future start time. You need a data connection to activate a ticket, but not afterwards.",
+   "verified_url": "https://pid.cz/en/travel-information/pid-mobile-app/",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "prague",
+   "category": "transport_payment",
+   "worry": "Can I tap my bank card on board?",
+   "tip": "PID says card payment in vehicles is an extra service, not guaranteed. If the terminal fails and you cannot pay another way, the driver may refuse to carry you, so have the Lítačka app or cash as a back-up. Whether you can tap in at metro stations or ticket machines is NOT VERIFIED.",
+   "verified_url": "https://pid.cz/en/travel-information/faq/",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified (card payment on vehicles not guaranteed); tap-in at metro and machines NOT VERIFIED"
+  },
+  {
+   "scope": "prague",
+   "category": "transport_payment",
+   "worry": "Do I have to stamp my ticket?",
+   "tip": "Yes for paper tickets: validate once at the first boarding (at the yellow validators in metro stations or at the airport platforms). App tickets must be activated before you board; the default countdown is 2 minutes. An unvalidated ticket counts as no ticket.",
+   "verified_url": "https://www.prg.aero/en/public-transport-buses",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "prague",
+   "category": "transport_payment",
+   "worry": "What is the fine for travelling without a valid ticket?",
+   "tip": "In Prague the fine is CZK 1,200 on the spot, CZK 1,500 if paid within 15 days, or CZK 2,000 otherwise (2026). It drops to CZK 50 if you show a valid ticket or discount proof within 15 days.",
+   "verified_url": "https://pid.cz/en/new-pid-tariff-from-1-january-2026-dont-pay-more-than-you-have-to/",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "prague",
+   "category": "transport_payment",
+   "worry": "How do I get from the airport on public transport?",
+   "tip": "Buy a 90-minute ticket (CZK 46 app or CZK 50 paper, 2026) before boarding. Take trolleybus 59 to Veleslavín (about 15 minutes) then metro line A, or bus 100 to Zličín (about 18 minutes) then metro line B. Night buses 907 and 910 take about 45 minutes to the centre.",
+   "verified_url": "https://www.prg.aero/en/public-transport-buses",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "prague",
+   "category": "transport_payment",
+   "worry": "What is the Airport Express and is it good value?",
+   "tip": "It is a bus from the airport to the Main Railway Station (about 40 minutes). A one-way ticket is CZK 200 (airport website, read 14 Oct 2026). Normal PID tickets are not valid on it. Buy from the Visitor Centre in arrivals or from the driver. For most families, 59 plus the metro is far cheaper.",
+   "verified_url": "https://www.prg.aero/en/airport-express",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "prague",
+   "category": "transport_payment",
+   "worry": "Which taxi or ride app should I use from the airport?",
+   "tip": "Use an app that shows the total fare before you confirm. The airport says Prague's taxi fare cap ended on 1 October 2026, so prices can now differ between firms. Its own figure for a typical trip to the centre (about 20 km) is around CZK 800. Uber Airport shows a fixed fare and is bound by limits agreed with the airport.",
+   "verified_url": "https://www.prg.aero/en/unofficial-taxi-services",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified (airport website, read 14 Oct 2026)"
+  },
+  {
+   "scope": "prague",
+   "category": "safety_habits",
+   "worry": "How do I avoid taxi problems in the city?",
+   "tip": "The UK Foreign Office advises using a major taxi company rather than hailing one in the street, and checking the rates on the side of the car before you get in. Beware of unmarked cars posing as taxis. If a fare looks excessive, or no receipt is offered, do not pay and call the Municipal Police on 156.",
+   "verified_url": "https://www.gov.uk/foreign-travel-advice/czechia/safety-and-security",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "prague",
+   "category": "transport_payment",
+   "worry": "Can I use the metro with a pushchair or wheelchair?",
+   "tip": "The transport company says lifts serve 45 stations, though another line on the same page says 48 of 61, so the count is unclear. Lifts can break down; check the live lift status page before you go. Stations without lifts are hard to use with a pushchair.",
+   "verified_url": "https://www.dpp.cz/en/travelling/barrier-free-travelling/metro",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified (access exists); exact station count inconsistent on page; pushchair rules on trams NOT VERIFIED"
+  },
+  {
+   "scope": "prague",
+   "category": "money_tipping",
+   "worry": "What currency do I use, and can I pay in euros?",
+   "tip": "Prague uses the Czech koruna (CZK). The Czech National Bank published EUR 1 = CZK 24.375 for 13 October 2026. Shops are not required to take euros; some tourist places do at poor rates. Pay in koruna wherever you can.",
+   "verified_url": "https://www.cnb.cz/en/",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified (CZK is the currency, CNB rate 13 Oct 2026); euro acceptance by shops NOT VERIFIED"
+  },
+  {
+   "scope": "prague",
+   "category": "money_tipping",
+   "worry": "Where is it safe to change money?",
+   "tip": "Change money only at a designated bureau de change, never from people on the street. The Czech National Bank also says rates vary a lot between offices, so compare the buy and sell rates before you go in.",
+   "verified_url": "https://www.cnb.cz/en/supervision-financial-market/consumer-protection-and-financial-literacy/consumer-protection/ten_golden_rules_currency_exchange/",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "prague",
+   "category": "money_tipping",
+   "worry": "What is the 'no commission' or '0%' trap?",
+   "tip": "Czech law bans commission on currency exchange, so '0% commission' means nothing. The real cost is hidden in the gap between buy and sell rates. The central bank says a gap of several koruna is a reason not to proceed. A tourist-centre kiosk can leave you well short of the fair rate.",
+   "verified_url": "https://www.cnb.cz/en/supervision-financial-market/consumer-protection-and-financial-literacy/consumer-protection/ten_golden_rules_currency_exchange/",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "prague",
+   "category": "money_tipping",
+   "worry": "Can I change my mind after exchanging money?",
+   "tip": "Yes, within 3 hours at the same bureau (the clock pauses outside its opening hours). You are entitled to a written proof of cancellation in at least Czech and English. For amounts over EUR 1,000 you can cancel only the first EUR 1,000. Machines allow 3 working days.",
+   "verified_url": "https://www.cnb.cz/exchange",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "prague",
+   "category": "money_tipping",
+   "worry": "Should I pay in koruna or pounds on a card machine or cash machine?",
+   "tip": "Choose koruna. If a cash machine or card terminal offers to charge you in pounds, that is dynamic currency conversion and it usually gives a worse rate. A 2026 local guide specifically warns about this at airport cash machines.",
+   "verified_url": "https://www.helloprague.net/is-prague-safe/",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified (secondary source, 2026)"
+  },
+  {
+   "scope": "prague",
+   "category": "money_tipping",
+   "worry": "Will cards be accepted?",
+   "tip": "Prague Zoo says all its ticket offices take payment cards, and some Prague City Tourism towers take card only. Card acceptance at individual Christmas market stalls is NOT VERIFIED, so carry some koruna for stalls and toilets.",
+   "verified_url": "https://www.zoopraha.cz/en/before-visit/admission-prices",
+   "verified_at": "2026-10-14",
+   "season": "christmas",
+   "status": "verified (zoo and towers); market stalls NOT VERIFIED"
+  },
+  {
+   "scope": "prague",
+   "category": "money_tipping",
+   "worry": "How much should I tip?",
+   "tip": "Tipping is customary rather than required. About 10 percent for good service, or rounding up the bill, is typical. Check whether a service charge is already on the bill first. This comes from private guides, not an official source.",
+   "verified_url": "https://www.praguebehindthescenes.com/tipping-in-prague-how-much-to-tip-in-restaurants-services/",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "secondary source; year not printed"
+  },
+  {
+   "scope": "prague",
+   "category": "water_snacks",
+   "worry": "Is a trdelník a traditional Czech Christmas treat?",
+   "tip": "No. Wikipedia notes it is mostly described in older sources as Slovak or Moravian, and sellers only spread across Prague from the early 2000s. It is still popular and warm to hold. Typical prices were CZK 100 to 180 plain or with toppings (2025 report), and CZK 190 with ice cream (December 2024).",
+   "verified_url": "https://en.wikipedia.org/wiki/Trdeln%C3%ADk",
+   "verified_at": "2026-10-14",
+   "season": "christmas",
+   "status": "verified (origin); prices from news reports 2024 and 2025, 2026 NOT VERIFIED"
+  },
+  {
+   "scope": "prague",
+   "category": "water_snacks",
+   "worry": "How much is mulled wine (svařák) at the Old Town market?",
+   "tip": "About CZK 100 for 2 decilitres at Old Town Square in December 2024. Wenceslas Square was CZK 100 to 120 and Náměstí Míru CZK 80 that year. 2026 prices are NOT VERIFIED.",
+   "verified_url": "https://cnn.iprima.cz/vanocni-trhy-po-roce-opet-zdrazily-za-svarak-date-i-stovku-lide-jsou-ale-ochotni-utracet-455699",
+   "verified_at": "2026-10-14",
+   "season": "christmas",
+   "status": "latest year only (2024); 2026 NOT VERIFIED"
+  },
+  {
+   "scope": "prague",
+   "category": "water_snacks",
+   "worry": "What is the ham-by-weight trap at the market?",
+   "tip": "Old Prague ham is sold by weight, not by portion. A guide gives CZK 99 per 100 g, another about CZK 1 per gram, so 200 g is roughly CZK 200 (price undated). Ask for a weight in grams (for example 150 g) and watch it being weighed. Asking for a 'portion' leaves the price to the seller.",
+   "verified_url": "https://livingprague.com/food-and-drink/czech-food-old-prague-ham/",
+   "verified_at": "2026-10-14",
+   "season": "christmas",
+   "status": "verified (method); price undated, 2026 NOT VERIFIED"
+  },
+  {
+   "scope": "prague",
+   "category": "water_snacks",
+   "worry": "Is tap water safe to drink?",
+   "tip": "Yes. The city water company says Prague tap water meets Czech and European standards and is checked regularly. One caution: very old buildings with lead pipes can be a risk for small children and pregnant women, so ask your accommodation if you are in a pre-war building.",
+   "verified_url": "https://www.pvk.cz/vse-o-vode/pitna-voda/",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "prague",
+   "category": "toilets",
+   "worry": "Do public toilets cost money?",
+   "tip": "Often yes. Guides give CZK 10 to 20 per visit, including in metro stations, and a few take euros. Shopping centres and fast-food restaurants are often free or cheaper. Keep a few coins in your pocket. Private guide, no official fee list found.",
+   "verified_url": "https://www.private-prague-guide.com/frequently-asked-questions/restrooms%E2%80%93wc-prague/",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "secondary source; year not printed; fees NOT VERIFIED officially"
+  },
+  {
+   "scope": "prague",
+   "category": "local_ways",
+   "worry": "When are shops shut over Christmas 2026?",
+   "tip": "Shops over 200 square metres must close by 12:00 on Thursday 24 December and stay shut all day on Friday 25 and Saturday 26 December. Petrol stations, pharmacies, small shops and shops in stations and airports are exempt. Buy supplies by Wednesday 23 December.",
+   "verified_url": "https://www.e15.cz/obchody-vanoce-kdy-je-zavreno-otevreno",
+   "verified_at": "2026-10-14",
+   "season": "christmas",
+   "status": "verified"
+  },
+  {
+   "scope": "prague",
+   "category": "local_ways",
+   "worry": "Are shops closed on Sundays and on 1 January?",
+   "tip": "The Christmas rules come from a law banning sales in larger shops on seven public holidays. We did not confirm the full list for 2026, so check whether 1 January 2027 is included. We found no source for a general Sunday ban; assume small shops open.",
+   "verified_url": "https://www.top.cz/oteviraci-doba-ve-statni-svatky-kdy-jsou-zavrene-obchody",
+   "verified_at": "2026-10-14",
+   "season": "christmas",
+   "status": "holiday ban verified; 1 January and Sundays NOT VERIFIED"
+  },
+  {
+   "scope": "prague",
+   "category": "local_ways",
+   "worry": "When do the Christmas markets run in 2026?",
+   "tip": "Old Town Square and Wenceslas Square markets run from 28 November 2026 to 6 January 2027, daily, with Wenceslas Square 10:00 to 22:00 and free entry. A tourism site says both are open on 24 and 25 December and New Year's Eve. Hours on those specific days are NOT VERIFIED.",
+   "verified_url": "https://prague.eu/en/akce/wenceslas-square-christmas-market/",
+   "verified_at": "2026-10-14",
+   "season": "christmas",
+   "status": "verified (dates); 24, 25 Dec and 31 Dec hours NOT VERIFIED"
+  },
+  {
+   "scope": "prague",
+   "category": "parks_play",
+   "worry": "Are there free things for children at the markets?",
+   "tip": "A tourism site lists creative decoration-making workshops for children at Old Town Square every Saturday and Sunday from 11:00 to 15:00. Whether they are free and the 2026 dates are NOT VERIFIED. The markets are free to enter and Wenceslas Square has an ice rink (fee NOT VERIFIED).",
+   "verified_url": "https://www.pragueexperience.com/events/christmas-markets.asp",
+   "verified_at": "2026-10-14",
+   "season": "christmas",
+   "status": "NOT VERIFIED (workshop cost and 2026 dates)"
+  },
+  {
+   "scope": "prague",
+   "category": "parks_play",
+   "worry": "Is Prague Zoo worth visiting in winter?",
+   "tip": "Yes, but days are short. November and December hours are 9:00 to 16:00, ticket offices close earlier (15:30 weekends, 14:00 some weekday entrances) and on 24 December all ticket offices close at 14:00. The fur seal exhibit is closed on Fridays. The children's tram is out of service.",
+   "verified_url": "https://www.zoopraha.cz/en/before-visit/opening-time",
+   "verified_at": "2026-10-14",
+   "season": "winter",
+   "status": "verified"
+  },
+  {
+   "scope": "prague",
+   "category": "parks_play",
+   "worry": "What does Prague Zoo cost for a family?",
+   "tip": "At the till: adult CZK 330, child (3 to 15) CZK 250, family ticket CZK 1,000. Online e-tickets are cheaper: CZK 300, CZK 200 and CZK 850 (2 adults plus up to 4 children). Under-3s are free. Retirees pay CZK 150. Page read 14 Oct 2026; tariff year not printed.",
+   "verified_url": "https://www.zoopraha.cz/en/before-visit/admission-prices",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified (page read 14 Oct 2026; tariff year not printed)"
+  },
+  {
+   "scope": "prague",
+   "category": "parks_play",
+   "worry": "What does Petřín tower and funicular cost?",
+   "tip": "The Petřín tower is CZK 250 (reduced CZK 170 for ages 6 to 15 and 65+, family CZK 500, under-5s free); its lift is a separate fee. The funicular is CZK 100 single, free for under-15s and over-65s. The tower is open 10:00 to 18:00 in November and December. A walk or funicular suits tired children.",
+   "verified_url": "https://prague.eu/en/objevujte/petrin-tower-petrinska-rozhledna/",
+   "verified_at": "2026-10-14",
+   "season": "winter",
+   "status": "verified (prague.eu, modified 30 Sep 2026); lift fee amounts unclear"
+  },
+  {
+   "scope": "prague",
+   "category": "local_ways",
+   "worry": "What is the weather like in December?",
+   "tip": "Typical highs are about 4 degrees Celsius with nights around 0 to minus 2, and it can be colder. Daylight is about 8.5 hours with sunset around 16:00 to 16:30. Pack waterproof boots, gloves and warm layers; cobbles get slippery.",
+   "verified_url": "https://weatherspark.com/m/77807/12/Average-Weather-in-December-in-Prague-Czechia",
+   "verified_at": "2026-10-14",
+   "season": "christmas",
+   "status": "verified (climate averages, secondary)"
+  },
+  {
+   "scope": "prague",
+   "category": "local_ways",
+   "worry": "Can we set off fireworks on New Year's Eve?",
+   "tip": "Not in the historic centre. A Prague city rule bans fireworks and firecrackers in the heritage reserve, within 50 metres of the river, in parks and near hospitals. On-the-spot fines go up to CZK 10,000 (up to CZK 100,000 in formal proceedings). The city did not plan an official fireworks show for New Year 2026. New Year 2027 plans are NOT VERIFIED.",
+   "verified_url": "https://www.kudyznudy.cz/aktuality/letosni-silvestr-bude-v-praze-bez-hluku-z-rachejtl",
+   "verified_at": "2026-10-14",
+   "season": "christmas",
+   "status": "rules verified (article Dec 2025); New Year 2027 NOT VERIFIED"
+  },
+  {
+   "scope": "prague",
+   "category": "safety_habits",
+   "worry": "Where do pickpockets work?",
+   "tip": "The UK Foreign Office warns of pickpockets on airport transport into town, trams to Prague Castle and busy tourist areas. A 2026 local guide names tram 22, Charles Bridge and Old Town Square. Tram 9 is NOT VERIFIED. Keep phones in front pockets or zipped bags, and be extra careful in market crowds.",
+   "verified_url": "https://www.gov.uk/foreign-travel-advice/czechia/safety-and-security",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified (tram 22 and areas); tram 9 NOT VERIFIED"
+  },
+  {
+   "scope": "prague",
+   "category": "safety_habits",
+   "worry": "What if someone says they are police and asks to see my cash?",
+   "tip": "The UK Foreign Office warns of fake plainclothes police. Offer to go to a police station, or call 112 to check. Real officers will not mind.",
+   "verified_url": "https://www.gov.uk/foreign-travel-advice/czechia/safety-and-security",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "prague",
+   "category": "safety_habits",
+   "worry": "Where is it risky at night?",
+   "tip": "A 2026 local guide says a cluster of bars at the bottom of Wenceslas Square use pushy touts and have been linked to overcharging and, rarely, spiked drinks. Do not follow touts, check prices first, and use an app taxi to get home.",
+   "verified_url": "https://www.helloprague.net/is-prague-safe/",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "secondary source (2026)"
+  },
+  {
+   "scope": "prague",
+   "category": "safety_habits",
+   "worry": "Who do I call in an emergency?",
+   "tip": "112 for any emergency. Police 158, ambulance 155, fire and rescue 150, city (municipal) police 156. Report theft at a police station within 24 hours for a crime number for insurance; the central station at Jungmannovo náměstí 9 is open 24 hours with interpreters.",
+   "verified_url": "https://mzv.gov.cz/copenhagen/en/consular_and_visa_information/tourist_information/emergency_contact_numbers.html",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified (numbers: Czech foreign ministry; station details: GOV.UK)"
+  },
+  {
+   "scope": "prague",
+   "category": "safety_habits",
+   "worry": "What do UK travellers need at the border?",
+   "tip": "Your passport must be under 10 years old at arrival and valid for 3 months after you leave. The EU Entry/Exit System is being introduced: you may have fingerprints and a photo taken on your first visit (free; children 11 and under are not fingerprinted). Allow extra time. Hotels normally register you with the police within 3 days.",
+   "verified_url": "https://www.gov.uk/foreign-travel-advice/czechia/entry-requirements",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified"
+  },
+  {
+   "scope": "prague",
+   "category": "safety_habits",
+   "worry": "Do I need an ETIAS?",
+   "tip": "Not yet. The EU's official site (read 14 Oct 2026) says ETIAS is not in operation and no applications are taken. The start date will be announced several months ahead, so check again before you book.",
+   "verified_url": "https://travel-europe.europa.eu/etias_en",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified (EU site 14 Oct 2026)"
+  },
+  {
+   "scope": "prague",
+   "category": "phone_data",
+   "worry": "Will my UK phone cost extra in Prague?",
+   "tip": "It depends on your plan. A September 2026 comparison says O2 does not charge for EU roaming (up to 25 GB), EE and Vodafone charge about GBP 2.50 a day and Three GBP 2.75. Older contracts may differ, so check your own plan or buy an eSIM before you go.",
+   "verified_url": "https://en.selectra.info/broadband-phone-france/guides/mobile/roaming-charges-eu",
+   "verified_at": "2026-10-14",
+   "season": "any",
+   "status": "verified (secondary, updated 17 Sep 2026); your own plan NOT VERIFIED"
+  }
+ ]
+}

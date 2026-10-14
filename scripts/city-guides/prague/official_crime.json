@@ -1,0 +1,237 @@
+{
+ "generated": "2026-10-14",
+ "source_note": "Main source: Czech Statistical Office (ČSÚ) publication 'Kriminalita 2015-2025' (code 080009-26), which republishes Police of the Czech Republic (Policejní prezidium ČR) data by region (kraj). We downloaded and read the full PDF and the Excel tables (Tab. 1.2 total crime, 2.1 violent, 2.9 assault, 2.10 robbery, 4.1 property, 4.8 simple theft, 4.9 home burglary). Product page: https://csu.gov.cz/aktualni-produkt/392026 ; PDF: https://csu.gov.cz/docs/107508/66013403-70d1-5819-4ba5-d1a48d624263/08000926.pdf?version=1.2 ; tables: https://csu.gov.cz/docs/107508/5662846a-b7e4-804a-3cc7-df86f19030bf/08000926t.xlsx?version=1.0 . Cross-check: the Police ČR 2025 regional ranking table (in a Olomouc regional-directorate presentation on the Police archive site) gives the same totals: https://archiv.policie.gov.cz/soubor/bilance-kriminality-2025-pdf.aspx . National press release (Police ČR, signed 21 Jan 2026): https://policie.gov.cz/clanek/vyvoj-registrovane-kriminality-v-roce-2025.aspx . Prague = 'Hl. m. Praha' = both a city and a region (kraj), so Prague figures ARE city-wide figures. Rates per 100,000 are ČSÚ's own 'index kriminality' (mid-year population, per the ČSÚ PDF methodology), not Wiley Fox calculations, except where marked WF. Latest published year is 2025 (published 23 Jun 2026).",
+ "scope_warning": "These are offences REGISTERED by the Czech Police (registrované skutky), allocated to the region where the police registered them. They are not a victim survey. ČSÚ itself warns that Prague's index is inflated by tourists and commuters: offences against or by short-stay visitors are counted, but only permanent/long-term residents are in the population base (ČSÚ PDF, section 1.1.1). The rate is therefore not the risk to one visitor. Prague has the highest crime index of all 14 regions. Brno, Ostrava and Plzeň CITY figures are NOT published in these sources; only regional (kraj) figures are, and they include the surrounding countryside. A district-level (Prague 1-22) 2025 breakdown was NOT obtained (see no_district_data).",
+ "headline": {
+  "summary": "Prague 2025: 34,853 registered offences, down 9.3% on 2024 (38,435; -3,582), the largest absolute fall of any Czech region. That is 2,492 per 100,000 residents (ČSÚ index) versus 1,561 for Czechia (170,051 offences, -1.9%), i.e. about 1.6 times the national rate (WF ratio). Prague's share of national crime fell to 20.5%, the lowest in the decade. Prague clearance rate 26.8% (lowest of 14 regions; Czechia 45.2%): ČSÚ links this to the high share of property crime, especially pickpocketing. Property crime is 67% of Prague's total (23,270, -9.4%). Violent crime 1,609 (+0.8%), 115 per 100,000 (Czechia 13,752, +0.3%). Robbery 204 (+12.7% on 181), 14.6 per 100,000 (Czechia 1,344, -2.6%). Home burglary 724 (-1.0%). Pickpocketing is not published as a separate Prague table: ČSÚ says it is 9% of Prague property crime, which implies roughly 2,100 cases (WF estimate from a rounded %; NOT VERIFIED as an exact count). Czechia total 3,384 pickpocketing cases in 2025.",
+  "pickpocket_relevant_line": "ČSÚ 2025: 'kapesní krádeže ... v Praze tvoří 9 % majetkové kriminality, v menších [krajích] jde nejčastěji o 1 %' (Prague 9% of property crime, about 1.6% in Vysočina). National pickpocketing 2025: 3,384 cases (ČSÚ PDF, section on theft). Police ČR said in 2018 that Prague had 7,313 pickpocketing cases in 2017 and 64.5% of the Czech total (ČT24, 1 Feb 2018, https://ct24.ceskatelevize.cz/domaci/2379337-kriminalita-v-praze-loni-opet-prudce-klesla-boj-s-kapsari-se-vsak-policii-nedari ): the long-run fall is large, but the exact 2024 and 2025 Prague counts are NOT VERIFIED.",
+  "source_url": "https://csu.gov.cz/docs/107508/66013403-70d1-5819-4ba5-d1a48d624263/08000926.pdf?version=1.2"
+ },
+ "indicators": [
+  {
+   "name": "Total registered offences, Czechia 2025",
+   "value": "170,051",
+   "unit": "offences",
+   "change": "-1.9% on 2024 (173,322). Clearance 45.2% (76,827).",
+   "source_url": "https://csu.gov.cz/docs/107508/5662846a-b7e4-804a-3cc7-df86f19030bf/08000926t.xlsx?version=1.0 (Tab. 1.2); https://policie.gov.cz/clanek/vyvoj-registrovane-kriminality-v-roce-2025.aspx"
+  },
+  {
+   "name": "Total registered offences, Prague (Hl. m. Praha) 2025",
+   "value": "34,853",
+   "unit": "offences",
+   "change": "-9.3% on 2024 (38,435), -3,582. 2023: 41,070. Clearance 26.8% (9,344), lowest of 14 regions. 20.5% of the Czech total.",
+   "source_url": "https://csu.gov.cz/docs/107508/5662846a-b7e4-804a-3cc7-df86f19030bf/08000926t.xlsx?version=1.0 (Tab. 1.2); https://archiv.policie.gov.cz/soubor/bilance-kriminality-2025-pdf.aspx"
+  },
+  {
+   "name": "Total offences per 100,000 residents: Prague",
+   "value": "2,492",
+   "unit": "per 100,000 (ČSÚ crime index, mid-year population)",
+   "change": "2024: 2,770; 2023: 2,988",
+   "source_url": "https://csu.gov.cz/docs/107508/5662846a-b7e4-804a-3cc7-df86f19030bf/08000926t.xlsx?version=1.0 (Tab. 1.2)",
+   "note": "Implied population about 1.40 million (WF back-calculation: 34,853 / 2,491.86)."
+  },
+  {
+   "name": "Total offences per 100,000 residents: Czechia",
+   "value": "1,561",
+   "unit": "per 100,000 (ČSÚ)",
+   "change": "2024: 1,592",
+   "source_url": "https://csu.gov.cz/docs/107508/5662846a-b7e4-804a-3cc7-df86f19030bf/08000926t.xlsx?version=1.0 (Tab. 1.2)",
+   "note": "Prague / Czechia ratio about 1.60 (WF calculation)."
+  },
+  {
+   "name": "Property crime (majetková), Prague 2025",
+   "value": "23,270",
+   "unit": "offences",
+   "change": "-9.4% on 2024 (25,687). 1,664 per 100,000. 67% of Prague total. Clearance 16.5%.",
+   "source_url": "https://csu.gov.cz/docs/107508/5662846a-b7e4-804a-3cc7-df86f19030bf/08000926t.xlsx?version=1.0 (Tab. 4.1); https://csu.gov.cz/docs/107508/66013403-70d1-5819-4ba5-d1a48d624263/08000926.pdf?version=1.2"
+  },
+  {
+   "name": "Simple theft (krádeže prosté), Prague 2025",
+   "value": "7,745",
+   "unit": "offences",
+   "change": "-15.9% on 2024 (9,210). 554 per 100,000. Clearance 27.8%. Czechia 30,840 (-3.5%).",
+   "source_url": "https://csu.gov.cz/docs/107508/5662846a-b7e4-804a-3cc7-df86f19030bf/08000926t.xlsx?version=1.0 (Tab. 4.8)",
+   "note": "Category includes shop theft and pickpocketing."
+  },
+  {
+   "name": "Pickpocketing (kapesní krádeže), Prague 2025",
+   "value": "about 2,100 (ESTIMATE)",
+   "unit": "offences",
+   "change": "2024 and exact 2025 count NOT VERIFIED",
+   "source_url": "https://csu.gov.cz/docs/107508/66013403-70d1-5819-4ba5-d1a48d624263/08000926.pdf?version=1.2",
+   "note": "WF estimate = 9% x 23,270 property offences = about 2,094; range 1,978-2,211 because ČSÚ rounds the percentage. Czechia 2025: 3,384 (ČSÚ), so Prague would be roughly 60% of the national total (WF estimate). Treat as indicative only."
+  },
+  {
+   "name": "Violent crime (násilná), Prague 2025",
+   "value": "1,609",
+   "unit": "offences",
+   "change": "+0.8% on 2024 (1,596). 115 per 100,000 (Czechia 13,752, +0.3%). Clearance 48.6%.",
+   "source_url": "https://csu.gov.cz/docs/107508/5662846a-b7e4-804a-3cc7-df86f19030bf/08000926t.xlsx?version=1.0 (Tab. 2.1)",
+   "note": "Highest Czech violent-crime rate is Ústí region, 196 per 100,000 (ČSÚ)."
+  },
+  {
+   "name": "Robbery (loupež), Prague 2025",
+   "value": "204",
+   "unit": "offences",
+   "change": "+12.7% on 2024 (181). 14.6 per 100,000. Clearance 59.8%. Czechia 1,344 (-2.6%).",
+   "source_url": "https://csu.gov.cz/docs/107508/5662846a-b7e4-804a-3cc7-df86f19030bf/08000926t.xlsx?version=1.0 (Tab. 2.10)",
+   "note": "Small numbers: +23 cases."
+  },
+  {
+   "name": "Intentional bodily harm (úmyslné ublížení na zdraví), Prague 2025",
+   "value": "495",
+   "unit": "offences",
+   "change": "-3.1% on 2024 (511). 35.4 per 100,000.",
+   "source_url": "https://csu.gov.cz/docs/107508/5662846a-b7e4-804a-3cc7-df86f19030bf/08000926t.xlsx?version=1.0 (Tab. 2.9)"
+  },
+  {
+   "name": "Murder incl. attempts (vražda), Prague 2025",
+   "value": "23",
+   "unit": "offences",
+   "change": "2024: 19. 1.6 per 100,000. (Table includes attempts and preparation.)",
+   "source_url": "https://csu.gov.cz/docs/107508/5662846a-b7e4-804a-3cc7-df86f19030bf/08000926t.xlsx?version=1.0 (Tab. 2.8)"
+  },
+  {
+   "name": "Home burglary (vloupání do soukromých obytných prostor), Prague 2025",
+   "value": "724",
+   "unit": "offences",
+   "change": "-1.0% on 2024 (731). 51.8 per 100,000. Czechia 4,064 (-4.1%).",
+   "source_url": "https://csu.gov.cz/docs/107508/5662846a-b7e4-804a-3cc7-df86f19030bf/08000926t.xlsx?version=1.0 (Tab. 4.9)"
+  }
+ ],
+ "comparators": {
+  "note": "REGIONS (kraj), not cities. City-only figures for Brno, Ostrava and Plzeň are NOT VERIFIED / not published in the sources read. Jihomoravský kraj contains Brno; Moravskoslezský contains Ostrava; Plzeňský contains Plzeň.",
+  "table": [
+   {
+    "area": "Prague (Hl. m. Praha)",
+    "total_2025": 34853,
+    "change_vs_2024": "-9.3%",
+    "per_100k": 2491.9,
+    "violent": 1609,
+    "violent_per_100k": 115.0,
+    "robbery": 204,
+    "home_burglary": 724,
+    "clearance_pct": 26.8
+   },
+   {
+    "area": "Czechia",
+    "total_2025": 170051,
+    "change_vs_2024": "-1.9%",
+    "per_100k": 1561.4,
+    "violent": 13752,
+    "violent_per_100k": null,
+    "robbery": 1344,
+    "home_burglary": 4064,
+    "clearance_pct": 45.2
+   },
+   {
+    "area": "South Moravia (Jihomoravský kraj, incl. Brno)",
+    "total_2025": 17708,
+    "change_vs_2024": "-2.1% (WF calc from 18,079)",
+    "per_100k": 1443.0,
+    "violent": 1376,
+    "violent_per_100k": 112.1,
+    "robbery": 139,
+    "home_burglary": 430,
+    "clearance_pct": 37.3
+   },
+   {
+    "area": "Moravian-Silesian (Moravskoslezský kraj, incl. Ostrava)",
+    "total_2025": 21247,
+    "change_vs_2024": "+4.2%",
+    "per_100k": 1803.3,
+    "violent": 1765,
+    "violent_per_100k": 149.8,
+    "robbery": 219,
+    "home_burglary": 506,
+    "clearance_pct": 54.3
+   },
+   {
+    "area": "Plzeň region (Plzeňský kraj, incl. Plzeň)",
+    "total_2025": 9244,
+    "change_vs_2024": "+2.8% (WF calc from 8,996)",
+    "per_100k": 1511.6,
+    "violent": 743,
+    "violent_per_100k": 121.5,
+    "robbery": 76,
+    "home_burglary": 268,
+    "clearance_pct": 42.1
+   }
+  ],
+  "source_url": "https://csu.gov.cz/docs/107508/5662846a-b7e4-804a-3cc7-df86f19030bf/08000926t.xlsx?version=1.0",
+  "reading_note": "Prague has about 1.4-1.7 times the per-resident total rate of the other three regions, but the gap is driven by property crime (pickpocketing, vehicle theft, fraud). On violent crime per 100,000 Prague (115) is level with South Moravia (112) and below Moravian-Silesia (150). Prague robbery per 100,000 (14.6) is below Moravian-Silesia (18.6) and above South Moravia (11.3). Rates include visitors' offences but only residents in the base, so Prague is inflated."
+ },
+ "data_quality_flags": [
+  "Prague = city and region; Brno/Ostrava/Plzeň are REGIONAL figures including surrounding districts.",
+  "Rates are ČSÚ indices using mid-year (1 July) population; Eurostat-style tables use 1 January, so values differ slightly (ČSÚ methodology note).",
+  "Pickpocketing has no standalone Prague table in the ČSÚ publication; the figure of about 2,100 is a WF estimate from a rounded 9% share.",
+  "Murder table includes attempts and preparation (ČSÚ footnote).",
+  "Police ČR 2025 totals match ČSÚ (Prague 34,853; Czechia 170,051). The Police ČR regional table was read in a regional-directorate presentation on archiv.policie.gov.cz, not on a national press page.",
+  "ČSÚ regional article for Středočeský kraj also states Prague fell 9.3% (3,582 fewer): https://csu.gov.cz/stc/kriminalita-ve-stredoceskem-kraji-v-roce-2025",
+  "Low Prague clearance (26.8%) is structural: a large share of anonymous property crime (ČSÚ).",
+  "Crime registered 2025 is last full year (latest year only, 2025); no 2026 year-to-date figures found."
+ ],
+ "no_district_data": {
+  "finding": "No Prague 1 (or Prague 1-22) district figures for 2025 were obtained. Searches for the Police ČR interactive crime map (Mapa kriminality) returned only news items; the map is interactive and was not read. District-level 2025 figures are NOT VERIFIED.",
+  "historical_context_only": "Police ČR / KŘP hl. m. Prahy press release of 14 July 2010 (first half of 2010 vs 2009): Prague 1 pickpocketing 836 (2009: 1,115) out of 5,435 in the whole city (7,190), i.e. about 15% of city pickpocketing in Prague 1 in H1 2010; Prague 1 total crime 3,470 of 38,284. This is 16 years old and NOT current: https://archiv.policie.gov.cz/clanek/sprava-hl-m-prahy-zpravodajstvi-kriminalita-v-praze-klesa.aspx",
+  "police_2008_hotspots": "Police ČR (2009 article on 2008 data, undated page): hotspots named were the historic centre, Hlavní nádraží, Florenc, trams and metro, Karlovo náměstí metro and Wenceslas Square; plain-clothes unit KAPSA. Old, context only: https://archiv.policie.gov.cz/clanek/cinnost-a-akce-nelehky-boj-s-kapsari-v-praze.aspx",
+  "municipal_police_prague1_2025": "Městská policie Praha 1 detected 99,468 offences in 2025 (traffic 86,564; public order 12,313; other 591); 2,127 people taken to the sobering-up station (866 foreigners). These are municipal offences, not crime statistics and not pickpocketing: https://www.praha1.cz/straznici-v-centru-prahy-loni-odhalili-temer-100-tisic-prestupku/ (3 Feb 2026)"
+ },
+ "christmas_market_security": {
+  "note": "Specific 2025 and 2026 Prague market-security announcements were NOT found. Latest items found are from 2018 and 2024.",
+  "latest_police_advent_measures": "Police ČR Prague, 28 Nov 2024 (latest year only, 2024): more officers at crowded places (shopping centres, transport hubs, Christmas markets); patrols with ballistic protection and long weapons; hundreds of officers from uniformed, criminal, public-order, foreigner and anti-conflict units plus riot unit and crisis interveners; coordination with Prague City Hall and Městská policie; pickpocketing prevention campaign. Source: https://archiv.policie.gov.cz/clanek/adventni-opatreni.aspx",
+  "barriers": "ČT24, 21 Dec 2024: concrete barriers placed at the Náměstí Republiky market after the Magdeburg attack; barriers already protected the Wenceslas Square and Old Town Square markets; more blocks planned for the Náplavka. Latest year only (2024): https://ct24.ceskatelevize.cz/clanek/domaci/praha-umistila-betonove-zabrany-u-trhu-na-namesti-republiky-356507 . Police ČR text of 29 Nov 2018 says Old Town Square keeps its barriers all year: https://archiv.policie.gov.cz/clanek/opatreni-v-souvislosti-s-adventem.aspx",
+  "tree_lighting_crowd_control": "Police ČR (2018 text): police and city guards monitor the tree lighting and can close the square to new visitors if too crowded; advice that elderly people and families with small children consider another day. 2018, context only.",
+  "bag_checks": "NOT VERIFIED for Prague."
+ },
+ "fcdo_czechia": {
+  "page": "https://www.gov.uk/foreign-travel-advice/czechia/safety-and-security (gov.uk/foreign-travel-advice/czech-republic redirects to Czechia in search results; the page was read via the fetch tool summary, so wording below is a PARAPHRASE except short quotes)",
+  "page_last_updated": "The fetch tool reported two dates: public update 11 Aug 2026 and metadata 'last updated' 14 Oct 2026. Not reconciled; treat as 'checked 14 Oct 2026'.",
+  "terrorism": "FCDO: terrorist attacks in Czechia 'cannot be ruled out'; stay aware of surroundings, especially in places frequented by foreign travellers. (UK threat level global wording as summarised; exact sentence NOT VERIFIED verbatim.)",
+  "crime": "Petty theft is a problem, especially in major Prague tourist areas; pickpocketing risks cited on busy metro and bus routes from the airport, trams to Prague Castle and busy tourist areas. Call 112 if a victim. Report theft in person to the nearest police station within 24 hours to get a crime number for insurance. Prague police station Jungmannovo náměstí 9 is open 24 hours with English-speaking interpreters; there is also a police station at the airport. Prague lamp posts carry 6-digit numbers that help police locate you.",
+  "scams_money": "Fake plain-clothes police may ask to see foreign currency and passport; real Czech police do not have this right; do not show money, offer to go to the station or call 112. Change money only at an exchange office or bank, not on the street (counterfeit risk). Take care at cash machines. Nightclub consumption charges can be high and lost consumption cards can carry large penalties.",
+  "drink_spiking": "Risk in bars and clubs; do not accept drinks from strangers or leave drinks unattended.",
+  "other_lines": "Carry ID (a passport scan is usually accepted). Drunken or offensive behaviour can lead to arrest, fines or sober-up detention. Drugs including cannabis are illegal. Use major taxi companies and check rates first. Validate public transport tickets (on-the-spot fines). Protests can occur at short notice and have been peaceful.",
+  "emergency_numbers": "112 (as stated by FCDO).",
+  "status": "read 14 Oct 2026 via fetch summary; verify verbatim wording before publishing quotes"
+ },
+ "police_focus_areas": {
+  "note": "No official 2025/26 list of Prague hotspots found. Items below are from Police ČR and ČSÚ pages.",
+  "items": [
+   "ČSÚ 2025: pickpocketing is typical of large anonymous cities; 9% of Prague property crime. Source: https://csu.gov.cz/docs/107508/66013403-70d1-5819-4ba5-d1a48d624263/08000926.pdf?version=1.2",
+   "Police ČR Prague advent measures 2024 and 2018: crowded transport, shopping centres, markets; pickpocketing prevention campaign.",
+   "Police ČR 2008 data article: historic centre, Hlavní nádraží, Florenc, trams, metro (Karlovo náměstí) and Wenceslas Square as pickpocket hotspots; dated, context only.",
+   "FCDO: airport bus/metro routes, trams to Prague Castle, busy tourist areas.",
+   "Police ČR national press release (21 Jan 2026): Prague recorded the most fraud and theft from vehicles."
+  ]
+ },
+ "prague1_night_rules": {
+  "pub_crawl_ban": "Prague city leadership approved on 14 Oct 2024 an amendment to the market regulation (tržní řád) banning agency-organised night pub crawls ('pochůzkové poskytování služeb'); ordinary guided tours still allowed 06:00-22:00. Effective on publication in the legal-regulations collection (publication date not stated); fines not stated; city police enforce. Citywide, not only Prague 1. Source: https://www.novinky.cz/clanek/domaci-praha-zakazala-organizovane-opilecke-tahy-pro-cizince-40492965 and https://www.expats.cz/czech-news/article/prague-approves-city-wide-ban-on-nighttime-pub-crawls . Current enforcement status in 2026: NOT VERIFIED.",
+  "public_alcohol_ban": "Drinking alcohol in public spaces is restricted by Prague decree 12/2008, which in 2018 Prague 1 asked to extend to named streets (Nerudova, Mostecká, Karmelitská, Anenské nám. etc.): https://www.praha1.cz/mc-praha-1-zada-o-rozsireni-vyhlasky-zakazujici-pozivani-alkoholu-na-verejnych-prostranstvich/ . A 2021 draft for a whole-of-Prague-1 ban 22:00-06:00 is reported by expats.cz (https://www.expats.cz/czech-news/article/prague-1-drafts-ban-on-drinking-alcohol-in-public-spaces-at-night). Whether either is in force in Oct 2026 and the exact zones: NOT VERIFIED (no current decree text read).",
+  "sobering_up": "Městská policie Praha 1 took 2,127 people to the sobering-up station in 2025 (866 foreigners)."
+ },
+ "new_years_eve_2025_26": {
+  "event": "Prague has strict pyrotechnics rules; no official city fireworks display was described in any 2025/26 source read (absence of mention only: NOT VERIFIED that none took place).",
+  "outcome": "Prague 1 commission summary (published 18 Feb 2026): no serious security problems; Policie ČR recorded 269 reports in the Prague 1 area (50 fewer than the previous year): fireworks 54, night disturbance 26, curfew-type violations 10; 3 detained at a Wenceslas Square gathering; Městská policie deployed 180 officers in the centre, received 176 fireworks reports in 24 hours (most unconfirmed) and issued 59 verbal warnings; ambulance service 303 call-outs (251 the year before). Injuries are not mentioned in the source (NOT VERIFIED either way). Source: https://www.praha1.cz/silvestrovske-oslavy-2025-2026-v-praze-1-probehly-klidne-prijata-opatreni-se-osvedcila/ . Novinky.cz, 3 Jan 2026: police caught nearly 40 people using fireworks, mostly foreigners, on-the-spot fines over CZK 60,000, more fireworks just after midnight around Wenceslas Square and Old Town Square: https://www.novinky.cz/clanek/domaci-zpravy-hlavni-mesto-praha-lide-odpalovali-pyrotechniku-i-tam-kde-nesmeli-policiste-viniky-na-miste-casto-uz-nenasli-40555721",
+  "fireworks_rules": "Prague pyrotechnics decree (as reported by TN.cz, 25 Dec 2025): public use banned in the historic and wider city centre/heritage reserve, within 50 m of watercourses and islands, parks, protected areas, and within 250 m of hospitals, care homes and vets; sky lanterns banned citywide; F1 fireworks and permitted professional displays exempt; on-the-spot fine up to CZK 10,000, administrative fine up to CZK 100,000. Interactive map: praha.eu/pyrotechnika (not opened). Source: https://tn.nova.cz/zpravodajstvi/clanek/636349-omezeni-pro-odpalovani-pyrotechniky-na-silvestra . Praha 1 (28 Dec 2025): 'same rules as previous years': https://www.praha1.cz/oslavy-prichodu-roku-2026-budou-mit-v-praze-stejna-pravidla-pro-pouzivani-pyrotechniky-jako-v-predchozich-letech/ . A national pyrotechnics amendment took effect 1 Dec 2025 (Novinky).",
+  "transport": "PID 2025/26: metro ran extended hours with last trips through the centre just after 02:00; night trams every 15 min from about 22:00; trains ended about 20:00. See official_dates.json.",
+  "2026_27": "NOT VERIFIED: no 2026/27 New Year's Eve plan, fireworks rules or security announcement found as of 14 Oct 2026. Expect the same decree; confirm in December."
+ },
+ "charles_university_shooting_context": {
+  "fact": "21 Dec 2023: a 24-year-old student shot dead 14 people and wounded 25 at the Faculty of Arts (Filozofická fakulta), Charles University, Jan Palach Square, Prague 1; he died at the scene (apparently suicide); he had earlier killed his father in Hostouň. Police said no indication of international terrorism. Not a tourist-targeted event. Source is a news report of police and Interior Minister statements, NOT the official police page: https://www.cc.cz/na-filozoficke-fakulte-v-centru-prahy-se-strilelo-na-miste-jsou-mrtvi-a-zraneni-hlasi-policie/ ; official police/Interior Ministry statement NOT VERIFIED. Police referred to the first anniversary in their 2024 advent measures.",
+  "status": "latest official-source check not completed"
+ },
+ "unverified": [
+  "Exact Prague pickpocketing counts for 2024 and 2025 (only a WF estimate of about 2,100 from ČSÚ's rounded 9% share).",
+  "Prague 1 (or any district) 2025 crime figures; Police ČR interactive map not read.",
+  "Brno, Ostrava, Plzeň city-level 2025 figures (only regional).",
+  "Whether Prague 1 / Prague alcohol-in-public bans cover the old town at night in 2026, hours and fines.",
+  "Pub-crawl ban publication/effective date and fines; enforcement in 2026.",
+  "Christmas market security plan for 2025 and 2026 (bag checks, barrier positions, officer numbers).",
+  "New Year's Eve 2026/27 security and any official fireworks.",
+  "Injuries on New Year's Eve 2025/26 in Prague (not mentioned in the sources read).",
+  "FCDO exact verbatim terrorism sentence and the discrepancy between 11 Aug 2026 and 14 Oct 2026 update dates.",
+  "Police ČR advent-measures: the 2024 text is at archiv.policie.gov.cz/clanek/adventni-opatreni.aspx; no 2025 equivalent found.",
+  "Official police/government page for the 21 Dec 2023 shooting (only a news report read)."
+ ]
+}

@@ -1,0 +1,122 @@
+[
+ {
+  "item": "30-minute ticket, Prague (app / paper)",
+  "price": "CZK 36 app, CZK 39 paper; reduced CZK 18 / 19",
+  "date": "2026 tariff from 1 Jan 2026",
+  "source": "https://pid.cz/en/new-pid-tariff-from-1-january-2026-dont-pay-more-than-you-have-to/"
+ },
+ {
+  "item": "90-minute ticket, Prague (app / paper)",
+  "price": "CZK 46 app, CZK 50 paper; reduced CZK 23 / 25",
+  "date": "2026 tariff from 1 Jan 2026",
+  "source": "https://pid.cz/en/new-pid-tariff-from-1-january-2026-dont-pay-more-than-you-have-to/"
+ },
+ {
+  "item": "24-hour ticket, Prague (app / paper)",
+  "price": "CZK 140 app, CZK 150 paper; reduced CZK 70 / 75",
+  "date": "2026 tariff from 1 Jan 2026",
+  "source": "https://pid.cz/en/new-pid-tariff-from-1-january-2026-dont-pay-more-than-you-have-to/"
+ },
+ {
+  "item": "72-hour ticket, Prague (app / paper)",
+  "price": "CZK 340 app, CZK 350 paper; no reduced version",
+  "date": "2026 tariff from 1 Jan 2026",
+  "source": "https://pid.cz/en/new-pid-tariff-from-1-january-2026-dont-pay-more-than-you-have-to/"
+ },
+ {
+  "item": "Airport bus 59 or 100 plus metro",
+  "price": "Uses a 90-minute ticket: CZK 46 app, CZK 50 paper",
+  "date": "2026 (airport page read 14 Oct 2026)",
+  "source": "https://www.prg.aero/en/how-much-public-transport-ticket-city-centre"
+ },
+ {
+  "item": "Airport Express (AE) to Main Railway Station",
+  "price": "CZK 200 one way; normal PID tickets not valid",
+  "date": "Airport website, read 14 Oct 2026",
+  "source": "https://www.prg.aero/en/how-much-public-transport-ticket-city-centre"
+ },
+ {
+  "item": "Taxi, airport to city centre",
+  "price": "About CZK 800 typical (about 20 km); fares uncapped since 1 Oct 2026, so use an app showing total fare",
+  "date": "Airport website, read 14 Oct 2026",
+  "source": "https://www.prg.aero/en/unofficial-taxi-services"
+ },
+ {
+  "item": "Mulled wine (svarak), Old Town Square market",
+  "price": "CZK 100 for 2 dl; deposit amount NOT VERIFIED",
+  "date": "Dec 2024 (2026 NOT VERIFIED)",
+  "source": "https://cnn.iprima.cz/vanocni-trhy-po-roce-opet-zdrazily-za-svarak-date-i-stovku-lide-jsou-ale-ochotni-utracet-455699"
+ },
+ {
+  "item": "Trdelnik, Old Town Square market",
+  "price": "CZK 100 to 180 plain or with toppings; CZK 190 with ice cream (Dec 2024)",
+  "date": "Seznam Zpravy report states 2025 (publication date not independently confirmed); 2026 NOT VERIFIED",
+  "source": "https://www.seznamzpravy.cz/clanek/domaci-zivot-v-cesku-klobasa-za-160-svarak-za-stovku-kolik-zaplatite-na-vanocnich-trzich-293192"
+ },
+ {
+  "item": "Klobasa (grilled sausage), Old Town Square market",
+  "price": "CZK 160; langos up to CZK 220",
+  "date": "Dec 2024 (2026 NOT VERIFIED)",
+  "source": "https://cnn.iprima.cz/vanocni-trhy-po-roce-opet-zdrazily-za-svarak-date-i-stovku-lide-jsou-ale-ochotni-utracet-455699"
+ },
+ {
+  "item": "Old Prague ham at the markets (sold by weight)",
+  "price": "About CZK 99 per 100 g (another guide: about CZK 1 per gram). Trap: ask for a weight in grams, not a 'portion'; 200 g is roughly CZK 200",
+  "date": "Undated private guide; 2026 NOT VERIFIED",
+  "source": "https://livingprague.com/festivals-holidays/prague-christmas-markets-eight-things-know/"
+ },
+ {
+  "item": "Prague Castle Main Circuit (adult / child 6-16)",
+  "price": "Adult CZK 450; reduced CZK 300 (ages 6-16, students to 26, 65+); family CZK 950; under 6 free; valid 2 days",
+  "date": "Official price list valid from 1 Mar 2024, still linked on hrad.cz on 12 Oct 2026; 2026 price NOT VERIFIED",
+  "source": "https://www.hrad.cz/file/edee/2024/01/price-list-english-sph-valid-from-1.-3.-2024.pdf"
+ },
+ {
+  "item": "Old Town Hall with Astronomical Clock tower",
+  "price": "Page lists basic CZK 350, reduced CZK 230 (ages 6-15, 65+), youth 16-26 CZK 280, under 5 free; exactly which route the basic ticket covers is NOT VERIFIED",
+  "date": "Prague City Tourism page modified 14 Oct 2026",
+  "source": "https://prague.eu/en/objevujte/old-town-hall-with-astronomical-clock-staromestska-radnice-s-orlojem/"
+ },
+ {
+  "item": "Petrin Lookout Tower",
+  "price": "Adult CZK 250; reduced CZK 170 (ages 6-15, 65+); family CZK 500; under 5 free; lift is a separate fee (CZK 150, CZK 50 for 65+)",
+  "date": "Prague City Tourism page modified 30 Sep 2026",
+  "source": "https://prague.eu/en/objevujte/petrin-tower-petrinska-rozhledna/"
+ },
+ {
+  "item": "Petrin funicular",
+  "price": "CZK 100 single (CZK 90 via the app); free for under-15s and over-65s",
+  "date": "Prague City Tourism page, read 14 Oct 2026; tariff year not printed",
+  "source": "https://prague.eu/en/objevujte/petrin-funicular-lanova-draha-na-petrin/"
+ },
+ {
+  "item": "Prague Zoo (at till / online)",
+  "price": "Adult CZK 330 / 300; child 3-15 CZK 250 / 200; family (2 adults + 4 children) CZK 1,000 / 850; under 3 free",
+  "date": "Official page read 14 Oct 2026; tariff year not printed",
+  "source": "https://www.zoopraha.cz/en/before-visit/admission-prices"
+ },
+ {
+  "item": "Half-litre beer in a pub",
+  "price": "CZK 55 to 80 in ordinary pubs; CZK 70 to 120 on Old Town terraces (private guides, not official)",
+  "date": "2026 (secondary sources)",
+  "source": "https://www.prague-guide.co.uk/comparison-of-prices-of-beer-in-the-world-the-cheapest-one-is-draught-in-prague-in-oslo-you-pay-up-to-250-czk/"
+ },
+ {
+  "item": "Central hotel night in December",
+  "price": "NOT VERIFIED - no reputable December-specific source found (Trip.com lists a yearly average of USD 249 for Prague hotels, not December-specific)",
+  "date": "NOT VERIFIED",
+  "source": "https://www.trip.com/hot/hotels-near-prague-christmas-market/"
+ },
+ {
+  "item": "Public toilet",
+  "price": "CZK 10 to 20 typical (private guide)",
+  "date": "Year not printed; NOT VERIFIED officially",
+  "source": "https://www.private-prague-guide.com/frequently-asked-questions/restrooms%E2%80%93wc-prague/"
+ },
+ {
+  "item": "Exchange rate reference",
+  "price": "EUR 1 = CZK 24.375 (Czech National Bank). No pound rate found, so no GBP conversions given",
+  "date": "13 Oct 2026",
+  "source": "https://www.cnb.cz/en/"
+ }
+]

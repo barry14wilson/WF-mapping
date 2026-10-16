@@ -1,0 +1,360 @@
+{
+ "cities": {
+  "Nice": {
+   "2024": {
+    "pop": "357737",
+    "ind": {
+     "Violences physiques hors cadre familial": [
+      "1642",
+      "4,5899641",
+      "diff"
+     ],
+     "Vols avec armes": [
+      "44",
+      "0,1229954",
+      "diff"
+     ],
+     "Vols violents sans arme": [
+      "620",
+      "1,7331168",
+      "diff"
+     ],
+     "Vols sans violence contre des personnes": [
+      "6080",
+      "16,9957259",
+      "diff"
+     ],
+     "Cambriolages de logement": [
+      "1280",
+      "5,3612597",
+      "diff"
+     ]
+    }
+   },
+   "2025": {
+    "pop": "357737",
+    "ind": {
+     "Violences physiques hors cadre familial": [
+      "1761",
+      "4,9226107",
+      "diff"
+     ],
+     "Vols avec armes": [
+      "48",
+      "0,1341768",
+      "diff"
+     ],
+     "Vols violents sans arme": [
+      "450",
+      "1,2579073",
+      "diff"
+     ],
+     "Vols sans violence contre des personnes": [
+      "5714",
+      "15,9726279",
+      "diff"
+     ],
+     "Cambriolages de logement": [
+      "1454",
+      "6,0900560",
+      "diff"
+     ]
+    }
+   }
+  },
+  "Marseille": {
+   "2024": {
+    "pop": "886040",
+    "ind": {
+     "Violences physiques hors cadre familial": [
+      "4309",
+      "4,8632116",
+      "diff"
+     ],
+     "Vols avec armes": [
+      "443",
+      "0,4999774",
+      "diff"
+     ],
+     "Vols violents sans arme": [
+      "2567",
+      "2,8971604",
+      "diff"
+     ],
+     "Vols sans violence contre des personnes": [
+      "16024",
+      "18,0849623",
+      "diff"
+     ],
+     "Cambriolages de logement": [
+      "4471",
+      "9,5887478",
+      "diff"
+     ]
+    }
+   },
+   "2025": {
+    "pop": "886040",
+    "ind": {
+     "Violences physiques hors cadre familial": [
+      "4454",
+      "5,0268611",
+      "diff"
+     ],
+     "Vols avec armes": [
+      "391",
+      "0,4412893",
+      "diff"
+     ],
+     "Vols violents sans arme": [
+      "2556",
+      "2,8847456",
+      "diff"
+     ],
+     "Vols sans violence contre des personnes": [
+      "17122",
+      "19,3241840",
+      "diff"
+     ],
+     "Cambriolages de logement": [
+      "4346",
+      "9,3206661",
+      "diff"
+     ]
+    }
+   }
+  },
+  "Strasbourg": {
+   "2024": {
+    "pop": "293771",
+    "ind": {
+     "Violences physiques hors cadre familial": [
+      "1491",
+      "5,0753818",
+      "diff"
+     ],
+     "Vols avec armes": [
+      "43",
+      "0,1463725",
+      "diff"
+     ],
+     "Vols violents sans arme": [
+      "298",
+      "1,0143956",
+      "diff"
+     ],
+     "Vols sans violence contre des personnes": [
+      "6516",
+      "22,1805420",
+      "diff"
+     ],
+     "Cambriolages de logement": [
+      "724",
+      "4,4332104",
+      "diff"
+     ]
+    }
+   },
+   "2025": {
+    "pop": "293771",
+    "ind": {
+     "Violences physiques hors cadre familial": [
+      "1443",
+      "4,9119893",
+      "diff"
+     ],
+     "Vols avec armes": [
+      "34",
+      "0,1157364",
+      "diff"
+     ],
+     "Vols violents sans arme": [
+      "376",
+      "1,2799085",
+      "diff"
+     ],
+     "Vols sans violence contre des personnes": [
+      "7582",
+      "25,8092187",
+      "diff"
+     ],
+     "Cambriolages de logement": [
+      "697",
+      "4,2678835",
+      "diff"
+     ]
+    }
+   }
+  },
+  "Lyon": {
+   "2024": {
+    "pop": "519127",
+    "ind": {
+     "Violences physiques hors cadre familial": [
+      "2336",
+      "4,4998623",
+      "diff"
+     ],
+     "Vols avec armes": [
+      "151",
+      "0,2908729",
+      "diff"
+     ],
+     "Vols violents sans arme": [
+      "1807",
+      "3,4808438",
+      "diff"
+     ],
+     "Vols sans violence contre des personnes": [
+      "17866",
+      "34,4154706",
+      "diff"
+     ],
+     "Cambriolages de logement": [
+      "2502",
+      "7,8528021",
+      "diff"
+     ]
+    }
+   },
+   "2025": {
+    "pop": "519127",
+    "ind": {
+     "Violences physiques hors cadre familial": [
+      "2754",
+      "5,3050602",
+      "diff"
+     ],
+     "Vols avec armes": [
+      "182",
+      "0,3505886",
+      "diff"
+     ],
+     "Vols violents sans arme": [
+      "3166",
+      "6,0987003",
+      "diff"
+     ],
+     "Vols sans violence contre des personnes": [
+      "20410",
+      "39,3160055",
+      "diff"
+     ],
+     "Cambriolages de logement": [
+      "2191",
+      "6,8766944",
+      "diff"
+     ]
+    }
+   }
+  },
+  "Paris": {
+   "2024": {
+    "pop": "2103778",
+    "ind": {
+     "Violences physiques hors cadre familial": [
+      "9861",
+      "4,6872816",
+      "diff"
+     ],
+     "Vols avec armes": [
+      "368",
+      "0,1749234",
+      "diff"
+     ],
+     "Vols violents sans arme": [
+      "7432",
+      "3,5326921",
+      "diff"
+     ],
+     "Vols sans violence contre des personnes": [
+      "99110",
+      "47,1104841",
+      "diff"
+     ],
+     "Cambriolages de logement": [
+      "9235",
+      "6,6005669",
+      "diff"
+     ]
+    }
+   },
+   "2025": {
+    "pop": "2103778",
+    "ind": {
+     "Violences physiques hors cadre familial": [
+      "11095",
+      "5,2738454",
+      "diff"
+     ],
+     "Vols avec armes": [
+      "393",
+      "0,1868068",
+      "diff"
+     ],
+     "Vols violents sans arme": [
+      "7268",
+      "3,4547371",
+      "diff"
+     ],
+     "Vols sans violence contre des personnes": [
+      "94924",
+      "45,1207304",
+      "diff"
+     ],
+     "Cambriolages de logement": [
+      "7072",
+      "5,0545976",
+      "diff"
+     ]
+    }
+   }
+  }
+ },
+ "national": {
+  "2024": {
+   "Violences physiques hors cadre familial": [
+    205459.0,
+    68350798.0
+   ],
+   "Vols avec armes": [
+    8582.0,
+    68350798.0
+   ],
+   "Vols violents sans arme": [
+    48292.0,
+    68350798.0
+   ],
+   "Vols sans violence contre des personnes": [
+    607772.0,
+    68350798.0
+   ],
+   "Cambriolages de logement": [
+    218156.0,
+    68350798.0
+   ]
+  },
+  "2025": {
+   "Violences physiques hors cadre familial": [
+    215728.0,
+    68350798.0
+   ],
+   "Vols avec armes": [
+    7913.0,
+    68350798.0
+   ],
+   "Vols violents sans arme": [
+    49193.0,
+    68350798.0
+   ],
+   "Vols sans violence contre des personnes": [
+    622059.0,
+    68350798.0
+   ],
+   "Cambriolages de logement": [
+    211596.0,
+    68350798.0
+   ]
+  }
+ }
+}

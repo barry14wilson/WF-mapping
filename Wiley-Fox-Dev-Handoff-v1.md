@@ -2,7 +2,7 @@
 
 **Status:** Ready for dev kickoff
 **Scope:** UK England, Wales & Northern Ireland (Scotland deferred to v2)
-**Date:** 2026-04-29 · **Last updated:** 2026-10-01 (v1.6 — city content pipeline, travel guides and live advice, §20)
+**Date:** 2026-04-29 · **Last updated:** 2026-10-16 (v1.7 — Phase 2 official area data, LA fix, §21)
 **Owner:** Barry Wilson
 
 ---
@@ -926,6 +926,48 @@ Queue (1 Oct 2026): Nuremberg (done) → **Berlin (current focus)** → Munich (
 3. Quarterly refresh job for the Eurostat and FBI comparison data (both APIs are free).
 4. Optional: a `/api/fbi-agency` proxy op so guide builds can use the server-side FBI key.
 5. Two Claude sessions published guides in parallel on 30 Sept; only one session should own guide publishing (the queue status in `wf_cities.guide_status` is the source of truth).
+
+---
+
+## 21. Phase 2 coverage — official area-level data (October 2026)
+
+> **Added 2026-10-16.** Brings forward part of the §12 v2 wishlist (Scotland, Ireland, Europe) using official area statistics, and fixes the Los Angeles feed. All in `new/index.html`; data builder in `scripts/official-area/`.
+
+### 21.1 Two kinds of rating
+
+| Mode | Where | Data | Map |
+|---|---|---|---|
+| Live street-level | England, Wales, NI (data.police.uk); NYC, Chicago, SF, LA (city open data) | Incidents within 1 mile, last month | Hex overlay |
+| **Official area-level (new)** | Scotland, Ireland, France, Italy, other European cities in `GLOBAL_CITIES` | Annual police-recorded rates for the city's administrative area | No hexes ("City-level data, no street map") |
+
+### 21.2 Scoring (area-level)
+
+- Area index = severity-weighted rate per 100k residents: homicide 3 · assault 3 · robbery 3 · burglary 2 · theft 1 (same weights as `SEVERITY`).
+- Ratio = area index ÷ the same index for the country (Scotland for Scottish cities). **Compared within one country only** — countries record crime differently.
+- Official sub-score `O = 75 − 20·log2(ratio)`, clamped 5–95 (national average → 75, double → 55). Constants `OFFICIAL_BASE` / `OFFICIAL_SLOPE`.
+- Final = 70% O + 30% Numbeo Safety Index (O alone where Numbeo has no city, e.g. Venice, Inverness) → `bandFromScore`.
+
+### 21.3 Sources
+
+| Country | Source | Geography | Period |
+|---|---|---|---|
+| Scotland | Scottish Government Recorded Crime (statistics.gov.scot) | Council area (Inverness = whole Highland) | Apr 2025 – Mar 2026 |
+| France | SSMSI base communale, data.gouv.fr | Commune | 2025 |
+| Ireland | Eurostat `crim_gen_reg` (rating) + CSO CJQ10 (trend line only, provisional) | NUTS 3 region / Garda division | 2024 / 2026 H1 |
+| Italy, Spain, NL, DE, PT, AT | Eurostat `crim_gen_reg` | NUTS 3 (province / city district) | 2024 (Italy and Amsterdam 2023) |
+
+Not used: ACLED (commercial licence required), GDELT (needs filtering), Turkey's Eurostat rows (inconsistent). Refresh steps in `scripts/official-area/README.md`; Scotland and France fetches must run on the Mac (cloud IPs blocked).
+
+### 21.4 Los Angeles
+
+LAPD moved to NIBRS in March 2024; dataset `2nrs-mtv8` stops at 30 Dec 2024. Now `k7nn-b2ep` (LAPD NIBRS Offenses, one row per offence, `group = 'A'`), fields `hndrdth_lat/lon`, `nibr_description`, `date_occ`. Updated weekly.
+
+### 21.5 Open items
+
+1. Remaining 28 Scottish council areas (data already in the same SPARQL endpoint; needs reverse-geocode → council area).
+2. Ireland rate per Garda division once CSO publishes division populations; until then the rating uses NUTS 3.
+3. Port the area-level mode into the pipeline (`connectors/eu-eurostat.js` already ingests the same Eurostat table).
+4. Quarterly refresh as a scheduled task.
 
 ---
 

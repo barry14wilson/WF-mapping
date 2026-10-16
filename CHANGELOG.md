@@ -2,6 +2,15 @@
 
 All notable changes to the WF-mapping repo. Newest first. Dates are commit dates (UTC). Design and architecture notes live in `Wiley-Fox-Dev-Handoff-v1.md` (§20 covers September 2026).
 
+## 2026-10-16 (Phase 2 coverage: official area data + LA fix)
+
+- **fix:** Los Angeles live map now reads LAPD NIBRS Offenses (`k7nn-b2ep`, Group A only). The old dataset (`2nrs-mtv8`) stopped on 30 Dec 2024, so the map had been showing 2024 incidents as the latest month. `US_CITY_APIS` entries can now carry `extraWhere`; `mapUSCategory` learns NIBRS abbreviations (GTA, BFMV, TFMV, ADW, pocket-picking).
+- **feat:** area-level rating mode for cities without street data (`OFFICIAL_AREA`, `renderOfficialCity`). Official police-recorded rates for assault, robbery, burglary, theft and homicide vs the national average fill the 70% slot that live police data fills in the UK; Numbeo stays 30%. "City-level data, no street map" card, per-category table (city vs national per 100k), source + period on every card. Method in Dev Handoff §21.
+- **feat:** Scotland: Edinburgh, Glasgow, Aberdeen, Inverness (council areas, Recorded Crime in Scotland 2025-26) added to the UK city list. Any search, map click or "my location" in Scotland now routes to official data instead of an empty data.police.uk call (`isScotlandCoords`, `loadScotland`); points away from the four cities show Scotland-wide figures.
+- **feat:** Ireland: Dublin, Cork, Galway, Limerick (Eurostat NUTS 3 2024) with a provisional CSO Garda trend line (2026 H1 vs 2025 H1, not used in the rating).
+- **feat:** France (SSMSI commune data 2025): Lyon, Marseille, Nice added; Paris and Strasbourg now rated from it. Italy (Eurostat provinces): Milan, Florence, Venice, Naples added; Rome rated from it. Barcelona, Amsterdam, Berlin, Munich, Cologne, Nuremberg, Lisbon, Vienna rated from Eurostat NUTS 3. Rating changes: Paris 4 → 3, Rome 4 → 3; all others unchanged. Prague keeps its Czech Statistical Office rating (not in `OFFICIAL_AREA`).
+- **fix:** city search matched substrings (searching "Venice" would have opened Nice). Exact match first, then whole-word.
+- **chore:** `scripts/official-area/` (builder, source snapshots, refresh README).
 ## 2026-10-16 (Guides approved: all ten live on /new)
 
 - **feat:** Prague Christmas 2026 guide approved and published at `/new/guides/prague/` (web page, PDF, Word, 26 credited Commons photos), copied byte-for-byte from the preview site. `/new` map gets the Prague city-list entry (rating 4, Czech Statistical Office 2025 / Eurostat 2024) and its `GUIDE_LINKS` entry. Queue status set to done.

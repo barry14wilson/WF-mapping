@@ -1320,7 +1320,7 @@ h1,h2,h3,.serif,.rating-card .city-name,.rating-orb,.report-orb,.report-city{
 
     <!-- City quick-select grids (hidden in global choropleth mode) -->
     <div class="section" id="cityGridSection">
-      <div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--charcoal-soft);font-weight:600;margin-bottom:6px">UK cities · live data</div>
+      <div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--charcoal-soft);font-weight:600;margin-bottom:6px">UK cities · live + official data</div>
       <div class="city-grid" id="cityGrid"></div>
       <div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--charcoal-soft);font-weight:600;margin-top:12px;margin-bottom:6px">Global cities · safety index</div>
       <div class="city-grid" id="globalCityGrid"></div>
@@ -2917,6 +2917,208 @@ map.on('error', (e) => {
 let activeCityName = null;
 let lastDataMonth = null;
 
+
+// ════════════════════════════════════════════════════════════════════════
+// OFFICIAL AREA-LEVEL DATA — Phase 2 coverage (added 16 Oct 2026)
+// Where no street-level feed exists (Scotland, Ireland, France, Italy and the
+// rest of Europe), the rating uses official police-recorded crime for the
+// city's administrative area instead of live points:
+//   • Area index  = severity-weighted rate per 100k residents
+//                   (homicide 3 · assault 3 · robbery 3 · burglary 2 · theft 1)
+//   • Ratio       = area index ÷ the same index for the country (or Scotland)
+//   • Official sub-score O = 75 − 20·log2(ratio), clamped 5–95
+//                   (national average → 75; twice the average → 55)
+//   • Blend       = 70% O + 30% Numbeo, the same slot live police data fills
+//                   in the UK; degrades to O alone when Numbeo has no entry.
+// Countries record crime differently, so ratios are only ever compared within
+// one country. No street points are published, so these cities get no hex map.
+// Rebuild the numbers with scripts/official-area/build_official.py.
+// ════════════════════════════════════════════════════════════════════════
+const OFFICIAL_AREA = {
+  "Rome": {"country": "Italy", "region": "Roma", "level": "province", "period": "2023", "source": "Eurostat crim_gen_reg (police-recorded offences by NUTS 3 region)", "url": "https://ec.europa.eu/eurostat/databrowser/view/crim_gen_reg/default/table", "rates": {"homicide": 0.6, "assault": 99.4, "robbery": 71.3, "burglary": 318.5, "theft": 3149.1}, "national": {"homicide": 0.6, "assault": 106.4, "robbery": 47.6, "burglary": 250.3, "theft": 1480.5}, "burglaryLabel": "domestic burglary"},
+  "Milan": {"country": "Italy", "region": "Milano", "level": "province", "period": "2023", "source": "Eurostat crim_gen_reg (police-recorded offences by NUTS 3 region)", "url": "https://ec.europa.eu/eurostat/databrowser/view/crim_gen_reg/default/table", "rates": {"homicide": 0.5, "assault": 122.6, "robbery": 129.2, "burglary": 295.9, "theft": 3560.3}, "national": {"homicide": 0.6, "assault": 106.4, "robbery": 47.6, "burglary": 250.3, "theft": 1480.5}, "burglaryLabel": "domestic burglary"},
+  "Florence": {"country": "Italy", "region": "Firenze", "level": "province", "period": "2023", "source": "Eurostat crim_gen_reg (police-recorded offences by NUTS 3 region)", "url": "https://ec.europa.eu/eurostat/databrowser/view/crim_gen_reg/default/table", "rates": {"homicide": 0.6, "assault": 139.8, "robbery": 136.7, "burglary": 434.1, "theft": 2738.6}, "national": {"homicide": 0.6, "assault": 106.4, "robbery": 47.6, "burglary": 250.3, "theft": 1480.5}, "burglaryLabel": "domestic burglary"},
+  "Venice": {"country": "Italy", "region": "Venezia", "level": "province", "period": "2023", "source": "Eurostat crim_gen_reg (police-recorded offences by NUTS 3 region)", "url": "https://ec.europa.eu/eurostat/databrowser/view/crim_gen_reg/default/table", "rates": {"homicide": 0.4, "assault": 114.0, "robbery": 52.9, "burglary": 347.6, "theft": 2301.5}, "national": {"homicide": 0.6, "assault": 106.4, "robbery": 47.6, "burglary": 250.3, "theft": 1480.5}, "burglaryLabel": "domestic burglary"},
+  "Naples": {"country": "Italy", "region": "Napoli", "level": "province", "period": "2024", "source": "Eurostat crim_gen_reg (police-recorded offences by NUTS 3 region)", "url": "https://ec.europa.eu/eurostat/databrowser/view/crim_gen_reg/default/table", "rates": {"homicide": 1.1, "assault": 120.6, "robbery": 92.4, "burglary": 141.0, "theft": 1947.1}, "national": {"homicide": 0.6, "assault": 113.5, "robbery": 48.7, "burglary": 263.8, "theft": 1524.5}, "burglaryLabel": "domestic burglary"},
+  "Barcelona": {"country": "Spain", "region": "Barcelona", "level": "province", "period": "2024", "source": "Eurostat crim_gen_reg (police-recorded offences by NUTS 3 region)", "url": "https://ec.europa.eu/eurostat/databrowser/view/crim_gen_reg/default/table", "rates": {"homicide": 0.7, "assault": 194.8, "robbery": 371.4, "burglary": 342.4, "theft": 1111.6}, "national": {"homicide": 0.7, "assault": 253.1, "robbery": 129.5, "burglary": 293.3, "theft": 450.9}, "burglaryLabel": "burglary"},
+  "Amsterdam": {"country": "Netherlands", "region": "Groot-Amsterdam", "level": "NUTS 3 region", "period": "2023", "source": "Eurostat crim_gen_reg (police-recorded offences by NUTS 3 region)", "url": "https://ec.europa.eu/eurostat/databrowser/view/crim_gen_reg/default/table", "rates": {"assault": 363.7, "robbery": 104.0, "burglary": 268.9, "theft": 2722.7}, "national": {"assault": 245.3, "robbery": 33.8, "burglary": 198.1, "theft": 1377.8}, "burglaryLabel": "burglary"},
+  "Berlin": {"country": "Germany", "region": "Berlin", "level": "city-state", "period": "2024", "source": "Eurostat crim_gen_reg (police-recorded offences by NUTS 3 region)", "url": "https://ec.europa.eu/eurostat/databrowser/view/crim_gen_reg/default/table", "rates": {"homicide": 1.8, "assault": 1382.3, "robbery": 139.8, "burglary": 1098.0, "theft": 3228.2}, "national": {"homicide": 0.8, "assault": 750.0, "robbery": 51.8, "burglary": 357.1, "theft": 1376.7}, "burglaryLabel": "burglary"},
+  "Munich": {"country": "Germany", "region": "München, Kreisfreie Stadt", "level": "city district", "period": "2024", "source": "Eurostat crim_gen_reg (police-recorded offences by NUTS 3 region)", "url": "https://ec.europa.eu/eurostat/databrowser/view/crim_gen_reg/default/table", "rates": {"homicide": 0.1, "assault": 805.9, "robbery": 50.6, "burglary": 275.9, "theft": 1272.4}, "national": {"homicide": 0.8, "assault": 750.0, "robbery": 51.8, "burglary": 357.1, "theft": 1376.7}, "burglaryLabel": "burglary"},
+  "Cologne": {"country": "Germany", "region": "Köln, Kreisfreie Stadt", "level": "city district", "period": "2024", "source": "Eurostat crim_gen_reg (police-recorded offences by NUTS 3 region)", "url": "https://ec.europa.eu/eurostat/databrowser/view/crim_gen_reg/default/table", "rates": {"homicide": 1.0, "assault": 1344.7, "robbery": 132.0, "burglary": 806.2, "theft": 3462.1}, "national": {"homicide": 0.8, "assault": 750.0, "robbery": 51.8, "burglary": 357.1, "theft": 1376.7}, "burglaryLabel": "burglary"},
+  "Nuremberg": {"country": "Germany", "region": "Nürnberg, Kreisfreie Stadt", "level": "city district", "period": "2024", "source": "Eurostat crim_gen_reg (police-recorded offences by NUTS 3 region)", "url": "https://ec.europa.eu/eurostat/databrowser/view/crim_gen_reg/default/table", "rates": {"homicide": 0.6, "assault": 888.7, "robbery": 59.6, "burglary": 413.0, "theft": 1700.7}, "national": {"homicide": 0.8, "assault": 750.0, "robbery": 51.8, "burglary": 357.1, "theft": 1376.7}, "burglaryLabel": "burglary"},
+  "Lisbon": {"country": "Portugal", "region": "Grande Lisboa", "level": "NUTS 3 region", "period": "2024", "source": "Eurostat crim_gen_reg (police-recorded offences by NUTS 3 region)", "url": "https://ec.europa.eu/eurostat/databrowser/view/crim_gen_reg/default/table", "rates": {"homicide": 0.7, "assault": 208.3, "robbery": 187.3, "burglary": 124.6, "theft": 895.5}, "national": {"homicide": 0.7, "assault": 235.9, "robbery": 88.4, "burglary": 146.5, "theft": 722.4}, "burglaryLabel": "burglary"},
+  "Vienna": {"country": "Austria", "region": "Wien", "level": "city-state", "period": "2024", "source": "Eurostat crim_gen_reg (police-recorded offences by NUTS 3 region)", "url": "https://ec.europa.eu/eurostat/databrowser/view/crim_gen_reg/default/table", "rates": {"homicide": 1.4, "assault": 897.6, "robbery": 83.9, "burglary": 1643.6, "theft": 2038.6}, "national": {"homicide": 0.8, "assault": 500.2, "robbery": 32.6, "burglary": 700.1, "theft": 1180.0}, "burglaryLabel": "burglary"},
+  "Dublin": {"country": "Ireland", "region": "Dublin", "level": "NUTS 3 region", "period": "2024", "source": "Eurostat crim_gen_reg (police-recorded offences by NUTS 3 region)", "url": "https://ec.europa.eu/eurostat/databrowser/view/crim_gen_reg/default/table", "rates": {"homicide": 0.9, "assault": 564.6, "robbery": 70.3, "burglary": 234.6, "theft": 2351.9}, "national": {"homicide": 0.7, "assault": 460.6, "robbery": 28.7, "burglary": 174.5, "theft": 1334.7}, "burglaryLabel": "burglary", "trend": {"pct": 2, "count": 26303, "period": "2026 Q1 – 2026 Q2", "vs": "2025 Q1 – 2025 Q2", "area": "Dublin Metropolitan Region", "source": "CSO CJQ10, recorded crime incidents (under reservation)", "url": "https://data.cso.ie/table/CJQ10", "what": "assaults, robbery, burglary and theft"}},
+  "Cork": {"country": "Ireland", "region": "South-West", "level": "NUTS 3 region", "period": "2024", "source": "Eurostat crim_gen_reg (police-recorded offences by NUTS 3 region)", "url": "https://ec.europa.eu/eurostat/databrowser/view/crim_gen_reg/default/table", "rates": {"homicide": 0.8, "assault": 429.4, "robbery": 13.6, "burglary": 79.8, "theft": 916.2}, "national": {"homicide": 0.7, "assault": 460.6, "robbery": 28.7, "burglary": 174.5, "theft": 1334.7}, "burglaryLabel": "burglary", "trend": {"pct": 18, "count": 3694, "period": "2026 Q1 – 2026 Q2", "vs": "2025 Q1 – 2025 Q2", "area": "Cork City Garda Division", "source": "CSO CJQ10, recorded crime incidents (under reservation)", "url": "https://data.cso.ie/table/CJQ10", "what": "assaults, robbery, burglary and theft"}},
+  "Galway": {"country": "Ireland", "region": "West", "level": "NUTS 3 region", "period": "2024", "source": "Eurostat crim_gen_reg (police-recorded offences by NUTS 3 region)", "url": "https://ec.europa.eu/eurostat/databrowser/view/crim_gen_reg/default/table", "rates": {"homicide": 0.2, "assault": 354.0, "robbery": 5.6, "burglary": 108.3, "theft": 634.0}, "national": {"homicide": 0.7, "assault": 460.6, "robbery": 28.7, "burglary": 174.5, "theft": 1334.7}, "burglaryLabel": "burglary", "trend": {"pct": 7, "count": 1867, "period": "2026 Q1 – 2026 Q2", "vs": "2025 Q1 – 2025 Q2", "area": "Galway Garda Division", "source": "CSO CJQ10, recorded crime incidents (under reservation)", "url": "https://data.cso.ie/table/CJQ10", "what": "assaults, robbery, burglary and theft"}},
+  "Limerick": {"country": "Ireland", "region": "Mid-West", "level": "NUTS 3 region", "period": "2024", "source": "Eurostat crim_gen_reg (police-recorded offences by NUTS 3 region)", "url": "https://ec.europa.eu/eurostat/databrowser/view/crim_gen_reg/default/table", "rates": {"homicide": 0.4, "assault": 401.4, "robbery": 13.6, "burglary": 212.2, "theft": 1155.2}, "national": {"homicide": 0.7, "assault": 460.6, "robbery": 28.7, "burglary": 174.5, "theft": 1334.7}, "burglaryLabel": "burglary", "trend": {"pct": 5, "count": 2548, "period": "2026 Q1 – 2026 Q2", "vs": "2025 Q1 – 2025 Q2", "area": "Limerick Garda Division", "source": "CSO CJQ10, recorded crime incidents (under reservation)", "url": "https://data.cso.ie/table/CJQ10", "what": "assaults, robbery, burglary and theft"}},
+  "Nice": {"country": "France", "region": "Nice", "level": "commune", "period": "2025", "source": "SSMSI base statistique communale (police + gendarmerie), data.gouv.fr", "url": "https://www.data.gouv.fr/fr/datasets/bases-statistiques-communale-departementale-et-regionale-de-la-delinquance-enregistree-par-la-police-et-la-gendarmerie-nationales/", "rates": {"assault": 492.3, "robbery": 139.2, "burglary": 406.4, "theft": 1597.3}, "national": {"assault": 315.6, "robbery": 83.5, "burglary": 309.6, "theft": 910.1}, "burglaryLabel": "domestic burglary", "note": "Theft counts thefts from people without violence (incl. pickpocketing)."},
+  "Marseille": {"country": "France", "region": "Marseille", "level": "commune", "period": "2025", "source": "SSMSI base statistique communale (police + gendarmerie), data.gouv.fr", "url": "https://www.data.gouv.fr/fr/datasets/bases-statistiques-communale-departementale-et-regionale-de-la-delinquance-enregistree-par-la-police-et-la-gendarmerie-nationales/", "rates": {"assault": 502.7, "robbery": 332.6, "burglary": 490.5, "theft": 1932.4}, "national": {"assault": 315.6, "robbery": 83.5, "burglary": 309.6, "theft": 910.1}, "burglaryLabel": "domestic burglary", "note": "Theft counts thefts from people without violence (incl. pickpocketing)."},
+  "Strasbourg": {"country": "France", "region": "Strasbourg", "level": "commune", "period": "2025", "source": "SSMSI base statistique communale (police + gendarmerie), data.gouv.fr", "url": "https://www.data.gouv.fr/fr/datasets/bases-statistiques-communale-departementale-et-regionale-de-la-delinquance-enregistree-par-la-police-et-la-gendarmerie-nationales/", "rates": {"assault": 491.2, "robbery": 139.6, "burglary": 237.3, "theft": 2580.9}, "national": {"assault": 315.6, "robbery": 83.5, "burglary": 309.6, "theft": 910.1}, "burglaryLabel": "domestic burglary", "note": "Theft counts thefts from people without violence (incl. pickpocketing)."},
+  "Lyon": {"country": "France", "region": "Lyon", "level": "commune", "period": "2025", "source": "SSMSI base statistique communale (police + gendarmerie), data.gouv.fr", "url": "https://www.data.gouv.fr/fr/datasets/bases-statistiques-communale-departementale-et-regionale-de-la-delinquance-enregistree-par-la-police-et-la-gendarmerie-nationales/", "rates": {"assault": 530.5, "robbery": 644.9, "burglary": 422.1, "theft": 3931.6}, "national": {"assault": 315.6, "robbery": 83.5, "burglary": 309.6, "theft": 910.1}, "burglaryLabel": "domestic burglary", "note": "Theft counts thefts from people without violence (incl. pickpocketing)."},
+  "Paris": {"country": "France", "region": "Paris", "level": "commune", "period": "2025", "source": "SSMSI base statistique communale (police + gendarmerie), data.gouv.fr", "url": "https://www.data.gouv.fr/fr/datasets/bases-statistiques-communale-departementale-et-regionale-de-la-delinquance-enregistree-par-la-police-et-la-gendarmerie-nationales/", "rates": {"assault": 527.4, "robbery": 364.2, "burglary": 336.2, "theft": 4512.1}, "national": {"assault": 315.6, "robbery": 83.5, "burglary": 309.6, "theft": 910.1}, "burglaryLabel": "domestic burglary", "note": "Theft counts thefts from people without violence (incl. pickpocketing)."},
+  "Edinburgh": {"country": "United Kingdom", "nation": "Scotland", "region": "City of Edinburgh", "level": "council area", "period": "Apr 2025 – Mar 2026", "source": "Scottish Government, Recorded Crime in Scotland (statistics.gov.scot)", "url": "https://statistics.gov.scot/data/recorded-crime", "rates": {"homicide": 0.8, "assault": 1210.5, "robbery": 48.8, "burglary": 215.0, "theft": 1039.6}, "national": {"homicide": 1.0, "assault": 1187.9, "robbery": 33.4, "burglary": 125.7, "theft": 547.1}, "nationalName": "Scotland", "burglaryLabel": "housebreaking", "note": "Theft excludes shoplifting and vehicle crime."},
+  "Glasgow": {"country": "United Kingdom", "nation": "Scotland", "region": "Glasgow City", "level": "council area", "period": "Apr 2025 – Mar 2026", "source": "Scottish Government, Recorded Crime in Scotland (statistics.gov.scot)", "url": "https://statistics.gov.scot/data/recorded-crime", "rates": {"homicide": 2.0, "assault": 1729.4, "robbery": 47.1, "burglary": 129.1, "theft": 841.7}, "national": {"homicide": 1.0, "assault": 1187.9, "robbery": 33.4, "burglary": 125.7, "theft": 547.1}, "nationalName": "Scotland", "burglaryLabel": "housebreaking", "note": "Theft excludes shoplifting and vehicle crime."},
+  "Aberdeen": {"country": "United Kingdom", "nation": "Scotland", "region": "Aberdeen City", "level": "council area", "period": "Apr 2025 – Mar 2026", "source": "Scottish Government, Recorded Crime in Scotland (statistics.gov.scot)", "url": "https://statistics.gov.scot/data/recorded-crime", "rates": {"homicide": 1.3, "assault": 1465.5, "robbery": 66.4, "burglary": 111.7, "theft": 722.6}, "national": {"homicide": 1.0, "assault": 1187.9, "robbery": 33.4, "burglary": 125.7, "theft": 547.1}, "nationalName": "Scotland", "burglaryLabel": "housebreaking", "note": "Theft excludes shoplifting and vehicle crime."},
+  "Inverness": {"country": "United Kingdom", "nation": "Scotland", "region": "Highland", "level": "council area", "period": "Apr 2025 – Mar 2026", "source": "Scottish Government, Recorded Crime in Scotland (statistics.gov.scot)", "url": "https://statistics.gov.scot/data/recorded-crime", "rates": {"homicide": 1.7, "assault": 981.2, "robbery": 24.9, "burglary": 69.5, "theft": 355.7}, "national": {"homicide": 1.0, "assault": 1187.9, "robbery": 33.4, "burglary": 125.7, "theft": 547.1}, "nationalName": "Scotland", "burglaryLabel": "housebreaking", "note": "Theft excludes shoplifting and vehicle crime."},
+  "Scotland": {"country": "United Kingdom", "nation": "Scotland", "region": "Scotland", "level": "country", "period": "Apr 2025 – Mar 2026", "source": "Scottish Government, Recorded Crime in Scotland (statistics.gov.scot)", "url": "https://statistics.gov.scot/data/recorded-crime", "rates": {"homicide": 1.0, "assault": 1187.9, "robbery": 33.4, "burglary": 125.7, "theft": 547.1}, "national": {"homicide": 1.0, "assault": 1187.9, "robbery": 33.4, "burglary": 125.7, "theft": 547.1}, "nationalName": "Scotland", "burglaryLabel": "housebreaking", "note": "Theft excludes shoplifting and vehicle crime."},
+};
+const OFFICIAL_W = { homicide: 3, assault: 3, robbery: 3, burglary: 2, theft: 1 };
+const OFFICIAL_LABELS = { homicide: 'Homicide', assault: 'Assault', robbery: 'Robbery', burglary: 'Burglary', theft: 'Theft' };
+const OFFICIAL_BASE = 75, OFFICIAL_SLOPE = 20;   // tune here
+
+function officialFor(name) {
+  if (!name) return null;
+  const n = String(name).toLowerCase().replace(/,.*$/, '').trim();
+  for (const k in OFFICIAL_AREA) if (k.toLowerCase() === n) return Object.assign({ key: k }, OFFICIAL_AREA[k]);
+  return null;
+}
+
+function officialScore(o, cityName) {
+  let idx = 0, nat = 0;
+  for (const k in o.rates) { if (o.national[k] == null) continue; idx += OFFICIAL_W[k] * o.rates[k]; nat += OFFICIAL_W[k] * o.national[k]; }
+  const ratio = nat ? idx / nat : 1;
+  const O = Math.max(5, Math.min(95, Math.round(OFFICIAL_BASE - OFFICIAL_SLOPE * Math.log2(ratio))));
+  let nb = null;
+  try { nb = (o.level === 'country') ? null : numbeoLookup(cityName, o.country); } catch (e) {}
+  const N = nb ? nb.si : null;
+  const score100 = N != null ? Math.round(0.7 * O + 0.3 * N) : O;
+  const blend = N != null ? '70% official area data · 30% Numbeo' : '100% official area data';
+  return { ratio, O, N, score100, band: bandFromScore(score100), blend };
+}
+
+// Cities added with this coverage (existing GLOBAL_CITIES entries are rated from OFFICIAL_AREA too)
+[
+  { name: 'Edinburgh', country: 'United Kingdom', iso: 'GBR', lat: 55.9533, lng: -3.1883, region: 'scotland', context: 'Low violent crime for a capital. Pickpocketing on the Royal Mile and at festival crowds in August; Cowgate and the Grassmarket get rowdy late at night.' },
+  { name: 'Glasgow',   country: 'United Kingdom', iso: 'GBR', lat: 55.8642, lng: -4.2518, region: 'scotland', context: 'City-centre crime is concentrated around late-night venues and the main stations. Use licensed taxis late at night.' },
+  { name: 'Aberdeen',  country: 'United Kingdom', iso: 'GBR', lat: 57.1497, lng: -2.0943, region: 'scotland', context: 'Compact city with low serious crime; Union Street and the harbour area are busiest late at night.' },
+  { name: 'Inverness', country: 'United Kingdom', iso: 'GBR', lat: 57.4778, lng: -4.2247, region: 'scotland', context: 'Figures cover the whole Highland council area, which is largely rural. The city centre is busier than the average suggests.' },
+  { name: 'Dublin',    country: 'Ireland', iso: 'IRL', lat: 53.3498, lng: -6.2603, context: 'Theft and pickpocketing around Temple Bar, O’Connell Street and the Luas lines are the main risks. Stay aware around the north inner city late at night.' },
+  { name: 'Cork',      country: 'Ireland', iso: 'IRL', lat: 51.8985, lng: -8.4756, context: 'Figures cover the South-West region (Cork and Kerry). The city centre is compact and walkable; usual care on nights out.' },
+  { name: 'Galway',    country: 'Ireland', iso: 'IRL', lat: 53.2707, lng: -9.0568, context: 'Figures cover the West region. Very low serious crime; busy Latin Quarter nightlife at weekends and during festivals.' },
+  { name: 'Limerick',  country: 'Ireland', iso: 'IRL', lat: 52.6638, lng: -8.6267, context: 'Figures cover the Mid-West region. The city centre is well policed; stick to busy streets late at night.' },
+  { name: 'Lyon',      country: 'France',  iso: 'FRA', lat: 45.7640, lng: 4.8357,  context: 'Theft from tourists around Part-Dieu station, the Presqu’île and Vieux Lyon is the main risk.' },
+  { name: 'Marseille', country: 'France',  iso: 'FRA', lat: 43.2965, lng: 5.3698,  context: 'Phone and bag snatching around the Vieux-Port and Saint-Charles station. Avoid isolated northern districts at night.' },
+  { name: 'Nice',      country: 'France',  iso: 'FRA', lat: 43.7102, lng: 7.2620,  context: 'Pickpocketing on the Promenade des Anglais, Vieux Nice and the tram. Watch belongings on the beach.' },
+  { name: 'Milan',     country: 'Italy',   iso: 'ITA', lat: 45.4642, lng: 9.1900,  context: 'Pickpocketing at the Duomo, Centrale station and on the metro is common. Violent crime against visitors is rare.' },
+  { name: 'Florence',  country: 'Italy',   iso: 'ITA', lat: 43.7696, lng: 11.2558, context: 'Crowded sights (Duomo, Ponte Vecchio, Santa Maria Novella station) attract pickpockets. Very low violent crime.' },
+  { name: 'Venice',    country: 'Italy',   iso: 'ITA', lat: 45.4408, lng: 12.3155, context: 'Figures cover the whole province. Pickpocketing on vaporetti and around Rialto and San Marco is the main risk.' },
+  { name: 'Naples',    country: 'Italy',   iso: 'ITA', lat: 40.8518, lng: 14.2681, context: 'Bag and phone snatching (including from scooters) around Centrale and the historic centre. Keep valuables out of sight.' },
+].forEach(c => { c.source = 'Official area data'; c.homicide = null; c.rating = null; GLOBAL_CITIES.push(c); });
+
+// Set each GLOBAL_CITIES rating from official data (called once NUMBEO is defined)
+function applyOfficialRatings() {
+  GLOBAL_CITIES.forEach(c => {
+    const o = officialFor(c.name); if (!o) return;
+    const s = officialScore(o, c.name);
+    c.rating = s.band; c.tag = RATING_TAGS[s.band][0]; c.officialScore = s.score100;
+  });
+}
+function officialBand(name) {
+  const o = officialFor(name); if (!o) return null;
+  try { return officialScore(o, name).band; } catch (e) { return null; }
+}
+
+// Scotland is inside isUKCoords but not covered by data.police.uk.
+// Coarse border line (Solway Firth → Berwick); good enough to route a point.
+function isScotlandCoords(lat, lng) {
+  if (!isUKCoords(lat, lng) || lng < -8.2) return false;
+  if (lat >= 55.81) return true;
+  if (lng < -5.3) return false;                      // Northern Ireland
+  if (lng <= -3.05) return lat > 54.95 || (lng < -3.55 && lat > 54.6);
+  const border = [[-3.05, 54.97], [-2.85, 55.05], [-2.65, 55.17], [-2.3, 55.3], [-2.2, 55.45], [-2.05, 55.62], [-2.03, 55.8]];
+  for (let i = 0; i < border.length - 1; i++) {
+    const [x1, y1] = border[i], [x2, y2] = border[i + 1];
+    if (lng >= x1 && lng <= x2) return lat > y1 + (y2 - y1) * (lng - x1) / (x2 - x1);
+  }
+  return lng > -2.03 && lat > 55.8;
+}
+
+// A Scottish search/click: nearest covered city within ~40 km, else Scotland-wide figures
+function loadScotland(name, lat, lng) {
+  const sc = GLOBAL_CITIES.filter(c => c.region === 'scotland');
+  let best = null, bd = Infinity;
+  sc.forEach(c => { const d = Math.hypot(c.lat - lat, (c.lng - lng) * Math.cos(lat * Math.PI / 180)); if (d < bd) { bd = d; best = c; } });
+  if (best && bd < 0.2) { loadGlobalCity(Object.assign({}, best, { lat, lng, displayName: name })); return; }
+  loadGlobalCity({ name: name || 'Scotland', country: 'United Kingdom', iso: 'GBR', lat, lng, region: 'scotland', official: 'Scotland' });
+}
+
+function renderOfficialCity(c, o) {
+  const s = officialScore(o, c.name);
+  const [tag, color] = RATING_TAGS[s.band];
+  const markerLeft = (s.score100 / 100) * 100;
+  const natName = o.nationalName || o.country;
+  const shownName = c.displayName && c.displayName.toLowerCase() !== c.name.toLowerCase() ? `${c.displayName}` : c.name;
+  const ratioTxt = s.ratio >= 1 ? `${s.ratio.toFixed(1)}× the ${natName} average` : `${Math.round((1 - s.ratio) * 100)}% below the ${natName} average`;
+  const areaTxt = o.level === 'country' ? 'Scotland-wide figures' : `${o.region} · ${o.level}`;
+  const fmt = v => v >= 100 ? Math.round(v).toLocaleString('en-GB') : v.toFixed(1);
+  const t = o.trend;
+  const trendHTML = t ? `
+      <div class="warning" style="margin:12px 24px 0;border-left-color:var(--sage)">
+        <strong>Latest Garda figures (provisional).</strong> ${t.what.charAt(0).toUpperCase() + t.what.slice(1)} in the ${escapeHtml(t.area)}:
+        ${t.count.toLocaleString('en-GB')} recorded in ${t.period}, ${t.pct === 0 ? 'level with' : (t.pct > 0 ? `up ${t.pct}% on` : `down ${Math.abs(t.pct)}% on`)} ${t.vs}.
+        <br><span style="opacity:.7;font-size:10px">Source: <a href="${t.url}" target="_blank" rel="noopener">${escapeHtml(t.source)}</a> · not used in the rating</span>
+      </div>` : '';
+  document.getElementById('ratingHost').innerHTML = `
+    <div class="section" style="padding-top:20px;padding-bottom:20px">
+      <div class="rating-card">
+        <div class="label" style="display:flex;align-items:center;gap:4px">Wiley Fox safety rating · city-level data${srcTip('Official police-recorded crime for the area around this city, compared with the national average, blended 70/30 with the Numbeo Safety Index. No street-level data is published here, so there is no hex map.')}</div>
+        <div class="city-name">${escapeHtml(shownName)}</div>
+        <div class="rating-display">
+          <div class="rating-orb" style="background:${color}">${s.band}</div>
+          <div class="rating-info">
+            <div class="rating-num">${tag}</div>
+            <div class="rating-tag">Safety Score ${s.score100}/100 · ${s.blend}</div>
+          </div>
+        </div>
+        <div class="rating-bar"><div class="marker" style="left:${markerLeft}%"></div></div>
+        <div class="scale-row"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+      </div>
+      <div class="meta-grid" style="margin:14px 24px 0">
+        <div class="meta-tile"><div class="v">${s.ratio.toFixed(2)}×</div><div class="l">vs ${escapeHtml(natName)} average</div></div>
+        <div class="meta-tile"><div class="v">${escapeHtml(String(o.period).replace(' – ', '–'))}</div><div class="l">Data period</div></div>
+      </div>
+      <div class="warning" style="margin:12px 24px 0">
+        ${o.level === 'country'
+          ? '<strong>Scotland-wide figures, no street map.</strong> Council-area figures are matched to Edinburgh, Glasgow, Aberdeen and Inverness so far, so this spot uses the Scotland average.'
+          : `<strong>City-level data, no street map.</strong> ${escapeHtml(areaTxt)} records ${escapeHtml(ratioTxt)} for assault, robbery, burglary and theft combined.`}
+        Compared within ${escapeHtml(natName)} only, because countries record crime differently.
+        <br><span style="opacity:.7;font-size:10px">Source: <a href="${o.url}" target="_blank" rel="noopener">${escapeHtml(o.source)}</a> · ${escapeHtml(String(o.period))}</span>
+      </div>
+      ${trendHTML}
+      <div id="fcdoHost"></div>
+      ${renderAdvisoryPanel(c.name)}
+      <div id="numbeoOfficialHost"></div>
+      ${cityGuideButtonHTML(c.name)}
+    </div>`;
+  renderUSAdvisoryPanel(c.country, 'fcdoHost', c.name);
+  renderNumbeoPanel(c.name, c.country, 'numbeoOfficialHost');
+
+  const rows = Object.keys(o.rates).filter(k => o.national[k] != null).map(k => {
+    const r = o.rates[k] / (o.national[k] || 1);
+    const dot = r >= 1.5 ? 'var(--r2)' : r >= 1.1 ? 'var(--r3)' : 'var(--r4)';
+    const lbl = k === 'burglary' && o.burglaryLabel ? o.burglaryLabel.charAt(0).toUpperCase() + o.burglaryLabel.slice(1) : OFFICIAL_LABELS[k];
+    return `<div class="cat-row"><span class="cat-dot" style="background:${dot}"></span><span class="cat-name">${escapeHtml(lbl)}</span><span class="cat-count">${fmt(o.rates[k])} <span style="opacity:.6;font-weight:400">/ ${fmt(o.national[k])}</span></span></div>`;
+  }).join('');
+  document.getElementById('catsHost').innerHTML = `
+    <div class="section">
+      <h2 style="display:flex;align-items:center;gap:4px">Crime per 100,000 residents${srcTip('First figure: ' + (o.level === 'country' ? 'Scotland' : o.region) + '. Second figure: ' + natName + ' average. Rates are per resident, so busy centres with many visitors and commuters look higher than they feel.')}</h2>
+      <div class="cat-list">${rows}</div>
+      <div style="font-size:11px;color:var(--charcoal-soft);margin-top:10px;line-height:1.5">
+        ${escapeHtml(o.region)} vs ${escapeHtml(natName)} average. ${o.note ? escapeHtml(o.note) + ' ' : ''}Annual official figures, so recent changes take time to show.
+      </div>
+    </div>`;
+
+  const pill = document.getElementById('sourcePill');
+  if (pill) { try { const host = new URL(o.url).host; pill.innerHTML = `Data: <a href="${o.url}" target="_blank" rel="noopener">${host}</a> (official area figures) · Map © OpenStreetMap`; } catch (e) {} }
+
+  renderGlobalInsight(c, 'insightHost');
+  renderWikivoyagePanel(c.name, 'wikivoyageHost');
+  if (c.lat && c.lng) renderPOIToggle(c.lat, c.lng, 'poiHost');
+  renderHotels(c.name);
+  renderGYGActivities(c.name, c.lat, c.lng);
+}
+
 // --- City buttons ----------------------------------------------------
 const cityGrid = document.getElementById('cityGrid');
 DEFAULT_CITIES.forEach(c => {
@@ -2934,10 +3136,26 @@ DEFAULT_CITIES.forEach(c => {
   };
   cityGrid.appendChild(btn);
 });
+// Scottish cities: official council-area figures (no street-level feed)
+GLOBAL_CITIES.filter(c => c.region === 'scotland').forEach(c => {
+  const btn = document.createElement('button');
+  btn.className = 'city';
+  btn.textContent = c.name;
+  btn.dataset.name = c.name;
+  btn.title = 'Scotland: official council-area figures (no street map)';
+  btn.onclick = () => {
+    const gs = document.getElementById('cityGridSection');
+    if (gs) gs.style.display = 'none';
+    showBackBtn('← Back to city overview');
+    loadGlobalCity(c);
+  };
+  cityGrid.appendChild(btn);
+});
 
 // --- Global city buttons ---------------------------------------------
 const globalCityGrid = document.getElementById('globalCityGrid');
 GLOBAL_CITIES.forEach(c => {
+  if (c.region === 'scotland') return;   // listed with the UK cities
   const btn = document.createElement('button');
   btn.className = 'city';
   btn.textContent = c.name;
@@ -2961,10 +3179,9 @@ async function handleSearch() {
   if (!q) return;
 
   // First check if it matches a pre-loaded global city
-  const globalMatch = GLOBAL_CITIES.find(c =>
-    c.name.toLowerCase() === q.toLowerCase() ||
-    q.toLowerCase().includes(c.name.toLowerCase())
-  );
+  const ql = q.toLowerCase();
+  const globalMatch = GLOBAL_CITIES.find(c => c.name.toLowerCase() === ql) ||
+    GLOBAL_CITIES.find(c => new RegExp('(^|[^a-z])' + c.name.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '($|[^a-z])').test(ql));
   if (globalMatch) {
     document.querySelectorAll('.city').forEach(b => b.classList.remove('active'));
     // Hide city grid, show back button
@@ -3040,7 +3257,9 @@ const US_CITY_APIS = {
   'New York':      { url: 'https://data.cityofnewyork.us/resource/5uac-w243.json',  lat: 'latitude', lng: 'longitude', cat: 'ofns_desc',         date: 'cmplnt_fr_dt',    daysBack: 30  },
   'Chicago':       { url: 'https://data.cityofchicago.org/resource/ijzp-q8t2.json', lat: 'latitude', lng: 'longitude', cat: 'primary_type',       date: 'date',            daysBack: 30  },
   'San Francisco': { url: 'https://data.sf.gov/resource/wg3w-h783.json',         lat: 'latitude', lng: 'longitude', cat: 'incident_category',  date: 'incident_date',   daysBack: 30  },
-  'Los Angeles':   { url: 'https://data.lacity.org/resource/2nrs-mtv8.json',        lat: 'lat',      lng: 'lon',       cat: 'crm_cd_desc',         date: 'date_occ',        daysBack: 30  },
+  // LAPD NIBRS Offenses (k7nn-b2ep), from 7 Mar 2024. Replaces 2nrs-mtv8, which stopped on 30 Dec 2024
+  // when LAPD moved to NIBRS. One row per offence; Group A only (Group B = arrest-only offences).
+  'Los Angeles':   { url: 'https://data.lacity.org/resource/k7nn-b2ep.json',        lat: 'hndrdth_lat', lng: 'hndrdth_lon', cat: 'nibr_description', date: 'date_occ', daysBack: 30, extraWhere: "`group` = 'A'" },
 };
 
 // Map US crime descriptions → WF category keys (for colour + label reuse)
@@ -3052,7 +3271,9 @@ function mapUSCategory(type) {
   if (/ROBBERY/.test(t))                                   return 'robbery';
   if (/WEAPON|FIREARM|GUN/.test(t))                        return 'possession-of-weapons';
   if (/BURGLARY|BREAK/.test(t))                            return 'burglary';
-  if (/MOTOR VEHICLE THEFT|AUTO THEFT/.test(t))            return 'vehicle-crime';
+  if (/\bADW\b|CRIMINAL THREAT/.test(t))                   return 'violent-crime';
+  if (/MOTOR VEHICLE THEFT|AUTO THEFT|\bGTA\b|\bBFMV\b|\bTFMV\b/.test(t)) return 'vehicle-crime';
+  if (/POCKET-?PICK|PURSE-?SNATCH/.test(t))                 return 'theft-from-the-person';
   if (/VEHICLE/.test(t))                                   return 'vehicle-crime';
   if (/THEFT FROM PERSON|PICKPOCKET|PURSE SNATCH/.test(t)) return 'theft-from-the-person';
   if (/LARCENY|THEFT|STEAL/.test(t))                       return 'other-theft';
@@ -3101,6 +3322,7 @@ async function loadUSCity(cityData) {
       `${api.lat} between ${(lat - r).toFixed(4)} and ${(lat + r).toFixed(4)}`,
       `${api.lng} between ${(lng - r).toFixed(4)} and ${(lng + r).toFixed(4)}`,
       `${api.date} > '${dateStr}T00:00:00'`,
+      ...(api.extraWhere ? [api.extraWhere] : []),
     ].join(' AND ');
 
     const LIMIT = 25000;
@@ -3987,6 +4209,8 @@ function renderAdvisoryPanel(cityName) {
 }
 
 function renderGlobalCity(c) {
+  const official = officialFor(c.official || c.name);
+  if (official) { renderOfficialCity(c, official); return; }
   const ratingHost = document.getElementById('ratingHost');
   const catsHost   = document.getElementById('catsHost');
   const hotelsHost = document.getElementById('hotelsHost');
@@ -4153,6 +4377,7 @@ let loadToken = 0;
 async function loadCityByCoords(name, lat, lng) { return loadCity(name, lat, lng); }
 
 async function loadCity(name, lat, lng) {
+  if (isScotlandCoords(lat, lng)) { ++loadToken; loadScotland(name, lat, lng); return; }
   const myToken = ++loadToken; // ignore stale responses if user clicks again quickly
   activeCityName = name;
   document.querySelectorAll('.city').forEach(b => {
@@ -8812,6 +9037,7 @@ document.getElementById('ratingHost').innerHTML = `
   var BAND_LBL = { 1: 'High caution', 2: 'Caution', 3: 'Stay aware', 4: 'Low incidents', 5: 'Very low incidents' };
 
   /* ---------- 0. never say "safe" in the static global index either ---------- */
+  try { applyOfficialRatings(); } catch (e) { console.warn('[official]', e); }
   try { GLOBAL_CITIES.forEach(function (c) { if (c.tag === 'Generally safe') c.tag = 'Low incidents'; if (c.tag === 'Very safe') c.tag = 'Very low incidents'; }); } catch (e) {}
 
   /* ---------- 1. collapsible lists ---------- */
@@ -8830,7 +9056,7 @@ document.getElementById('ratingHost').innerHTML = `
     btn.addEventListener('click', function () { open = !open; try { localStorage.setItem(key, open ? '1' : '0'); } catch (e) {} apply(); });
     apply();
   }
-  if (section) { makeAccordion('cityGrid', 'wf_grid_uk_open', 'UK cities · live data'); makeAccordion('globalCityGrid', 'wf_grid_global_open', 'Global cities · safety index'); }
+  if (section) { makeAccordion('cityGrid', 'wf_grid_uk_open', 'UK cities · live + official data'); makeAccordion('globalCityGrid', 'wf_grid_global_open', 'Global cities · safety index'); }
 
   /* ---------- 2. rating badges on the chips ---------- */
   var ukCache = {}; try { ukCache = JSON.parse(localStorage.getItem('wf_city_rating_cache') || '{}'); } catch (e) {}
@@ -8845,7 +9071,7 @@ document.getElementById('ratingHost').innerHTML = `
     if (c && c.rating) badge(chip, c.rating);
     else { badge(chip, null, { title: 'No crime data — checking US State Dept advice' }); if (c) fcdoBand(c.country || c.name).then(function (r) { if (r) badge(chip, r.band, { prov: true }); }); }
   });
-  function refreshUK() { document.querySelectorAll('#cityGrid .city').forEach(function (chip) { var v = ukCache[chip.dataset.name]; badge(chip, v || null); }); }
+  function refreshUK() { document.querySelectorAll('#cityGrid .city').forEach(function (chip) { var v = ukCache[chip.dataset.name] || officialBand(chip.dataset.name); badge(chip, v || null); }); }
   refreshUK();
   // remember each UK city's live band as it loads, so the chip shows it next time
   try {

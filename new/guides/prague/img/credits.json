@@ -1,0 +1,184 @@
+{
+ "cover": {
+  "file": "img/cover.jpg",
+  "artist": "Karelj",
+  "page": "https://commons.wikimedia.org/wiki/File:V%C3%A1noce_Praha_Starom_2021_2.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Vánoce Praha Starom 2021 2.jpg"
+ },
+ "Staré Město (Old Town)": {
+  "file": "img/star-m-sto-old-town.jpg",
+  "artist": "Txllxt TxllxT",
+  "page": "https://commons.wikimedia.org/wiki/File:Praha_-_Starom%C4%9Bstsk%C3%A9_n%C3%A1m%C4%9Bst%C3%AD_-_View_East_on_Tyn_Church.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Praha - Staroměstské náměstí - View East on Tyn Church.jpg"
+ },
+ "Malá Strana (Lesser Town)": {
+  "file": "img/mal-strana-lesser-town.jpg",
+  "artist": "Ввласенко",
+  "page": "https://commons.wikimedia.org/wiki/File:Vltava_River,_Church_of_Saint_Nicholas_at_Mal%C3%A1_Strana,_Mal%C3%A1_Strana_Bridge_Tower,_Basilica_of_the_Assumption_in_the_Strahov_Monastery._Prague,_Czech_Republic.jpg",
+  "license": "CC BY-SA 3.0",
+  "title": "File:Vltava River, Church of Saint Nicholas at Malá Strana, Malá Strana Bridge Tower, Basilica of the Assumption in the Strahov Monastery. Prague, Czech Republic.jpg"
+ },
+ "Nové Město (New Town)": {
+  "file": "img/nov-m-sto-new-town.jpg",
+  "artist": "Diego Delso",
+  "page": "https://commons.wikimedia.org/wiki/File:Casa_Danzante,_Praga,_Rep%C3%BAblica_Checa,_2022-07-01,_DD_01.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Casa Danzante, Praga, República Checa, 2022-07-01, DD 01.jpg"
+ },
+ "Holešovice": {
+  "file": "img/hole-ovice.jpg",
+  "artist": "Daniel Baránek",
+  "page": "https://commons.wikimedia.org/wiki/File:Praha,_Hole%C5%A1ovice,_Letn%C3%A1,_v%C3%BDhled_J_04.jpg",
+  "license": "CC BY-SA 3.0",
+  "title": "File:Praha, Holešovice, Letná, výhled J 04.jpg"
+ },
+ "Dejvice (Prague 6)": {
+  "file": "img/dejvice-prague-6.jpg",
+  "artist": "VitVit",
+  "page": "https://commons.wikimedia.org/wiki/File:Dejvice_V%C3%ADt%C4%9Bzn%C3%A9_n%C3%A1m%C4%9Bst%C3%AD_4.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Dejvice Vítězné náměstí 4.jpg"
+ },
+ "Charles Bridge": {
+  "file": "img/charles-bridge.jpg",
+  "artist": "Roman Boed from The Netherlands",
+  "page": "https://commons.wikimedia.org/wiki/File:Roman_Boed_Karl%C5%AFv_most.jpg",
+  "license": "CC BY 2.0",
+  "title": "File:Roman Boed Karlův most.jpg"
+ },
+ "Prague Castle & St Vitus Cathedral": {
+  "file": "img/prague-castle-st-vitus-cathedral.jpg",
+  "artist": "Uoaei1",
+  "page": "https://commons.wikimedia.org/wiki/File:Praha_Panorama_from_Pet%C5%99%C3%ADn_20170430.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Praha Panorama from Petřín 20170430.jpg"
+ },
+ "Old Town Hall tower & Astronomical Clock": {
+  "file": "img/old-town-hall-tower-astronomical-clock.jpg",
+  "artist": "Godot13",
+  "page": "https://commons.wikimedia.org/wiki/File:Czech-2013-Prague-Astronomical_clock_face.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Czech-2013-Prague-Astronomical clock face.jpg"
+ },
+ "Petřín hill": {
+  "file": "img/pet-n-hill.jpg",
+  "artist": "Suisant7",
+  "page": "https://commons.wikimedia.org/wiki/File:Pet%C5%99%C3%ADn_tower_05_2018.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Petřín tower 05 2018.jpg"
+ },
+ "Vyšehrad": {
+  "file": "img/vy-ehrad.jpg",
+  "artist": "Tilman2007",
+  "page": "https://commons.wikimedia.org/wiki/File:Praha_2,_Pevnost_Vy%C5%A1ehrad_20170808_014.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Praha 2, Pevnost Vyšehrad 20170808 014.jpg"
+ },
+ "Kampa, the Lennon Wall & Vojanovy sady": {
+  "file": "img/kampa-the-lennon-wall-vojanovy-sady.jpg",
+  "artist": "František Šťastný",
+  "page": "https://commons.wikimedia.org/wiki/File:Praha,_Muzeum_Kampa_(Miminka).jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Praha, Muzeum Kampa (Miminka).jpg"
+ },
+ "Prague Zoo": {
+  "file": "img/prague-zoo.jpg",
+  "artist": "Altaipanther",
+  "page": "https://commons.wikimedia.org/wiki/File:Zoo_Praha.JPG",
+  "license": "Public domain",
+  "title": "File:Zoo Praha.JPG"
+ },
+ "National Technical Museum": {
+  "file": "img/national-technical-museum.jpg",
+  "artist": "VitVit",
+  "page": "https://commons.wikimedia.org/wiki/File:NTM_hala_letoun.JPG",
+  "license": "CC BY-SA 4.0",
+  "title": "File:NTM hala letoun.JPG"
+ },
+ "Jewish Quarter (Josefov)": {
+  "file": "img/jewish-quarter-josefov.jpg",
+  "artist": "Lehotsky",
+  "page": "https://commons.wikimedia.org/wiki/File:%C5%A0pan%C4%9Blsk%C3%A1_synagoga,_Praha_1.JPG",
+  "license": "CC BY-SA 3.0",
+  "title": "File:Španělská synagoga, Praha 1.JPG"
+ },
+ "Letná Park": {
+  "file": "img/letn-park.jpg",
+  "artist": "Jiří Bernard",
+  "page": "https://commons.wikimedia.org/wiki/File:Letensk%C3%A9_sady_-_panoramio_(19).jpg",
+  "license": "CC BY-SA 3.0",
+  "title": "File:Letenské sady - panoramio (19).jpg"
+ },
+ "Old Town Square (Staroměstské náměstí)": {
+  "file": "img/old-town-square-starom-stsk-n-m-st.jpg",
+  "artist": "Anaj7",
+  "page": "https://commons.wikimedia.org/wiki/File:V%C3%A1no%C4%8Dn%C3%AD_trhy_v_2023,_Starom%C4%9Bstsk%C3%A9_n%C3%A1m%C4%9Bst%C3%AD,_Praha_(03).jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Vánoční trhy v 2023, Staroměstské náměstí, Praha (03).jpg"
+ },
+ "Wenceslas Square (Václavské náměstí)": {
+  "file": "img/wenceslas-square-v-clavsk-n-m-st.jpg",
+  "artist": "Anaj7",
+  "page": "https://commons.wikimedia.org/wiki/File:V%C3%A1no%C4%8Dn%C3%AD_trhy_v_2023,_V%C3%A1clavsk%C3%A9_n%C3%A1m%C4%9Bst%C3%AD,_Praha_(01).jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Vánoční trhy v 2023, Václavské náměstí, Praha (01).jpg"
+ },
+ "Náměstí Míru": {
+  "file": "img/n-m-st-m-ru.jpg",
+  "artist": "Anaj7",
+  "page": "https://commons.wikimedia.org/wiki/File:V%C3%A1no%C4%8Dn%C3%AD_trhy_v_2023,_n%C3%A1m._M%C3%ADru,_Praha_(01).jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Vánoční trhy v 2023, nám. Míru, Praha (01).jpg"
+ },
+ "Republic Square (Náměstí Republiky)": {
+  "file": "img/republic-square-n-m-st-republiky.jpg",
+  "artist": "Anaj7",
+  "page": "https://commons.wikimedia.org/wiki/File:V%C3%A1no%C4%8Dn%C3%AD_trhy_v_2023,_n%C3%A1m._Republiky,_Praha_02.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Vánoční trhy v 2023, nám. Republiky, Praha 02.jpg"
+ },
+ "Jiřího z Poděbrad": {
+  "file": "img/ji-ho-z-pod-brad.jpg",
+  "artist": "Dezidor",
+  "page": "https://commons.wikimedia.org/wiki/File:Kostel_Nejsv%C4%9Bt%C4%9Bj%C5%A1%C3%ADho_srdce_P%C3%A1n%C4%9B,_Ji%C5%99%C3%ADho_z_Pod%C4%9Bbrad2.jpg",
+  "license": "CC BY-SA 3.0",
+  "title": "File:Kostel Nejsvětějšího srdce Páně, Jiřího z Poděbrad2.jpg"
+ },
+ "Havelské tržiště & Mariánské náměstí": {
+  "file": "img/havelsk-tr-i-t-mari-nsk-n-m-st.jpg",
+  "artist": "Perituss",
+  "page": "https://commons.wikimedia.org/wiki/File:Havelsk%C3%A9_tr%C5%BEi%C5%A1t%C4%9B_2010_2.jpg",
+  "license": "CC0",
+  "title": "File:Havelské tržiště 2010 2.jpg"
+ },
+ "Anděl": {
+  "file": "img/and-l.jpg",
+  "artist": "I would appreciate being notified if you use my work outside Wikimedia. More of my work can be found in my personal gall",
+  "page": "https://commons.wikimedia.org/wiki/File:Praha,_Sm%C3%ADchov,_And%C4%9Bl,_velikono%C4%8Dn%C3%AD_trhy.JPG",
+  "license": "CC BY 3.0",
+  "title": "File:Praha, Smíchov, Anděl, velikonoční trhy.JPG"
+ },
+ "The Charles Bridge lamplighter": {
+  "file": "img/the-charles-bridge-lamplighter.jpg",
+  "artist": "Jakub T. Jankiewicz",
+  "page": "https://commons.wikimedia.org/wiki/File:Lantern_on_Charles_Bridge_at_Night.jpg",
+  "license": "CC BY-SA 4.0",
+  "title": "File:Lantern on Charles Bridge at Night.jpg"
+ },
+ "Advent at Prague Castle": {
+  "file": "img/advent-at-prague-castle.jpg",
+  "artist": "Karelj",
+  "page": "https://commons.wikimedia.org/wiki/File:Praha_Hrad_sn%C3%ADh_2010_22.jpg",
+  "license": "Public domain",
+  "title": "File:Praha Hrad sníh 2010 22.jpg"
+ },
+ "New Year's Eve": {
+  "file": "img/new-year-s-eve.jpg",
+  "artist": "Jan Fidler from Prague, Czech Republic",
+  "page": "https://commons.wikimedia.org/wiki/File:Prague_New_Year_2016_fireworks._Happy_New_Year!_(23741249829).jpg",
+  "license": "CC BY 2.0",
+  "title": "File:Prague New Year 2016 fireworks. Happy New Year! (23741249829).jpg"
+ }
+}

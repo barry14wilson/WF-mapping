@@ -878,8 +878,7 @@ rejection cycle. Location history included in the W6 export bundle.
 | FBI proxy (key server-side) | `netlify/functions/fbi-state.js` → `GET /api/fbi-state?state=XX` (env `FBI_API_KEY`) | **Live** |
 | City-guide template (web page + PDF + Word, Christmas chapter, comparison table) | `scripts/city-guides/` | In use |
 | Redesigned prototype | `new/index.html` → `wiley-fox.netlify.app/new/` (classic homepage unchanged) | **Live** |
-| Published guides | `new/guides/{london,nuremberg,munich}/` | **Live** |
-| Guides in review (preview site only) | Cologne, New York → `wiley-fox-redesign.netlify.app/guides/<slug>/` | Awaiting approval |
+| Published guides | `new/guides/{london,new-york,nuremberg,munich,cologne,berlin,chicago,strasbourg,vienna,prague}/` | **Live** (all approved 16 Oct 2026) |
 
 ### 20.2 Content pipeline (how a city gets its facts)
 

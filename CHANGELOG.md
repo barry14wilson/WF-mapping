@@ -2,6 +2,12 @@
 
 All notable changes to the WF-mapping repo. Newest first. Dates are commit dates (UTC). Design and architecture notes live in `Wiley-Fox-Dev-Handoff-v1.md` (§20 covers September 2026).
 
+## 2026-10-16 (Guides approved: all ten live on /new)
+
+- **feat:** Prague Christmas 2026 guide approved and published at `/new/guides/prague/` (web page, PDF, Word, 26 credited Commons photos), copied byte-for-byte from the preview site. `/new` map gets the Prague city-list entry (rating 4, Czech Statistical Office 2025 / Eurostat 2024) and its `GUIDE_LINKS` entry. Queue status set to done.
+- **chore:** every guide on the preview site is now live on production `/new/guides/`: London, New York, Nuremberg, Munich, Cologne, Berlin, Chicago, Strasbourg, Vienna, Prague. Audit on 16 Oct: page HTML identical on preview, production and repo for all nine earlier guides; Munich's photos on preview are an older re-encode of the same images, production keeps the repo copies. "Draft / preview only" comments removed from `GUIDE_LINKS`.
+- **ops:** backup before deploy — GitHub tag `backup-pre-guide-approval-2026-10-16` (= production as of a870a45) and a copy of the preview-only files in the Cowork folder `_archive/site_backup_2026-10-16/`. The preview site was not redeployed.
+
 ## 2026-10-14 (Prague)
 
 - **feat:** Prague Christmas 2026 guide build script and source data (`scripts/city-guides/prague/`): 716 creator facts from 155 videos (79 creators credited), Czech Statistical Office 2025 crime tables (Prague 34,853 registered crimes, -9.3%; 2,492 per 100,000; violent 115 per 100,000), 2026 market dates from the organiser (trhypraha.cz), 2026 PID fares, airport transfer options (taxi cap ended 1 Oct 2026), Czech National Bank exchange rules. Czech-regions compare box. Rating 4 (Low), creator feeling 4. On preview only (`/guides/prague/`); new Prague city-list entry on preview (rating 4, homicide 0.7 Eurostat 2024).

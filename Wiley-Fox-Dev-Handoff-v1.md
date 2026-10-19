@@ -975,6 +975,21 @@ The four Scottish cities draw data zones instead of hexes: SIMD 2020 crime indic
 
 ---
 
+## 22. Phase 2 preview — labels, My travel, booking, shop (October 2026)
+
+> **Added 2026-10-19.** `new/phase2/index.html` (+ `shop.json`), live at `/new/phase2/`, unlinked and noindex. Mix of working and test features; see CHANGELOG 2026-10-19 for the full list.
+
+| Section | State | What production needs |
+|---|---|---|
+| Name labels | Designer works; checkout is a test that outputs the printer job JSON + A4 SVG sheets | Shopify product with line-item properties (or a personaliser app), payment, a print partner API/email intake for the job file, QR codes registered to the buyer's account (WP5/WP6) |
+| My travel | Works, data on the device only (localStorage + IndexedDB) | Encrypted per-user storage, consent, retention, DPIA — passport images and medical notes are special-category/high-risk data. Keep on-device until then |
+| Book a trip | Test results generated client-side | Flights/hotels via affiliate deep links or a booking API (Booking.com Demand API, Expedia/Skyscanner affiliates); insurance only through an FCA-authorised partner (introducer/affiliate), never quoted by Wiley Fox itself |
+| Shop | Live catalogue snapshot; basket only | Storefront API token or Buy Button for a real cart → checkout; replace the 8 draft travel products with supplier-backed listings |
+
+Open decisions: label print partner and unit costs; whether labels sell through Shopify or a dedicated personaliser; FCA route for insurance; when (if ever) travel documents leave the device.
+
+---
+
 ## Contact & sign-off
 
 **Product owner:** Barry Wilson (`barry14wilson@gmail.com`)

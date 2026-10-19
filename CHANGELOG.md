@@ -2,6 +2,11 @@
 
 All notable changes to the WF-mapping repo. Newest first. Dates are commit dates (UTC). Design and architecture notes live in `Wiley-Fox-Dev-Handoff-v1.md` (§20 covers September 2026).
 
+## 2026-10-19 (Scotland neighbourhood map)
+
+- **feat:** Edinburgh, Glasgow, Aberdeen and Inverness now show a neighbourhood map in place of hexes: 1,719 data zones (about 500–1,000 residents each) shaded on the brand 1–5 palette by the SIMD 2020 crime indicator (recorded crime 2017/18 per 10,000 residents) against the Scotland rate (289.6), using the same curve as the official-area rating. Tap a zone for its name, rate and ratio. Inverness covers zones within 12 km of the centre (Highland is otherwise mostly rural). Files: `new/data/scotland-dz/<city>.json` (100–570 KB, loaded on demand); builder `scripts/official-area/build_scot_dz.py`.
+- **note:** the city rating is unchanged (council-area figures for 2025-26). Zone figures are older and per resident, so city-centre zones read high; the card says so. SIMD 2026 (2022 data zones) is due later in 2026 — rebuild when it lands.
+
 ## 2026-10-16 (Phase 2 coverage: official area data + LA fix)
 
 - **fix:** Los Angeles live map now reads LAPD NIBRS Offenses (`k7nn-b2ep`, Group A only). The old dataset (`2nrs-mtv8`) stopped on 30 Dec 2024, so the map had been showing 2024 incidents as the latest month. `US_CITY_APIS` entries can now carry `extraWhere`; `mapUSCategory` learns NIBRS abbreviations (GTA, BFMV, TFMV, ADW, pocket-picking).

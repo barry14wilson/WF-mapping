@@ -3043,6 +3043,46 @@ function loadScotland(name, lat, lng) {
   loadGlobalCity({ name: name || 'Scotland', country: 'United Kingdom', iso: 'GBR', lat, lng, region: 'scotland', official: 'Scotland' });
 }
 
+// ── Scotland neighbourhood shading (data zones) ────────────────────────
+// No street-level points exist for Scotland, so the four covered cities get the
+// closest equivalent: ~500–1,000-resident data zones shaded by the SIMD 2020 crime
+// indicator (recorded crime 2017/18 per 10,000 residents) vs the Scotland rate,
+// on the same curve and palette as the official-area rating. Built by
+// scripts/official-area/build_scot_dz.py → new/data/scotland-dz/<city>.json.
+const SCOT_DZ_CITIES = { 'Edinburgh': 'edinburgh', 'Glasgow': 'glasgow', 'Aberdeen': 'aberdeen', 'Inverness': 'inverness' };
+const SCOT_DZ_COL = { 0: '#C9CCC2', 1: '#D7263D', 2: '#F46036', 3: '#FFC857', 4: '#A4C957', 5: '#3FA34D' };
+let scotDzPopupsInit = false, scotDzSeq = 0;
+async function plotScotDZ(cityKey) {
+  const slug = SCOT_DZ_CITIES[cityKey]; if (!slug) return;
+  const seq = ++scotDzSeq;
+  try {
+    const r = await fetch(`data/scotland-dz/${slug}.json`); if (!r.ok) return;
+    const gj = await r.json();
+    if (seq !== scotDzSeq || activeCityName !== cityKey) return;
+    if (!map.isStyleLoaded()) await new Promise(res => map.once('idle', res));
+    gj.features.forEach(f => { f.properties.color = SCOT_DZ_COL[f.properties.b] || SCOT_DZ_COL[0]; });
+    clearHotspotLayers();
+    map.addSource('scot-dz', { type: 'geojson', data: gj });
+    map.addLayer({ id: 'scot-dz-fill', type: 'fill', source: 'scot-dz', paint: { 'fill-color': ['get', 'color'], 'fill-opacity': 0.42 } });
+    map.addLayer({ id: 'scot-dz-line', type: 'line', source: 'scot-dz', paint: { 'line-color': '#ffffff', 'line-width': 0.8, 'line-opacity': 0.7 } });
+    if (!scotDzPopupsInit) {
+      scotDzPopupsInit = true;
+      map.on('click', 'scot-dz-fill', e => {
+        const p = e.features[0].properties;
+        const lbl = p.b ? RATING_TAGS[p.b][0] : 'No published figure';
+        const detail = p.b
+          ? `${Number(p.r).toLocaleString('en-GB')} recorded crimes per 10,000 residents (2017/18)<br>${p.x >= 1 ? Number(p.x).toFixed(1) + '× the Scotland rate' : Math.round((1 - p.x) * 100) + '% below the Scotland rate'}`
+          : 'Figure suppressed or not published for this zone';
+        new maplibregl.Popup({ closeButton: true }).setLngLat(e.lngLat)
+          .setHTML(`<div style="font-family:Inter,sans-serif;padding:4px"><strong style="color:${p.color}">${escapeHtml(lbl)}</strong><br><span style="font-size:12px">${escapeHtml(p.n)}</span><br><span style="font-size:11px;color:#666">${detail}</span><br><span style="font-size:10px;color:#999">SIMD 2020 crime indicator · neighbourhood rates are per resident, so busy centres read high</span></div>`)
+          .addTo(map);
+      });
+      map.on('mouseenter', 'scot-dz-fill', () => map.getCanvas().style.cursor = 'pointer');
+      map.on('mouseleave', 'scot-dz-fill', () => map.getCanvas().style.cursor = '');
+    }
+  } catch (e) { console.warn('[scotDZ]', e); }
+}
+
 function renderOfficialCity(c, o) {
   const s = officialScore(o, c.name);
   const [tag, color] = RATING_TAGS[s.band];
@@ -3052,6 +3092,9 @@ function renderOfficialCity(c, o) {
   const ratioTxt = s.ratio >= 1 ? `${s.ratio.toFixed(1)}× the ${natName} average` : `${Math.round((1 - s.ratio) * 100)}% below the ${natName} average`;
   const areaTxt = o.level === 'country' ? 'Scotland-wide figures' : `${o.region} · ${o.level}`;
   const fmt = v => v >= 100 ? Math.round(v).toLocaleString('en-GB') : v.toFixed(1);
+  const dzKey = (o.nation === 'Scotland' && o.level !== 'country') ? o.key : null;
+  const hasDZ = !!(dzKey && SCOT_DZ_CITIES[dzKey]);
+  if (hasDZ) plotScotDZ(dzKey); else scotDzSeq++;
   const t = o.trend;
   const trendHTML = t ? `
       <div class="warning" style="margin:12px 24px 0;border-left-color:var(--sage)">
@@ -3081,7 +3124,8 @@ function renderOfficialCity(c, o) {
       <div class="warning" style="margin:12px 24px 0">
         ${o.level === 'country'
           ? '<strong>Scotland-wide figures, no street map.</strong> Council-area figures are matched to Edinburgh, Glasgow, Aberdeen and Inverness so far, so this spot uses the Scotland average.'
-          : `<strong>City-level data, no street map.</strong> ${escapeHtml(areaTxt)} records ${escapeHtml(ratioTxt)} for assault, robbery, burglary and theft combined.`}
+          : `<strong>${hasDZ ? 'City-level rating, neighbourhood map.' : 'City-level data, no street map.'}</strong> ${escapeHtml(areaTxt)} records ${escapeHtml(ratioTxt)} for assault, robbery, burglary and theft combined.`}
+        ${hasDZ ? '<br><br>The map shades each neighbourhood (data zone) by its recorded crime rate against the Scotland average. These are the latest small-area figures (SIMD 2020, crime in 2017/18) and are older than the rating above; city-centre zones read high because the rate is per resident. Tap a zone for its figure.' : ''}
         Compared within ${escapeHtml(natName)} only, because countries record crime differently.
         <br><span style="opacity:.7;font-size:10px">Source: <a href="${o.url}" target="_blank" rel="noopener">${escapeHtml(o.source)}</a> · ${escapeHtml(String(o.period))}</span>
       </div>
@@ -3222,7 +3266,7 @@ async function handleSearch() {
 let cgClickSeq = 0;
 map.on('click', e => {
   const hits = map.queryRenderedFeatures(e.point, {
-    layers: ['hex-fill'].filter(l => map.getLayer(l)),
+    layers: ['hex-fill', 'scot-dz-fill'].filter(l => map.getLayer(l)),
   });
   if (hits.length > 0) return;
   const lat = e.lngLat.lat;
@@ -3500,6 +3544,8 @@ const HOTSPOT_COLORS = {
 };
 
 function clearHotspotLayers() {
+  ['scot-dz-fill','scot-dz-line'].forEach(id => { if (map.getLayer(id)) map.removeLayer(id); });
+  if (map.getSource('scot-dz')) map.removeSource('scot-dz');
   ['eu-hotspots-fill','eu-hotspots-stroke'].forEach(id => {
     if (map.getLayer(id)) map.removeLayer(id);
   });

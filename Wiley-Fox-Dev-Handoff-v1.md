@@ -962,7 +962,11 @@ Not used: ACLED (commercial licence required), GDELT (needs filtering), Turkey's
 
 LAPD moved to NIBRS in March 2024; dataset `2nrs-mtv8` stops at 30 Dec 2024. Now `k7nn-b2ep` (LAPD NIBRS Offenses, one row per offence, `group = 'A'`), fields `hndrdth_lat/lon`, `nibr_description`, `date_occ`. Updated weekly.
 
-### 21.5 Open items
+### 21.5 Scotland neighbourhood map (added 19 Oct 2026)
+
+The four Scottish cities draw data zones instead of hexes: SIMD 2020 crime indicator (2017/18, per 10,000 residents) vs the Scotland rate, same `75 − 20·log2(ratio)` curve and 1–5 palette. Layer ids `scot-dz-fill` / `scot-dz-line`, removed by `clearHotspotLayers()`. Data in `new/data/scotland-dz/`, built by `scripts/official-area/build_scot_dz.py` from the 2011 data-zone shapefile (maps.gov.scot), the statistics.gov.scot crime indicator and the data-zone → council lookup (SPARQL, Mac only). Rebuild on SIMD 2026 (2022 data zones).
+
+### 21.6 Open items
 
 1. Remaining 28 Scottish council areas (data already in the same SPARQL endpoint; needs reverse-geocode → council area).
 2. Ireland rate per Garda division once CSO publishes division populations; until then the rating uses NUTS 3.

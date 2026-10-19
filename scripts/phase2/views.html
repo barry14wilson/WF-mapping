@@ -1,0 +1,71 @@
+  <!-- ======================= PHASE 2: NAME LABELS ======================= -->
+  <section class="wf-view p2" id="v-labels" hidden>
+  <div class="view">
+    <div class="head"><div><div class="k">SCHOOL &amp; KIDS</div><h1>Design your name labels</h1><p>Wash-proof labels for uniforms, shoes and lunchboxes. Add a Wiley Fox QR code and anything found can come home in one scan, without showing your phone number.</p></div>
+      <div class="row"><button class="btn btn-ghost" data-goto="tags">Tags &amp; items</button><button class="btn btn-ghost" id="ordersBtn">My label orders</button></div></div>
+    <div class="banner demo" style="margin-bottom:16px"><b>Test checkout.</b> Placing an order creates the print file our printer would receive. No payment is taken and nothing is printed.</div>
+    <div class="card" style="margin-bottom:16px"><h3>1. Choose a label</h3><div class="lab-types" id="labTypes"></div></div>
+    <div class="grid2">
+      <div class="stack">
+        <div class="card"><h3>2. Personalise</h3>
+          <div class="stack" style="gap:12px">
+            <label class="f">Who are they for? <select class="in" id="lWho"></select></label>
+            <label class="f">Name on the label <input class="in" id="lName" maxlength="22" value="Zoe Wilson"></label>
+            <label class="f" id="lLine2Wrap">Second line (optional) <input class="in" id="lLine2" maxlength="26" placeholder="e.g. Class 4B or St Mary's"></label>
+            <label class="f" id="lAllergyWrap" hidden>Allergy or medical note <input class="in" id="lAllergy" maxlength="30" value="NUT ALLERGY"></label>
+            <div class="banner warn" id="lPhoneWarn" hidden>Labels are visible to anyone. Use the QR code instead of printing a phone number or address.</div>
+            <label class="f">Font <select class="in" id="lFont"><option value="Plus Jakarta Sans">Clean (Jakarta)</option><option value="Fraunces">Classic (Fraunces)</option><option value="Inter">Simple (Inter)</option></select></label>
+          </div>
+        </div>
+        <div class="card"><h3>3. Colour and icon</h3>
+          <div class="note" style="margin-bottom:8px">Background</div><div class="swatches" id="lColours"></div>
+          <div class="note" style="margin:14px 0 8px">Icon</div><div class="icons" id="lIcons"></div>
+          <label class="row" style="margin-top:16px;font-weight:700;gap:8px"><input type="checkbox" id="lQR" checked> Add a Wiley Fox QR code (lost &amp; found)</label>
+          <div class="note" style="margin-top:4px">Each pack gets its own code, added to <a href="#" data-goto="tags">Tags &amp; items</a> in your account. Finders message you through Wiley Fox and never see your details. QR labels carry www.thewileyfox.com.</div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="card"><h3>Preview</h3>
+          <div class="preview-wrap"><div id="lBig"></div><div class="sheet" id="lSheet"></div></div>
+          <div class="note" id="lSizeNote" style="margin-top:8px"></div>
+        </div>
+        <div class="card"><h3>4. Quantity</h3>
+          <div class="row" id="lPacks"></div>
+          <div class="row" style="justify-content:space-between;margin-top:16px">
+            <div><div class="note">Total</div><div class="price" id="lTotal">£0.00</div><div class="note">Free UK delivery · printed and posted in 3–5 working days</div></div>
+            <button class="btn btn-accent" id="lCheckout">Continue to checkout</button>
+          </div>
+          <div class="banner warn" id="lErr" hidden style="margin-top:10px"></div>
+        </div>
+        <div class="card"><h3>Pairs well with</h3><div class="note" style="margin-bottom:10px">Labels name their things. A snap wristband lets a finder reach you if your child is lost.</div><div class="row"><button class="btn btn-ghost btn-sm" data-shop="Wristbands">Snap wristbands</button><button class="btn btn-ghost btn-sm" data-shop="Medical ID">Medical ID band</button><button class="btn btn-ghost btn-sm" data-goto="people">Set up your family group</button></div></div>
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <!-- ======================= PHASE 2: MY TRAVEL ======================= -->
+  <section class="wf-view p2" id="v-travel" hidden>
+  <div class="view">
+    <div class="head"><div><div class="k">MY TRAVEL</div><h1 id="tTitle">Your trips</h1><p id="tSub">Flights, hotels, passports, medical details and insurance for everyone travelling, in one place.</p></div>
+      <div class="row" id="tHeadBtns"></div></div>
+    <div class="banner info" style="margin-bottom:16px"><b>Kept on this device only.</b> Passport copies and medical details are stored in this browser and are never uploaded. Clear them at any time from a trip's Passports tab. Travellers come from <a href="#" data-goto="people">Your people</a>.</div>
+    <div id="tList" class="stack"></div>
+    <div id="tTrip" hidden></div>
+  </div>
+  </section>
+
+  <!-- ======================= PHASE 2: BOOK ======================= -->
+  <section class="wf-view p2" id="v-book" hidden>
+  <div class="view">
+    <div class="head"><div><div class="k">BOOK A TRIP</div><h1>Flights, hotels and insurance</h1><p>Search, compare, check the area on the safety map, then add it straight to My travel.</p></div><button class="btn btn-ghost" data-goto="travel">My travel</button></div>
+    <div class="banner demo" style="margin-bottom:16px"><b>Test version.</b> Results, prices and insurers are illustrative, generated on this page. They are not live fares or real offers, and nothing is booked. Safety ratings and the map are live.</div>
+    <div class="tabs" id="bTabs"><button class="chip" data-b="flights" aria-pressed="true">Flights</button><button class="chip" data-b="hotels">Hotels</button><button class="chip" data-b="insurance">Insurance quotes</button></div>
+    <div class="card" style="margin-bottom:16px">
+      <form id="bForm" class="grid3" onsubmit="return false"></form>
+    </div>
+    <div id="bDest"></div>
+    <div id="bResults" class="stack" style="margin-top:16px"></div>
+  </div>
+  </section>
+
+  <dialog id="p2dlg" class="p2"><div class="dlg" id="p2dlgBody"></div></dialog>

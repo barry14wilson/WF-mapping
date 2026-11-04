@@ -2,6 +2,12 @@
 
 All notable changes to the WF-mapping repo. Newest first. Dates are commit dates (UTC). Design and architecture notes live in `Wiley-Fox-Dev-Handoff-v1.md` (§20 covers September 2026).
 
+## 2026-11-04 (Homepage v2: console redesign)
+
+- **change:** `/newhomepage` restyled after getdesign.md (Barry's chosen reference, full design freedom): near-black canvas (#141416), Geist + Geist Mono, hairline-ruled panels, mono kickers and 01–08 numbering, sticky left section sidebar (desktop), light "scan page" mock in the hero, Wiley orange as the single action colour, rating colours kept for data, Medical yellow for the Medical ID section.
+- **feat:** product range is now a searchable catalogue table of the 13 ACTIVE Shopify products with real prices from `new/phase2/shop.json`.
+- **note:** this departs from the cream / Fraunces + Inter system in CLAUDE.md for this page only (approved by Barry, 4 Nov). Previous light version: commit e7b80ae.
+
 ## 2026-11-04 (Homepage: Medical ID + full tag range)
 
 - **feat:** new **Medical ID bands** section on `/newhomepage` (yellow Medical ID · SOS band, sample scan card, who it's for, "not a medical device" disclaimer), plus Medical ID in the nav, pillars (now 8, incl. Travel & safety), FAQ, Free plan and footer.

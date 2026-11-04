@@ -2,6 +2,12 @@
 
 All notable changes to the WF-mapping repo. Newest first. Dates are commit dates (UTC). Design and architecture notes live in `Wiley-Fox-Dev-Handoff-v1.md` (§20 covers September 2026).
 
+## 2026-11-04 (Homepage: Medical ID + full tag range)
+
+- **feat:** new **Medical ID bands** section on `/newhomepage` (yellow Medical ID · SOS band, sample scan card, who it's for, "not a medical device" disclaimer), plus Medical ID in the nav, pillars (now 8, incl. Travel & safety), FAQ, Free plan and footer.
+- **feat:** product range now 8 cards: Medical ID bands, kids' slap bands, Guardian bands ("Scan to contact guardian"), SOS event wristbands, key fobs, pet & dog tags, smart stickers, school & event packs. New images: `medical-id-card.webp`, `guardian-band-card.webp`, `keyfob-front.webp`, `keyfob-back.webp`.
+- **todo:** pet & dog tag card uses the key fob back (Wiley side) until a dedicated dog-tag photo is supplied.
+
 ## 2026-11-04 (New homepage draft at /newhomepage)
 
 - **feat:** `newhomepage/index.html`, the new landing page for www.thewileyfox.com (single file, Fraunces + Inter, brand tokens, 900px breakpoint, no build). Sections: hero (Get your tag + Check a place, safety-check search), honest proof strip, six pillars, Family & child safety, Tags/bands/stickers, SOS & women's safety, Crime & safety checks, Know before you go (links to `/new/guides/*`), Travel & safety, Lost & found, Community, Pricing (Free / Pro £4), FAQ, Know Before You Go newsletter, footer. Images in `newhomepage/img/`.

@@ -67,7 +67,7 @@ section{padding:96px 0}
 .nav .wrap{display:flex;align-items:center;gap:28px;height:72px}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--serif);font-weight:700;font-size:1.3rem}
 .brand img{width:40px;height:40px}
-.nav-links{display:flex;gap:22px;margin-left:auto;font-size:.92rem;font-weight:500}
+.nav-links{display:flex;gap:18px;margin-left:auto;font-size:.92rem;font-weight:500}
 .nav-links a{text-decoration:none;color:var(--ink-2)}
 .nav-links a:hover{color:var(--charcoal)}
 .nav-cta{display:flex;gap:10px}
@@ -126,7 +126,7 @@ section{padding:96px 0}
 .stat .l{font-size:.85rem;color:var(--ink-3);margin-top:6px}
 
 /* ---------- Pillars ---------- */
-.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .pillar{background:#fff;border-radius:var(--radius);padding:26px;text-decoration:none;border:1px solid var(--line);transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column;gap:10px}
 .pillar:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
 .pillar .pi{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--cream);color:var(--orange-dark)}
@@ -171,6 +171,20 @@ section{padding:96px 0}
 .sticker.s2 img{width:46px}
 .nfc{margin-top:28px;display:flex;gap:18px;align-items:center;background:var(--charcoal);color:#fff;border-radius:var(--radius);padding:22px 26px;flex-wrap:wrap}
 .nfc p{color:#cfd1c6;flex:1;min-width:240px}
+
+/* medical ID */
+.medical{background:#FFFBEA}
+.med-hero{border-radius:24px;overflow:hidden;box-shadow:var(--shadow);background:#fff}
+.med-hero img{width:100%}
+.med-scan{background:#fff;border-radius:20px;padding:20px;margin-top:-40px;margin-left:24px;margin-right:24px;position:relative;box-shadow:var(--shadow);border:1px solid var(--line)}
+.med-scan .hd{display:flex;align-items:center;gap:10px;font-weight:700;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:#B42318}
+.med-scan .hd i{width:26px;height:26px;border-radius:7px;background:#D7263D;color:#fff;display:grid;place-items:center;font-style:normal;font-size:1.1rem}
+.med-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin-top:12px;font-size:.88rem}
+.med-grid .k{color:var(--ink-3);font-size:.74rem;text-transform:uppercase;letter-spacing:.08em}
+.med-grid b{display:block;font-weight:600}
+.who{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 28px}
+.who span{background:#fff;border:1px solid rgba(180,35,24,.18);border-radius:999px;padding:.45em .9em;font-size:.86rem;font-weight:500}
+.med-note{font-size:.8rem;color:var(--ink-3);margin-top:18px;max-width:60ch}
 
 /* dark SOS section */
 .dark{background:var(--charcoal);color:#fff}
@@ -296,9 +310,11 @@ footer{padding:64px 0 40px;font-size:.9rem;color:var(--ink-2)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 
 /* ---------- Responsive (breakpoint 900px per design system) ---------- */
-@media (max-width:1080px){
+@media (max-width:1180px){
   .nav-links{display:none}
-  .products{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:1080px){
+  .products,.pillars{grid-template-columns:repeat(2,1fr)}
   .circle{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width:900px){
@@ -318,6 +334,7 @@ footer{padding:64px 0 40px;font-size:.9rem;color:var(--ink-2)}
   .proof .wrap{grid-template-columns:repeat(2,1fr)}
   .proof .stat:last-child{grid-column:span 2}
   .pillars,.checks,.tips,.steps,.stories{grid-template-columns:1fr}
+  .med-scan{margin-left:12px;margin-right:12px}
   .split{grid-template-columns:1fr;gap:36px}
   .split.rev .media{order:0}
   .guides{grid-template-columns:repeat(2,1fr)}
@@ -375,6 +392,7 @@ footer{padding:64px 0 40px;font-size:.9rem;color:var(--ink-2)}
     <a class="brand" href="#top"><img src="img/wiley-fox-logo.png" alt="">Wiley Fox</a>
     <nav class="nav-links" aria-label="Main">
       <a href="#family">Family safety</a>
+      <a href="#medical">Medical ID</a>
       <a href="#tags">Tags &amp; bands</a>
       <a href="#sos">SOS</a>
       <a href="#checks">Safety checks</a>
@@ -390,6 +408,7 @@ footer{padding:64px 0 40px;font-size:.9rem;color:var(--ink-2)}
 </header>
 <div class="mobile-menu" id="mmenu">
   <a href="#family">Family &amp; child safety</a>
+  <a href="#medical">Medical ID bands</a>
   <a href="#tags">Tags, bands &amp; stickers</a>
   <a href="#sos">SOS &amp; women's safety</a>
   <a href="#checks">Crime &amp; safety checks</a>
@@ -408,7 +427,7 @@ footer{padding:64px 0 40px;font-size:.9rem;color:var(--ink-2)}
     <div>
       <span class="pill"><span class="dot"></span> Community safety for families, travellers &amp; everyone in between</span>
       <h1>Keep the people you love safe, <em class="o">wherever</em> they wander.</h1>
-      <p class="lede">Smart safety tags and bands for kids, one-tap SOS, street-level crime checks and local "know before you go" tips, all in one app. If someone or something goes missing, the next person to scan helps bring them home.</p>
+      <p class="lede">Smart safety tags and bands for kids, Medical ID bands, one-tap SOS, street-level crime checks and local "know before you go" tips, all in one app. If someone or something goes missing, the next person to scan helps bring them home.</p>
       <div class="hero-ctas">
         <a class="btn btn-primary" href="/new/phase2/#shop"><svg class="ico"><use href="#i-tag"/></svg>Get your tag</a>
         <a class="btn btn-dark" href="/new/phase2/#map"><svg class="ico"><use href="#i-shield"/></svg>Check a place</a>
@@ -420,7 +439,7 @@ footer{padding:64px 0 40px;font-size:.9rem;color:var(--ink-2)}
       </form>
       <p class="hero-note">Free to start. Finders don't need the app to scan.</p>
       <div class="buzz" style="margin-top:22px">
-        <span>Know before you go</span><span>Lost. Scanned. Reunited.</span><span>One tap to safety</span><span>Safer together</span>
+        <span>Know before you go</span><span>Medical ID on your wrist</span><span>Lost. Scanned. Reunited.</span><span>One tap to safety</span><span>Safer together</span>
       </div>
     </div>
 
@@ -461,17 +480,19 @@ footer{padding:64px 0 40px;font-size:.9rem;color:var(--ink-2)}
 <section>
   <div class="wrap">
     <div class="sec-head rv">
-      <span class="eyebrow">One app, six ways to stay safe</span>
+      <span class="eyebrow">One app, eight ways to stay safe</span>
       <h2>Safety that goes <em class="o">everywhere</em> you do.</h2>
       <p class="lede">From the school gate to a city you've never visited, Wiley Fox brings together the things families and travellers actually need when it matters.</p>
     </div>
     <div class="pillars">
       <a class="pillar rv" href="#family"><div class="pi"><svg class="ico"><use href="#i-family"/></svg></div><h3>Family &amp; child safety</h3><p>Guardians, lost-child alerts and ICE details your kids carry on a band, tag or school label.</p><span class="go">Protect your family →</span></a>
+      <a class="pillar rv" href="#medical"><div class="pi" style="background:#FFF3B0;color:#B42318"><svg class="ico"><use href="#i-med"/></svg></div><h3>Medical ID bands</h3><p>Allergies, conditions, medication and ICE contacts on the wrist, ready for first responders with one scan.</p><span class="go">Get a Medical ID →</span></a>
       <a class="pillar rv" href="#tags"><div class="pi"><svg class="ico"><use href="#i-qr"/></svg></div><h3>Tags, bands &amp; stickers</h3><p>Wristbands, slap bands, stickers and tags for bags, pets and keys. Scan once, get it home.</p><span class="go">Shop the range →</span></a>
       <a class="pillar rv" href="#sos"><div class="pi"><svg class="ico"><use href="#i-sos"/></svg></div><h3>SOS &amp; women's safety</h3><p>One tap sends your live location to everyone in your circle. Safer routes for the walk home.</p><span class="go">See how SOS works →</span></a>
       <a class="pillar rv" href="#checks"><div class="pi"><svg class="ico"><use href="#i-shield"/></svg></div><h3>Crime &amp; safety checks</h3><p>Street-level ratings from official police data. Check a hotel, a route or a neighbourhood in seconds.</p><span class="go">Run a safety check →</span></a>
       <a class="pillar rv" href="#know"><div class="pi"><svg class="ico"><use href="#i-compass"/></svg></div><h3>Know before you go</h3><p>Local insights, scams to avoid and tips from people who've been there, in travel guides you can trust.</p><span class="go">Read the guides →</span></a>
       <a class="pillar rv" href="#lost"><div class="pi"><svg class="ico"><use href="#i-heart"/></svg></div><h3>Lost &amp; found</h3><p>Lost. Scanned. Reunited. A stranger scans, you get a ping, and nobody sees your number.</p><span class="go">How it works →</span></a>
+      <a class="pillar rv" href="#travel"><div class="pi"><svg class="ico"><use href="#i-plane"/></svg></div><h3>Travel &amp; safety</h3><p>Trips, passports and medical details in one place, with every hotel checked against the safety map.</p><span class="go">Plan a safer trip →</span></a>
     </div>
   </div>
 </section>
@@ -510,6 +531,45 @@ footer{padding:64px 0 40px;font-size:.9rem;color:var(--ink-2)}
   </div>
 </section>
 
+<!-- ================= MEDICAL ID ================= -->
+<section id="medical" class="medical">
+  <div class="wrap split rev">
+    <div class="rv">
+      <span class="eyebrow" style="color:#B42318">Medical ID bands</span>
+      <h2 style="margin-top:12px">When they can't speak for themselves, <em class="o">their band can</em>.</h2>
+      <p class="lede" style="margin-top:16px">A bright yellow Medical ID band that's easy for first responders, teachers and passers-by to spot. One scan shows the allergies, conditions, medication and emergency contacts you've chosen to share, and alerts you that it's been scanned.</p>
+      <ul class="feat-list">
+        <li><div class="fi" style="background:#FFF3B0;color:#B42318"><svg class="ico"><use href="#i-med"/></svg></div><div><b>Critical info, instantly</b><span>Allergies, conditions, medication, blood type and GP details, shown in seconds without unlocking a phone.</span></div></li>
+        <li><div class="fi" style="background:#FFF3B0;color:#B42318"><svg class="ico"><use href="#i-bell"/></svg></div><div><b>You know when it's scanned</b><span>Every scan pings you and your guardians with the location, so family can get there fast.</span></div></li>
+        <li><div class="fi" style="background:#FFF3B0;color:#B42318"><svg class="ico"><use href="#i-doc"/></svg></div><div><b>Always up to date</b><span>Change medication or contacts in the app and the band shows it straight away. Nothing is engraved, so nothing goes out of date.</span></div></li>
+        <li><div class="fi" style="background:#FFF3B0;color:#B42318"><svg class="ico"><use href="#i-plane"/></svg></div><div><b>Works abroad</b><span>Perfect for holidays and school trips, with your ICE details linked to your My Travel medical notes.</span></div></li>
+      </ul>
+      <div class="who">
+        <span>Severe allergies</span><span>Diabetes</span><span>Epilepsy</span><span>Asthma</span><span>Autism &amp; non-verbal</span><span>Dementia</span><span>Heart conditions</span><span>Older parents</span><span>Sport &amp; running</span><span>Solo travel</span>
+      </div>
+      <div class="ctas">
+        <a class="btn btn-primary" href="/new/phase2/#shop">Get a Medical ID band</a>
+        <a class="btn btn-ghost" href="/new/phase2/#people">Set up a medical profile</a>
+      </div>
+      <p class="med-note">Wiley Fox Medical ID helps people find your information quickly. It isn't a medical device and doesn't replace professional medical advice or the emergency services. In an emergency, call 999 (UK) or 112 (EU).</p>
+    </div>
+    <div class="media rv">
+      <div class="med-hero"><img src="img/medical-id-card.webp" alt="Yellow Wiley Fox Medical ID SOS wristband with red cross and QR code" loading="lazy"></div>
+      <div class="med-scan" aria-hidden="true">
+        <div class="hd"><i>+</i>Medical ID · scanned 14:02</div>
+        <div class="med-grid">
+          <div><span class="k">Name</span><b>Max, 9</b></div>
+          <div><span class="k">Allergy</span><b>Peanuts (severe)</b></div>
+          <div><span class="k">Medication</span><b>Adrenaline pen, left pocket</b></div>
+          <div><span class="k">Condition</span><b>Asthma</b></div>
+          <div><span class="k">Contact</span><b>Mum · tap to call via app</b></div>
+          <div><span class="k">Guardians alerted</span><b>2 notified</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= TAGS, BANDS & STICKERS ================= -->
 <section id="tags">
   <div class="wrap">
@@ -520,20 +580,36 @@ footer{padding:64px 0 40px;font-size:.9rem;color:var(--ink-2)}
     </div>
     <div class="products">
       <article class="product rv">
+        <div class="pm"><img src="img/medical-id-card.webp" alt="Yellow Wiley Fox Medical ID SOS band" loading="lazy"></div>
+        <div class="pb"><h3>Medical ID bands</h3><p>Bright yellow so it gets noticed. Allergies, conditions, medication and ICE contacts in one scan.</p><div class="pf"><span class="pill">Adults &amp; kids</span><a href="/new/phase2/#shop">Shop →</a></div></div>
+      </article>
+      <article class="product rv">
         <div class="pm"><img src="img/slap-bands.webp" alt="Red Wiley Fox silicone slap bands with QR code" loading="lazy"></div>
         <div class="pb"><h3>Kids' slap bands</h3><p>Soft silicone that slaps on and stays put. For days out, theme parks and school trips.</p><div class="pf"><span class="pill">Ages 3+</span><a href="/new/phase2/#shop">Shop →</a></div></div>
       </article>
       <article class="product rv">
+        <div class="pm"><img src="img/guardian-band-card.webp" alt="Orange Wiley Fox band reading Scan to contact guardian" loading="lazy"></div>
+        <div class="pb"><h3>Guardian bands</h3><p>"Scan to contact guardian". Whoever finds them reaches you without seeing your number.</p><div class="pf"><span class="pill">Events &amp; kids</span><a href="/new/phase2/#shop">Shop →</a></div></div>
+      </article>
+      <article class="product rv">
         <div class="pm"><img src="img/sos-wristband.webp" alt="Wiley Fox SOS event wristband" loading="lazy"></div>
-        <div class="pb"><h3>SOS event wristbands</h3><p>Tamper-evident bands for festivals, holidays and busy events. Scan for ICE details in seconds.</p><div class="pf"><span class="pill">Packs of 10 or 100</span><a href="/new/phase2/#shop">Shop →</a></div></div>
+        <div class="pb"><h3>SOS event wristbands</h3><p>Tamper-evident bands for festivals, holidays and busy events. Scan for ICE details in seconds.</p><div class="pf"><span class="pill">Single use</span><a href="/new/phase2/#shop">Shop →</a></div></div>
+      </article>
+      <article class="product rv">
+        <div class="pm"><img src="img/keyfob-front.webp" alt="Orange Wiley Fox key fob reading Scan if found" loading="lazy" style="object-fit:contain;background:#fff"></div>
+        <div class="pb"><h3>Key fobs</h3><p>"Scan if found" on one side, Wiley on the other. For house keys, car keys and school bags.</p><div class="pf"><span class="pill">Keys &amp; bags</span><a href="/new/phase2/#shop">Shop →</a></div></div>
+      </article>
+      <article class="product rv">
+        <div class="pm"><img src="img/keyfob-back.webp" alt="Wiley Fox tag with the Wiley fox character" loading="lazy" style="object-fit:contain;background:#fff"></div>
+        <div class="pb"><h3>Pet &amp; dog tags</h3><p>A collar tag that lets a neighbour, vet or dog walker reach you the moment they scan.</p><div class="pf"><span class="pill">Dogs &amp; cats</span><a href="/new/phase2/#shop">Shop →</a></div></div>
       </article>
       <article class="product rv">
         <div class="pm"><div class="sticker-art"><div style="position:relative"><div class="sticker"><img src="img/wiley-fox-logo.png" alt=""></div><div class="sticker s2"><img src="img/wiley-fox-logo.png" alt=""></div></div></div></div>
         <div class="pb"><h3>Smart stickers</h3><p>For phones, laptops, scooters, water bottles and anything else that tends to go walkabout.</p><div class="pf"><span class="pill">Weatherproof</span><a href="/new/phase2/#shop">Shop →</a></div></div>
       </article>
       <article class="product rv">
-        <div class="pm"><img src="img/wristband-packs.webp" alt="Wiley Fox wristband packs and roll" loading="lazy"></div>
-        <div class="pb"><h3>Bag, pet &amp; key tags</h3><p>Luggage tags, collar tags and key fobs. Lost on a train, in a park or at an airport, they come home.</p><div class="pf"><span class="pill">Travel &amp; pets</span><a href="/new/phase2/#tags">Link a tag →</a></div></div>
+        <div class="pm"><img src="img/wristband-packs.webp" alt="Wiley Fox wristband packs and roll of 100" loading="lazy"></div>
+        <div class="pb"><h3>School &amp; event packs</h3><p>Packs of 10 or rolls of 100, with codes you assign in the app. Ideal for schools, clubs and events.</p><div class="pf"><span class="pill">Bulk</span><a href="/new/phase2/#labels">Order →</a></div></div>
       </article>
     </div>
     <div class="nfc rv">
@@ -712,7 +788,7 @@ footer{padding:64px 0 40px;font-size:.9rem;color:var(--ink-2)}
       <div class="plan rv">
         <h3>Free</h3><p class="muted">Everything most people need.</p>
         <div class="price">£0 <small>forever</small></div>
-        <ul><li>Up to 3 active tags</li><li>3 emergency contacts</li><li>One-tap SOS</li><li>Street-level safety checks</li><li>Anonymous chat with finders</li></ul>
+        <ul><li>Up to 3 active tags</li><li>3 emergency contacts</li><li>One-tap SOS</li><li>Medical ID profile</li><li>Street-level safety checks</li><li>Anonymous chat with finders</li></ul>
         <a class="btn btn-ghost" href="/new/phase2/#account">Start free</a>
       </div>
       <div class="plan pro rv">
@@ -733,6 +809,7 @@ footer{padding:64px 0 40px;font-size:.9rem;color:var(--ink-2)}
     <div class="faq">
       <details><summary>Does the finder need to install an app?</summary><p>No. Any phone camera can scan the code. The finder lands on a private page showing only what you've chosen to share, and can message you straight away.</p></details>
       <details><summary>Is my child's information safe?</summary><p>You choose exactly what a finder sees, and it can be as little as "please contact my parent". Your phone number and address are never shown, and you can edit or switch off a profile at any time. Children's profiles are always managed by a parent or guardian.</p></details>
+      <details><summary>What does a Medical ID band show when it's scanned?</summary><p>Only what you choose: for example allergies, conditions, medication, blood type and emergency contacts. You can update it in the app at any time and the band shows the change straight away. Every scan notifies you and your guardians.</p></details>
       <details><summary>Where does the safety rating come from?</summary><p>From official police and government crime data. In England, Wales and Northern Ireland that's street-level data from data.police.uk, refreshed monthly. Scotland uses official data-zone statistics, and other countries use national and international sources. Ratings run from 1 (higher crime) to 5 (safest).</p></details>
       <details><summary>Does SOS call the emergency services?</summary><p>No. SOS alerts your own emergency contacts with your live location. In an emergency, always call 999 in the UK or 112 in the EU first.</p></details>
       <details><summary>What if a tag gets damaged or lost?</summary><p>Each tag links to an address we control, so you can deactivate a lost tag and link a new one to the same profile in seconds.</p></details>
@@ -781,7 +858,7 @@ footer{padding:64px 0 40px;font-size:.9rem;color:var(--ink-2)}
         <p style="margin-top:14px;max-width:34ch">Family, travel and community safety. Keeping kids, women and travellers safer, and bringing lost things home.</p>
         <p style="margin-top:10px"><a href="https://www.thewileyfox.com" style="display:inline;color:var(--orange-dark);font-weight:600">www.thewileyfox.com</a></p>
       </div>
-      <div><h4>Safety</h4><a href="#family">Family &amp; child safety</a><a href="#sos">SOS &amp; women's safety</a><a href="#checks">Crime &amp; safety checks</a><a href="#lost">Lost &amp; found</a></div>
+      <div><h4>Safety</h4><a href="#family">Family &amp; child safety</a><a href="#medical">Medical ID bands</a><a href="#sos">SOS &amp; women's safety</a><a href="#checks">Crime &amp; safety checks</a><a href="#lost">Lost &amp; found</a></div>
       <div><h4>Travel</h4><a href="#know">Know before you go</a><a href="/new/guides/london/">City guides</a><a href="/new/phase2/#travel">My Travel</a><a href="/new/phase2/#book">Book a safe stay</a></div>
       <div><h4>Shop</h4><a href="/new/phase2/#shop">Tags, bands &amp; stickers</a><a href="/new/phase2/#labels">School name labels</a><a href="/new/phase2/#tags">Link a tag</a><a href="/new/phase2/#account">Sign in</a></div>
     </div>

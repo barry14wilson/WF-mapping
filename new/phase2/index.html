@@ -10351,7 +10351,7 @@ $('sCart').onclick = function () {
 /* ---------- start ---------- */
 updateCartCount();
 if (typeof qrcode === 'undefined') window.addEventListener('load', function () { if (!$('v-labels').hidden) renderLabel(); });
-(function () { var v = null; try { v = sessionStorage.getItem('p2open'); sessionStorage.removeItem('p2open'); } catch (e) {} var h = (location.hash || '').slice(1); if (!v && P2_VIEWS.indexOf(h) >= 0) v = h; if (v) setTimeout(function () { p2Go(v); }, 300); })();
+(function () { var v = null; try { v = sessionStorage.getItem('p2open'); sessionStorage.removeItem('p2open'); } catch (e) {} var h = (location.hash || '').slice(1); if (!v && (P2_VIEWS.indexOf(h) >= 0 || (/^[a-z]+$/.test(h) && document.querySelector('.wf-nav[data-view="' + h + '"]')))) v = h; if (v) setTimeout(function () { p2Go(v); }, 300); })();
 })();
 
 </script>

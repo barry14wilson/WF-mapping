@@ -5,7 +5,7 @@ All notable changes to the WF-mapping repo. Newest first. Dates are commit dates
 ## 2026-11-04 (New homepage draft at /newhomepage)
 
 - **feat:** `newhomepage/index.html`, the new landing page for www.thewileyfox.com (single file, Fraunces + Inter, brand tokens, 900px breakpoint, no build). Sections: hero (Get your tag + Check a place, safety-check search), honest proof strip, six pillars, Family & child safety, Tags/bands/stickers, SOS & women's safety, Crime & safety checks, Know before you go (links to `/new/guides/*`), Travel & safety, Lost & found, Community, Pricing (Free / Pro £4), FAQ, Know Before You Go newsletter, footer. Images in `newhomepage/img/`.
-- **feat:** every CTA deep-links into the app at `/new/phase2/#<view>` (map, family, tags, labels, people, places, travel, book, shop, account).
+- **feat:** every CTA deep-links into the app at `/new/phase2/#<view>` (map, people, tags, labels, places, travel, book, shop, account).
 - **change:** `new/phase2/index.html` hash deep-linking now opens any rail view (`#map`, `#family`, `#tags`, ...), not just the four Phase 2 views. One-line change in the load IIFE; port it to `scripts/phase2/module.js` before the next rebuild or it will be overwritten.
 - **note (claims):** proof stats are only what we can stand behind today (160+ cities with local intel, 9 official data sources, 1–5 rating, monthly UK refresh, no app needed to scan). Testimonials are labelled "example story" until real member stories exist (ASA/CAP). The live site's 94% / 2.4M / 180+ figures were deliberately not carried over.
 - **dev hooks:** newsletter form has `data-endpoint` for Beehiiv; hero search passes `?q=` to `/new/phase2/` (the map doesn't read it yet); legal footer links are `#` placeholders.

@@ -4,840 +4,927 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Wiley Fox — Family, Travel &amp; Community Safety</title>
-<meta name="description" content="Medical ID bands, kids' safety bands, QR tags and stickers, one-tap SOS, street-level crime checks and local 'know before you go' insights. Lost. Scanned. Reunited.">
-<meta name="theme-color" content="#141416">
+<meta name="description" content="Keep kids and loved ones safe with QR safety tags, bands and stickers, one-tap SOS, street-level crime checks and local 'know before you go' insights. Lost. Scanned. Reunited.">
+<meta name="theme-color" content="#FF7B14">
 <link rel="canonical" href="https://www.thewileyfox.com/">
-<meta property="og:title" content="Wiley Fox — Keep the people you love safe, anywhere">
-<meta property="og:description" content="Safety bands and tags, Medical ID, one-tap SOS, crime and safety checks, local insight and lost &amp; found, in one community safety app.">
+<meta property="og:title" content="Wiley Fox — Keep the people you love safe, wherever they wander">
+<meta property="og:description" content="Safety tags and bands for kids, one-tap SOS, crime and safety checks, local insights and lost &amp; found — all in one community safety app.">
 <meta property="og:image" content="img/feature-graphic.webp">
+<meta property="og:url" content="https://www.thewileyfox.com/">
 <link rel="icon" href="img/wiley-fox-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <!--
-  Wiley Fox — homepage v2 (console style, after getdesign.md)
-  Repo: /newhomepage/index.html · Preview: https://wiley-fox.netlify.app/newhomepage/
-  Single file, no build. CTAs deep-link into the prototype at /new/phase2/#<view>
-  (map, people, tags, labels, places, travel, book, shop, account, inbox).
-  Product table prices come from new/phase2/shop.json (Shopify snapshot, 19 Oct 2026, ACTIVE only).
-  DEV: see "DEV:" comments for hooks.
+  Wiley Fox — new homepage (draft for thewileyfox.com)
+  Path in repo: /newhomepage/index.html  ·  Live preview: https://wiley-fox.netlify.app/newhomepage/
+  Single file, no build. All CTAs deep-link into the prototype app at /new/phase2/#<view>
+  (views: map, people, tags, labels, places, travel, book, shop, inbox, account).
+  DEV NOTES: see the "DEV:" comments for the hooks to wire into the production Next.js site.
 -->
 <style>
 :root{
-  --bg:#141416; --panel:#1A1A1D; --panel-2:#202024; --line:#2A2A30; --line-2:#36363D;
-  --text:#ECECEE; --text-2:#B8B8BF; --muted:#85858F;
-  --orange:#FF7B14; --orange-2:#FF9442; --on-orange:#141416;
-  --paper:#F4F3EE; --ink:#141416;
+  --orange:#FF7B14; --orange-dark:#E2620A; --sage:#AABA9F; --cream:#E5EBD3; --cream-light:#F2F4E5;
+  --charcoal:#232323; --ink-2:#4a4a46; --ink-3:#6d6e66; --line:rgba(35,35,35,.12); --white:#fff;
   --r1:#D7263D; --r2:#F46036; --r3:#FFC857; --r4:#A4C957; --r5:#3FA34D;
-  --med:#F5C400;
-  --sans:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --mono:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
-  --side:248px; --rad:6px;
+  --sos:#D7263D;
+  --radius:18px; --shadow:0 18px 50px -20px rgba(35,35,35,.28);
+  --serif:'Fraunces',Georgia,serif; --sans:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --max:1180px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:72px}
-body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-a{color:inherit;text-decoration:none}
-img{display:block;max-width:100%}
-.mono{font-family:var(--mono)}
-.kick{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
-.hl{color:var(--orange)}
-h1,h2,h3{font-weight:600;letter-spacing:-.025em;line-height:1.08}
-h1{font-size:clamp(2.3rem,4.4vw,3.6rem)}
-h2{font-size:clamp(1.8rem,3vw,2.5rem)}
-h3{font-size:1.05rem;letter-spacing:-.01em;line-height:1.3}
-p{color:var(--text-2)}
-.ico{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-.new{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--orange);border:1px solid rgba(255,123,20,.55);border-radius:4px;padding:1px 5px;line-height:1.4}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:var(--sans);color:var(--charcoal);background:var(--cream-light);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+h1,h2,h3,.serif{font-family:var(--serif);font-weight:600;letter-spacing:-.015em;line-height:1.08}
+h1{font-size:clamp(2.5rem,5.6vw,4.4rem)}
+h2{font-size:clamp(2rem,4vw,3.1rem)}
+h3{font-size:1.3rem;line-height:1.2}
+em.o{font-style:italic;color:var(--orange-dark);font-weight:500}
+.eyebrow{font-size:.75rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.lede{font-size:1.15rem;color:var(--ink-2);max-width:56ch}
+.btn{display:inline-flex;align-items:center;gap:.55em;padding:.95em 1.5em;border-radius:999px;font-weight:600;font-size:.98rem;text-decoration:none;border:1.5px solid transparent;cursor:pointer;transition:transform .15s,background .15s,box-shadow .15s;white-space:nowrap}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--orange);color:#fff;box-shadow:0 10px 24px -10px rgba(255,123,20,.7)}
+.btn-primary:hover{background:var(--orange-dark)}
+.btn-dark{background:var(--charcoal);color:#fff}
+.btn-dark:hover{background:#000}
+.btn-ghost{border-color:var(--charcoal);color:var(--charcoal);background:transparent}
+.btn-ghost:hover{background:var(--charcoal);color:#fff}
+.btn-light{background:#fff;color:var(--charcoal)}
+.btn svg{width:18px;height:18px}
+.pill{display:inline-flex;align-items:center;gap:.45em;padding:.35em .8em;border-radius:999px;font-size:.78rem;font-weight:600;background:#fff;border:1px solid var(--line)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--r5);box-shadow:0 0 0 4px rgba(63,163,77,.18)}
+section{padding:96px 0}
+.sec-head{display:flex;flex-direction:column;gap:14px;margin-bottom:48px;max-width:760px}
+.ico{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
-/* buttons */
-.btn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border-radius:var(--rad);font-size:13.5px;font-weight:600;border:1px solid var(--line-2);background:var(--panel);color:var(--text);transition:background .15s,border-color .15s;white-space:nowrap;cursor:pointer;font-family:inherit}
-.btn:hover{border-color:#4a4a52;background:var(--panel-2)}
-.btn-o{background:var(--orange);border-color:var(--orange);color:var(--on-orange)}
-.btn-o:hover{background:var(--orange-2);border-color:var(--orange-2)}
-.btn .ct{font-family:var(--mono);font-weight:400;color:var(--muted);font-size:12px}
-.kit{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:var(--rad);border:1px solid var(--line-2);background:var(--panel);min-width:240px;transition:border-color .15s,background .15s}
-.kit:hover{border-color:#4a4a52}
-.kit b{display:block;font-size:14px;font-weight:600}
-.kit span{display:block;font-size:12.5px;color:var(--muted)}
-.kit .ico{width:22px;height:22px}
-.kit.o{background:var(--orange);border-color:var(--orange);color:var(--on-orange)}
-.kit.o span{color:rgba(20,20,22,.72)}
-.kit.o:hover{background:var(--orange-2)}
+/* ---------- Nav ---------- */
+.nav{position:sticky;top:0;z-index:50;background:rgba(242,244,229,.88);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid transparent;transition:border-color .2s}
+.nav.scrolled{border-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:28px;height:72px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--serif);font-weight:700;font-size:1.3rem}
+.brand img{width:40px;height:40px}
+.nav-links{display:flex;gap:18px;margin-left:auto;font-size:.92rem;font-weight:500}
+.nav-links a{text-decoration:none;color:var(--ink-2)}
+.nav-links a:hover{color:var(--charcoal)}
+.nav-cta{display:flex;gap:10px}
+.nav-cta .btn{padding:.65em 1.15em;font-size:.9rem}
+.burger{display:none;margin-left:auto;background:none;border:0;width:44px;height:44px;cursor:pointer}
+.burger span{display:block;width:22px;height:2px;background:var(--charcoal);margin:5px auto;transition:.2s}
+.mobile-menu{display:none}
 
-/* announcement */
-.announce{background:var(--paper);color:var(--ink);font-size:13px;text-align:center;padding:9px 16px;border-bottom:1px solid #dcdad2}
-.announce a{display:inline-flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center}
-.announce .new{color:#C2570B;border-color:#E8A36D}
-.announce b{font-weight:600}
-.announce span.d{color:#5b5b60}
+/* ---------- Hero ---------- */
+.hero{padding:56px 0 40px;position:relative;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.hero h1{margin:18px 0 20px}
+.hero .lede{margin-bottom:30px}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px}
+.check{display:flex;background:#fff;border-radius:999px;padding:6px;box-shadow:var(--shadow);max-width:520px;border:1px solid var(--line)}
+.check input{flex:1;border:0;outline:0;font:inherit;padding:0 18px;background:transparent;min-width:0}
+.check .btn{padding:.75em 1.2em}
+.hero-note{font-size:.85rem;color:var(--ink-3);margin-top:12px}
+.buzz{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.buzz span{font-size:.8rem;font-weight:600;padding:.4em .85em;border-radius:999px;background:var(--cream);color:var(--charcoal)}
 
-/* header */
-.top{position:sticky;top:0;z-index:40;height:64px;display:flex;align-items:center;border-bottom:1px solid var(--line);background:rgba(20,20,22,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-.top .logo{width:var(--side);height:100%;display:flex;align-items:center;gap:10px;padding:0 22px;border-right:1px solid var(--line);font-family:var(--mono);font-size:17px;font-weight:500;letter-spacing:-.01em;flex-shrink:0}
-.top .logo img{width:28px;height:28px}
-.top .logo i{font-style:normal;color:var(--orange)}
-.top .acts{display:flex;gap:8px;padding:0 32px;flex:1}
-.top .right{display:flex;gap:8px;padding:0 22px}
-.burger{display:none;background:none;border:1px solid var(--line-2);border-radius:var(--rad);width:38px;height:36px;margin-left:auto;margin-right:16px;cursor:pointer;color:var(--text)}
+.hero-visual{position:relative;height:620px}
+.hexfield{position:absolute;inset:0;border-radius:28px;overflow:hidden;background:var(--cream)}
+.hexfield svg{width:100%;height:100%}
+.phone{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:300px;height:580px;background:var(--charcoal);border-radius:46px;padding:12px;box-shadow:0 40px 80px -30px rgba(0,0,0,.55)}
+.screen{width:100%;height:100%;border-radius:36px;overflow:hidden;background:var(--cream-light);position:relative;display:flex;flex-direction:column}
+.scr-top{padding:30px 16px 10px;display:flex;align-items:center;gap:8px}
+.scr-top img{width:28px;height:28px}
+.scr-search{flex:1;background:#fff;border-radius:12px;padding:9px 12px;font-size:.78rem;color:var(--ink-3);border:1px solid var(--line)}
+.scr-map{flex:1;position:relative;overflow:hidden}
+.scr-map svg{position:absolute;inset:0;width:100%;height:100%}
+.you{position:absolute;left:52%;top:42%;width:16px;height:16px;border-radius:50%;background:var(--orange);border:3px solid #fff;box-shadow:0 0 0 10px rgba(255,123,20,.22);animation:pulse 2.2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 6px rgba(255,123,20,.28)}50%{box-shadow:0 0 0 16px rgba(255,123,20,.05)}}
+.scr-card{position:absolute;left:12px;right:12px;background:#fff;border-radius:16px;padding:12px 14px;box-shadow:0 10px 30px -12px rgba(0,0,0,.35);font-size:.76rem}
+.scr-card.c1{top:12px}
+.scr-card.c2{bottom:86px}
+.scr-card b{font-family:var(--serif);font-size:.95rem;font-weight:600}
+.rate{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9px;color:#fff;font-family:var(--serif);font-weight:700;background:var(--r4);margin-right:10px;flex-shrink:0}
+.row{display:flex;align-items:center}
+.muted{color:var(--ink-3)}
+.scr-sos{position:absolute;bottom:16px;left:12px;right:12px;display:flex;gap:8px}
+.scr-sos div{flex:1;border-radius:14px;padding:12px;text-align:center;font-weight:700;font-size:.8rem}
+.scr-sos .s1{background:var(--sos);color:#fff;letter-spacing:.08em}
+.scr-sos .s2{background:var(--charcoal);color:#fff}
+.float{position:absolute;background:#fff;border-radius:16px;padding:12px 14px;box-shadow:var(--shadow);font-size:.8rem;display:flex;gap:10px;align-items:center;max-width:240px;animation:bob 6s ease-in-out infinite}
+.float .fi{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;flex-shrink:0}
+.float.f1{left:-40px;top:215px;max-width:210px}
+.float.f2{right:-40px;top:350px;max-width:210px;animation-delay:-2s}
+.float.f3{display:none}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 
-/* layout */
-.shell{display:flex}
-.side{width:var(--side);flex-shrink:0;border-right:1px solid var(--line);position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;padding:20px 12px 24px;display:flex;flex-direction:column}
-.side .grp{padding:14px 0;border-bottom:1px solid var(--line)}
-.side .grp:first-child{padding-top:0}
-.side .kick{padding:2px 10px 10px;display:block;font-size:10.5px}
-.side a{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:5px;font-size:13.5px;color:var(--text-2)}
-.side a:hover,.side a.on{background:var(--panel-2);color:var(--text)}
-.side a .n{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--muted)}
-.side .promo{margin-top:auto;background:var(--orange);color:var(--on-orange);border-radius:var(--rad);padding:14px;display:block}
-.side .promo:hover{background:var(--orange-2);color:var(--on-orange)}
-.side .promo b{display:block;font-size:14px}
-.side .promo span{font-size:12.5px;opacity:.8;line-height:1.45;display:block;margin-top:2px}
-main{flex:1;min-width:0}
+/* ---------- Proof strip ---------- */
+.proof{padding:36px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}
+.proof .wrap{display:grid;grid-template-columns:repeat(5,1fr);gap:24px}
+.stat .n{font-family:var(--serif);font-size:2.2rem;font-weight:600;line-height:1}
+.stat .l{font-size:.85rem;color:var(--ink-3);margin-top:6px}
 
-/* hero */
-.hero{display:grid;grid-template-columns:1.25fr 1fr;border-bottom:1px solid var(--line)}
-.hero-l{padding:64px 64px 48px;border-right:1px solid var(--line)}
-.hero-l h1{margin:18px 0 18px;max-width:15ch}
-.hero-l .lede{font-size:16.5px;max-width:58ch;color:var(--text-2)}
-.kits{display:flex;gap:10px;margin:30px 0 32px;flex-wrap:wrap}
-.check{display:flex;align-items:center;gap:10px;border:1px solid var(--line-2);border-radius:var(--rad);padding:0 6px 0 14px;height:46px;background:var(--panel);max-width:560px}
-.check input{flex:1;background:none;border:0;outline:0;color:var(--text);font:inherit;font-size:14px;min-width:0}
-.check input::placeholder{color:var(--muted)}
-.check .btn{height:34px}
-.src{border-top:1px solid var(--line);margin-top:34px;padding-top:22px}
-.src .row{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:10px;font-size:13px;color:var(--text-2)}
-.src .row span{display:inline-flex;align-items:center;gap:7px}
-.src .row span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--r5)}
-.hero-r{padding:64px 56px 48px}
-.uses{margin-top:14px;border-top:1px solid var(--line)}
-.uses a{display:flex;align-items:center;gap:16px;padding:9px 4px;border-bottom:1px solid var(--line);font-size:14px;color:var(--text-2);transition:color .15s,padding .15s}
-.uses a .mono{font-size:12px;color:var(--muted);width:20px}
-.uses a .ico{margin-left:auto;opacity:0;transition:opacity .15s}
-.uses a:hover{color:var(--text);padding-left:8px}
-.uses a:hover .ico{opacity:1}
-.uses a.first{color:var(--text);font-weight:600}
-.uses a.first .ico{opacity:1}
+/* ---------- Pillars ---------- */
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.pillar{background:#fff;border-radius:var(--radius);padding:26px;text-decoration:none;border:1px solid var(--line);transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column;gap:10px}
+.pillar:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.pillar .pi{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--cream);color:var(--orange-dark)}
+.pillar p{color:var(--ink-2);font-size:.95rem}
+.pillar .go{margin-top:auto;font-weight:600;font-size:.88rem;color:var(--orange-dark)}
 
-/* scan mock (light card) */
-.mock{margin-top:28px;background:var(--paper);color:var(--ink);border-radius:10px;overflow:hidden;border:1px solid #3a3a40;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
-.mock .bar{display:flex;align-items:center;gap:6px;padding:9px 12px;border-bottom:1px solid #dddbd3;background:#fbfaf6}
-.mock .bar i{width:8px;height:8px;border-radius:50%;background:#d0cec6}
-.mock .bar .url{margin-left:10px;flex:1;border:1px solid #d6d4cc;border-radius:999px;font-family:var(--mono);font-size:10.5px;color:#8a8a8f;padding:2px 10px}
-.mock .bd{padding:18px;display:grid;gap:12px}
-.mrow{display:flex;align-items:center;gap:12px}
-.mrow .av{width:40px;height:40px;border-radius:8px;background:var(--orange);display:grid;place-items:center;color:#fff;font-weight:700;flex-shrink:0}
-.mrow b{font-size:14px;display:block}
-.mrow small{font-size:12px;color:#6b6b70}
-.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.mgrid div{background:#fff;border:1px solid #e3e1d9;border-radius:6px;padding:8px 10px}
-.mgrid .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#8a8a8f}
-.mgrid b{font-size:12.5px;display:block;font-weight:600}
-.mcta{display:flex;gap:8px}
-.mcta span{flex:1;text-align:center;border-radius:6px;padding:9px;font-size:12.5px;font-weight:600}
-.mcta .a{background:var(--ink);color:#fff}
-.mcta .b{background:var(--orange);color:var(--ink)}
+/* ---------- Split feature sections ---------- */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.split.rev .media{order:-1}
+.feat-list{list-style:none;display:grid;gap:16px;margin:28px 0 32px}
+.feat-list li{display:flex;gap:14px}
+.feat-list .fi{width:40px;height:40px;border-radius:12px;background:var(--cream);color:var(--orange-dark);display:grid;place-items:center;flex-shrink:0}
+.feat-list b{display:block;font-weight:600}
+.feat-list span{color:var(--ink-2);font-size:.95rem}
+.ctas{display:flex;gap:12px;flex-wrap:wrap}
 
-/* sections */
-.sec{border-bottom:1px solid var(--line);padding:72px 64px}
-.sec-h{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end;margin-bottom:40px}
-.sec-h h2{margin-top:12px}
-.sec-h p{font-size:15.5px;max-width:52ch}
+/* family visual */
+.fam-card{background:#fff;border-radius:24px;padding:22px;box-shadow:var(--shadow);border:1px solid var(--line)}
+.alert{border-radius:16px;padding:16px;background:#FFF4EC;border:1px solid rgba(255,123,20,.35);margin-bottom:14px}
+.alert .t{font-weight:700;color:var(--orange-dark);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase}
+.member{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff;font-family:var(--serif)}
+.member .grow{flex:1}
+.member .s{font-size:.82rem;color:var(--ink-3)}
+.tag-g{font-size:.72rem;font-weight:700;padding:.3em .7em;border-radius:999px;background:rgba(63,163,77,.14);color:#2b7a37}
+.tag-o{background:rgba(255,123,20,.15);color:var(--orange-dark)}
 
-/* table */
-.tbl-wrap{border:1px solid var(--line);border-radius:8px;overflow:hidden}
-.tsearch{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line);color:var(--muted);font-size:14px}
-.thead,.tr{display:grid;grid-template-columns:56px 1.25fr 2.2fr 110px 90px 80px;align-items:center;gap:12px;padding:0 16px}
-.thead{height:40px;font-family:var(--mono);font-size:12px;color:var(--muted);border-bottom:1px solid var(--line);background:var(--panel)}
-.tr{min-height:58px;border-bottom:1px solid var(--line);font-size:14px;transition:background .12s}
-.tr:last-child{border-bottom:0}
-.tr:hover{background:var(--panel)}
-.tr .th{width:40px;height:40px;border-radius:6px;overflow:hidden;background:var(--paper);display:grid;place-items:center}
-.tr .th img{width:100%;height:100%;object-fit:cover}
-.tr .th svg{width:20px;height:20px;color:var(--ink)}
-.tr .nm{font-weight:600}
-.tr .ds{color:var(--text-2);font-size:13.5px}
-.tr .pr{font-family:var(--mono);text-align:right}
-.tr .go{font-family:var(--mono);font-size:12.5px;color:var(--orange);text-align:right}
-.chip{font-family:var(--mono);font-size:11px;border:1px solid var(--line-2);border-radius:4px;padding:2px 7px;color:var(--text-2);white-space:nowrap;justify-self:start}
-.chip.m{border-color:rgba(245,196,0,.5);color:var(--med)}
-.chip.k{border-color:rgba(255,123,20,.5);color:var(--orange)}
-.tnote{font-size:12px;color:var(--muted);margin-top:12px;font-family:var(--mono)}
+/* products */
+.products{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.product{background:#fff;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.product:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.product .pm{aspect-ratio:4/3;background:var(--cream);overflow:hidden;display:grid;place-items:center}
+.product .pm img{width:100%;height:100%;object-fit:cover}
+.product .pb{padding:18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.product p{font-size:.9rem;color:var(--ink-2)}
+.product .pf{margin-top:auto;display:flex;justify-content:space-between;align-items:center;padding-top:8px}
+.product .pf a{font-weight:600;font-size:.88rem;color:var(--orange-dark);text-decoration:none}
+.sticker-art{width:100%;height:100%;display:grid;place-items:center;background:radial-gradient(circle at 30% 30%,#fff 0,var(--cream) 70%)}
+.sticker{width:120px;height:120px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 10px 24px -10px rgba(0,0,0,.35);border:6px solid var(--orange);position:relative}
+.sticker img{width:70px}
+.sticker.s2{width:84px;height:84px;border-color:var(--charcoal);position:absolute;transform:translate(70px,40px) rotate(12deg)}
+.sticker.s2 img{width:46px}
+.nfc{margin-top:28px;display:flex;gap:18px;align-items:center;background:var(--charcoal);color:#fff;border-radius:var(--radius);padding:22px 26px;flex-wrap:wrap}
+.nfc p{color:#cfd1c6;flex:1;min-width:240px}
 
-/* split panels */
-.split{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:8px;overflow:hidden}
-.split > div{padding:40px}
-.split > div + div{border-left:1px solid var(--line)}
-.split .vis{background:var(--panel);display:flex;flex-direction:column;justify-content:center;gap:14px}
-.list{margin:24px 0 28px;border-top:1px solid var(--line)}
-.list > div{display:grid;grid-template-columns:40px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
-.list .mono{font-size:12px;color:var(--muted);padding-top:2px}
-.list b{display:block;font-weight:600;font-size:14.5px;color:var(--text)}
-.list span{font-size:14px;color:var(--text-2)}
-.ctas{display:flex;gap:8px;flex-wrap:wrap}
-.disc{font-size:12px;color:var(--muted);margin-top:18px;max-width:62ch}
+/* medical ID */
+.medical{background:#FFFBEA}
+.med-hero{border-radius:24px;overflow:hidden;box-shadow:var(--shadow);background:#fff}
+.med-hero img{width:100%}
+.med-scan{background:#fff;border-radius:20px;padding:20px;margin-top:-40px;margin-left:24px;margin-right:24px;position:relative;box-shadow:var(--shadow);border:1px solid var(--line)}
+.med-scan .hd{display:flex;align-items:center;gap:10px;font-weight:700;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:#B42318}
+.med-scan .hd i{width:26px;height:26px;border-radius:7px;background:#D7263D;color:#fff;display:grid;place-items:center;font-style:normal;font-size:1.1rem}
+.med-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin-top:12px;font-size:.88rem}
+.med-grid .k{color:var(--ink-3);font-size:.74rem;text-transform:uppercase;letter-spacing:.08em}
+.med-grid b{display:block;font-weight:600}
+.who{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 28px}
+.who span{background:#fff;border:1px solid rgba(180,35,24,.18);border-radius:999px;padding:.45em .9em;font-size:.86rem;font-weight:500}
+.med-note{font-size:.8rem;color:var(--ink-3);margin-top:18px;max-width:60ch}
 
-/* dark cards inside vis */
-.card{background:var(--bg);border:1px solid var(--line-2);border-radius:8px;padding:14px 16px}
-.card .t{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
-.mem{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
-.mem:first-of-type{border-top:0}
-.mem .av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:600;font-size:13px;color:#fff;flex-shrink:0}
-.mem .g{flex:1}
-.mem b{font-size:13.5px;display:block}
-.mem small{font-size:12px;color:var(--muted)}
-.st{font-family:var(--mono);font-size:10.5px;border-radius:4px;padding:2px 6px;white-space:nowrap}
-.st.ok{color:#7fd38a;border:1px solid rgba(63,163,77,.5)}
-.st.o{color:var(--orange);border:1px solid rgba(255,123,20,.5)}
+/* dark SOS section */
+.dark{background:var(--charcoal);color:#fff}
+.dark .eyebrow{color:var(--sage)}
+.dark .lede,.dark .feat-list span{color:#c9cbc0}
+.dark .feat-list .fi{background:rgba(255,255,255,.08);color:var(--orange)}
+.sos-visual{position:relative;display:grid;place-items:center;min-height:460px;overflow:hidden}
+.sos-ring{width:280px;height:280px;border-radius:50%;display:grid;place-items:center;position:relative}
+.sos-ring::before,.sos-ring::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid rgba(215,38,61,.5);animation:ring 2.6s infinite}
+.sos-ring::after{animation-delay:1.3s}
+@keyframes ring{0%{transform:scale(.7);opacity:1}100%{transform:scale(1.5);opacity:0}}
+.sos-btn{width:180px;height:180px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ef4b60,var(--sos));display:grid;place-items:center;font-family:var(--serif);font-size:2.6rem;font-weight:700;letter-spacing:.06em;box-shadow:0 20px 60px -10px rgba(215,38,61,.7)}
+.sos-chip{position:absolute;background:#fff;color:var(--charcoal);border-radius:14px;padding:10px 14px;font-size:.8rem;box-shadow:var(--shadow)}
+.sos-chip b{display:block}
+.sos-chip.a{top:30px;left:0}
+.sos-chip.b{bottom:40px;right:0}
+.sos-chip.c{top:50%;right:0;transform:translateY(-50%)}
 
-/* medical */
-.med-img{border-radius:8px;overflow:hidden;border:1px solid var(--line-2)}
-.who{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px}
-.who span{font-family:var(--mono);font-size:11.5px;border:1px solid var(--line-2);border-radius:4px;padding:3px 8px;color:var(--text-2)}
-.medtop{border-top:3px solid var(--med)}
-.dk div{background:var(--panel)!important;border-color:var(--line-2)!important}
-.dk b{color:var(--text)}
-
-/* SOS */
-.sos-vis{position:relative;min-height:380px;display:grid!important;place-items:center;overflow:hidden}
-.sos-b{width:150px;height:150px;border-radius:50%;background:var(--r1);display:grid;place-items:center;font-weight:700;font-size:2rem;letter-spacing:.08em;position:relative;box-shadow:0 0 0 18px rgba(215,38,61,.12),0 0 0 40px rgba(215,38,61,.06)}
-.sos-b::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1.5px solid rgba(215,38,61,.7);animation:ring 2.4s infinite}
-@keyframes ring{0%{transform:scale(1);opacity:1}100%{transform:scale(1.9);opacity:0}}
-.sos-c{position:absolute;font-size:12.5px;background:var(--bg);border:1px solid var(--line-2);border-radius:6px;padding:8px 12px}
-.sos-c b{display:block;font-size:13px}
-.sos-c small{color:var(--muted);font-family:var(--mono);font-size:11px}
-.sos-c.a{top:28px;left:24px}.sos-c.b{bottom:28px;right:24px}.sos-c.c{top:50%;right:20px;transform:translateY(-50%)}
-
-/* rating */
-.scale{display:flex;gap:4px;margin:14px 0 6px}
-.scale i{flex:1;height:34px;border-radius:4px;display:grid;place-items:center;font-style:normal;font-family:var(--mono);font-weight:500;color:#141416}
-.scale+small{font-family:var(--mono);font-size:11.5px;color:var(--muted);display:flex;justify-content:space-between}
-.checks{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-top:16px}
-.checks div{padding:24px}
-.checks div + div{border-left:1px solid var(--line)}
-.checks .mono{font-size:12px;color:var(--orange)}
-.checks h3{margin:8px 0 6px}
-.checks p{font-size:14px}
+/* safety checks */
+.legend{display:flex;gap:6px;align-items:center;margin:20px 0 6px}
+.legend i{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;color:#fff;font-style:normal;font-family:var(--serif);font-weight:700;font-size:.9rem}
+.legend small{margin-left:10px;color:var(--ink-3)}
+.checks{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+.chk{background:#fff;border-radius:var(--radius);padding:22px;border:1px solid var(--line)}
+.chk h3{font-size:1.1rem;margin:12px 0 6px}
+.chk p{font-size:.92rem;color:var(--ink-2)}
+.feature-img{border-radius:24px;overflow:hidden;box-shadow:var(--shadow)}
 
 /* guides */
-.guides{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
-.guide{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel);transition:border-color .15s}
-.guide:hover{border-color:#4a4a52}
-.guide .im{aspect-ratio:4/5;overflow:hidden;background:#222}
-.guide img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
-.guide:hover img{transform:scale(1.04)}
-.guide .cap{padding:12px 14px;display:flex;justify-content:space-between;align-items:center}
-.guide .cap b{font-size:14px}
-.guide .cap span{font-family:var(--mono);font-size:11px;color:var(--muted)}
-.tips{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:8px;margin-top:16px;overflow:hidden}
-.tips div{padding:22px 24px}
-.tips div + div{border-left:1px solid var(--line)}
-.tips p{font-size:14px;margin-top:8px}
+.guides{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.guide{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:3/4;text-decoration:none;color:#fff;background:var(--sage)}
+.guide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.guide:hover img{transform:scale(1.05)}
+.guide::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.72))}
+.guide .gc{position:absolute;left:16px;right:16px;bottom:16px;z-index:1}
+.guide .gc b{font-family:var(--serif);font-size:1.5rem;font-weight:600;display:block}
+.guide .gc span{font-size:.82rem;opacity:.9}
+.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+.tip{background:var(--cream);border-radius:var(--radius);padding:20px}
+.tip .k{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--orange-dark)}
+.tip p{margin-top:8px;font-size:.95rem}
 
-/* trip */
-.tr2{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line);font-size:13.5px}
-.tr2:first-child{border-top:0}
-.tr2 .g{flex:1}
-.tr2 small{display:block;color:var(--muted);font-size:12px}
-.rt{width:26px;height:26px;border-radius:5px;display:grid;place-items:center;font-family:var(--mono);font-size:12.5px;color:#141416;background:var(--r4)}
+/* travel */
+.trip{background:#fff;border-radius:24px;padding:22px;box-shadow:var(--shadow);border:1px solid var(--line)}
+.trip-row{display:flex;gap:14px;align-items:center;padding:14px 0;border-top:1px solid var(--line)}
+.trip-row:first-of-type{border-top:0}
+.trip-row .ti{width:40px;height:40px;border-radius:12px;background:var(--cream);display:grid;place-items:center;color:var(--orange-dark);flex-shrink:0}
+.trip-row .grow{flex:1}
+.trip-row .s{font-size:.82rem;color:var(--ink-3)}
 
-/* steps */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:8px;overflow:hidden}
-.steps div{padding:28px}
-.steps div + div{border-left:1px solid var(--line)}
-.steps .mono{font-size:13px;color:var(--orange)}
-.steps h3{font-size:1.25rem;margin:16px 0 8px}
-.steps p{font-size:14px}
-.tagrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
-.tagrow span{font-family:var(--mono);font-size:12px;border:1px solid var(--line-2);border-radius:4px;padding:4px 9px;color:var(--text-2)}
+/* lost & found */
+.lf{background:var(--cream)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:s}
+.step{background:#fff;border-radius:var(--radius);padding:28px;position:relative}
+.step .num{font-family:var(--serif);font-size:3rem;color:var(--orange);line-height:1;font-weight:500}
+.step h3{margin:12px 0 8px}
+.step p{color:var(--ink-2);font-size:.95rem}
+.uses{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px}
+.uses span{background:#fff;border-radius:999px;padding:.6em 1.1em;font-weight:500;font-size:.92rem;border:1px solid var(--line);display:inline-flex;gap:8px;align-items:center}
+.uses .ico{width:18px;height:18px;color:var(--orange-dark)}
 
 /* community */
-.four{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:8px;overflow:hidden}
-.four div{padding:24px}
-.four div + div{border-left:1px solid var(--line)}
-.four .mono{font-size:12px;color:var(--muted)}
-.four h3{margin:10px 0 6px}
-.four p{font-size:14px}
-.quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
-.quotes figure{border:1px solid var(--line);border-radius:8px;padding:22px;background:var(--panel)}
-.quotes blockquote{font-size:15px;color:var(--text);line-height:1.5}
-.quotes figcaption{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:14px;text-transform:uppercase;letter-spacing:.08em}
-.qnote{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:12px}
+.community{text-align:center}
+.community .sec-head{margin:0 auto 48px;align-items:center}
+.circle{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;text-align:left}
+.circle .c{background:#fff;border-radius:var(--radius);padding:24px;border:1px solid var(--line)}
+.circle .c h3{font-size:1.1rem;margin:12px 0 6px}
+.circle .c p{font-size:.92rem;color:var(--ink-2)}
+.stories{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px;text-align:left}
+.story{background:var(--charcoal);color:#fff;border-radius:var(--radius);padding:24px}
+.story q{font-family:var(--serif);font-size:1.12rem;line-height:1.4;display:block;quotes:"\201C" "\201D"}
+.story .who{margin-top:16px;font-size:.82rem;color:var(--sage)}
+.ex-note{font-size:.8rem;color:var(--ink-3);margin-top:14px;text-align:center}
 
 /* pricing */
-.plans{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:8px;overflow:hidden;max-width:900px}
-.plan{padding:32px;display:flex;flex-direction:column}
-.plan + .plan{border-left:1px solid var(--line);background:var(--panel)}
-.plan .price{font-size:2.6rem;font-weight:600;letter-spacing:-.03em;margin:14px 0 4px}
-.plan .price small{font-size:14px;font-weight:400;color:var(--muted);font-family:var(--mono)}
-.plan ul{list-style:none;margin:20px 0 28px;border-top:1px solid var(--line)}
-.plan li{padding:9px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--text-2);display:flex;gap:10px}
-.plan li::before{content:"✓";font-family:var(--mono);color:var(--r5)}
-.plan .btn{margin-top:auto;justify-content:center;height:42px}
+.plans{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:860px}
+.plan{background:#fff;border-radius:24px;padding:32px;border:1px solid var(--line);display:flex;flex-direction:column}
+.plan.pro{background:var(--charcoal);color:#fff;border:0;position:relative}
+.plan.pro .muted{color:#bfc1b6}
+.plan .price{font-family:var(--serif);font-size:3rem;font-weight:600;margin:12px 0}
+.plan .price small{font-size:1rem;font-family:var(--sans);font-weight:500;opacity:.7}
+.plan ul{list-style:none;display:grid;gap:10px;margin:18px 0 28px}
+.plan li{display:flex;gap:10px;font-size:.95rem}
+.plan li::before{content:"";width:18px;height:18px;flex-shrink:0;margin-top:3px;border-radius:50%;background:var(--r5) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/11px no-repeat}
+.plan .btn{margin-top:auto;justify-content:center}
+.badge{position:absolute;top:22px;right:22px;background:var(--orange);color:#fff;font-size:.72rem;font-weight:700;padding:.35em .8em;border-radius:999px;letter-spacing:.06em;text-transform:uppercase}
 
-/* faq */
-.faq{border-top:1px solid var(--line);max-width:900px}
-.faq details{border-bottom:1px solid var(--line)}
-.faq summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:36px 1fr 20px;gap:10px;padding:16px 0;font-size:15px;font-weight:500}
+/* FAQ */
+.faq{max-width:820px}
+.faq details{border-top:1px solid var(--line);padding:20px 0}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;font-weight:600;font-size:1.05rem;list-style:none;display:flex;justify-content:space-between;gap:16px}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary .mono{color:var(--muted);font-size:12.5px;padding-top:2px}
-.faq summary::after{content:"+";font-family:var(--mono);color:var(--orange);text-align:right}
-.faq details[open] summary::after{content:"−"}
-.faq details p{padding:0 0 18px 46px;font-size:14.5px;max-width:72ch}
+.faq summary::after{content:"+";font-family:var(--serif);font-size:1.5rem;line-height:1;color:var(--orange-dark);transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{margin-top:12px;color:var(--ink-2)}
 
-/* cta band */
-.band{display:grid;grid-template-columns:1.2fr 1fr;border:1px solid var(--line);border-radius:8px;overflow:hidden}
-.band .l{background:var(--orange);color:var(--on-orange);padding:44px}
-.band .l h2{color:var(--on-orange)}
-.band .l p{color:rgba(20,20,22,.78);margin:12px 0 24px;font-size:15.5px}
-.band .l .btn{background:var(--on-orange);color:#fff;border-color:var(--on-orange)}
-.band .l .btn.w{background:transparent;color:var(--on-orange);border-color:rgba(20,20,22,.4)}
-.band .r{padding:44px;background:var(--panel)}
-.band form{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
-.band input{flex:1;min-width:180px;height:40px;border-radius:var(--rad);border:1px solid var(--line-2);background:var(--bg);color:var(--text);padding:0 12px;font:inherit;font-size:14px;outline:0}
-.band input:focus{border-color:var(--orange)}
-.band .ok{display:none;color:#7fd38a;margin-top:12px;font-family:var(--mono);font-size:13px}
-.band small{display:block;margin-top:10px;color:var(--muted);font-size:12px}
+/* final CTA */
+.final{background:var(--orange);color:#fff;border-radius:32px;padding:64px;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center;position:relative;overflow:hidden}
+.final h2{color:#fff}
+.final p{color:rgba(255,255,255,.92);margin-top:14px;font-size:1.08rem}
+.final .fox{position:absolute;right:-30px;bottom:-40px;width:300px;opacity:.16;pointer-events:none}
+.news{background:#fff;border-radius:20px;padding:22px;color:var(--charcoal);position:relative;z-index:1}
+.news b{font-family:var(--serif);font-size:1.25rem;font-weight:600}
+.news p{color:var(--ink-2);font-size:.9rem;margin:6px 0 14px}
+.news form{display:flex;gap:8px;flex-wrap:wrap}
+.news input{flex:1;min-width:180px;border:1.5px solid var(--line);border-radius:999px;padding:.85em 1.1em;font:inherit;outline:0}
+.news input:focus{border-color:var(--orange)}
+.news .ok{display:none;color:var(--r5);font-weight:600;margin-top:10px;font-size:.9rem}
+.news small{display:block;margin-top:10px;color:var(--ink-3);font-size:.75rem}
 
 /* footer */
-footer{padding:48px 64px 40px;font-size:13.5px}
-.fgrid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:32px}
-.fgrid h4{font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
-.fgrid a{display:block;color:var(--text-2);padding:3px 0}
-.fgrid a:hover{color:var(--text)}
-.legal{border-top:1px solid var(--line);margin-top:36px;padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+footer{padding:64px 0 40px;font-size:.9rem;color:var(--ink-2)}
+.foot{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:32px}
+.foot h4{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px}
+.foot a{display:block;text-decoration:none;padding:4px 0}
+.foot a:hover{color:var(--orange-dark)}
+.legal{border-top:1px solid var(--line);margin-top:40px;padding-top:24px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:.8rem;color:var(--ink-3)}
 
-/* mobile menu */
-.mmenu{display:none;position:fixed;inset:64px 0 0;background:var(--bg);z-index:39;padding:12px 16px 32px;overflow:auto}
-.mmenu.open{display:block}
-.mmenu > a{display:flex;align-items:center;gap:12px;padding:13px 4px;border-bottom:1px solid var(--line);font-size:16px}
-.mmenu .ctas{margin-top:18px}
-.mmenu .ctas .btn{flex:1;justify-content:center;height:44px}
-
-.rv{opacity:0;transform:translateY(12px);transition:opacity .6s ease,transform .6s ease}
+/* reveal */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
 .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 
-/* ---------- responsive ---------- */
-@media (max-width:1280px){
-  .hero{grid-template-columns:1fr}
-  .hero-l{border-right:0;border-bottom:1px solid var(--line)}
-  .hero-r{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
-  .hero-r .mock{margin-top:0}
-  .guides{grid-template-columns:repeat(3,1fr)}
-  .guides .guide:nth-child(n+4){display:none}
+/* ---------- Responsive (breakpoint 900px per design system) ---------- */
+@media (max-width:1180px){
+  .nav-links{display:none}
 }
-@media (max-width:1100px){
-  .side{display:none}
-  .top .logo{border-right:0;width:auto}
-  .top .acts{padding:0 8px}
-  .thead,.tr{grid-template-columns:48px 1.2fr 1.6fr 100px 80px 64px}
+@media (max-width:1080px){
+  .products,.pillars{grid-template-columns:repeat(2,1fr)}
+  .circle{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width:900px){
-  .top{height:60px}
-  .top .acts,.top .right{display:none}
-  .burger{display:grid;place-items:center}
-  .mmenu{inset:60px 0 0}
-  .hero-l,.hero-r,.sec{padding-left:16px;padding-right:16px}
-  .hero-l{padding-top:40px}
-  .hero-r{grid-template-columns:1fr;padding-top:32px}
-  .kit{flex:1;min-width:0}
-  .sec{padding-top:56px;padding-bottom:56px}
-  .sec-h{grid-template-columns:1fr;gap:12px;margin-bottom:28px}
-  .split{grid-template-columns:1fr}
-  .split > div{padding:22px}
-  .split > div + div{border-left:0;border-top:1px solid var(--line)}
-  .thead{display:none}
-  .tr{grid-template-columns:44px 1fr auto;grid-template-areas:"th nm pr" "th ds ds" "th ch go";padding:12px 14px;row-gap:4px}
-  .tr .th{grid-area:th;align-self:start}
-  .tr .nm{grid-area:nm}.tr .ds{grid-area:ds}.tr .pr{grid-area:pr}.tr .go{grid-area:go}.tr .chip{grid-area:ch}
-  .checks,.tips,.steps,.quotes{grid-template-columns:1fr}
-  .checks div + div,.tips div + div,.steps div + div{border-left:0;border-top:1px solid var(--line)}
-  .four{grid-template-columns:1fr 1fr}
-  .four div:nth-child(3){border-left:0}
-  .four div:nth-child(n+3){border-top:1px solid var(--line)}
-  .guides{grid-template-columns:1fr 1fr}
-  .guides .guide:nth-child(4){display:block}
+  section{padding:68px 0}
+  .wrap{padding:0 16px}
+  .nav .wrap{height:64px}
+  .nav-cta{display:none}
+  .burger{display:block}
+  .mobile-menu{position:fixed;inset:64px 0 0;background:var(--cream-light);z-index:49;padding:24px 16px;flex-direction:column;gap:4px;overflow:auto}
+  .mobile-menu.open{display:flex}
+  .mobile-menu a{font-family:var(--serif);font-size:1.5rem;text-decoration:none;padding:10px 0;border-bottom:1px solid var(--line)}
+  .mobile-menu .btn{font-family:var(--sans);font-size:1rem;justify-content:center;margin-top:12px;border-bottom:0}
+  .hero{padding:32px 0 24px}
+  .hero .wrap{grid-template-columns:1fr;gap:32px}
+  .hero-visual{height:560px}
+  .float{display:none}
+  .proof .wrap{grid-template-columns:repeat(2,1fr)}
+  .proof .stat:last-child{grid-column:span 2}
+  .pillars,.checks,.tips,.steps,.stories{grid-template-columns:1fr}
+  .med-scan{margin-left:12px;margin-right:12px}
+  .split{grid-template-columns:1fr;gap:36px}
+  .split.rev .media{order:0}
+  .guides{grid-template-columns:repeat(2,1fr)}
   .plans{grid-template-columns:1fr}
-  .plan + .plan{border-left:0;border-top:1px solid var(--line)}
-  .band{grid-template-columns:1fr}
-  .band .l,.band .r{padding:28px 20px}
-  footer{padding:40px 16px}
-  .fgrid{grid-template-columns:1fr 1fr}
-  .sos-c.c{display:none}
-  .faq details p{padding-left:0}
+  .final{grid-template-columns:1fr;padding:36px 22px;border-radius:24px}
+  .foot{grid-template-columns:1fr 1fr}
+  .sos-chip.c{display:none}
+  .final .fox{right:0;width:200px;bottom:-30px}
 }
 @media (max-width:520px){
-  .kits{flex-direction:column}
-  .four{grid-template-columns:1fr}
-  .four div + div{border-left:0!important;border-top:1px solid var(--line)}
-  .check{height:auto;flex-wrap:wrap;padding:8px}
-  .check > .ico{display:none}
-  .check input{padding:6px 4px;flex-basis:100%}
-  .check .btn{flex:1;justify-content:center}
-  .fgrid{grid-template-columns:1fr}
+  .products,.circle{grid-template-columns:1fr}
+  .phone{width:260px;height:520px}
+  .hero-visual{height:540px}
+  .float{max-width:200px;font-size:.74rem}
+  .check{flex-direction:column;border-radius:20px;gap:6px}
+  .check input{padding:12px 14px}
+  .check .btn{justify-content:center}
+  .hero-ctas .btn{flex:1;justify-content:center}
 }
 </style>
 </head>
 <body>
 
+<!-- SVG icon sprite -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-family" viewBox="0 0 24 24"><circle cx="8" cy="6" r="2.5"/><circle cx="16.5" cy="8" r="2"/><path d="M4 20v-5a4 4 0 0 1 8 0v5M13 20v-4a3.5 3.5 0 0 1 7 0v4"/></symbol>
-  <symbol id="i-med" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8v8M8 12h8"/></symbol>
   <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></symbol>
   <symbol id="i-sos" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></symbol>
   <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></symbol>
   <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></symbol>
   <symbol id="i-plane" viewBox="0 0 24 24"><path d="M10.5 13.5L3 11l1.5-1.5 7 1 4-4.5c1-1 2.8-1.6 3.5-.9s.1 2.5-.9 3.5l-4.5 4 1 7L13 21l-2.5-7.5"/></symbol>
-  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7a4.3 4.3 0 0 1 7.5 2.8C19.5 15.4 12 20 12 20z"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
-  <symbol id="i-bag" viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></symbol>
   <symbol id="i-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></symbol>
-  <symbol id="i-school" viewBox="0 0 24 24"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11v5c3 2 7 2 10 0v-5"/></symbol>
-  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/></symbol>
   <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
-  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.5"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7a4.3 4.3 0 0 1 7.5 2.8C19.5 15.4 12 20 12 20z"/></symbol>
+  <symbol id="i-med" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8v8M8 12h8"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></symbol>
+  <symbol id="i-paw" viewBox="0 0 24 24"><circle cx="6" cy="10" r="1.8"/><circle cx="10" cy="6" r="1.8"/><circle cx="14" cy="6" r="1.8"/><circle cx="18" cy="10" r="1.8"/><path d="M12 12c-3 0-5 3.5-5 5.5 0 1.5 1.5 2 2.5 2s1.5-.5 2.5-.5 1.5.5 2.5.5 2.5-.5 2.5-2c0-2-2-5.5-5-5.5z"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/></symbol>
+  <symbol id="i-bike" viewBox="0 0 24 24"><circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-8h5l3 8M10 8l4 8M14 5h3"/></symbol>
+  <symbol id="i-school" viewBox="0 0 24 24"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11v5c3 2 7 2 10 0v-5"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></symbol>
+  <symbol id="i-hotel" viewBox="0 0 24 24"><path d="M3 20V6h11v14M14 10h7v10M7 9h3M7 13h3M7 17h3M17 14h1M17 17h1"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></symbol>
 </svg>
 
-<div class="announce"><a href="#medical"><span class="new">NEW</span><b>Medical ID bands — from £12.99</b><span class="d">Allergies, conditions and ICE contacts in one scan.</span><svg class="ico"><use href="#i-arrow"/></svg></a></div>
-
-<header class="top">
-  <a class="logo" href="#top"><img src="img/wiley-fox-logo.png" alt="">wiley<i>fox</i></a>
-  <div class="acts">
-    <a class="btn btn-o" href="/new/phase2/#shop"><svg class="ico"><use href="#i-tag"/></svg>Get your tag</a>
-    <a class="btn" href="/new/phase2/#map"><svg class="ico"><use href="#i-search"/></svg>Check a place <span class="ct">160+ cities</span></a>
+<!-- ================= NAV ================= -->
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="img/wiley-fox-logo.png" alt="">Wiley Fox</a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#family">Family safety</a>
+      <a href="#medical">Medical ID</a>
+      <a href="#tags">Tags &amp; bands</a>
+      <a href="#sos">SOS</a>
+      <a href="#checks">Safety checks</a>
+      <a href="#know">Know before you go</a>
+      <a href="#lost">Lost &amp; found</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="/new/phase2/#account">Sign in</a>
+      <a class="btn btn-primary" href="/new/phase2/#shop">Get your tag</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
-  <div class="right">
-    <a class="btn" href="/new/guides/london/">Guides</a>
-    <a class="btn" href="/new/phase2/#account">Sign in</a>
-  </div>
-  <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><svg class="ico" style="width:20px;height:20px"><use href="#i-menu"/></svg></button>
 </header>
-
-<nav class="mmenu" id="mmenu" aria-label="Mobile">
-  <a href="#family"><svg class="ico"><use href="#i-family"/></svg>Family &amp; child safety</a>
-  <a href="#medical"><svg class="ico"><use href="#i-med"/></svg>Medical ID bands <span class="new" style="margin-left:auto">NEW</span></a>
-  <a href="#range"><svg class="ico"><use href="#i-tag"/></svg>Tags, bands &amp; stickers</a>
-  <a href="#sos"><svg class="ico"><use href="#i-sos"/></svg>SOS &amp; women's safety</a>
-  <a href="#checks"><svg class="ico"><use href="#i-shield"/></svg>Crime &amp; safety checks</a>
-  <a href="#know"><svg class="ico"><use href="#i-compass"/></svg>Know before you go</a>
-  <a href="#travel"><svg class="ico"><use href="#i-plane"/></svg>Travel &amp; safety</a>
-  <a href="#lost"><svg class="ico"><use href="#i-heart"/></svg>Lost &amp; found</a>
-  <div class="ctas"><a class="btn btn-o" href="/new/phase2/#shop">Get your tag</a><a class="btn" href="/new/phase2/#map">Check a place</a></div>
-</nav>
-
-<div class="shell" id="top">
-  <aside class="side" aria-label="Sections">
-    <div class="grp">
-      <a href="#family" data-s="family"><svg class="ico"><use href="#i-family"/></svg>Family safety</a>
-      <a href="#medical" data-s="medical"><svg class="ico"><use href="#i-med"/></svg>Medical ID <span class="n"><span class="new">NEW</span></span></a>
-      <a href="#range" data-s="range"><svg class="ico"><use href="#i-tag"/></svg>Tags &amp; bands <span class="n">13</span></a>
-      <a href="#sos" data-s="sos"><svg class="ico"><use href="#i-sos"/></svg>SOS &amp; women's safety</a>
-    </div>
-    <div class="grp">
-      <span class="kick">Travel safety</span>
-      <a href="#checks" data-s="checks"><svg class="ico"><use href="#i-shield"/></svg>Safety checks <span class="n">1–5</span></a>
-      <a href="#know" data-s="know"><svg class="ico"><use href="#i-compass"/></svg>Know before you go <span class="n">10</span></a>
-      <a href="#travel" data-s="travel"><svg class="ico"><use href="#i-plane"/></svg>My Travel</a>
-    </div>
-    <div class="grp">
-      <span class="kick">Community</span>
-      <a href="#lost" data-s="lost"><svg class="ico"><use href="#i-heart"/></svg>Lost &amp; found</a>
-      <a href="#community" data-s="community"><svg class="ico"><use href="#i-pin"/></svg>Safer together</a>
-      <a href="#pricing" data-s="pricing"><svg class="ico"><use href="#i-user"/></svg>Pricing</a>
-    </div>
-    <a class="promo" href="/new/phase2/#labels"><b>School name labels</b><span>Personalised labels with a Wiley Fox code, printed and posted to your door.</span></a>
-  </aside>
-
-  <main>
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-l">
-        <span class="kick">Family · Travel · Community safety</span>
-        <h1>Keep the people you love <span class="hl">safe, anywhere.</span></h1>
-        <p class="lede">Safety bands and Medical ID for the people you love, tags for everything else, one-tap SOS and street-level safety checks before you go. If someone or something goes missing, the next person to scan helps bring them home.</p>
-        <div class="kits">
-          <a class="kit o" href="/new/phase2/#shop"><svg class="ico"><use href="#i-tag"/></svg><div><b>Get your tag</b><span>Bands, Medical ID, tags &amp; stickers</span></div></a>
-          <a class="kit" href="/new/phase2/#map"><svg class="ico"><use href="#i-shield"/></svg><div><b>Check a place</b><span>Street-level safety rating, 1–5</span></div></a>
-        </div>
-        <!-- DEV: production map should read ?q= -->
-        <form class="check" id="checkForm">
-          <svg class="ico" style="color:var(--muted)"><use href="#i-search"/></svg>
-          <input id="checkQ" type="text" placeholder="City, street or postcode — e.g. SW1A, Paris" aria-label="Check a place">
-          <button class="btn btn-o" type="submit">Safety check</button>
-        </form>
-        <div class="src">
-          <span class="kick" style="letter-spacing:.1em">Built on official crime data</span>
-          <div class="row"><span>data.police.uk</span><span>Scottish SIMD</span><span>FBI Crime Data</span><span>Eurostat</span><span>StatCan</span><span>ABS</span><span>UNODC</span><span>World Bank</span><span>ACLED</span></div>
-        </div>
-      </div>
-      <div class="hero-r">
-        <div>
-          <span class="kick">Use Wiley Fox to</span>
-          <div class="uses">
-            <a class="first" href="#family"><span class="mono">01</span>Keep kids safe on days out<svg class="ico"><use href="#i-arrow"/></svg></a>
-            <a href="#medical"><span class="mono">02</span>Carry Medical ID on your wrist<svg class="ico"><use href="#i-arrow"/></svg></a>
-            <a href="#sos"><span class="mono">03</span>Send SOS in one tap<svg class="ico"><use href="#i-arrow"/></svg></a>
-            <a href="#checks"><span class="mono">04</span>Check a street, hotel or route<svg class="ico"><use href="#i-arrow"/></svg></a>
-            <a href="#know"><span class="mono">05</span>Know before you go<svg class="ico"><use href="#i-arrow"/></svg></a>
-            <a href="#lost"><span class="mono">06</span>Get lost things back<svg class="ico"><use href="#i-arrow"/></svg></a>
-          </div>
-        </div>
-        <div class="mock" aria-hidden="true">
-          <div class="bar"><i></i><i></i><i></i><span class="url">thewileyfox.com/t/WF-01234</span></div>
-          <div class="bd">
-            <div class="mrow"><div class="av">Z</div><div><b>You've found Zoe, age 7</b><small>Please stay with her. Her guardian has been alerted.</small></div></div>
-            <div class="mgrid">
-              <div><span class="k">Allergy</span><b>Nuts (severe)</b></div>
-              <div><span class="k">Medication</span><b>Adrenaline pen</b></div>
-              <div><span class="k">Guardian</span><b>Sarah · notified</b></div>
-              <div><span class="k">Scanned</span><b>South Bank · 15:58</b></div>
-            </div>
-            <div class="mcta"><span class="a">Message guardian</span><span class="b">Share my location</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAMILY -->
-    <section class="sec" id="family">
-      <div class="sec-h rv">
-        <div><span class="kick">01 — Family &amp; child safety</span><h2>If they wander off, the whole community <span class="hl">helps.</span></h2></div>
-        <p>A band or school label with a Wiley Fox code. Anyone who finds your child can scan it, see only what you choose to share, and reach you straight away. No app needed, and your number is never shown.</p>
-      </div>
-      <div class="split rv">
-        <div>
-          <div class="list" style="margin-top:0">
-            <div><span class="mono">01</span><p><b>Lost-child alert</b><span>Raise an alert with a photo and last-seen pin. Nearby members are notified, and it retracts automatically once they're found.</span></p></div>
-            <div><span class="mono">02</span><p><b>Guardians &amp; family circle</b><span>Grandparents, carers and teachers with the right permissions, so someone can always respond.</span></p></div>
-            <div><span class="mono">03</span><p><b>ICE &amp; medical info</b><span>Allergies, conditions and emergency contacts, shown only when the band is scanned.</span></p></div>
-            <div><span class="mono">04</span><p><b>School name labels</b><span>Personalised labels for uniforms, lunch boxes and bags, printed and posted to your door.</span></p></div>
-          </div>
-          <div class="ctas"><a class="btn btn-o" href="/new/phase2/#people">Set up your family</a><a class="btn" href="/new/phase2/#labels">Order school labels</a></div>
-        </div>
-        <div class="vis">
-          <div class="card" style="border-color:rgba(255,123,20,.5)">
-            <span class="t hl">Lost-child alert · active</span>
-            <div style="margin-top:8px;font-weight:600;font-size:14.5px">Zoe, 7 · red slap band · last seen by the carousel, South Bank</div>
-            <small class="mono" style="color:var(--muted);font-size:11.5px">Members within 1 km notified · retracts when found</small>
-          </div>
-          <div class="card">
-            <div class="mem"><div class="av" style="background:var(--orange);color:#141416">Z</div><div class="g"><b>Zoe</b><small>Slap band WF-01234 · ICE + allergy</small></div><span class="st o">Protected</span></div>
-            <div class="mem"><div class="av" style="background:#3a3a42">S</div><div class="g"><b>Sarah (Mum)</b><small>Owner · every scan alert</small></div><span class="st ok">Guardian</span></div>
-            <div class="mem"><div class="av" style="background:#56604f">M</div><div class="g"><b>Margaret (Nan)</b><small>Can respond for Zoe</small></div><span class="st ok">Guardian</span></div>
-            <div class="mem"><div class="av" style="background:var(--r5)">✓</div><div class="g"><b>Band scanned · 15:58</b><small>"She's with me at the ice-cream stand."</small></div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- MEDICAL -->
-    <section class="sec" id="medical">
-      <div class="sec-h rv">
-        <div><span class="kick" style="color:var(--med)">02 — Medical ID bands</span><h2>When they can't speak for themselves, <span style="color:var(--med)">their band can.</span></h2></div>
-        <p>A bright yellow Medical ID band that first responders, teachers and passers-by can't miss. One scan shows the allergies, conditions, medication and emergency contacts you've chosen to share, and tells you it's been scanned.</p>
-      </div>
-      <div class="split medtop rv">
-        <div>
-          <div class="list" style="margin-top:0">
-            <div><span class="mono">01</span><p><b>Critical info, instantly</b><span>Allergies, conditions, medication, blood type and GP details, readable in seconds without unlocking a phone.</span></p></div>
-            <div><span class="mono">02</span><p><b>You know when it's scanned</b><span>Every scan pings you and your guardians with the location.</span></p></div>
-            <div><span class="mono">03</span><p><b>Always up to date</b><span>Change medication or contacts in the app and the band shows it straight away. Nothing engraved, nothing out of date.</span></p></div>
-            <div><span class="mono">04</span><p><b>Works abroad</b><span>Linked to your My Travel medical notes for holidays and school trips.</span></p></div>
-          </div>
-          <div class="who"><span>Severe allergies</span><span>Diabetes</span><span>Epilepsy</span><span>Asthma</span><span>Autism &amp; non-verbal</span><span>Dementia</span><span>Heart conditions</span><span>Older parents</span><span>Sport</span><span>Solo travel</span></div>
-          <div class="ctas"><a class="btn btn-o" href="/new/phase2/#shop">Get a Medical ID band — £12.99</a><a class="btn" href="/new/phase2/#people">Set up a medical profile</a></div>
-          <p class="disc">Wiley Fox Medical ID helps people find your information quickly. It isn't a medical device and doesn't replace professional medical advice or the emergency services. In an emergency, call 999 (UK) or 112 (EU).</p>
-        </div>
-        <div class="vis">
-          <div class="med-img"><img src="img/medical-id-card.webp" alt="Yellow Wiley Fox Medical ID SOS band with red cross and QR code" loading="lazy"></div>
-          <div class="card" style="border-color:rgba(245,196,0,.45)">
-            <span class="t" style="color:var(--med)">+ Medical ID · scanned 14:02</span>
-            <div class="mgrid dk" style="margin-top:10px">
-              <div><span class="k">Name</span><b>Max, 9</b></div>
-              <div><span class="k">Allergy</span><b>Peanuts (severe)</b></div>
-              <div><span class="k">Medication</span><b>Adrenaline pen</b></div>
-              <div><span class="k">Guardians</span><b>2 notified</b></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- RANGE TABLE -->
-    <section class="sec" id="range">
-      <div class="sec-h rv">
-        <div><span class="kick">03 — Tags, bands &amp; stickers</span><h2>One small scan, <span class="hl">big peace of mind.</span></h2></div>
-        <p>Weatherproof, wearable and readable by any phone camera. Each one links to a private profile you control, so you can change what it shows without replacing it.</p>
-      </div>
-      <div class="tbl-wrap rv">
-        <div class="tsearch"><svg class="ico"><use href="#i-search"/></svg><input id="tq" placeholder="Search the range" aria-label="Search the range" style="flex:1;background:none;border:0;outline:0;color:var(--text);font:inherit"></div>
-        <div class="thead"><span>#</span><span>Product</span><span>What it's for</span><span>For</span><span style="text-align:right">Price</span><span></span></div>
-        <div id="tbody"></div>
-      </div>
-      <p class="tnote">Prices from the Wiley Fox shop, Nov 2026. QR today, tap-to-scan NFC next. Every tag links to a re-pointable Wiley Fox address.</p>
-    </section>
-
-    <!-- SOS -->
-    <section class="sec" id="sos">
-      <div class="sec-h rv">
-        <div><span class="kick">04 — SOS &amp; women's safety</span><h2>One tap. Everyone who matters <span class="hl">knows.</span></h2></div>
-        <p>Walking home late, a taxi that doesn't feel right, a solo trip abroad. Help is a single tap away, and the safer route is the one we show first.</p>
-      </div>
-      <div class="split rv">
-        <div>
-          <div class="list" style="margin-top:0">
-            <div><span class="mono">01</span><p><b>One-tap SOS with GPS</b><span>Your live location goes to every emergency contact by push, SMS and email at once.</span></p></div>
-            <div><span class="mono">02</span><p><b>Safer routes home</b><span>Directions that weigh up crime data and live community reports, not just distance.</span></p></div>
-            <div><span class="mono">03</span><p><b>After-dark awareness</b><span>See well-lit, busy streets and recent reports before you set off.</span></p></div>
-            <div><span class="mono">04</span><p><b>Community reports</b><span>Flag a hazard and warn the next person. Moderated, and they fade once out of date.</span></p></div>
-          </div>
-          <div class="ctas"><a class="btn btn-o" href="/new/phase2/#people">Add emergency contacts</a><a class="btn" href="/new/phase2/#map">Plan a safer route</a></div>
-          <p class="disc">In an emergency, call 999 (UK) or 112 (EU) first. Wiley Fox SOS alerts your own contacts and doesn't replace the emergency services.</p>
-        </div>
-        <div class="vis sos-vis" aria-hidden="true">
-          <div class="sos-b">SOS</div>
-          <div class="sos-c a"><b>Live location shared</b><small>Mum · Jess · Dan — just now</small></div>
-          <div class="sos-c c"><b>Push · SMS · Email</b><small>all delivered</small></div>
-          <div class="sos-c b"><b>Jess is on her way</b><small>ETA 6 min</small></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CHECKS -->
-    <section class="sec" id="checks">
-      <div class="sec-h rv">
-        <div><span class="kick">05 — Crime &amp; safety checks</span><h2>Know the ground you're <span class="hl">standing on.</span></h2></div>
-        <p>Every street gets a plain 1–5 Wiley Fox rating built from official police and government data. Facts, not fear.</p>
-      </div>
-      <div class="split rv">
-        <div>
-          <span class="kick">Wiley Fox safety rating</span>
-          <div class="scale"><i style="background:var(--r1);color:#fff">1</i><i style="background:var(--r2)">2</i><i style="background:var(--r3)">3</i><i style="background:var(--r4)">4</i><i style="background:var(--r5);color:#fff">5</i></div>
-          <small><span>Higher crime</span><span>Safest</span></small>
-          <div class="list">
-            <div><span class="mono">UK</span><p><b>Street level, monthly</b><span>England, Wales and NI from data.police.uk; Scotland from official data-zone statistics.</span></p></div>
-            <div><span class="mono">160+</span><p><b>Cities worldwide</b><span>National and international sources where street data isn't published, with plain caveats.</span></p></div>
-          </div>
-          <div class="ctas"><a class="btn btn-o" href="/new/phase2/#map">Check a place</a><a class="btn" href="/new/phase2/#places">My saved places</a></div>
-        </div>
-        <div class="vis" style="padding:0;min-height:320px"><img src="img/feature-graphic.webp" alt="Wiley Fox hex safety map" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:78% center"></div>
-      </div>
-      <div class="checks rv">
-        <div><span class="mono">01 / Stay</span><h3>Hotel &amp; Airbnb check</h3><p>See the rating around where you're staying before you book.</p></div>
-        <div><span class="mono">02 / Move</span><h3>Route check</h3><p>Compare routes on safety as well as time, with hotspots flagged.</p></div>
-        <div><span class="mono">03 / Plan</span><h3>Safety report</h3><p>A one-page PDF for any area. Handy for school trips and house moves.</p></div>
-      </div>
-    </section>
-
-    <!-- KNOW BEFORE YOU GO -->
-    <section class="sec" id="know">
-      <div class="sec-h rv">
-        <div><span class="kick">06 — Know before you go</span><h2>Local insight from people who've <span class="hl">been there.</span></h2></div>
-        <p>City guides that pair the safety map with real local knowledge: where to stay, what to avoid, which scams are doing the rounds, and the tips you'd only hear from a friend.</p>
-      </div>
-      <div class="guides rv">
-        <a class="guide" href="/new/guides/london/"><div class="im"><img src="/new/guides/london/img/cover.jpg" alt="London" loading="lazy"></div><div class="cap"><b>London</b><span>UK</span></div></a>
-        <a class="guide" href="/new/guides/new-york/"><div class="im"><img src="/new/guides/new-york/img/cover.jpg" alt="New York" loading="lazy"></div><div class="cap"><b>New York</b><span>US</span></div></a>
-        <a class="guide" href="/new/guides/prague/"><div class="im"><img src="/new/guides/prague/img/cover.jpg" alt="Prague" loading="lazy"></div><div class="cap"><b>Prague</b><span>CZ</span></div></a>
-        <a class="guide" href="/new/guides/vienna/"><div class="im"><img src="/new/guides/vienna/img/cover.jpg" alt="Vienna" loading="lazy"></div><div class="cap"><b>Vienna</b><span>AT</span></div></a>
-        <a class="guide" href="/new/guides/berlin/"><div class="im"><img src="/new/guides/berlin/img/cover.jpg" alt="Berlin" loading="lazy"></div><div class="cap"><b>Berlin</b><span>DE</span></div></a>
-      </div>
-      <div class="tips rv">
-        <div><span class="kick hl">Scam watch</span><p>Know the local tricks before they're tried on you, from fake ticket sellers to "friendship bracelet" hustles.</p></div>
-        <div><span class="kick hl">Getting around</span><p>Which taxis are licensed, which stations to avoid late, and the safest way back from the airport.</p></div>
-        <div><span class="kick hl">Family-friendly</span><p>Parks, attractions and areas that work with kids, and where to meet if you get separated.</p></div>
-      </div>
-    </section>
-
-    <!-- TRAVEL -->
-    <section class="sec" id="travel">
-      <div class="sec-h rv">
-        <div><span class="kick">07 — Travel &amp; safety</span><h2>Your whole trip, <span class="hl">safety-checked.</span></h2></div>
-        <p>Plan, book and carry everything in one place. Every hotel and destination links back to the safety map, so the safe choice is the easy one.</p>
-      </div>
-      <div class="split rv">
-        <div>
-          <div class="list" style="margin-top:0">
-            <div><span class="mono">01</span><p><b>My Travel</b><span>Flights, hotels, passports and medical notes together, shareable with your family circle.</span></p></div>
-            <div><span class="mono">02</span><p><b>Book with a safety rating</b><span>Hotels shown with the area's rating and the city guide one tap away.</span></p></div>
-            <div><span class="mono">03</span><p><b>Travel essentials</b><span>Luggage tags, travel packs and wristbands for the whole family.</span></p></div>
-          </div>
-          <div class="ctas"><a class="btn btn-o" href="/new/phase2/#travel">Start a trip</a><a class="btn" href="/new/phase2/#book">Find a safe stay</a></div>
-        </div>
-        <div class="vis">
-          <div class="card">
-            <span class="t" style="color:var(--muted)">Family trip · Paris · 3 nights</span>
-            <div style="margin-top:6px">
-              <div class="tr2"><svg class="ico"><use href="#i-plane"/></svg><div class="g">LHR → CDG<small>Fri 08:40 · 4 passengers</small></div><span class="st ok">Checked</span></div>
-              <div class="tr2"><svg class="ico"><use href="#i-pin"/></svg><div class="g">Hotel, Le Marais<small>Area rating 4/5 · guide included</small></div><span class="rt">4</span></div>
-              <div class="tr2"><svg class="ico"><use href="#i-tag"/></svg><div class="g">Kids' bands linked<small>Zoe &amp; Max · ICE up to date</small></div><span class="st ok">Ready</span></div>
-              <div class="tr2"><svg class="ico"><use href="#i-compass"/></svg><div class="g">Know before you go<small>Pickpocket hotspots on Line 1</small></div><span class="st o">Tip</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- LOST & FOUND -->
-    <section class="sec" id="lost">
-      <div class="sec-h rv">
-        <div><span class="kick">08 — Lost &amp; found</span><h2>Lost. Scanned. <span class="hl">Reunited.</span></h2></div>
-        <p>Three steps between "where's it gone?" and "got it back". Your phone number and address are never shown to the finder.</p>
-      </div>
-      <div class="steps rv">
-        <div><span class="mono">01</span><h3>Tag what matters</h3><p>A band, sticker or tag on the bag, the collar, the keys or the kids. Set up the profile in a minute.</p></div>
-        <div><span class="mono">02</span><h3>A kind stranger scans</h3><p>Any phone camera works. They see only what you've chosen to share, no app needed.</p></div>
-        <div><span class="mono">03</span><h3>You get a ping</h3><p>Push, email or SMS with the scan location. Chat anonymously and share contact only when you decide.</p></div>
-      </div>
-      <div class="tagrow rv"><span>Kids</span><span>Medical &amp; ICE</span><span>Bags &amp; luggage</span><span>Pets</span><span>Keys &amp; wallets</span><span>Bikes &amp; scooters</span><span>Loved ones who may get confused</span></div>
-    </section>
-
-    <!-- COMMUNITY -->
-    <section class="sec" id="community">
-      <div class="sec-h rv">
-        <div><span class="kick">Community safety</span><h2>Safer <span class="hl">together.</span></h2></div>
-        <p>Every scan, report and alert makes the map a little smarter, and the street a little safer for the next family, traveller or person walking home.</p>
-      </div>
-      <div class="four rv">
-        <div><span class="mono">Finders</span><h3>Scan and help</h3><p>Anyone who scans a tag and helps something, or someone, get home.</p></div>
-        <div><span class="mono">Guardians</span><h3>Always someone</h3><p>Family and trusted carers who can respond when you can't.</p></div>
-        <div><span class="mono">Reporters</span><h3>Warn the next person</h3><p>Members who flag hazards so others take a better route.</p></div>
-        <div><span class="mono">Creators</span><h3>Local know-how</h3><p>Travellers and locals behind the know-before-you-go tips in our guides.</p></div>
-      </div>
-      <div class="quotes rv">
-        <figure><blockquote>"Our son wandered off at a theme park. A member of staff scanned his slap band and I had a message before I'd even started to panic."</blockquote><figcaption>Example story · family day out</figcaption></figure>
-        <figure><blockquote>"I check the area around every hotel before I book now. It's the first thing I do on any solo trip."</blockquote><figcaption>Example story · solo traveller</figcaption></figure>
-        <figure><blockquote>"Left my rucksack on a train. The guard scanned the tag and it was waiting at the next station."</blockquote><figcaption>Example story · commuter</figcaption></figure>
-      </div>
-      <p class="qnote">Example scenarios showing how Wiley Fox works. Real member stories after launch.</p>
-    </section>
-
-    <!-- PRICING -->
-    <section class="sec" id="pricing">
-      <div class="sec-h rv"><div><span class="kick">Pricing</span><h2>Free to start. <span class="hl">Pro</span> when it matters.</h2></div><p>The app is free. Bands, tags and stickers are bought once, with no subscription needed to keep them working.</p></div>
-      <div class="plans rv">
-        <div class="plan">
-          <span class="kick">Free</span>
-          <div class="price">£0 <small>/ forever</small></div>
-          <p>Everything most people need.</p>
-          <ul><li>Up to 3 active tags</li><li>3 emergency contacts</li><li>One-tap SOS</li><li>Medical ID profile</li><li>Street-level safety checks</li><li>Anonymous chat with finders</li></ul>
-          <a class="btn" href="/new/phase2/#account">Start free</a>
-        </div>
-        <div class="plan">
-          <span class="kick hl">Pro · Families</span>
-          <div class="price">£4 <small>/ month</small></div>
-          <p>For families, frequent travellers and anything irreplaceable.</p>
-          <ul><li>Unlimited tags and bulk codes</li><li>25 emergency contacts</li><li>Priority lost-child alerts</li><li>Family guardians and roles</li><li>Downloadable safety reports</li><li>Members' travel perks</li></ul>
-          <a class="btn btn-o" href="/new/phase2/#account">Go Pro</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="sec" id="faq">
-      <div class="sec-h rv"><div><span class="kick">FAQ</span><h2>Honest answers.</h2></div></div>
-      <div class="faq rv">
-        <details><summary><span class="mono">01</span>Does the finder need to install an app?</summary><p>No. Any phone camera can scan the code. The finder sees only what you've chosen to share and can message you straight away.</p></details>
-        <details><summary><span class="mono">02</span>Is my child's information safe?</summary><p>You choose exactly what a finder sees, which can be as little as "please contact my parent". Your phone number and address are never shown, and you can edit or switch off a profile at any time. Children's profiles are always managed by a parent or guardian.</p></details>
-        <details><summary><span class="mono">03</span>What does a Medical ID band show when scanned?</summary><p>Only what you choose: for example allergies, conditions, medication, blood type and emergency contacts. Update it in the app and the band shows the change straight away. Every scan notifies you and your guardians.</p></details>
-        <details><summary><span class="mono">04</span>Where does the safety rating come from?</summary><p>Official police and government data. In England, Wales and Northern Ireland that's street-level data from data.police.uk, refreshed monthly. Scotland uses official data-zone statistics, and other countries use national and international sources. Ratings run from 1 (higher crime) to 5 (safest).</p></details>
-        <details><summary><span class="mono">05</span>Does SOS call the emergency services?</summary><p>No. SOS alerts your own emergency contacts with your live location. In an emergency, always call 999 in the UK or 112 in the EU first.</p></details>
-        <details><summary><span class="mono">06</span>What if a tag is damaged or lost?</summary><p>Each tag links to an address we control, so you can switch off a lost tag and link a new one to the same profile in seconds.</p></details>
-        <details><summary><span class="mono">07</span>Can schools, clubs or events order in bulk?</summary><p>Yes. Event wristband packs, school safety packs and name labels are available, with codes you assign in the app.</p></details>
-      </div>
-    </section>
-
-    <!-- CTA BAND -->
-    <section class="sec" style="border-bottom:0">
-      <div class="band rv">
-        <div class="l">
-          <h2>The people you love deserve a way home.</h2>
-          <p>Get your first tag, set up your family circle and check your next destination. Free to start.</p>
-          <div class="ctas"><a class="btn" href="/new/phase2/#shop">Get your tag</a><a class="btn w" href="/new/phase2/#map">Check a place</a></div>
-        </div>
-        <div class="r">
-          <span class="kick">Weekly newsletter</span>
-          <h3 style="font-size:1.5rem;margin-top:10px">Know Before You Go</h3>
-          <p style="margin-top:6px;font-size:14px">Safety tips, local insight and members' travel deals, every week.</p>
-          <!-- DEV: wire to Beehiiv subscribe endpoint -->
-          <form id="newsForm" data-endpoint=""><input type="email" required placeholder="you@email.com" aria-label="Email address"><button class="btn btn-o" type="submit">Subscribe</button></form>
-          <div class="ok" id="newsOk">✓ You're on the list.</div>
-          <small>Adults 18+. Unsubscribe any time.</small>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <div class="fgrid">
-        <div>
-          <a class="mono" href="#top" style="display:flex;align-items:center;gap:10px;font-size:17px"><img src="img/wiley-fox-logo.png" alt="" style="width:28px">wiley<span class="hl">fox</span></a>
-          <p style="margin-top:12px;max-width:34ch;font-size:13.5px">Family, travel and community safety. Keeping kids, women and travellers safer, and bringing lost things home.</p>
-          <a href="https://www.thewileyfox.com" class="mono hl" style="margin-top:10px;display:inline-block">www.thewileyfox.com</a>
-        </div>
-        <div><h4>Safety</h4><a href="#family">Family &amp; child safety</a><a href="#medical">Medical ID bands</a><a href="#sos">SOS &amp; women's safety</a><a href="#lost">Lost &amp; found</a></div>
-        <div><h4>Travel</h4><a href="#checks">Safety checks</a><a href="#know">Know before you go</a><a href="/new/phase2/#travel">My Travel</a><a href="/new/phase2/#book">Book a safe stay</a></div>
-        <div><h4>Shop</h4><a href="/new/phase2/#shop">Bands, tags &amp; stickers</a><a href="/new/phase2/#labels">School name labels</a><a href="/new/phase2/#tags">Link a tag</a><a href="/new/phase2/#account">Sign in</a></div>
-      </div>
-      <!-- DEV: legal links -->
-      <div class="legal"><span>© 2026 Wiley Fox</span><span><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Cookies</a> · <a href="#">Contact</a></span><span>Crime data: data.police.uk (OGL) and official national sources</span></div>
-    </footer>
-  </main>
+<div class="mobile-menu" id="mmenu">
+  <a href="#family">Family &amp; child safety</a>
+  <a href="#medical">Medical ID bands</a>
+  <a href="#tags">Tags, bands &amp; stickers</a>
+  <a href="#sos">SOS &amp; women's safety</a>
+  <a href="#checks">Crime &amp; safety checks</a>
+  <a href="#know">Know before you go</a>
+  <a href="#travel">Travel safety</a>
+  <a href="#lost">Lost &amp; found</a>
+  <a class="btn btn-primary" href="/new/phase2/#shop">Get your tag</a>
+  <a class="btn btn-ghost" href="/new/phase2/#map">Check a place</a>
 </div>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="pill"><span class="dot"></span> Community safety for families, travellers &amp; everyone in between</span>
+      <h1>Keep the people you love safe, <em class="o">wherever</em> they wander.</h1>
+      <p class="lede">Smart safety tags and bands for kids, Medical ID bands, one-tap SOS, street-level crime checks and local "know before you go" tips, all in one app. If someone or something goes missing, the next person to scan helps bring them home.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="/new/phase2/#shop"><svg class="ico"><use href="#i-tag"/></svg>Get your tag</a>
+        <a class="btn btn-dark" href="/new/phase2/#map"><svg class="ico"><use href="#i-shield"/></svg>Check a place</a>
+      </div>
+      <!-- DEV: on production, send ?q= to the map search. Currently opens the map view. -->
+      <form class="check" id="checkForm" action="/new/phase2/#map">
+        <input id="checkQ" type="text" placeholder="Check a city, street or postcode, e.g. SW1A or Paris" aria-label="Check a place">
+        <button class="btn btn-primary" type="submit"><svg class="ico"><use href="#i-search"/></svg>Safety check</button>
+      </form>
+      <p class="hero-note">Free to start. Finders don't need the app to scan.</p>
+      <div class="buzz" style="margin-top:22px">
+        <span>Know before you go</span><span>Medical ID on your wrist</span><span>Lost. Scanned. Reunited.</span><span>One tap to safety</span><span>Safer together</span>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hexfield"><svg id="heroHex" preserveAspectRatio="xMidYMid slice"></svg></div>
+      <div class="phone">
+        <div class="screen">
+          <div class="scr-top"><img src="img/wiley-fox-logo.png" alt=""><div class="scr-search">Covent Garden, London</div></div>
+          <div class="scr-map">
+            <svg id="phoneHex" preserveAspectRatio="xMidYMid slice"></svg>
+            <div class="you"></div>
+            <div class="scr-card c1"><div class="row"><span class="rate">4</span><div><b>Low crime area</b><div class="muted">Safety 4/5 · well lit · busy till late</div></div></div></div>
+            <div class="scr-card c2"><div class="row"><span class="rate" style="background:var(--orange)">✓</span><div><b>Zoe's band was scanned</b><div class="muted">Finder is with her · 2 min ago</div></div></div></div>
+          </div>
+          <div class="scr-sos"><div class="s1">SOS</div><div class="s2">Share live location</div></div>
+        </div>
+      </div>
+      <div class="float f1"><div class="fi" style="background:#FFF4EC;color:var(--orange-dark)"><svg class="ico"><use href="#i-family"/></svg></div><div><b>Family circle</b><br><span class="muted">3 guardians can respond</span></div></div>
+      <div class="float f2"><div class="fi" style="background:rgba(63,163,77,.14);color:#2b7a37"><svg class="ico"><use href="#i-route"/></svg></div><div><b>Safer route found</b><br><span class="muted">Avoids 2 reported hotspots</span></div></div>
+      <div class="float f3"><div class="fi" style="background:var(--cream);color:var(--charcoal)"><svg class="ico"><use href="#i-compass"/></svg></div><div><b>Local tip</b><br><span class="muted">Use licensed black cabs after midnight</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROOF (honest, pre-launch) ================= -->
+<!-- DEV: these figures are true at Nov 2026 build. Update from the pipeline; do not inflate (ASA/CAP). -->
+<div class="proof">
+  <div class="wrap">
+    <div class="stat"><div class="n">160+</div><div class="l">cities with local safety intel</div></div>
+    <div class="stat"><div class="n">9</div><div class="l">official crime-data sources</div></div>
+    <div class="stat"><div class="n">1–5</div><div class="l">street-level safety rating</div></div>
+    <div class="stat"><div class="n">Monthly</div><div class="l">UK police data refresh</div></div>
+    <div class="stat"><div class="n">0 apps</div><div class="l">needed by a finder to scan</div></div>
+  </div>
+</div>
+
+<!-- ================= PILLARS ================= -->
+<section>
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">One app, eight ways to stay safe</span>
+      <h2>Safety that goes <em class="o">everywhere</em> you do.</h2>
+      <p class="lede">From the school gate to a city you've never visited, Wiley Fox brings together the things families and travellers actually need when it matters.</p>
+    </div>
+    <div class="pillars">
+      <a class="pillar rv" href="#family"><div class="pi"><svg class="ico"><use href="#i-family"/></svg></div><h3>Family &amp; child safety</h3><p>Guardians, lost-child alerts and ICE details your kids carry on a band, tag or school label.</p><span class="go">Protect your family →</span></a>
+      <a class="pillar rv" href="#medical"><div class="pi" style="background:#FFF3B0;color:#B42318"><svg class="ico"><use href="#i-med"/></svg></div><h3>Medical ID bands</h3><p>Allergies, conditions, medication and ICE contacts on the wrist, ready for first responders with one scan.</p><span class="go">Get a Medical ID →</span></a>
+      <a class="pillar rv" href="#tags"><div class="pi"><svg class="ico"><use href="#i-qr"/></svg></div><h3>Tags, bands &amp; stickers</h3><p>Wristbands, slap bands, stickers and tags for bags, pets and keys. Scan once, get it home.</p><span class="go">Shop the range →</span></a>
+      <a class="pillar rv" href="#sos"><div class="pi"><svg class="ico"><use href="#i-sos"/></svg></div><h3>SOS &amp; women's safety</h3><p>One tap sends your live location to everyone in your circle. Safer routes for the walk home.</p><span class="go">See how SOS works →</span></a>
+      <a class="pillar rv" href="#checks"><div class="pi"><svg class="ico"><use href="#i-shield"/></svg></div><h3>Crime &amp; safety checks</h3><p>Street-level ratings from official police data. Check a hotel, a route or a neighbourhood in seconds.</p><span class="go">Run a safety check →</span></a>
+      <a class="pillar rv" href="#know"><div class="pi"><svg class="ico"><use href="#i-compass"/></svg></div><h3>Know before you go</h3><p>Local insights, scams to avoid and tips from people who've been there, in travel guides you can trust.</p><span class="go">Read the guides →</span></a>
+      <a class="pillar rv" href="#lost"><div class="pi"><svg class="ico"><use href="#i-heart"/></svg></div><h3>Lost &amp; found</h3><p>Lost. Scanned. Reunited. A stranger scans, you get a ping, and nobody sees your number.</p><span class="go">How it works →</span></a>
+      <a class="pillar rv" href="#travel"><div class="pi"><svg class="ico"><use href="#i-plane"/></svg></div><h3>Travel &amp; safety</h3><p>Trips, passports and medical details in one place, with every hotel checked against the safety map.</p><span class="go">Plan a safer trip →</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAMILY & CHILD SAFETY ================= -->
+<section id="family" style="background:#fff">
+  <div class="wrap split">
+    <div class="rv">
+      <span class="eyebrow">Family &amp; child safety</span>
+      <h2 style="margin-top:12px">If they wander off, the whole community <em class="o">helps</em>.</h2>
+      <p class="lede" style="margin-top:16px">Give your kids a band or school label with a Wiley Fox code. Anyone who finds them can scan it, see only what you choose to share, and reach you straight away. No app, no phone number on show.</p>
+      <ul class="feat-list">
+        <li><div class="fi"><svg class="ico"><use href="#i-bell"/></svg></div><div><b>Lost-child alert</b><span>Raise an alert with a photo and last-seen pin. Nearby members are notified, and it retracts automatically once they're found.</span></div></li>
+        <li><div class="fi"><svg class="ico"><use href="#i-users"/></svg></div><div><b>Guardians &amp; family circle</b><span>Add grandparents, carers and teachers with the right permissions so someone can always respond.</span></div></li>
+        <li><div class="fi"><svg class="ico"><use href="#i-med"/></svg></div><div><b>ICE &amp; medical info</b><span>Allergies, conditions and emergency contacts, shown only when the band is scanned.</span></div></li>
+        <li><div class="fi"><svg class="ico"><use href="#i-school"/></svg></div><div><b>Custom school name labels</b><span>Personalised labels for uniforms, lunch boxes and bags, printed and posted straight to your door.</span></div></li>
+      </ul>
+      <div class="ctas">
+        <a class="btn btn-primary" href="/new/phase2/#people">Set up your family</a>
+        <a class="btn btn-ghost" href="/new/phase2/#labels">Order school labels</a>
+      </div>
+    </div>
+    <div class="media rv">
+      <div class="fam-card">
+        <div class="alert">
+          <div class="t">Lost-child alert · active</div>
+          <div style="margin-top:8px;font-weight:600">Zoe, 7 · red slap band · last seen by the carousel, South Bank</div>
+          <div class="muted" style="font-size:.85rem;margin-top:4px">Shared with members within 1 km · retracts when she's found</div>
+        </div>
+        <div class="member"><div class="av" style="background:var(--orange)">Z</div><div class="grow"><b>Zoe</b><div class="s">Slap band WF-01234 · ICE + allergy info</div></div><span class="tag-g tag-o">Protected</span></div>
+        <div class="member"><div class="av" style="background:var(--charcoal)">S</div><div class="grow"><b>Sarah (Mum)</b><div class="s">Owner · gets every scan alert</div></div><span class="tag-g">Guardian</span></div>
+        <div class="member"><div class="av" style="background:var(--sage)">M</div><div class="grow"><b>Margaret (Nan)</b><div class="s">Can respond for Zoe</div></div><span class="tag-g">Guardian</span></div>
+        <div class="member"><div class="av" style="background:var(--r5)">✓</div><div class="grow"><b>Band scanned at 15:58</b><div class="s">"She's with me at the ice-cream stand." · chat open</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MEDICAL ID ================= -->
+<section id="medical" class="medical">
+  <div class="wrap split rev">
+    <div class="rv">
+      <span class="eyebrow" style="color:#B42318">Medical ID bands</span>
+      <h2 style="margin-top:12px">When they can't speak for themselves, <em class="o">their band can</em>.</h2>
+      <p class="lede" style="margin-top:16px">A bright yellow Medical ID band that's easy for first responders, teachers and passers-by to spot. One scan shows the allergies, conditions, medication and emergency contacts you've chosen to share, and alerts you that it's been scanned.</p>
+      <ul class="feat-list">
+        <li><div class="fi" style="background:#FFF3B0;color:#B42318"><svg class="ico"><use href="#i-med"/></svg></div><div><b>Critical info, instantly</b><span>Allergies, conditions, medication, blood type and GP details, shown in seconds without unlocking a phone.</span></div></li>
+        <li><div class="fi" style="background:#FFF3B0;color:#B42318"><svg class="ico"><use href="#i-bell"/></svg></div><div><b>You know when it's scanned</b><span>Every scan pings you and your guardians with the location, so family can get there fast.</span></div></li>
+        <li><div class="fi" style="background:#FFF3B0;color:#B42318"><svg class="ico"><use href="#i-doc"/></svg></div><div><b>Always up to date</b><span>Change medication or contacts in the app and the band shows it straight away. Nothing is engraved, so nothing goes out of date.</span></div></li>
+        <li><div class="fi" style="background:#FFF3B0;color:#B42318"><svg class="ico"><use href="#i-plane"/></svg></div><div><b>Works abroad</b><span>Perfect for holidays and school trips, with your ICE details linked to your My Travel medical notes.</span></div></li>
+      </ul>
+      <div class="who">
+        <span>Severe allergies</span><span>Diabetes</span><span>Epilepsy</span><span>Asthma</span><span>Autism &amp; non-verbal</span><span>Dementia</span><span>Heart conditions</span><span>Older parents</span><span>Sport &amp; running</span><span>Solo travel</span>
+      </div>
+      <div class="ctas">
+        <a class="btn btn-primary" href="/new/phase2/#shop">Get a Medical ID band</a>
+        <a class="btn btn-ghost" href="/new/phase2/#people">Set up a medical profile</a>
+      </div>
+      <p class="med-note">Wiley Fox Medical ID helps people find your information quickly. It isn't a medical device and doesn't replace professional medical advice or the emergency services. In an emergency, call 999 (UK) or 112 (EU).</p>
+    </div>
+    <div class="media rv">
+      <div class="med-hero"><img src="img/medical-id-card.webp" alt="Yellow Wiley Fox Medical ID SOS wristband with red cross and QR code" loading="lazy"></div>
+      <div class="med-scan" aria-hidden="true">
+        <div class="hd"><i>+</i>Medical ID · scanned 14:02</div>
+        <div class="med-grid">
+          <div><span class="k">Name</span><b>Max, 9</b></div>
+          <div><span class="k">Allergy</span><b>Peanuts (severe)</b></div>
+          <div><span class="k">Medication</span><b>Adrenaline pen, left pocket</b></div>
+          <div><span class="k">Condition</span><b>Asthma</b></div>
+          <div><span class="k">Contact</span><b>Mum · tap to call via app</b></div>
+          <div><span class="k">Guardians alerted</span><b>2 notified</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TAGS, BANDS & STICKERS ================= -->
+<section id="tags">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Tags, bands &amp; stickers</span>
+      <h2>One small scan, <em class="o">big</em> peace of mind.</h2>
+      <p class="lede">Weatherproof, wearable and made to be scanned by anyone with a phone camera. Each one links to a private profile you control, and you can update it any time without replacing the tag.</p>
+    </div>
+    <div class="products">
+      <article class="product rv">
+        <div class="pm"><img src="img/medical-id-card.webp" alt="Yellow Wiley Fox Medical ID SOS band" loading="lazy"></div>
+        <div class="pb"><h3>Medical ID bands</h3><p>Bright yellow so it gets noticed. Allergies, conditions, medication and ICE contacts in one scan.</p><div class="pf"><span class="pill">Adults &amp; kids</span><a href="/new/phase2/#shop">Shop →</a></div></div>
+      </article>
+      <article class="product rv">
+        <div class="pm"><img src="img/slap-bands.webp" alt="Red Wiley Fox silicone slap bands with QR code" loading="lazy"></div>
+        <div class="pb"><h3>Kids' slap bands</h3><p>Soft silicone that slaps on and stays put. For days out, theme parks and school trips.</p><div class="pf"><span class="pill">Ages 3+</span><a href="/new/phase2/#shop">Shop →</a></div></div>
+      </article>
+      <article class="product rv">
+        <div class="pm"><img src="img/guardian-band-card.webp" alt="Orange Wiley Fox band reading Scan to contact guardian" loading="lazy"></div>
+        <div class="pb"><h3>Guardian bands</h3><p>"Scan to contact guardian". Whoever finds them reaches you without seeing your number.</p><div class="pf"><span class="pill">Events &amp; kids</span><a href="/new/phase2/#shop">Shop →</a></div></div>
+      </article>
+      <article class="product rv">
+        <div class="pm"><img src="img/sos-wristband.webp" alt="Wiley Fox SOS event wristband" loading="lazy"></div>
+        <div class="pb"><h3>SOS event wristbands</h3><p>Tamper-evident bands for festivals, holidays and busy events. Scan for ICE details in seconds.</p><div class="pf"><span class="pill">Single use</span><a href="/new/phase2/#shop">Shop →</a></div></div>
+      </article>
+      <article class="product rv">
+        <div class="pm"><img src="img/keyfob-front.webp" alt="Orange Wiley Fox key fob reading Scan if found" loading="lazy" style="object-fit:contain;background:#fff"></div>
+        <div class="pb"><h3>Key fobs</h3><p>"Scan if found" on one side, Wiley on the other. For house keys, car keys and school bags.</p><div class="pf"><span class="pill">Keys &amp; bags</span><a href="/new/phase2/#shop">Shop →</a></div></div>
+      </article>
+      <article class="product rv">
+        <div class="pm"><img src="img/keyfob-back.webp" alt="Wiley Fox tag with the Wiley fox character" loading="lazy" style="object-fit:contain;background:#fff"></div>
+        <div class="pb"><h3>Pet &amp; dog tags</h3><p>A collar tag that lets a neighbour, vet or dog walker reach you the moment they scan.</p><div class="pf"><span class="pill">Dogs &amp; cats</span><a href="/new/phase2/#shop">Shop →</a></div></div>
+      </article>
+      <article class="product rv">
+        <div class="pm"><div class="sticker-art"><div style="position:relative"><div class="sticker"><img src="img/wiley-fox-logo.png" alt=""></div><div class="sticker s2"><img src="img/wiley-fox-logo.png" alt=""></div></div></div></div>
+        <div class="pb"><h3>Smart stickers</h3><p>For phones, laptops, scooters, water bottles and anything else that tends to go walkabout.</p><div class="pf"><span class="pill">Weatherproof</span><a href="/new/phase2/#shop">Shop →</a></div></div>
+      </article>
+      <article class="product rv">
+        <div class="pm"><img src="img/wristband-packs.webp" alt="Wiley Fox wristband packs and roll of 100" loading="lazy"></div>
+        <div class="pb"><h3>School &amp; event packs</h3><p>Packs of 10 or rolls of 100, with codes you assign in the app. Ideal for schools, clubs and events.</p><div class="pf"><span class="pill">Bulk</span><a href="/new/phase2/#labels">Order →</a></div></div>
+      </article>
+    </div>
+    <div class="nfc rv">
+      <svg class="ico" style="width:34px;height:34px;color:var(--orange)"><use href="#i-qr"/></svg>
+      <p><b style="color:#fff">QR today, tap-to-scan NFC next.</b> Every tag links to a re-pointable Wiley Fox address, so it keeps working as the app grows. Schools, clubs and event organisers can order in bulk.</p>
+      <a class="btn btn-light" href="/new/phase2/#tags">Already have a tag? Link it</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SOS & WOMEN'S SAFETY ================= -->
+<section id="sos" class="dark">
+  <div class="wrap split">
+    <div class="rv">
+      <span class="eyebrow">SOS &amp; women's safety</span>
+      <h2 style="margin-top:12px;color:#fff">One tap. Everyone who matters <em class="o">knows</em>.</h2>
+      <p class="lede" style="margin-top:16px">Walking home late, a taxi that doesn't feel right, a solo trip abroad. Wiley Fox puts help a single tap away and helps you choose the safer way there.</p>
+      <ul class="feat-list">
+        <li><div class="fi"><svg class="ico"><use href="#i-sos"/></svg></div><div><b style="color:#fff">One-tap SOS with GPS</b><span>Sends your live location to every emergency contact by push, SMS and email at once.</span></div></li>
+        <li><div class="fi"><svg class="ico"><use href="#i-route"/></svg></div><div><b style="color:#fff">Safer routes home</b><span>Directions that weigh up crime data and live community reports, not just the shortest line.</span></div></li>
+        <li><div class="fi"><svg class="ico"><use href="#i-moon"/></svg></div><div><b style="color:#fff">After-dark awareness</b><span>See well-lit, busy streets and recent reports before you set off.</span></div></li>
+        <li><div class="fi"><svg class="ico"><use href="#i-pin"/></svg></div><div><b style="color:#fff">Community reports</b><span>Flag a hazard and warn the next person. Reports are moderated and fade once they're out of date.</span></div></li>
+      </ul>
+      <p style="font-size:.82rem;color:#a9ab9f;margin-bottom:24px">In an emergency, always call 999 (UK) or 112 (EU) first. Wiley Fox SOS alerts your own contacts and does not replace the emergency services.</p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="/new/phase2/#people">Add emergency contacts</a>
+        <a class="btn btn-light" href="/new/phase2/#map">Plan a safer route</a>
+      </div>
+    </div>
+    <div class="media rv">
+      <div class="sos-visual" aria-hidden="true">
+        <div class="sos-ring"><div class="sos-btn">SOS</div></div>
+        <div class="sos-chip a"><b>Live location shared</b><span class="muted">Mum, Jess, Dan · just now</span></div>
+        <div class="sos-chip b"><b>Jess is on her way</b><span class="muted">ETA 6 min · tracking you</span></div>
+        <div class="sos-chip c"><b>Push · SMS · Email</b><span class="muted">all sent</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CRIME & SAFETY CHECKS ================= -->
+<section id="checks">
+  <div class="wrap">
+    <div class="split rev">
+      <div class="rv">
+        <span class="eyebrow">Crime &amp; safety checks</span>
+        <h2 style="margin-top:12px">Know the ground you're <em class="o">standing on</em>.</h2>
+        <p class="lede" style="margin-top:16px">Every street gets a clear 1–5 Wiley Fox safety rating built from official police and government crime data, so you see the facts plainly, without the scaremongering.</p>
+        <div class="legend" aria-label="Safety rating scale">
+          <i style="background:var(--r1)">1</i><i style="background:var(--r2)">2</i><i style="background:var(--r3);color:var(--charcoal)">3</i><i style="background:var(--r4)">4</i><i style="background:var(--r5)">5</i>
+          <small>Higher crime → safest</small>
+        </div>
+        <div class="ctas" style="margin-top:26px">
+          <a class="btn btn-primary" href="/new/phase2/#map">Check a place</a>
+          <a class="btn btn-ghost" href="/new/phase2/#places">My saved places</a>
+        </div>
+      </div>
+      <div class="media rv"><div class="feature-img"><img src="img/feature-graphic.webp" alt="Wiley Fox hex safety map with 1 to 5 safety ratings" loading="lazy"></div></div>
+    </div>
+    <div class="checks">
+      <div class="chk rv"><svg class="ico" style="color:var(--orange-dark)"><use href="#i-hotel"/></svg><h3>Hotel &amp; Airbnb check</h3><p>See the rating around where you're staying before you book, not after you arrive.</p></div>
+      <div class="chk rv"><svg class="ico" style="color:var(--orange-dark)"><use href="#i-route"/></svg><h3>Route check</h3><p>Compare routes on safety as well as time, with hotspots flagged along the way.</p></div>
+      <div class="chk rv"><svg class="ico" style="color:var(--orange-dark)"><use href="#i-doc"/></svg><h3>Safety report</h3><p>Download a one-page PDF for any area: crime breakdown, trends and tips. Handy for school trips and moves.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= KNOW BEFORE YOU GO ================= -->
+<section id="know" style="background:#fff">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Know before you go</span>
+      <h2>Local insight from people who've <em class="o">been there</em>.</h2>
+      <p class="lede">City guides that pair the safety map with real local knowledge: where to stay, what to avoid, which scams are doing the rounds, and the tips you'd only hear from a friend who lives there.</p>
+    </div>
+    <div class="guides">
+      <a class="guide rv" href="/new/guides/london/"><img src="/new/guides/london/img/cover.jpg" alt="" loading="lazy"><div class="gc"><b>London</b><span>Neighbourhoods, transport &amp; late nights</span></div></a>
+      <a class="guide rv" href="/new/guides/new-york/"><img src="/new/guides/new-york/img/cover.jpg" alt="" loading="lazy"><div class="gc"><b>New York</b><span>Subway smarts &amp; where to stay</span></div></a>
+      <a class="guide rv" href="/new/guides/prague/"><img src="/new/guides/prague/img/cover.jpg" alt="" loading="lazy"><div class="gc"><b>Prague</b><span>Old Town traps &amp; hidden gems</span></div></a>
+      <a class="guide rv" href="/new/guides/vienna/"><img src="/new/guides/vienna/img/cover.jpg" alt="" loading="lazy"><div class="gc"><b>Vienna</b><span>Markets, trams &amp; family days</span></div></a>
+    </div>
+    <div class="tips">
+      <div class="tip rv"><span class="k">Scam watch</span><p>Know the local tricks before they're tried on you, from fake ticket sellers to "friendship bracelet" hustles.</p></div>
+      <div class="tip rv"><span class="k">Getting around</span><p>Which taxis are licensed, which stations to avoid late, and the safest way back from the airport.</p></div>
+      <div class="tip rv"><span class="k">Family-friendly</span><p>Parks, attractions and areas that work with kids, plus where to meet if you get separated.</p></div>
+    </div>
+    <div class="ctas" style="margin-top:32px"><a class="btn btn-dark" href="/new/guides/london/">Browse travel guides</a></div>
+  </div>
+</section>
+
+<!-- ================= TRAVEL & SAFETY ================= -->
+<section id="travel">
+  <div class="wrap split">
+    <div class="rv">
+      <span class="eyebrow">Travel &amp; safety</span>
+      <h2 style="margin-top:12px">Your whole trip, <em class="o">safety-checked</em>.</h2>
+      <p class="lede" style="margin-top:16px">Plan, book and carry everything in one place. Every hotel and destination links back to the safety map, so the safe choice is the easy one.</p>
+      <ul class="feat-list">
+        <li><div class="fi"><svg class="ico"><use href="#i-plane"/></svg></div><div><b>My Travel</b><span>Flights, hotels, passport and medical details together, and shareable with your family circle.</span></div></li>
+        <li><div class="fi"><svg class="ico"><use href="#i-hotel"/></svg></div><div><b>Book with a safety rating</b><span>Hotels shown alongside the area's safety score, with the city guide one tap away.</span></div></li>
+        <li><div class="fi"><svg class="ico"><use href="#i-bag"/></svg></div><div><b>Travel essentials shop</b><span>Luggage tags, travel accessories and wristbands for the whole family.</span></div></li>
+      </ul>
+      <div class="ctas">
+        <a class="btn btn-primary" href="/new/phase2/#travel">Start a trip</a>
+        <a class="btn btn-ghost" href="/new/phase2/#book">Find a safe stay</a>
+      </div>
+    </div>
+    <div class="media rv">
+      <div class="trip">
+        <div class="eyebrow" style="margin-bottom:10px">Family trip · Paris · 3 nights</div>
+        <div class="trip-row"><div class="ti"><svg class="ico"><use href="#i-plane"/></svg></div><div class="grow"><b>LHR → CDG</b><div class="s">Fri 08:40 · 4 passengers</div></div><span class="tag-g">Checked</span></div>
+        <div class="trip-row"><div class="ti"><svg class="ico"><use href="#i-hotel"/></svg></div><div class="grow"><b>Hotel, Le Marais</b><div class="s">Area safety 4/5 · guide included</div></div><span class="rate" style="width:28px;height:28px;margin:0">4</span></div>
+        <div class="trip-row"><div class="ti"><svg class="ico"><use href="#i-tag"/></svg></div><div class="grow"><b>Kids' bands linked</b><div class="s">Zoe &amp; Max · ICE details up to date</div></div><span class="tag-g">Ready</span></div>
+        <div class="trip-row"><div class="ti"><svg class="ico"><use href="#i-compass"/></svg></div><div class="grow"><b>Know before you go</b><div class="s">Pickpocket hotspots on Line 1 · tap to read</div></div><span class="tag-g tag-o">Tip</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LOST & FOUND ================= -->
+<section id="lost" class="lf">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Lost &amp; found</span>
+      <h2>Lost. Scanned. <em class="o">Reunited.</em></h2>
+      <p class="lede">Three steps between "where's it gone?" and "got it back".</p>
+    </div>
+    <div class="steps">
+      <div class="step rv"><div class="num">01</div><h3>Tag what matters</h3><p>A band, sticker or tag on the bag, the collar, the keys or the kids. Set up the profile in a minute.</p></div>
+      <div class="step rv"><div class="num">02</div><h3>A kind stranger scans</h3><p>Any phone camera works. They see only what you've chosen to share, and they don't need the app.</p></div>
+      <div class="step rv"><div class="num">03</div><h3>You get a ping</h3><p>Push, email or SMS with the scan location. Chat anonymously and share your contact only when you decide to.</p></div>
+    </div>
+    <div class="uses rv">
+      <span><svg class="ico"><use href="#i-family"/></svg>Kids</span>
+      <span><svg class="ico"><use href="#i-bag"/></svg>Bags &amp; luggage</span>
+      <span><svg class="ico"><use href="#i-paw"/></svg>Pets</span>
+      <span><svg class="ico"><use href="#i-med"/></svg>Medical &amp; ICE</span>
+      <span><svg class="ico"><use href="#i-key"/></svg>Keys &amp; wallets</span>
+      <span><svg class="ico"><use href="#i-bike"/></svg>Bikes &amp; scooters</span>
+      <span><svg class="ico"><use href="#i-heart"/></svg>Loved ones who may get confused</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COMMUNITY ================= -->
+<section class="community">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Community safety</span>
+      <h2>Safer <em class="o">together</em>.</h2>
+      <p class="lede">Every scan, report and alert makes the map a little smarter and the street a little safer for the next family, the next traveller, the next person walking home.</p>
+    </div>
+    <div class="circle">
+      <div class="c rv"><svg class="ico" style="color:var(--orange-dark)"><use href="#i-qr"/></svg><h3>Finders</h3><p>Anyone who scans a tag and helps something, or someone, get home.</p></div>
+      <div class="c rv"><svg class="ico" style="color:var(--orange-dark)"><use href="#i-users"/></svg><h3>Guardians</h3><p>Family and trusted carers who can respond when you can't.</p></div>
+      <div class="c rv"><svg class="ico" style="color:var(--orange-dark)"><use href="#i-pin"/></svg><h3>Reporters</h3><p>Members who flag hazards so the next person takes a better route.</p></div>
+      <div class="c rv"><svg class="ico" style="color:var(--orange-dark)"><use href="#i-compass"/></svg><h3>Local creators</h3><p>Travellers and locals who share the know-before-you-go tips behind our guides.</p></div>
+    </div>
+    <div class="stories">
+      <div class="story rv"><q>Our son wandered off at a theme park. A member of staff scanned his slap band and I had a message before I'd even started to panic.</q><div class="who">Example story · family day out</div></div>
+      <div class="story rv"><q>I check the area around every hotel before I book now. It's the first thing I do on any solo trip.</q><div class="who">Example story · solo traveller</div></div>
+      <div class="story rv"><q>Left my rucksack on a train. The guard scanned the tag and it was waiting at the next station.</q><div class="who">Example story · commuter</div></div>
+    </div>
+    <p class="ex-note">Example scenarios showing how Wiley Fox works. Real member stories are coming after launch.</p>
+  </div>
+</section>
+
+<!-- ================= PRICING ================= -->
+<section style="background:#fff">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Pricing</span>
+      <h2>Free to start. <em class="o">Pro</em> when it matters.</h2>
+    </div>
+    <div class="plans">
+      <div class="plan rv">
+        <h3>Free</h3><p class="muted">Everything most people need.</p>
+        <div class="price">£0 <small>forever</small></div>
+        <ul><li>Up to 3 active tags</li><li>3 emergency contacts</li><li>One-tap SOS</li><li>Medical ID profile</li><li>Street-level safety checks</li><li>Anonymous chat with finders</li></ul>
+        <a class="btn btn-ghost" href="/new/phase2/#account">Start free</a>
+      </div>
+      <div class="plan pro rv">
+        <span class="badge">Families</span>
+        <h3>Pro</h3><p class="muted">For families, frequent travellers and anything irreplaceable.</p>
+        <div class="price">£4 <small>/ month</small></div>
+        <ul><li>Unlimited tags and bulk codes</li><li>25 emergency contacts</li><li>Priority lost-child alerts</li><li>Family guardians and roles</li><li>Downloadable safety reports</li><li>Members' travel perks</li></ul>
+        <a class="btn btn-primary" href="/new/phase2/#account">Go Pro</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section>
+  <div class="wrap">
+    <div class="sec-head rv"><span class="eyebrow">FAQ</span><h2>Honest <em class="o">answers</em>.</h2></div>
+    <div class="faq">
+      <details><summary>Does the finder need to install an app?</summary><p>No. Any phone camera can scan the code. The finder lands on a private page showing only what you've chosen to share, and can message you straight away.</p></details>
+      <details><summary>Is my child's information safe?</summary><p>You choose exactly what a finder sees, and it can be as little as "please contact my parent". Your phone number and address are never shown, and you can edit or switch off a profile at any time. Children's profiles are always managed by a parent or guardian.</p></details>
+      <details><summary>What does a Medical ID band show when it's scanned?</summary><p>Only what you choose: for example allergies, conditions, medication, blood type and emergency contacts. You can update it in the app at any time and the band shows the change straight away. Every scan notifies you and your guardians.</p></details>
+      <details><summary>Where does the safety rating come from?</summary><p>From official police and government crime data. In England, Wales and Northern Ireland that's street-level data from data.police.uk, refreshed monthly. Scotland uses official data-zone statistics, and other countries use national and international sources. Ratings run from 1 (higher crime) to 5 (safest).</p></details>
+      <details><summary>Does SOS call the emergency services?</summary><p>No. SOS alerts your own emergency contacts with your live location. In an emergency, always call 999 in the UK or 112 in the EU first.</p></details>
+      <details><summary>What if a tag gets damaged or lost?</summary><p>Each tag links to an address we control, so you can deactivate a lost tag and link a new one to the same profile in seconds.</p></details>
+      <details><summary>Can schools, clubs or events order in bulk?</summary><p>Yes. Bulk packs of wristbands, slap bands and school name labels are available, with codes you can assign in the app.</p></details>
+      <details><summary>Can I cancel Pro any time?</summary><p>Yes. Cancel whenever you like and keep your free features.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINAL CTA + NEWSLETTER ================= -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="final rv">
+      <img class="fox" src="img/wiley-fox-logo.png" alt="">
+      <div style="position:relative;z-index:1">
+        <h2>The people you love deserve a way <em style="font-style:italic">home</em>.</h2>
+        <p>Get your first tag, set up your family circle and check your next destination, all free to start.</p>
+        <div class="ctas" style="margin-top:26px">
+          <a class="btn btn-dark" href="/new/phase2/#shop">Get your tag</a>
+          <a class="btn btn-light" href="/new/phase2/#map">Check a place</a>
+        </div>
+      </div>
+      <div class="news">
+        <b>Know Before You Go</b>
+        <p>The weekly email with safety tips, local insight and members' travel deals.</p>
+        <!-- DEV: wire to Beehiiv subscribe endpoint (newsletter = core owned asset). Add an age confirmation before launch. -->
+        <form id="newsForm" data-endpoint="">
+          <input type="email" required placeholder="you@email.com" aria-label="Email address">
+          <button class="btn btn-primary" type="submit">Subscribe</button>
+        </form>
+        <div class="ok" id="newsOk">Thanks, you're on the list.</div>
+        <small>Adults 18+. Unsubscribe any time. See our privacy policy.</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="brand" href="#top" style="padding:0"><img src="img/wiley-fox-logo.png" alt="">Wiley Fox</a>
+        <p style="margin-top:14px;max-width:34ch">Family, travel and community safety. Keeping kids, women and travellers safer, and bringing lost things home.</p>
+        <p style="margin-top:10px"><a href="https://www.thewileyfox.com" style="display:inline;color:var(--orange-dark);font-weight:600">www.thewileyfox.com</a></p>
+      </div>
+      <div><h4>Safety</h4><a href="#family">Family &amp; child safety</a><a href="#medical">Medical ID bands</a><a href="#sos">SOS &amp; women's safety</a><a href="#checks">Crime &amp; safety checks</a><a href="#lost">Lost &amp; found</a></div>
+      <div><h4>Travel</h4><a href="#know">Know before you go</a><a href="/new/guides/london/">City guides</a><a href="/new/phase2/#travel">My Travel</a><a href="/new/phase2/#book">Book a safe stay</a></div>
+      <div><h4>Shop</h4><a href="/new/phase2/#shop">Tags, bands &amp; stickers</a><a href="/new/phase2/#labels">School name labels</a><a href="/new/phase2/#tags">Link a tag</a><a href="/new/phase2/#account">Sign in</a></div>
+    </div>
+    <div class="legal">
+      <span>© 2026 Wiley Fox. All rights reserved.</span>
+      <!-- DEV: point to production legal pages -->
+      <span><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Cookies</a> · <a href="#">Contact</a></span>
+      <span>Crime data: data.police.uk (Open Government Licence) and official national sources.</span>
+    </div>
+  </div>
+</footer>
 
 <script>
 (function(){
-  // ---- product range: ACTIVE products from new/phase2/shop.json (19 Oct 2026) ----
-  var IMG={band:'img/slap-bands.webp',med:'img/medical-id-card.webp',twin:'img/kids-slap-band.webp',event:'img/sos-wristband.webp',fob:'img/keyfob-front.webp',pet:'img/keyfob-back.webp'};
-  var P=[
-    ['Medical ID Band','med','Allergies, conditions, medication and ICE contacts in one scan. Bright yellow so it gets noticed.','Medical','m',12.99],
-    ['Snap Wristband','band','Soft silicone slap band for days out, theme parks and school trips.','Kids','k',10.99],
-    ['Snap Wristband — Twin Pack','twin','Two snap bands, one for each child, linked to one family circle.','Kids','k',19.99],
-    ["Kids' School Safety Pack",'i-school','Bands, name labels and stickers for the new school year.','Kids','k',24.99],
-    ['Family Starter Pack','i-family','Bands, tags and stickers to set up the whole family in one go.','Family','',29.99],
-    ['Event Wristbands — 10 Pack','event','Tamper-evident bands for festivals, holidays and busy events.','Events','',12.99],
-    ['Pet Collar Tag','pet','A neighbour, vet or dog walker reaches you the moment they scan.','Pets','',11.99],
-    ['Whistle Keyring','fob','"Scan if found" key fob with a built-in safety whistle.','Keys','',9.99],
-    ['Leather Name Tag','i-bag','A classic bag tag with a scannable Wiley Fox code.','Bags','',14.99],
-    ['Travel and Luggage Pack','i-plane','Luggage stickers and tags for suitcases, cabin bags and passports.','Travel','',22.99],
-    ['Luggage Sticker Pack — 2','i-bag','Tough stickers for hard-shell cases. Lost at the airport, back to you.','Travel','',11.99],
-    ['QR Sticker Pack — 5','i-qr','For phones, laptops, scooters and water bottles.','Everyday','',9.99],
-    ['Mini QR Stickers — 24','i-qr',"Small stickers for keys, earbuds, remotes and kids' kit.",'Everyday','',11.99]
-  ];
-  var tb=document.getElementById('tbody');
-  function th(k){return IMG[k]?'<div class="th"><img src="'+IMG[k]+'" alt="" loading="lazy"></div>':'<div class="th"><svg class="ico"><use href="#'+k+'"/></svg></div>'}
-  tb.innerHTML=P.map(function(p){
-    return '<a class="tr" href="/new/phase2/#shop" data-q="'+(p[0]+' '+p[2]+' '+p[3]).toLowerCase().replace(/"/g,'')+'">'+th(p[1])+'<span class="nm">'+p[0]+'</span><span class="ds">'+p[2]+'</span><span class="chip '+p[4]+'">'+p[3]+'</span><span class="pr">£'+p[5].toFixed(2)+'</span><span class="go">Shop →</span></a>';
-  }).join('');
-  document.getElementById('tq').addEventListener('input',function(e){
-    var q=e.target.value.toLowerCase().trim();
-    tb.querySelectorAll('.tr').forEach(function(r){r.style.display=!q||r.dataset.q.indexOf(q)>=0?'':'none'});
-  });
+  // ---------- hex fields (decorative, deterministic) ----------
+  var COL=['#D7263D','#F46036','#FFC857','#A4C957','#3FA34D'];
+  function noise(x,y){return Math.sin(x*0.09+y*0.05)+Math.cos(y*0.11-x*0.04)*0.8+Math.sin((x+y)*0.035)*0.6}
+  function hexes(svg,W,H,r,opts){
+    if(!svg) return;
+    svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    var w=Math.sqrt(3)*r,h=1.5*r,out=[];
+    for(var row=-1;row*h<H+r;row++){
+      for(var col=-1;col*w<W+w;col++){
+        var cx=col*w+(row%2?w/2:0),cy=row*h;
+        var n=noise(cx/r*3,cy/r*3)+(opts.bias||0);
+        var i=n>1.3?4:n>0.5?3:n>-0.3?2:n>-1.1?1:0;
+        if(opts.safe) i=Math.min(4,i+1);
+        var d='';
+        for(var k=0;k<6;k++){var a=Math.PI/180*(60*k-30);d+=(k?'L':'M')+(cx+(r-1.2)*Math.cos(a)).toFixed(1)+' '+(cy+(r-1.2)*Math.sin(a)).toFixed(1)}
+        out.push('<path d="'+d+'Z" fill="'+COL[i]+'" fill-opacity="'+opts.op+'"/>');
+      }
+    }
+    svg.innerHTML=out.join('');
+  }
+  hexes(document.getElementById('heroHex'),600,640,22,{op:.5,bias:.6});
+  hexes(document.getElementById('phoneHex'),280,460,14,{op:.62,bias:.9,safe:true});
 
+  // ---------- nav ----------
+  var nav=document.getElementById('nav');
+  addEventListener('scroll',function(){nav.classList.toggle('scrolled',scrollY>8)},{passive:true});
   var b=document.getElementById('burger'),m=document.getElementById('mmenu');
   b.addEventListener('click',function(){var o=m.classList.toggle('open');b.setAttribute('aria-expanded',o)});
-  m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){m.classList.remove('open')})});
+  m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){m.classList.remove('open');b.setAttribute('aria-expanded',false)})});
 
+  // ---------- safety check search → prototype map ----------
   document.getElementById('checkForm').addEventListener('submit',function(e){
-    e.preventDefault(); var q=document.getElementById('checkQ').value.trim();
+    e.preventDefault();
+    var q=document.getElementById('checkQ').value.trim();
+    try{ if(q) sessionStorage.setItem('wfCheckQuery',q); }catch(_){}
     location.href='/new/phase2/'+(q?'?q='+encodeURIComponent(q):'')+'#map';
   });
 
+  // ---------- newsletter (DEV: replace with Beehiiv) ----------
   document.getElementById('newsForm').addEventListener('submit',function(e){
-    e.preventDefault(); var f=e.target,ep=f.getAttribute('data-endpoint');
-    if(ep) fetch(ep,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:f.querySelector('input').value})}).catch(function(){});
+    e.preventDefault();
+    var f=e.target,ep=f.getAttribute('data-endpoint');
+    if(ep){ fetch(ep,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:f.querySelector('input').value})}).catch(function(){}); }
     f.style.display='none'; document.getElementById('newsOk').style.display='block';
   });
 
+  // ---------- reveal on scroll ----------
+  var els=document.querySelectorAll('.rv');
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{rootMargin:'0px 0px -8% 0px'});
-    document.querySelectorAll('.rv').forEach(function(el){io.observe(el)});
-    var links={};document.querySelectorAll('.side a[data-s]').forEach(function(a){links[a.dataset.s]=a});
-    var so=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting&&links[x.target.id]){Object.keys(links).forEach(function(k){links[k].classList.remove('on')});links[x.target.id].classList.add('on')}})},{rootMargin:'-40% 0px -55% 0px'});
-    document.querySelectorAll('section[id]').forEach(function(s){so.observe(s)});
-  } else document.querySelectorAll('.rv').forEach(function(el){el.classList.add('in')});
+    els.forEach(function(el){io.observe(el)});
+  } else els.forEach(function(el){el.classList.add('in')});
 })();
 </script>
 </body>

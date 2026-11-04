@@ -2,6 +2,10 @@
 
 All notable changes to the WF-mapping repo. Newest first. Dates are commit dates (UTC). Design and architecture notes live in `Wiley-Fox-Dev-Handoff-v1.md` (§20 covers September 2026).
 
+## 2026-11-04 (Homepage v2 reverted)
+
+- **revert:** Barry preferred the light version, so `newhomepage/index.html` is restored from e7b80ae (cream, Fraunces + Inter, Medical ID section, 8-product grid). The console redesign remains in history at b203307.
+
 ## 2026-11-04 (Homepage v2: console redesign)
 
 - **change:** `/newhomepage` restyled after getdesign.md (Barry's chosen reference, full design freedom): near-black canvas (#141416), Geist + Geist Mono, hairline-ruled panels, mono kickers and 01–08 numbering, sticky left section sidebar (desktop), light "scan page" mock in the hero, Wiley orange as the single action colour, rating colours kept for data, Medical yellow for the Medical ID section.

@@ -2829,6 +2829,7 @@ const GLOBAL_CITIES = [
   { name: 'Chicago',       country: 'USA', iso: 'USA', lat: 41.8781, lng: -87.6298, rating: 3, tag: 'Stay aware',     homicide: 15.2, source: 'Chicago Police 2025 / Data Portal 2026', context: 'Homicides fell 29% in 2025 to the lowest since 1965 (416), but the rate is still high and concentrated in South and West Side residential neighbourhoods away from visitor areas. Downtown, theft and street scams are the main risks; crime in the Central district is down 9% in 2026 so far. Under-18s need an adult 21+ in Millennium Park after 6pm Fri-Sun.' },
   { name: 'San Francisco', country: 'USA', iso: 'USA', lat: 37.7749, lng: -122.4194,rating: 2, tag: 'Caution',        homicide: 6.1,  source: 'FBI UCR 2023 / SFPD', context: 'SF has significant property crime — vehicle break-ins and drug offences in the Tenderloin are frequent. Waterfront, Union Square and tourist areas are better policed. Live street-level data shown.' },
   { name: 'Los Angeles',   country: 'USA', iso: 'USA', lat: 34.0522, lng: -118.2437,rating: 2, tag: 'Caution',        homicide: 8.4,  source: 'FBI UCR 2023 / LAPD', context: 'LA is a city of contrasts. Hollywood, Santa Monica and Beverly Hills are lower-risk. Downtown, Skid Row and parts of South LA are significantly higher. Live incident data shown (to Dec 2024).' },
+  { name: 'Houston',       country: 'USA', iso: 'USA', lat: 29.7604, lng: -95.3698, rating: 2, tag: 'Caution',        homicide: 11.4, source: 'HPD NIBRS 2025 / US Census 2024', context: 'Houston recorded 272 murders in 2025 (11.4 per 100k residents), above the US average. Downtown, Midtown, the Museum District and the Galleria are busy visitor areas; vehicle break-ins are the most common crime affecting visitors, so keep bags out of sight in parked cars.' },
 ];
 
 const DEFAULT_CITIES = [
@@ -3303,6 +3304,9 @@ const US_CITY_APIS = {
   'San Francisco': { url: 'https://data.sf.gov/resource/wg3w-h783.json',         lat: 'latitude', lng: 'longitude', cat: 'incident_category',  date: 'incident_date',   daysBack: 30  },
   // LAPD NIBRS Offenses (k7nn-b2ep), from 7 Mar 2024. Replaces 2nrs-mtv8, which stopped on 30 Dec 2024
   // when LAPD moved to NIBRS. One row per offence; Group A only (Group B = arrest-only offences).
+  // Houston PD NIBRS monthly file (houstontx.gov). No CORS/API, so it is pre-built
+  // into a static JSON by scripts/houston/build_hpd.py and refreshed monthly.
+  'Houston':       { static: '/new/data/houston/hpd_latest.json', label: 'houstontx.gov (Houston Police Department NIBRS)', home: 'https://houstontx.gov/police/cs/Monthly_Crime_Data_by_Street_and_Police_Beat.htm', daysBack: 31 },
   'Los Angeles':   { url: 'https://data.lacity.org/resource/k7nn-b2ep.json',        lat: 'hndrdth_lat', lng: 'hndrdth_lon', cat: 'nibr_description', date: 'date_occ', daysBack: 30, extraWhere: "`group` = 'A'" },
 };
 
@@ -3329,6 +3333,100 @@ function mapUSCategory(type) {
   return 'other-crime';
 }
 
+// Houston (and any city whose police publish a monthly file instead of an API):
+// read the pre-built static JSON, then rate exactly like the live US cities.
+async function loadStaticUSCity(cityData, api) {
+  const d = await fetchJSON(api.static);
+  if (!d || !Array.isArray(d.rows)) throw new Error('UNEXPECTED_RESPONSE');
+  const { lat, lng } = cityData;
+  const r = 0.05; // ~5 km box, same as the live US cities
+  const crimes = [];
+  for (const row of d.rows) {
+    const [la, ln, ci, day, di, si] = row;
+    if (Math.abs(la - lat) > r || Math.abs(ln - lng) > r) continue;
+    crimes.push({
+      category: d.cats[ci] || 'other-crime',
+      location: { latitude: String(la), longitude: String(ln), street: { name: d.streets[si] || 'On or near street' } },
+      month: d.month,
+      description: d.descs[di] || '',
+    });
+  }
+  const [y, m] = d.month.split('-').map(Number);
+  const periodLabel = new Date(Date.UTC(y, m - 1, 1)).toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' }) + ' (latest complete month published by HPD)';
+  const R_M = 1609, mLat = 110540, mLng = 111320 * Math.cos(lat * Math.PI / 180);
+  const near = crimes.filter(c => Math.hypot((parseFloat(c.location.latitude) - lat) * mLat, (parseFloat(c.location.longitude) - lng) * mLng) <= R_M);
+  renderUSCity(cityData, crimes, periodLabel, { ratingCrimes: near, nearCount: near.length, scaled: false });
+  const pill = document.getElementById('sourcePill');
+  if (pill) pill.innerHTML = `Data: <a href="${api.home}" target="_blank" rel="noopener">${api.label}</a> · Map © OpenStreetMap`;
+}
+
+// ── Houston extras: Super Neighborhood context + local reporting resources ──
+// City of Houston / HPD "Crime Summary by Super Neighborhood" (ArcGIS, CORS-enabled).
+const HOU_SN_URL = 'https://services.arcgis.com/NummVBqZSIJKUeVR/ArcGIS/rest/services/HPD_Crime_Summary/FeatureServer/0/query';
+const HOU_SN_YEAR = 2024;
+let _houSNAll = null;
+function wfClearHoustonLayer() {
+  try {
+    if (map.getLayer('hou-sn-line')) map.removeLayer('hou-sn-line');
+    if (map.getLayer('hou-sn-fill')) map.removeLayer('hou-sn-fill');
+    if (map.getSource('hou-sn')) map.removeSource('hou-sn');
+  } catch (e) {}
+}
+async function renderHoustonPanels(cityData) {
+  const host = document.getElementById('houSNHost');
+  const res = document.getElementById('houResHost');
+  if (res) res.innerHTML = `<div style="margin:12px 24px 0;padding:12px 14px;background:var(--cream-light,#F2F4E5);border-radius:10px;font-size:12px;line-height:1.55">
+      <div style="font-family:Fraunces,serif;font-weight:700;font-size:14px;margin-bottom:4px">Reporting a concern in Houston</div>
+      <div>Emergency: call <strong>911</strong>.</div>
+      <div>Anonymous tips: <a href="https://crime-stoppers.org/crime-stoppers-anonymous-tips" target="_blank" rel="noopener" style="color:var(--orange)">Crime Stoppers of Houston</a>, 713-222-TIPS (8477).</div>
+      <div>Gang activity: <a href="http://stophoustongangs.org/" target="_blank" rel="noopener" style="color:var(--orange)">Stop Houston Gangs</a>, a multi-agency task force with HPD, takes tips and explains warning signs.</div>
+      <div>Official figures: <a href="https://houstontx.gov/police/cs/Monthly_Crime_Data_by_Street_and_Police_Beat.htm" target="_blank" rel="noopener" style="color:var(--orange)">HPD monthly crime data</a>.</div>
+    </div>`;
+  if (!host) return;
+  host.innerHTML = '<div class="loading" style="margin:12px 24px 0"><span class="spinner"></span> Loading neighbourhood figures…</div>';
+  const Y = HOU_SN_YEAR, F = n => `HPD_NIBRS_${n}_CNT_${Y}`;
+  const fields = ['SNBR', `HPD_NIBRS_CNT_${Y}`, F('AI'), F('AP'), F('AI_09A'), F('AI_13A'), F('AP_120')];
+  try {
+    const q = new URLSearchParams({ geometry: `${cityData.lng},${cityData.lat}`, geometryType: 'esriGeometryPoint', inSR: '4326', spatialRel: 'esriSpatialRelIntersects', outFields: fields.join(','), returnGeometry: 'true', outSR: '4326', geometryPrecision: '5', f: 'geojson' });
+    const [hit, all] = await Promise.all([
+      fetchJSON(`${HOU_SN_URL}?${q}`),
+      _houSNAll || fetchJSON(`${HOU_SN_URL}?` + new URLSearchParams({ where: '1=1', outFields: `HPD_NIBRS_CNT_${Y}`, returnGeometry: 'false', f: 'json' })),
+    ]);
+    if (hit && hit.error) throw new Error(hit.error.message || 'ArcGIS error');
+    _houSNAll = all;
+    // The card can be re-rendered while we wait, so look the host up again.
+    const live = document.getElementById('houSNHost');
+    if (!live || (typeof activeCityName !== 'undefined' && activeCityName !== cityData.name)) return;
+    const f = hit && hit.features && hit.features[0];
+    if (!f) { live.innerHTML = ''; return; }
+    const a = f.properties;
+    const totals = (all.features || []).map(x => x.attributes[`HPD_NIBRS_CNT_${Y}`]).filter(v => v != null).sort((p, q) => p - q);
+    const med = totals.length ? totals[Math.floor(totals.length / 2)] : null;
+    const total = a[`HPD_NIBRS_CNT_${Y}`];
+    const ratio = med ? total / med : null;
+    const rel = ratio == null ? '' : ratio >= 1.15 ? `${ratio.toFixed(1)}× the median neighbourhood` : ratio <= 0.85 ? `below the median neighbourhood (${ratio.toFixed(1)}×)` : 'close to the median neighbourhood';
+    const fmt = v => (v ?? 0).toLocaleString();
+    live.innerHTML = `<div style="margin:12px 24px 0;padding:12px 14px;background:var(--cream);border-radius:10px;font-size:12px;line-height:1.5">
+        <div style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:var(--charcoal-soft)">Houston Super Neighborhood · ${Y}</div>
+        <div style="font-family:Fraunces,serif;font-weight:700;font-size:16px;margin:2px 0 6px">${escapeHtml(a.SNBR || '')}</div>
+        <div style="display:flex;justify-content:space-between"><span>Offences recorded</span><strong>${fmt(total)}</strong></div>
+        ${rel ? `<div style="color:var(--charcoal-soft);font-size:11px;margin-bottom:4px">${rel} (median ${fmt(med)} across Houston's ${totals.length} Super Neighborhoods)</div>` : ''}
+        <div style="display:flex;justify-content:space-between"><span>Against persons</span><strong>${fmt(a[F('AI')])}</strong></div>
+        <div style="display:flex;justify-content:space-between"><span>Aggravated assaults</span><strong>${fmt(a[F('AI_13A')])}</strong></div>
+        <div style="display:flex;justify-content:space-between"><span>Robberies</span><strong>${fmt(a[F('AP_120')])}</strong></div>
+        <div style="display:flex;justify-content:space-between"><span>Murders</span><strong>${fmt(a[F('AI_09A')])}</strong></div>
+        <div style="color:var(--charcoal-soft);font-size:10.5px;margin-top:6px">Counts are not adjusted for population or visitor numbers, and HPD advises against comparing areas directly. Outlined on the map. Source: <a href="https://services.arcgis.com/NummVBqZSIJKUeVR/ArcGIS/rest/services/HPD_Crime_Summary/FeatureServer" target="_blank" rel="noopener" style="color:var(--orange)">City of Houston / HPD</a>.</div>
+      </div>`;
+    wfClearHoustonLayer();
+    map.addSource('hou-sn', { type: 'geojson', data: { type: 'FeatureCollection', features: [f] } });
+    map.addLayer({ id: 'hou-sn-fill', type: 'fill', source: 'hou-sn', paint: { 'fill-color': '#232323', 'fill-opacity': 0.04 } });
+    map.addLayer({ id: 'hou-sn-line', type: 'line', source: 'hou-sn', paint: { 'line-color': '#232323', 'line-width': 2, 'line-dasharray': [2, 2], 'line-opacity': 0.7 } });
+  } catch (e) {
+    console.warn('[houston SN]', e);
+    const live = document.getElementById('houSNHost'); if (live) live.innerHTML = '';
+  }
+}
+
 // Fetch live US city incidents and plot them on the map
 async function loadUSCity(cityData) {
   const api = US_CITY_APIS[cityData.name];
@@ -3348,6 +3446,7 @@ async function loadUSCity(cityData) {
   clearActivityMarkers();
 
   try {
+    if (api.static) { await loadStaticUSCity(cityData, api); return; }
     // Open-data portals publish with a lag (NYPD: quarterly), so anchor the window
     // to the newest record in the dataset rather than today's date.
     let latest = new Date();
@@ -3447,12 +3546,15 @@ function renderUSCity(cityData, crimes, periodLabel, opts = {}) {
       </button>
       ${cityData.context ? `<div class="warning" style="margin:12px 24px 0">${escapeHtml(cityData.context)}</div>` : ''}
       ${renderAdvisoryPanel(cityData.name)}
+      ${cityData.name === 'Houston' ? '<div id="houSNHost"></div>' : ''}
       <div id="govAdvHost"></div>
       <div id="usTravHost"></div>
+      ${cityData.name === 'Houston' ? '<div id="houResHost"></div>' : ''}
       ${cityGuideButtonHTML(cityData.name)}
     </div>
   `;
   renderFCDOPanel('United States', 'govAdvHost');
+  if (cityData.name === 'Houston') renderHoustonPanels(cityData);
 
   const catsHost = document.getElementById('catsHost');
   catsHost.innerHTML = sortedCats.length ? `
@@ -4620,7 +4722,7 @@ function wfNumbeoRankText(key) {
     return `Ranked <strong>${rank}</strong> safest of ${all.length} cities · `;
   } catch (e) { return ''; }
 }
-function wfClearUKNumbeo() { document.querySelectorAll('#numbeoUKHost').forEach(e => e.remove()); }
+function wfClearUKNumbeo() { document.querySelectorAll('#numbeoUKHost').forEach(e => e.remove()); if (typeof wfClearHoustonLayer === 'function') wfClearHoustonLayer(); }
 
 function calculateWFRating(crimes, cityName, country = 'United Kingdom', iso3 = 'GBR', cityHomicide = null) {
   let weighted = 0;

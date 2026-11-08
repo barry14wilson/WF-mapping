@@ -2,6 +2,19 @@
 
 All notable changes to the WF-mapping repo. Newest first. Dates are commit dates (UTC). Design and architecture notes live in `Wiley-Fox-Dev-Handoff-v1.md` (§20 covers September 2026).
 
+## 2026-11-08 (Houston added)
+
+- **feat:** Houston on `/new` and `/new/phase2`. Dots, hexes and the rating come from HPD's monthly NIBRS file (latest complete month, Group A only), pre-built into `new/data/houston/hpd_latest.json` by `scripts/houston/build_hpd.py` because HPD offers files, not an API. New `loadStaticUSCity()` handles any city fed this way.
+- **feat:** Houston city card adds a live "Super Neighborhood" panel (City of Houston / HPD ArcGIS, 2024 counts vs the median of 88 areas, outlined on the map) and a "Reporting a concern in Houston" panel (911, Crime Stoppers 713-222-TIPS, Stop Houston Gangs, HPD data).
+- **feat:** pipeline connector `connectors/us-houston-hpd.js` (`npm run connector:houston`), `categoriseNIBRS()` in `lib/normalise.js`, monthly scheduled function `scheduled-us-houston` (20th, 06:00 UTC), tests in `test/houston-hpd.test.js`.
+- **data:** Houston homicide input 11.4 per 100k (272 murders in HPD 2025 ÷ 2,390,125, Census 2024). Global score 29/100, band 2. Details in `scripts/houston/README.md`.
+
+## 2026-11-06 (One global safety scale)
+
+- **fix:** every city now uses one 0–100 Wiley Fox global score: 50% Numbeo safety index + 50% homicide sub-score, with live police / official area data moving it by at most ±10. London 54 (band 3), Tokyo 86 (5), Paris 56 (3). The circle always shows the 1–5 band; the score is explained underneath with benchmarks.
+- **fix:** the UK Numbeo panel was never cleared, so London's 55.3 / 44.7 appeared (often twice) on every city opened afterwards.
+- **feat:** gov.uk FCDO advice on every city card; Numbeo panel shows global rank; Numbeo lookup normalises USA/UAE country names.
+
 ## 2026-11-04 (Homepage v2 reverted)
 
 - **revert:** Barry preferred the light version, so `newhomepage/index.html` is restored from e7b80ae (cream, Fraunces + Inter, Medical ID section, 8-product grid). The console redesign remains in history at b203307.

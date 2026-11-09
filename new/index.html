@@ -3265,6 +3265,44 @@ async function handleSearch() {
 
 // --- Map click -------------------------------------------------------
 let cgClickSeq = 0;
+// US cities with live/street-level data: which one (if any) a point belongs to.
+// ~0.6° (≈55–65 km) covers the full city limits of NYC, Chicago, LA and Houston.
+function wfUSCityNear(lat, lng) {
+  let best = null, bd = 0.6;
+  for (const c of GLOBAL_CITIES) {
+    if (!US_CITY_APIS[c.name]) continue;
+    const d = Math.hypot(c.lat - lat, c.lng - lng);
+    if (d < bd) { bd = d; best = c; }
+  }
+  return best;
+}
+// Load a US city's crime data and rating centred on a clicked spot, named by neighbourhood.
+let wfUSClickSeq = 0;
+function wfLoadUSPoint(city, lat, lng) {
+  const id = ++wfUSClickSeq;
+  const go = ctx => {
+    if (id !== wfUSClickSeq) return;                  // user clicked again
+    const area = ctx && ctx.area && ctx.area !== city.name ? ctx.area : `Point (${lat.toFixed(3)}, ${lng.toFixed(3)})`;
+    loadUSCity({ ...city, lat, lng, areaLabel: area, isPoint: true });
+  };
+  cgReverseArea(lat, lng).then(go, () => go(null));
+}
+// "Check safety here" from a hex popup (UK and US alike)
+function wfCheckHere(lat, lng) {
+  document.querySelectorAll('.maplibregl-popup').forEach(p => p.remove());
+  if (isUKCoords(lat, lng)) {
+    const clickId = ++cgClickSeq;
+    cgReverseArea(lat, lng).then(ctx => {
+      if (clickId !== cgClickSeq) return;
+      if (ctx) { cgPointCtx = { ...ctx, lat, lng, label: `${ctx.area}, ${ctx.city}` }; loadCity(cgPointCtx.label, lat, lng); }
+      else { cgPointCtx = null; loadCity(`Point (${lat.toFixed(3)}, ${lng.toFixed(3)})`, lat, lng); }
+    });
+  } else {
+    const c = wfUSCityNear(lat, lng);
+    if (c) wfLoadUSPoint(c, lat, lng);
+  }
+}
+
 map.on('click', e => {
   const hits = map.queryRenderedFeatures(e.point, {
     layers: ['hex-fill', 'scot-dz-fill'].filter(l => map.getLayer(l)),
@@ -3282,6 +3320,9 @@ map.on('click', e => {
         loadCity(cgPointCtx.label, lat, lng);
       } else { cgPointCtx = null; loadCity(label, lat, lng); }
     });
+  } else if (wfUSCityNear(lat, lng)) {
+    // US live-data cities: load crime + rating for the clicked spot, like the UK
+    wfLoadUSPoint(wfUSCityNear(lat, lng), lat, lng);
   } else {
     // Find nearest global city for context, or show generic global notice
     const nearest = GLOBAL_CITIES.reduce((best, c) => {
@@ -3335,8 +3376,9 @@ function mapUSCategory(type) {
 
 // Houston (and any city whose police publish a monthly file instead of an API):
 // read the pre-built static JSON, then rate exactly like the live US cities.
-async function loadStaticUSCity(cityData, api) {
+async function loadStaticUSCity(cityData, api, tok) {
   const d = await fetchJSON(api.static);
+  if (tok != null && wfUSStale(tok, cityData)) return;
   if (!d || !Array.isArray(d.rows)) throw new Error('UNEXPECTED_RESPONSE');
   const { lat, lng } = cityData;
   const r = 0.05; // ~5 km box, same as the live US cities
@@ -3428,12 +3470,33 @@ async function renderHoustonPanels(cityData) {
 }
 
 // Fetch live US city incidents and plot them on the map
+// Only the newest US load may render (a slow earlier fetch must not overwrite a later click).
+let wfUSLoadSeq = 0;
+// City open-data portals (Socrata) return the odd 503 under load; retry once before giving up.
+// A hung portal must not leave the spinner up forever, so each attempt times out.
+async function wfFetchRetry(url, ms = 20000, tries = 2) {
+  for (let i = 0; i < tries; i++) {
+    const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), ms);
+    try {
+      const r = await fetch(url, { headers: { 'Accept': 'application/json' }, signal: ctl.signal });
+      clearTimeout(t);
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return await r.json();
+    } catch (e) {
+      clearTimeout(t);
+      if (i === tries - 1) throw e;
+      await new Promise(res => setTimeout(res, 1500));
+    }
+  }
+}
+function wfUSStale(tok, cityData) { return tok !== wfUSLoadSeq || activeCityName !== cityData.name; }
 async function loadUSCity(cityData) {
   const api = US_CITY_APIS[cityData.name];
   if (!api) { renderGlobalCity(cityData); return; }
+  const tok = ++wfUSLoadSeq;
 
   activeCityName = cityData.name;
-  map.flyTo({ center: [cityData.lng, cityData.lat], zoom: 12.5, duration: 1200 });
+  map.flyTo({ center: [cityData.lng, cityData.lat], zoom: cityData.isPoint ? Math.max(map.getZoom(), 13) : 12.5, duration: 1200 });
   clearHotspotLayers();
   if (map.getSource('crimes')) map.getSource('crimes').setData({ type: 'FeatureCollection', features: [] });
   document.getElementById('ratingHost').innerHTML = '<div class="loading"><span class="spinner"></span> Pulling live crime data…</div>';
@@ -3446,12 +3509,12 @@ async function loadUSCity(cityData) {
   clearActivityMarkers();
 
   try {
-    if (api.static) { await loadStaticUSCity(cityData, api); return; }
+    if (api.static) { await loadStaticUSCity(cityData, api, tok); return; }
     // Open-data portals publish with a lag (NYPD: quarterly), so anchor the window
     // to the newest record in the dataset rather than today's date.
     let latest = new Date();
     try {
-      const mx = await fetchJSON(`${api.url}?%24select=${encodeURIComponent(`max(${api.date}) as m`)}`);
+      const mx = await wfFetchRetry(`${api.url}?%24select=${encodeURIComponent(`max(${api.date}) as m`)}`, 8000, 1);
       if (mx && mx[0] && mx[0].m) { const d = new Date(mx[0].m); if (!isNaN(d) && d < latest) latest = d; }
     } catch (e) { /* fall back to today */ }
     const cutoff = new Date(latest);
@@ -3472,7 +3535,8 @@ async function loadUSCity(cityData) {
     const sel = [api.lat, api.lng, api.cat, api.date, 'block', 'location_description'].filter((v, i, a) => a.indexOf(v) === i);
     const cols = api.cat === 'primary_type' ? sel : sel.filter(c => c !== 'block' && c !== 'location_description');
     const url = `${api.url}?%24limit=${LIMIT}&%24select=${encodeURIComponent(cols.join(','))}&%24order=${encodeURIComponent(api.date + ' DESC')}&%24where=${encodeURIComponent(where)}`;
-    const raw = await fetchJSON(url);
+    const raw = await wfFetchRetry(url);
+    if (wfUSStale(tok, cityData)) return;
     if (!Array.isArray(raw)) throw new Error('UNEXPECTED_RESPONSE');
 
     const crimes = raw
@@ -3503,10 +3567,16 @@ async function loadUSCity(cityData) {
     if (pill) { const host = new URL(api.url).host; pill.innerHTML = `Data: <a href="https://${host}" target="_blank" rel="noopener">${host}</a> (city open data) · Map © OpenStreetMap`; }
 
   } catch (err) {
+    if (wfUSStale(tok, cityData)) return;
     console.warn('[loadUSCity]', err);
     const pill = document.getElementById('sourcePill'); if (pill) pill.innerHTML = 'Map © OpenStreetMap';
-    // Graceful fallback to index card
+    // Graceful fallback to index card, saying why there are no street-level dots
     renderGlobalCity(cityData);
+    const rh = document.getElementById('ratingHost');
+    if (rh && api.url) {
+      const host = new URL(api.url).host;
+      rh.insertAdjacentHTML('afterbegin', `<div class="warning" style="margin:0 24px 12px"><strong>Street-level data is temporarily unavailable.</strong> ${escapeHtml(host)} isn't responding right now, so this shows the city-wide rating${cityData.areaLabel ? ` rather than ${escapeHtml(cityData.areaLabel)}` : ''}. Try again in a minute.</div>`);
+    }
   }
 }
 
@@ -3524,7 +3594,7 @@ function renderUSCity(cityData, crimes, periodLabel, opts = {}) {
     <div class="section" style="padding-top:20px;padding-bottom:20px">
       <div class="rating-card">
         <div class="label">Wiley Fox rating · live data</div>
-        <div class="city-name">${escapeHtml(cityData.name)}</div>
+        <div class="city-name">${escapeHtml(cityData.areaLabel ? `${cityData.areaLabel}, ${cityData.name}` : cityData.name)}</div>
         <div class="rating-display">
           <div class="rating-orb" style="background:${color}">${display}</div>
           <div class="rating-info">
@@ -3596,7 +3666,7 @@ function renderUSCity(cityData, crimes, periodLabel, opts = {}) {
   plotCrimes({ type: 'FeatureCollection', features }, cityData.lat, cityData.lng);
 
   // Snapshot for the detailed Safety Report panel + PDF download
-  lastReport = { name: cityData.name, lat: cityData.lat, lng: cityData.lng, crimes, month: null, monthLabel: periodLabel, rating, sortedCats, counts };
+  lastReport = { name: cityData.areaLabel ? `${cityData.areaLabel}, ${cityData.name}` : cityData.name, lat: cityData.lat, lng: cityData.lng, crimes, month: null, monthLabel: periodLabel, rating, sortedCats, counts };
 }
 
 // --- EU hotspot zones (hand-researched, plotted as map overlays) ------
@@ -3702,6 +3772,7 @@ function plotEUHotspots(cityName) {
 // --- Global city loader ----------------------------------------------
 function loadGlobalCity(cityData) {
   wfClearUKNumbeo();
+  wfUSLoadSeq++;
   activeCityName = cityData.name;
 
   // Clear previous layers
@@ -4954,7 +5025,7 @@ function hexRound(q, r) {
 let hexPopupsInitialised = false;
 function plotCrimes(geojson, centerLat, centerLng) {
   if (!map.isStyleLoaded()) {
-    map.once('load', () => plotCrimes(geojson, centerLat, centerLng));
+    map.once('idle', () => plotCrimes(geojson, centerLat, centerLng));
     return;
   }
   const pts = geojson.features;
@@ -5044,7 +5115,7 @@ function plotCrimes(geojson, centerLat, centerLng) {
             : 'No incidents recorded this month — not enough data to grade';
           new maplibregl.Popup({ closeButton: true })
             .setLngLat(e.lngLat)
-            .setHTML(`<div style="font-family:Inter,sans-serif;padding:4px"><strong style="color:${p.color}">${p.label}</strong><br><span style="font-size:12px;color:#666">${detail}</span></div>`)
+            .setHTML(`<div style="font-family:Inter,sans-serif;padding:4px"><strong style="color:${p.color}">${p.label}</strong><br><span style="font-size:12px;color:#666">${detail}</span><br><a href="#" onclick="wfCheckHere(${e.lngLat.lat.toFixed(5)}, ${e.lngLat.lng.toFixed(5)});return false" style="display:inline-block;margin-top:6px;font-size:12px;font-weight:600;color:var(--orange,#FF7B14);text-decoration:none">Check safety here &rarr;</a></div>`)
             .addTo(map);
         });
         map.on('mouseenter', 'hex-fill', () => map.getCanvas().style.cursor = 'pointer');
@@ -6581,7 +6652,7 @@ async function loadPOILayer(lat, lng) {
   const features = await fetchPOIs(lat, lng);
   if (!features.length) return;
 
-  if (!map.isStyleLoaded()) { map.once('load', () => loadPOILayer(lat, lng)); return; }
+  if (!map.isStyleLoaded()) { map.once('idle', () => loadPOILayer(lat, lng)); return; }
 
   map.addSource('poi-source', {
     type: 'geojson',
@@ -7938,7 +8009,7 @@ function showGlobalMapEmptyState() {
 const WORLD_GEOJSON_URL = 'https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson';
 
 async function loadChoropleth() {
-  if (!map.isStyleLoaded()) { map.once('load', loadChoropleth); return; }
+  if (!map.isStyleLoaded()) { map.once('idle', loadChoropleth); return; }
 
   if (choroplethLoaded) {
     ['country-fill','country-line','country-hover'].forEach(id => {

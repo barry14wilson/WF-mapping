@@ -2,6 +2,13 @@
 
 All notable changes to the WF-mapping repo. Newest first. Dates are commit dates (UTC). Design and architecture notes live in `Wiley-Fox-Dev-Handoff-v1.md` (§20 covers September 2026).
 
+## 2026-11-09 (Click anywhere in US cities)
+
+- **fix:** clicking anywhere in New York, Chicago, San Francisco, Los Angeles or Houston now loads crime data and the rating for that spot, named by neighbourhood (e.g. "Lincoln Park, Chicago", "Uptown, Houston"), like the UK. Previously any non-UK click snapped back to the nearest city centre. New `wfUSCityNear()` / `wfLoadUSPoint()`; Houston's Super Neighborhood card follows the clicked spot.
+- **feat:** hex popups (UK and US) have a "Check safety here" link that loads that spot.
+- **fix:** crime hexes, place pins and the country colouring waited for the map's one-off `load` event; if tiles were still streaming (e.g. mid fly-to) they never drew. They now wait for `idle`.
+- **fix:** only the newest US load may render (a slow earlier request could overwrite a later click). City portal requests time out after 20 s and retry once; if a portal is down the card says "street-level data temporarily unavailable" instead of silently showing the city-wide card.
+
 ## 2026-11-08 (Houston added)
 
 - **feat:** Houston on `/new` and `/new/phase2`. Dots, hexes and the rating come from HPD's monthly NIBRS file (latest complete month, Group A only), pre-built into `new/data/houston/hpd_latest.json` by `scripts/houston/build_hpd.py` because HPD offers files, not an API. New `loadStaticUSCity()` handles any city fed this way.

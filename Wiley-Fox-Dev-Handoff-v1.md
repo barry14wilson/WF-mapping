@@ -2,7 +2,7 @@
 
 **Status:** Ready for dev kickoff
 **Scope:** UK England, Wales & Northern Ireland (Scotland deferred to v2)
-**Date:** 2026-04-29 · **Last updated:** 2026-11-09 (v2.0 — one global safety scale §5, Houston §23, North America street-level coverage §24)
+**Date:** 2026-04-29 · **Last updated:** 2026-11-09 (v2.1 — global scale §5, Houston §23, North America §24, Tokyo / Netherlands / Europe / Asia §25)
 **Owner:** Barry Wilson
 
 ---
@@ -1039,6 +1039,13 @@ Live street-level data now covers 33 US cities (New York, Chicago, San Francisco
 - **Annual maintenance:** Detroit's layer is per year (`RMS_Crime_Incidents_<YEAR>`), Kansas City's dataset is per year (`KCPD Crime Data <YEAR>`), New Orleans calls for service is per year (`Calls for Service <YEAR>`): update the URLs each January. Refresh FBI homicide rates when the FBI publishes the next year.
 
 Sources, filters, freshness and the cities checked but not added are listed in `CHANGELOG.md` (2026-11-09). None of these feeds are in the Neon pipeline yet; they are read live in the page. Only Houston has a pipeline connector (§23).
+
+## 25. Area-count cities, Europe and Asia (November 2026)
+
+- **Area-count layers** (`loadAggregateCity`): police data published as counts per small area is drawn at each area's centre as a monthly average, then rated like street-level data. Tokyo (street blocks, `scripts/tokyo/`) and Amsterdam, Rotterdam, The Hague, Utrecht (neighbourhoods, `scripts/netherlands/`). Both refresh monthly via their build scripts, then redeploy. Set `radius` on these entries so the data is never used outside its coverage.
+- **Europe:** 70 places in `OFFICIAL_AREA` (Eurostat NUTS 3 vs national, France SSMSI, Scotland, Ireland). To add a city: add it to `EU_CITIES` in `scripts/official-area/build_official.py` with its NUTS 3 code, run the script, paste `data/official_data.js` over `OFFICIAL_AREA` in both pages, and add a `GLOBAL_CITIES` row.
+- **Asia:** street-level open data exists only for Tokyo among the places checked. Others are city-level cards (Numbeo + national homicide rate). Next candidates: Osaka 2025 annual data (7 street crimes), Berlin district atlas, Mexico City (point data).
+- Sources and the full checked-not-added list are in `CHANGELOG.md` (2026-11-09 batch 4).
 
 ---
 

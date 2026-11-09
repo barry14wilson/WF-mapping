@@ -2,6 +2,26 @@
 
 All notable changes to the WF-mapping repo. Newest first. Dates are commit dates (UTC). Design and architecture notes live in `Wiley-Fox-Dev-Handoff-v1.md` (§20 covers September 2026).
 
+## 2026-11-09 (Batch 4: Tokyo street blocks, Dutch neighbourhoods, 43 more European cities, 24 Asian city cards)
+
+### Maps (`/new` and `/new/phase2`)
+- **feat:** **Tokyo** now has near-street-level detail: Tokyo Metropolitan Police recorded offences for every street block (町丁目), 36 crime types, Jan–Sep 2026 (80,789 offences, 99.6% placed), shown as a monthly average at each block's centre. Click anywhere in Tokyo (e.g. "Shibuya, Tokyo"). Tokyo's score moves from 86 to 95 now that its own police data counts (centre is low-crime).
+- **feat:** **Amsterdam, Rotterdam, The Hague, Utrecht** get neighbourhood-level layers from Dutch police monthly counts per *buurt* (Jul–Sep 2026 average, 12,867 crimes/month placed). Amsterdam switches from the Eurostat area card to this finer data.
+- **feat:** **43 more European cities** with official area-level data (Eurostat police-recorded offences vs national average): Madrid, Seville, Valencia, Málaga, Palma, Granada, Bilbao, Porto, Prague, Budapest, Warsaw, Kraków, Copenhagen, Stockholm, Oslo, Helsinki, Brussels, Antwerp, Bruges, Hamburg, Frankfurt, Dresden, Zürich, Geneva, Bratislava, Ljubljana, Zagreb, Split, Dubrovnik, Riga, Tallinn, Vilnius, Valletta, Reykjavík, Bucharest, Sofia, Salzburg, Innsbruck, Bologna, Turin, Palermo, Verona, Pisa. `OFFICIAL_AREA` now holds 70 places (the 27 existing entries are unchanged).
+- **feat:** **city-level cards** for Osaka, Kyoto, Yokohama, Kawasaki, Saitama, Chiba, Seoul, Busan, Hong Kong, Taipei, Kuala Lumpur, Hanoi, Ho Chi Minh City, Phuket, Chiang Mai, Manila, Jakarta, Abu Dhabi, Doha, Delhi, Mumbai, Shanghai, Beijing and Athens.
+- **feat:** new `loadAggregateCity()` for police data published as counts per small area; `US_CITY_APIS` entries can set `radius` so a feed is only used within its coverage (Tokyo 0.45°, Dutch cities 0.08–0.12°). Yokohama/Kawasaki/Saitama/Chiba cards stop Tokyo's data being used outside Tokyo.
+- **fix:** Numbeo name matching for Palma, Kraków, The Hague, Hong Kong and Washington DC; Czechia now matches Numbeo's "Czech Republic". Macau dropped (no Numbeo or homicide data, so no honest rating).
+- **fix:** the source credit no longer shows the previous city's source on city-level cards.
+
+### Data sources added
+| Place | Source | Granularity | Period |
+|---|---|---|---|
+| Tokyo | [Tokyo Metropolitan Police — 区市町村の町丁別、罪種別及び手口別認知件数 (`R8.csv`)](https://www.keishicho.metro.tokyo.lg.jp/about_mpd/jokyo_tokei/jokyo/ninchikensu.html) + [MLIT 位置参照情報 block centres](https://nlftp.mlit.go.jp/isj/) | Street block (町丁目), 36 crime types | Jan–Sep 2026 (updated 15 Oct 2026) |
+| Amsterdam, Rotterdam, The Hague, Utrecht | [Politie / CBS 47022NED registered crimes by neighbourhood, monthly](https://data.politie.nl/#/Politie/nl/dataset/47022NED) + [PDOK Wijk- en Buurtkaart 2025](https://service.pdok.nl/cbs/wijkenbuurten/2025/wfs/v1_0?service=WFS&request=GetCapabilities) | Neighbourhood (buurt), 25 offence types kept | Jul–Sep 2026 (final) |
+| 43 European cities | [Eurostat `crim_gen_reg`](https://ec.europa.eu/eurostat/databrowser/view/crim_gen_reg/default/table) (already in `scripts/official-area/data/eu_by_year.json`) | NUTS 3 region vs national | 2024 (2023 where 2024 not yet published: Rotterdam, The Hague, Utrecht, Riga, Bologna, Verona, Pisa) |
+
+- **checked, not added (with reasons):** Osaka (2025 annual data for 7 street crimes sits on a separate prefectural open-data site that blocked automated access; [notes page](https://www.police.pref.osaka.lg.jp/seikatsu/24615.html)) · Kyoto (PDF statistics only) · Taipei ([burglary points](https://data.gov.tw/dataset/130312) are address ranges, ~30 a month; would need mass geocoding) · Singapore ([data.gov.sg](https://data.gov.sg/datasets/d_5767147db6e5b4c4cfa874db132fef39/view): annual counts by police division only) · Athens (Greece reports Attica only to Eurostat) · Mexico City (open data portal unreachable from our build environment; to retry from the Mac) · Berlin district-level atlas (yearly; candidate for the next batch) · Seoul, Hong Kong, Bangkok, Dubai and other Asian cities (no open local data found).
+
 ## 2026-11-09 (Batch 3: 23 more street-level cities, 41 city-level cards — US, Canada, Australia)
 
 ### Maps (`/new` and `/new/phase2`)

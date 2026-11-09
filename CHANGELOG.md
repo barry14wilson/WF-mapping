@@ -2,6 +2,48 @@
 
 All notable changes to the WF-mapping repo. Newest first. Dates are commit dates (UTC). Design and architecture notes live in `Wiley-Fox-Dev-Handoff-v1.md` (§20 covers September 2026).
 
+## 2026-11-09 (Batch 3: 23 more street-level cities, 41 city-level cards — US, Canada, Australia)
+
+### Maps (`/new` and `/new/phase2`)
+- **feat:** street-level dots, hexes, global score and click-anywhere for **20 more US cities** (Nashville, Fort Worth, Columbus, Charlotte, Omaha, Raleigh, Long Beach, Minneapolis, Tampa, Wichita, Detroit, Cleveland, Baltimore, Kansas City, Oakland, Mesa, Baton Rouge, Buffalo, New Orleans, Boise) and **3 Canadian cities** (Toronto, Montréal, Halifax). Street-level coverage is now 36 cities outside the UK/Ireland.
+- **feat:** **city-level cards** (global score from Numbeo + homicide rate, FCDO/US advice, guide links; labelled "city-level") for 26 US cities without open street-level data (Austin, Orlando, Atlanta, Pittsburgh, Phoenix, San Antonio, San Jose, Jacksonville, Indianapolis, Portland, Memphis, Honolulu, Salt Lake City, St. Louis, Cincinnati, Milwaukee, Louisville, Sacramento, Tucson, Albuquerque, El Paso, Oklahoma City, Anchorage, Savannah, Charleston, Richmond), 6 Canadian (Vancouver, Calgary, Edmonton, Winnipeg, Ottawa, Québec City) and 9 Australian (Melbourne, Brisbane, Perth, Adelaide, Gold Coast, Canberra, Hobart, Darwin, Cairns).
+- **feat:** readers extended: Socrata `point` columns and numeric lat/lng, a CKAN "newest rows" reader (Montréal), per-city `include` / `exclude` category filters and `catMap` (French SPVM categories).
+- **fix:** a click now snaps to the nearest city overall and only loads street data if *that* city has a feed (a Phoenix click no longer loads Mesa's feed and shows falsely low crime).
+- **fix:** non-crime records filtered out: Wichita (traffic, found property, mental-health and "misc report" categories; central 1-mile count 1,974 → 818) and Columbus (missing persons, aid and transport, lost property, DOA, etc.).
+- **fix:** global city cards with no city homicide rate now say "national homicide rate used" instead of "null".
+- **fix:** the FCDO panel on live-data cards uses the city's own country (Canada now uses this path).
+- **note:** labelled "partial public data": Tampa (public extract only) and New Orleans (NOPD calls for service filtered to crime types; NOLA publishes no geocoded incident file). Detroit's feed is one layer per year (`RMS_Crime_Incidents_2026`): switch the URL each January. Halifax's layer holds about a week, so counts are scaled to a month.
+
+### Data sources added
+| City | Source | Records used | Newest record (9 Nov) |
+|---|---|---|---|
+| Nashville | [MNPD Incidents (ArcGIS view)](https://services2.arcgis.com/HdTo6HJqh92wn4D8/arcgis/rest/services/Metro_Nashville_Police_Department_Incidents_view/FeatureServer/0) | All | 8 Nov 2026 |
+| Fort Worth | [FWPD Crime Data Points (ArcGIS)](https://mapit.fortworthtexas.gov/ags/rest/services/CIVIC/Crime_Data/MapServer/0) | All | 8 Nov 2026 |
+| Columbus | [Columbus Police Incident Reports (ArcGIS)](https://services1.arcgis.com/9yy6msODkIBzkUXU/arcgis/rest/services/Police_Incident_Reports/FeatureServer/0) | Non-crime subjects excluded | 6 Nov 2026 |
+| Charlotte | [CMPD Incidents (ArcGIS)](https://gis.charlottenc.gov/arcgis/rest/services/CMPD/CMPDIncidents/MapServer/0) | All | 7 Nov 2026 |
+| Omaha | [Omaha Police Incident Data (ArcGIS view)](https://services1.arcgis.com/tIBLyYZX96jUntYm/arcgis/rest/services/Omaha_Police_Incident_Data_(View)/FeatureServer/0) | All (block-level points) | 9 Nov 2026 |
+| Raleigh | [Raleigh Police Incidents NIBRS (ArcGIS)](https://services.arcgis.com/v400IkDOw1ad7Yad/arcgis/rest/services/Police_Incidents/FeatureServer/0) | Excl. `MISCELLANEOUS` | 9 Nov 2026 |
+| Long Beach | [LBPD Police Crime Mapping (ArcGIS)](https://services6.arcgis.com/yCArG7wGXGyWLqav/arcgis/rest/services/Police_Crime_Mapping/FeatureServer/0) | All | 7 Oct 2026 |
+| Minneapolis | [MPD Crime Data (ArcGIS)](https://services.arcgis.com/afSMGVsC7QlRK1kZ/arcgis/rest/services/Crime_Data/FeatureServer/0) | Excl. "Additional Crime Metrics" duplicates | 6 Nov 2026 |
+| Tampa | [TPD crimes_public_365days (ArcGIS)](https://services1.arcgis.com/IbNXlmt2RVVRCZ6M/arcgis/rest/services/crimes_public_365days/FeatureServer/0) | Group A; partial extract | 8 Nov 2026 |
+| Wichita | [WPD Crime Incidents 90 days (ArcGIS)](https://gismaps.wichita.gov/ageweb/rest/services/OpenData/Crime/MapServer/0) | Non-crime categories excluded | 8 Nov 2026 |
+| Detroit | [DPD RMS Crime Incidents 2026 (ArcGIS)](https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/RMS_Crime_Incidents_2026/FeatureServer/0) | All | 9 Nov 2026 |
+| Cleveland | [CDP Crime Incidents P1RMS (ArcGIS)](https://services3.arcgis.com/dty2kHktVXHrqO8i/arcgis/rest/services/Crime_Incidents_P1RMS/FeatureServer/0) | All | 9 Nov 2026 |
+| Baltimore | [BPD NIBRS Group A Crime Data (ArcGIS)](https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/NIBRS_GroupA_Crime_Data/FeatureServer/0) | Group A (replaces the legacy file that ended Dec 2024) | 3 Nov 2026 |
+| Boise | [BPD Crimes Public (ArcGIS)](https://services1.arcgis.com/WHM6qC35aMtyAAlN/arcgis/rest/services/BPD_Crimes_Public/FeatureServer/0) | Charge category A | 29 Oct 2026 |
+| Kansas City | [KCPD Crime Data 2026 (Socrata `f7wj-ckmw`)](https://data.kcmo.org/resource/f7wj-ckmw.json) | All | 9 Nov 2026 |
+| Oakland | [OPD CrimeWatch Data (Socrata `ppgh-7dqv`)](https://data.oaklandca.gov/resource/ppgh-7dqv.json) | All | 8 Nov 2026 |
+| Mesa | [Mesa PD Criminal Offenses (Socrata `t445-fism`)](https://citydata.mesaaz.gov/resource/t445-fism.json) | Offense group A | 7 Nov 2026 |
+| Baton Rouge | [BRPD Crime Incidents (Socrata `pbin-pcm7`)](https://data.brla.gov/resource/pbin-pcm7.json) | All | 5 Oct 2026 |
+| Buffalo | [BPD Crime Incidents (Socrata `d6g9-xbgu`)](https://data.buffalony.gov/resource/d6g9-xbgu.json) | All | 8 Nov 2026 |
+| New Orleans | [NOPD Calls for Service 2026 (Socrata `es9j-6y5d`)](https://data.nola.gov/resource/es9j-6y5d.json) | Crime call types only; partial | 8 Nov 2026 |
+| Toronto | [TPS YTD_CRIME_WM (ArcGIS)](https://services.arcgis.com/S9th0jAJ7bqgIRjw/arcgis/rest/services/YTD_CRIME_WM/FeatureServer/0) | Major crime indicators; withheld locations (0,0) dropped | 8 Nov 2026 |
+| Montréal | [SPVM Actes criminels (CKAN datastore)](https://donnees.montreal.ca/dataset/actes-criminels) | All; points snapped to intersections by SPVM | 6 Nov 2026 |
+| Halifax | [HRP Crime (ArcGIS)](https://services2.arcgis.com/11XBiaBYA9Ep0yNJ/arcgis/rest/services/Crime/FeatureServer/0) | All (about one week held) | 8 Nov 2026 |
+
+- **data (homicide inputs):** US street-level and city-level cities use the **FBI UCR 2024** murder rate per 100k (Table 8, as compiled in [Wikipedia: List of US cities by crime rate](https://en.wikipedia.org/wiki/List_of_United_States_cities_by_crime_rate)), except where FBI 2024 has no row: Atlanta 18.8 (98 homicides in 2025, [CBS News](https://www.cbsnews.com/atlanta/news/atlanta-records-lowest-homicide-total-since-2018-officials-say)), Orlando 3.0 (10 in 2025, [Spectrum News](https://spectrumlocalnews.com/orlando/news/2026/02/14/orlando-crime-homicides-decrease)), Jacksonville 7.8 (79 murders in 2025, [News4JAX](https://www.news4jax.com/news/local/2026/01/02/jacksonvilles-2025-homicide-data-reveals-spikes-in-certain-areas-but-only-1-gang-related-death-a-7-year-olds-murder)), New Orleans 29.8 (108 murders in 2025, [GNO Inc.](https://gnoinc.org/news/gno-inc-sunday-night-highlight-a-historic-year-for-lower-crime-in-new-orleans/), cross-checked by [Louisiana Data News](https://ladatanews.com/?p=14733)), Baton Rouge 23.5 (52 murder incidents in BRPD's own 2025 feed). Populations from [US Census Vintage 2024](https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/cities/totals/sub-est2024.csv). Canada: [Statistics Canada 2024 homicide rates by CMA](https://www150.statcan.gc.ca/n1/daily-quotidien/251202/t003a-eng.htm) (Toronto updated 1.8 → 1.9). Australia: national rate (no city rate used).
+- **checked, not added as street-level:** Ottawa ([open data](https://services7.arcgis.com/2vhcNzw0NfUwAD3d/arcgis/rest/services/Criminal_Offences_Open_Data/FeatureServer/0) is released yearly; newest record 31 Dec 2025) · Pittsburgh ([WPRDC 30-day blotter](https://data.wprdc.org/api/3/action/datastore_search?resource_id=1797ead8-8262-41cc-9099-cbc8a161924b&limit=1) has no 2026 rows) · Vancouver (VPD GeoDASH is a file download only) · Australia (state police publish counts by suburb/LGA, not points) · Austin ([no coordinates](https://data.austintexas.gov/resource/fdj4-gpfu.json)) · Phoenix, San Antonio, San Jose, Jacksonville, Indianapolis, Portland, Memphis, Honolulu, Salt Lake City, St. Louis, Cincinnati, Milwaukee, Louisville, Sacramento, Tucson, Albuquerque, El Paso, Oklahoma City, Orlando, Miami, Atlanta (no open, current, geocoded incident feed found on Socrata, ArcGIS or CKAN on 9 Nov 2026). All have city-level cards.
+
 ## 2026-11-09 (Eight more US cities)
 
 ### Maps (`/new` and `/new/phase2`)

@@ -2,7 +2,7 @@
 
 **Status:** Ready for dev kickoff
 **Scope:** UK England, Wales & Northern Ireland (Scotland deferred to v2)
-**Date:** 2026-04-29 · **Last updated:** 2026-11-09 (v1.9 — one global safety scale §5, Houston §23, 13 US cities §24)
+**Date:** 2026-04-29 · **Last updated:** 2026-11-09 (v2.0 — one global safety scale §5, Houston §23, North America street-level coverage §24)
 **Owner:** Barry Wilson
 
 ---
@@ -468,7 +468,7 @@ Everything that feeds a city view, and whether it is fetched **live** at runtime
 | Data | Source | Auth | Used for |
 |---|---|---|---|
 | **UK crime** (street-level) | `data.police.uk/api` | none | Core map + Safety Score (England, Wales, NI) |
-| US crime | Socrata: `data.cityofnewyork.us`, `data.cityofchicago.org`, `data.sfgov.org`, `data.lacity.org`, `data.seattle.gov`, `dallasopendata.com` · ArcGIS: DC MPD, Denver, San Diego PD, LVMPD · CARTO: Philadelphia · CKAN: `data.boston.gov` · static file: Houston HPD (§23, §24) | none (Socrata app token optional) | US city live data |
+| US + Canada crime | 36 city police feeds: Socrata, ArcGIS, CARTO, CKAN and one static file (Houston). Full list with links in `CHANGELOG.md` (2026-11-09 entries) and §24 | none (Socrata app token optional) | US city live data |
 | US national crime | `api.usa.gov/crime/fbi/cde` (FBI CDE) | api.data.gov key | US context |
 | EU crime stats | Eurostat API (`ec.europa.eu/eurostat`) | none | European city context |
 | Attractions (★) | OpenStreetMap **Overpass** (3 mirrors) | none | Map attraction markers |
@@ -1028,12 +1028,15 @@ Homicide input 11.4 per 100k = 272 murders in HPD's 2025 file ÷ 2,390,125 (US C
 
 ## 24. US city coverage — 13 cities (November 2026)
 
-Live street-level data now covers New York, Chicago, San Francisco, Los Angeles, Houston, Washington DC, Seattle, Philadelphia, Boston, Denver, Dallas, San Diego and Las Vegas. Clicking anywhere within ~0.6° of one of these cities loads that spot (`wfUSCityNear` / `wfLoadUSPoint`).
+Live street-level data now covers 33 US cities (New York, Chicago, San Francisco, Los Angeles, Houston, Washington DC, Seattle, Philadelphia, Boston, Denver, Dallas, San Diego, Las Vegas, Nashville, Fort Worth, Columbus, Charlotte, Omaha, Raleigh, Long Beach, Minneapolis, Tampa, Wichita, Detroit, Cleveland, Baltimore, Kansas City, Oakland, Mesa, Baton Rouge, Buffalo, New Orleans, Boise) and 3 Canadian (Toronto, Montréal, Halifax). A further 41 cities across the US, Canada and Australia have city-level cards (no open street-level feed). Clicking anywhere within ~0.6° of one of these cities loads that spot (`wfUSCityNear` / `wfLoadUSPoint`).
 
 **Adding a city** is a config row in `US_CITY_APIS` plus a `GLOBAL_CITIES` row (centre, homicide rate, short factual context):
 - `type: 'socrata'` with `geo` (location column) or `lat`/`lng` (+ `latText` if stored as text); `type: 'arcgis'` with `lat`/`lng` columns where present (much faster) else geometry; `type: 'carto'`; `type: 'ckan'`; `static:` for file-only cities (Houston). No `type` = the original Socrata path (NYC, Chicago, SF, LA).
 - Homicide rate = last full year's murders ÷ Census Vintage population; check the feed's count against the police department's published figure before using it (Dallas's feed undercounts, so an estimate from DPD's published change is used).
 - Mark partial feeds with `partial: true` so the card says so.
+- Filter out non-crime records: server-side with `where:` (ArcGIS SQL) or client-side with `exclude:` / `include:` regexes (upper-case); map non-English categories with `catMap:` (Montréal).
+- `wfUSCityNear` picks the nearest city overall and only loads a feed if that city has one, so a feed is never used outside its own city.
+- **Annual maintenance:** Detroit's layer is per year (`RMS_Crime_Incidents_<YEAR>`), Kansas City's dataset is per year (`KCPD Crime Data <YEAR>`), New Orleans calls for service is per year (`Calls for Service <YEAR>`): update the URLs each January. Refresh FBI homicide rates when the FBI publishes the next year.
 
 Sources, filters, freshness and the cities checked but not added are listed in `CHANGELOG.md` (2026-11-09). None of these feeds are in the Neon pipeline yet; they are read live in the page. Only Houston has a pipeline connector (§23).
 

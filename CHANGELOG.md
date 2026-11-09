@@ -2,6 +2,27 @@
 
 All notable changes to the WF-mapping repo. Newest first. Dates are commit dates (UTC). Design and architecture notes live in `Wiley-Fox-Dev-Handoff-v1.md` (§20 covers September 2026).
 
+## 2026-11-09 (Batch 5: Berlin district regions; Osaka, Kyoto, Kobe, Nagoya, Fukuoka street crime)
+
+### Maps (`/new` and `/new/phase2`)
+- **feat:** **Berlin** now uses Polizei Berlin's Kriminalitätsatlas 2025 (143 district regions, 322,031 offences in mapped categories) instead of the Eurostat area card. Each region's count is spread across its planning areas by area (labelled on the card). Click anywhere in Berlin (e.g. "Kreuzberg, Berlin": 68/100).
+- **feat:** **Osaka, Kyoto, Kobe, Nagoya, Fukuoka** get street-block layers from each prefectural police force's 2025 open data (seven street crimes: bag snatching, car break-ins, car-part theft, vending-machine theft, car theft, motorbike theft, bike theft); about 76,000 incidents, 94–99.5% placed. Because these are theft-type crimes only, the card shows a "Partial data" note and the **rating stays on the city's global baseline** (new `baselineOnly` option) rather than looking artificially safe.
+- **feat:** new cards for Fukuoka, Nagoya and Kobe; Nara city-level card (keeps Osaka's data from being used in Nara).
+- **note:** Mexico City is still city-level: its open-data portal (datos.cdmx.gob.mx) refused connections from both our build environment and Barry's Mac on 9 Nov 2026. Kanagawa (Yokohama) doesn't publish the seven-crime files as downloads, so Yokohama stays city-level.
+
+### Data sources added
+| Place | Source | Granularity | Period |
+|---|---|---|---|
+| Berlin | [Polizei Berlin — Kriminalitätsatlas (xlsx)](https://daten.berlin.de/datensaetze/kriminalitatsatlas-berlin) + [Geoportal Berlin LOR 2021 WFS](https://gdi.berlin.de/services/wfs/lor_2021?service=WFS&request=GetCapabilities) | 143 district regions (Bezirksregionen), 8 crime groups | 2025 |
+| Osaka | [Osaka Prefectural Police 犯罪オープンデータ 令和7年](https://www.police.pref.osaka.lg.jp/seikatsu/24614.html) | Street block, 7 street crimes | 2025 |
+| Kyoto | [Kyoto Prefectural Police 犯罪発生情報 令和7年 (BODIK)](https://data.bodik.jp/organization/260002) | Street block, 7 street crimes | 2025 |
+| Kobe | [Hyogo Prefectural Police crime open data](https://web.pref.hyogo.lg.jp/kk26/johoseisaku/opendata.html) | Street block, 7 street crimes | 2025 |
+| Nagoya | [Aichi Prefectural Police crime open data](https://www.pref.aichi.jp/police/anzen/toukei/opendata/seian-s/crimeopendata.html) | Street block, 7 street crimes | 2025 |
+| Fukuoka | [Fukuoka Prefectural Police 犯罪オープンデータ 令和7年 (BODIK)](https://data.bodik.jp/organization/400009) | Street block, 7 street crimes | 2025 |
+| Japan (all) | [MLIT 位置参照情報 block centre points](https://nlftp.mlit.go.jp/isj/) · [NPA index of prefectural crime open data](https://www.npa.go.jp/toukei/seianki/hanzaiopendatalink.html) | — | 2024 points |
+
+- **checked, not added:** Mexico City ([open data portal](https://datos.cdmx.gob.mx/) unreachable, connection refused) · Kanagawa/Yokohama ([police statistics page](https://www.police.pref.kanagawa.jp/tokei/hanzai_tokei/mesd0145.html) has no downloadable files).
+
 ## 2026-11-09 (Batch 4: Tokyo street blocks, Dutch neighbourhoods, 43 more European cities, 24 Asian city cards)
 
 ### Maps (`/new` and `/new/phase2`)

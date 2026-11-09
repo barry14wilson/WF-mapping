@@ -2,7 +2,7 @@
 
 **Status:** Ready for dev kickoff
 **Scope:** UK England, Wales & Northern Ireland (Scotland deferred to v2)
-**Date:** 2026-04-29 · **Last updated:** 2026-11-09 (v2.1 — global scale §5, Houston §23, North America §24, Tokyo / Netherlands / Europe / Asia §25)
+**Date:** 2026-04-29 · **Last updated:** 2026-11-09 (v2.2 — global scale §5, Houston §23, North America §24, Tokyo / Netherlands / Europe / Asia / Berlin / Japan §25)
 **Owner:** Barry Wilson
 
 ---
@@ -1044,7 +1044,9 @@ Sources, filters, freshness and the cities checked but not added are listed in `
 
 - **Area-count layers** (`loadAggregateCity`): police data published as counts per small area is drawn at each area's centre as a monthly average, then rated like street-level data. Tokyo (street blocks, `scripts/tokyo/`) and Amsterdam, Rotterdam, The Hague, Utrecht (neighbourhoods, `scripts/netherlands/`). Both refresh monthly via their build scripts, then redeploy. Set `radius` on these entries so the data is never used outside its coverage.
 - **Europe:** 70 places in `OFFICIAL_AREA` (Eurostat NUTS 3 vs national, France SSMSI, Scotland, Ireland). To add a city: add it to `EU_CITIES` in `scripts/official-area/build_official.py` with its NUTS 3 code, run the script, paste `data/official_data.js` over `OFFICIAL_AREA` in both pages, and add a `GLOBAL_CITIES` row.
-- **Asia:** street-level open data exists only for Tokyo among the places checked. Others are city-level cards (Numbeo + national homicide rate). Next candidates: Osaka 2025 annual data (7 street crimes), Berlin district atlas, Mexico City (point data).
+- **Berlin** (`scripts/berlin/`, yearly) uses the police Kriminalitätsatlas by district region, spread across planning areas by area.
+- **Japan, other prefectures** (`scripts/japan/`, yearly): Osaka, Kyoto, Kobe, Nagoya, Fukuoka from the national seven-street-crime open data format. Entries set `baselineOnly: true` so theft-only data never lifts a city's rating; the card shows a "Partial data" note.
+- **Asia:** beyond Japan, no street-level open data was found among the places checked. Others are city-level cards (Numbeo + national homicide rate). Next candidates: Osaka 2025 annual data (7 street crimes), Berlin district atlas, Mexico City (point data).
 - Sources and the full checked-not-added list are in `CHANGELOG.md` (2026-11-09 batch 4).
 
 ---

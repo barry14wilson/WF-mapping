@@ -2830,6 +2830,14 @@ const GLOBAL_CITIES = [
   { name: 'San Francisco', country: 'USA', iso: 'USA', lat: 37.7749, lng: -122.4194,rating: 2, tag: 'Caution',        homicide: 6.1,  source: 'FBI UCR 2023 / SFPD', context: 'SF has significant property crime — vehicle break-ins and drug offences in the Tenderloin are frequent. Waterfront, Union Square and tourist areas are better policed. Live street-level data shown.' },
   { name: 'Los Angeles',   country: 'USA', iso: 'USA', lat: 34.0522, lng: -118.2437,rating: 2, tag: 'Caution',        homicide: 8.4,  source: 'FBI UCR 2023 / LAPD', context: 'LA is a city of contrasts. Hollywood, Santa Monica and Beverly Hills are lower-risk. Downtown, Skid Row and parts of South LA are significantly higher. Live incident data shown (to Dec 2024).' },
   { name: 'Houston',       country: 'USA', iso: 'USA', lat: 29.7604, lng: -95.3698, rating: 2, tag: 'Caution',        homicide: 11.4, source: 'HPD NIBRS 2025 / US Census 2024', context: 'Houston recorded 272 murders in 2025 (11.4 per 100k residents), above the US average. Downtown, Midtown, the Museum District and the Galleria are busy visitor areas; vehicle break-ins are the most common crime affecting visitors, so keep bags out of sight in parked cars.' },
+  { name: 'Washington DC', country: 'USA', iso: 'USA', lat: 38.9072, lng: -77.0369, rating: 3, tag: 'Stay aware', homicide: 18.1, source: 'MPD 2025 / US Census 2024', context: 'DC recorded 127 homicides in 2025 (18.1 per 100k), concentrated in a small number of neighbourhoods. The National Mall, Downtown and Georgetown are busy, well-policed visitor areas; theft is the crime visitors are most likely to meet. Check the map for where you are staying.' },
+  { name: 'Seattle',       country: 'USA', iso: 'USA', lat: 47.6062, lng: -122.3321, rating: 3, tag: 'Stay aware', homicide: 4.1,  source: 'SPD 2025 / US Census 2024', context: 'Seattle recorded 32 homicides in 2025 (4.1 per 100k), down sharply on 2024. Most reported crime is property crime, especially car break-ins; keep valuables out of sight in parked cars. Check the map for where you are staying.' },
+  { name: 'Philadelphia',  country: 'USA', iso: 'USA', lat: 39.9526, lng: -75.1652, rating: 3, tag: 'Stay aware', homicide: 14.1, source: 'PPD 2025 / US Census 2024', context: 'Philadelphia recorded 222 homicides in 2025 (14.1 per 100k), concentrated in a small number of neighbourhoods away from the historic centre. Old City, Center City and the museum district are busy visitor areas. Check the map for where you are staying.' },
+  { name: 'Boston',        country: 'USA', iso: 'USA', lat: 42.3601, lng: -71.0589, rating: 3, tag: 'Stay aware', homicide: 3.6,  source: 'BPD 2025 / US Census 2024', context: 'Boston recorded 24 homicides in 2025 (3.6 per 100k), low for a large US city. Theft and shoplifting make up most reported crime in central areas. Check the map for where you are staying.' },
+  { name: 'Denver',        country: 'USA', iso: 'USA', lat: 39.7392, lng: -104.9903, rating: 3, tag: 'Stay aware', homicide: 5.3,  source: 'DPD 2025 / US Census 2024', context: 'Denver recorded 39 homicides in 2025 (5.3 per 100k), roughly half the 2024 total. Vehicle theft and theft from cars are the most common reported crimes. Check the map for where you are staying.' },
+  { name: 'Dallas',        country: 'USA', iso: 'USA', lat: 32.7767, lng: -96.7970, rating: 3, tag: 'Stay aware', homicide: 9.0,  source: 'DPD-reported 2025 change (est.) / US Census 2024', context: 'Dallas police reported about 120 homicides in 2025 (around 9 per 100k), down about a quarter on 2024. Most reported crime is theft and vehicle crime. Check the map for where you are staying.' },
+  { name: 'San Diego',     country: 'USA', iso: 'USA', lat: 32.7157, lng: -117.1611, rating: 4, tag: 'Generally safe', homicide: 2.9, source: 'SDPD 2025 / US Census 2024', context: 'San Diego recorded 41 homicides in 2025 (2.9 per 100k), one of the lowest rates among large US cities. Theft and vehicle crime make up most reported crime. Check the map for where you are staying.' },
+  { name: 'Las Vegas',     country: 'USA', iso: 'USA', lat: 36.1147, lng: -115.1728, rating: 3, tag: 'Stay aware', homicide: null, source: 'LVMPD NIBRS (partial public extract)', context: 'The Strip and Downtown are heavily policed and busy around the clock; theft and pickpocketing in crowded casinos and on the Strip are the main issues for visitors. LVMPD publishes only part of its crime data publicly, so local counts here are an undercount.' },
 ];
 
 const DEFAULT_CITIES = [
@@ -3348,6 +3356,15 @@ const US_CITY_APIS = {
   // Houston PD NIBRS monthly file (houstontx.gov). No CORS/API, so it is pre-built
   // into a static JSON by scripts/houston/build_hpd.py and refreshed monthly.
   'Houston':       { static: '/new/data/houston/hpd_latest.json', label: 'houstontx.gov (Houston Police Department NIBRS)', home: 'https://houstontx.gov/police/cs/Monthly_Crime_Data_by_Street_and_Police_Beat.htm', daysBack: 31 },
+  // ── Added Nov 2026 (see CHANGELOG / handoff §24). type selects the reader in WF_US_READERS.
+  'Washington DC': { type: 'arcgis', url: 'https://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/MPD/MapServer/39', where: '1=1', noDateFilter: true, lat: 'LATITUDE', lng: 'LONGITUDE', cat: 'OFFENSE', date: 'REPORT_DAT', street: 'BLOCK', page: 1000, label: 'opendata.dc.gov (Metropolitan Police Department, last 30 days)', home: 'https://opendata.dc.gov/', daysBack: 30 },
+  'Seattle':       { type: 'socrata', url: 'https://data.seattle.gov/resource/tazs-3rd5.json', latText: true, lat: 'latitude', lng: 'longitude', cat: 'offense_sub_category', date: 'offense_date', street: 'block_address', extraWhere: "nibrs_group_a_b='A'", label: 'data.seattle.gov (Seattle Police Department)', home: 'https://data.seattle.gov/', daysBack: 30 },
+  'Philadelphia':  { type: 'carto', url: 'https://phl.carto.com/api/v2/sql', table: 'incidents_part1_part2', label: 'opendataphilly.org (Philadelphia Police Department)', home: 'https://opendataphilly.org/', daysBack: 30 },
+  'Boston':        { type: 'ckan', url: 'https://data.boston.gov/api/3/action/datastore_search_sql', resource: 'b973d8cb-eeb2-4e7e-99da-c92938efc9c0', exclude: /^(INVESTIGATE|SICK|TOWED|PROPERTY - (LOST|FOUND|ACCIDENTAL|MISSING)|DEATH INVESTIGATION|M\/V (ACCIDENT|PLATES)|SERVICE|MISSING PERSON|VERBAL DISPUTE|LANDLORD|FIRE|AUTO RECOVERY|WARRANT|LICENSE|NOISY|BALLISTICS|SUDDEN DEATH|MEDICAL|HARBOR|PRISONER|RECOVERED|EXPLOSIVES|DANGEROUS OR HAZARDOUS|CHILD REQUIRING|PROTECTIVE CUSTODY|ANIMAL|LOST|FOUND)/, label: 'data.boston.gov (Boston Police Department)', home: 'https://data.boston.gov/', daysBack: 30 },
+  'Denver':        { type: 'arcgis', url: 'https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_CRIME_OFFENSES_P/FeatureServer/324', where: 'IS_CRIME=1', lat: 'GEO_LAT', lng: 'GEO_LON', cat: 'OFFENSE_TYPE_ID', slugCat: true, date: 'REPORTED_DATE', street: 'INCIDENT_ADDRESS', page: 2000, label: 'denvergov.org open data (Denver Police Department)', home: 'https://opendata-geospatialdenver.hub.arcgis.com/', daysBack: 30 },
+  'Dallas':        { type: 'socrata', url: 'https://www.dallasopendata.com/resource/qv6i-rri7.json', geo: 'geocoded_column', cat: 'nibrs_crime', date: 'date1', street: 'incident_address', extraWhere: "nibrs_group='A'", label: 'dallasopendata.com (Dallas Police Department)', home: 'https://www.dallasopendata.com/', daysBack: 30 },
+  'San Diego':     { type: 'arcgis', url: 'https://webmaps.sandiego.gov/arcgis/rest/services/SDPD/SDPD_NIBRS_Crime_Offenses_Geo/FeatureServer/0', where: "GROUP_TYPE='A'", cat: 'IBR_OFFENSE_DESCRIPTION', date: 'OCCURED_ON', street: 'BLOCK_ADDR', page: 1000, label: 'sandiego.gov (San Diego Police Department NIBRS)', home: 'https://data.sandiego.gov/', daysBack: 30 },
+  'Las Vegas':     { type: 'arcgis', url: 'https://services.arcgis.com/jjSk6t82vIntwDbs/arcgis/rest/services/LVMPD_Reported_NIBRS_Crimes_YTD/FeatureServer/0', where: "OffenseGroup='A'", lat: 'Latitude', lng: 'Longitude', cat: 'Offense', date: 'ReportedOn', street: 'Location', page: 2000, partial: true, label: 'LVMPD open data (reported NIBRS crimes, partial public extract)', home: 'https://opendata-lvmpd.hub.arcgis.com/', daysBack: 30 },
   'Los Angeles':   { url: 'https://data.lacity.org/resource/k7nn-b2ep.json',        lat: 'hndrdth_lat', lng: 'hndrdth_lon', cat: 'nibr_description', date: 'date_occ', daysBack: 30, extraWhere: "`group` = 'A'" },
 };
 
@@ -3365,13 +3382,113 @@ function mapUSCategory(type) {
   if (/POCKET-?PICK|PURSE-?SNATCH/.test(t))                 return 'theft-from-the-person';
   if (/VEHICLE/.test(t))                                   return 'vehicle-crime';
   if (/THEFT FROM PERSON|PICKPOCKET|PURSE SNATCH/.test(t)) return 'theft-from-the-person';
+  if (/SHOPLIFTING|SHOPLIFT|RETAIL THEFT/.test(t))         return 'shoplifting';
   if (/LARCENY|THEFT|STEAL/.test(t))                       return 'other-theft';
-  if (/SHOPLIFTING|SHOPLIFT/.test(t))                      return 'shoplifting';
   if (/DRUG|NARCOTIC|CANNABIS|COCAINE/.test(t))            return 'drugs';
-  if (/DAMAGE|VANDAL|GRAFFITI|ARSON/.test(t))              return 'criminal-damage-arson';
+  if (/DAMAGE|VANDAL|GRAFFITI|ARSON|MISCHIEF|DESTRUCTION/.test(t)) return 'criminal-damage-arson';
   if (/DISORDERLY|PUBLIC NUISANCE/.test(t))                return 'anti-social-behaviour';
   if (/PUBLIC ORDER|TRESPASS/.test(t))                     return 'public-order';
   return 'other-crime';
+}
+
+// ── Readers for US city crime portals that aren't plain Socrata lat/lng ──
+// Each returns { rows: [{ lat, lng, cat, date, street }], latest: Date|null } for a
+// bounding box, covering the `daysBack` days up to the newest record (never the future).
+function wfIsoTs(d) { return d.toISOString().slice(0, 19).replace('T', ' '); }
+const WF_US_READERS = {
+  // ArcGIS FeatureServer / MapServer layers (DC, Denver, San Diego, Las Vegas)
+  async arcgis(api, box) {
+    const now = new Date();
+    let latest = null, cut = null;
+    const base = api.where || '1=1';
+    if (!api.noDateFilter) {
+      // Newest record (a max() statistic is far quicker than sorting big tables); fall back to today.
+      const top = await wfFetchRetry(`${api.url}/query?` + new URLSearchParams({ where: `${base} AND ${api.date} <= TIMESTAMP '${wfIsoTs(now)}'`, outStatistics: JSON.stringify([{ statisticType: 'max', onStatisticField: api.date, outStatisticFieldName: 'm' }]), f: 'json' }), 15000, 1).catch(() => null);
+      const t = top && top.features && top.features[0] && top.features[0].attributes && top.features[0].attributes.m;
+      latest = t ? new Date(t) : now;
+      cut = new Date(latest); cut.setDate(cut.getDate() - api.daysBack);
+    }
+    // Layers with lat/lng columns are filtered on those (far faster than a spatial envelope on big tables).
+    const boxW = api.lat ? ` AND ${api.lat} BETWEEN ${box.s.toFixed(5)} AND ${box.n.toFixed(5)} AND ${api.lng} BETWEEN ${box.w.toFixed(5)} AND ${box.e.toFixed(5)}` : '';
+    const where = (api.noDateFilter ? base : `${base} AND ${api.date} >= TIMESTAMP '${wfIsoTs(cut)}' AND ${api.date} <= TIMESTAMP '${wfIsoTs(now)}'`) + boxW;
+    const fields = [api.lat, api.lng, api.cat, api.date, api.street].filter(Boolean).join(',');
+    const page = api.page || 1000, rows = [];
+    for (let off = 0, i = 0; i < 20; i++, off += page) {
+      const j = await wfFetchRetry(`${api.url}/query?` + new URLSearchParams({
+        where, outFields: fields, returnGeometry: api.lat ? 'false' : 'true', outSR: '4326',
+        ...(api.lat ? {} : { geometry: `${box.w},${box.s},${box.e},${box.n}`, geometryType: 'esriGeometryEnvelope', inSR: '4326', spatialRel: 'esriSpatialRelIntersects' }),
+        resultOffset: String(off), resultRecordCount: String(page), f: 'json' }));
+      if (j && j.error) throw new Error(j.error.message || 'ArcGIS error');
+      for (const f of (j.features || [])) {
+        const a = f.attributes || {};
+        rows.push({ lat: api.lat ? a[api.lat] : f.geometry && f.geometry.y, lng: api.lng ? a[api.lng] : f.geometry && f.geometry.x,
+          cat: api.slugCat ? String(a[api.cat] || '').replace(/-/g, ' ') : a[api.cat], date: a[api.date], street: a[api.street] });
+      }
+      if (!j.exceededTransferLimit && (j.features || []).length < page) break;
+    }
+    if (!latest) latest = rows.reduce((m, r) => (r.date && r.date > m ? r.date : m), 0) ? new Date(rows.reduce((m, r) => (r.date && r.date > m ? r.date : m), 0)) : now;
+    return { rows, latest };
+  },
+  // Socrata with a location column (Dallas) or text lat/lng (Seattle)
+  async socrata(api, box) {
+    const now = new Date().toISOString().slice(0, 19);
+    const mx = await wfFetchRetry(`${api.url}?` + new URLSearchParams({ '$select': `max(${api.date}) as m`, '$where': `${api.date} <= '${now}'` }), 12000, 1).catch(() => null);
+    const latest = mx && mx[0] && mx[0].m ? new Date(mx[0].m) : new Date();
+    const cut = new Date(latest); cut.setDate(cut.getDate() - api.daysBack);
+    const geoW = api.geo
+      ? `within_box(${api.geo}, ${box.n.toFixed(5)}, ${box.w.toFixed(5)}, ${box.s.toFixed(5)}, ${box.e.toFixed(5)})`
+      : `${api.lat} between '${box.s.toFixed(4)}' and '${box.n.toFixed(4)}'`; // text lat: positive, same digits → string order is safe; lng trimmed below
+    const where = [geoW, `${api.date} > '${cut.toISOString().slice(0, 19)}'`, `${api.date} <= '${now}'`, api.extraWhere].filter(Boolean).join(' AND ');
+    const sel = [api.geo || api.lat, api.lng, api.cat, api.date, api.street].filter(Boolean).join(',');
+    const raw = await wfFetchRetry(`${api.url}?` + new URLSearchParams({ '$limit': '25000', '$select': sel, '$where': where, '$order': `${api.date} DESC` }));
+    const rows = (raw || []).map(c => api.geo
+      ? { lat: c[api.geo] && parseFloat(c[api.geo].latitude), lng: c[api.geo] && parseFloat(c[api.geo].longitude), cat: c[api.cat], date: c[api.date], street: c[api.street] }
+      : { lat: parseFloat(c[api.lat]), lng: parseFloat(c[api.lng]), cat: c[api.cat], date: c[api.date], street: c[api.street] });
+    return { rows, latest };
+  },
+  // CARTO SQL (Philadelphia)
+  async carto(api, box) {
+    const q = sql => wfFetchRetry(`${api.url}?` + new URLSearchParams({ q: sql }));
+    const today = new Date().toISOString().slice(0, 10); // dispatch_date is text (YYYY-MM-DD), compare as text
+    const mx = await q(`select max(dispatch_date) as m from ${api.table} where dispatch_date <= '${today}'`);
+    const latest = mx && mx.rows && mx.rows[0] && mx.rows[0].m ? new Date(mx.rows[0].m) : new Date();
+    const cut = new Date(latest); cut.setDate(cut.getDate() - api.daysBack);
+    const j = await q(`select point_y as lat, point_x as lng, text_general_code as cat, dispatch_date_time as d, location_block as street from ${api.table} where point_y between ${box.s} and ${box.n} and point_x between ${box.w} and ${box.e} and dispatch_date >= '${cut.toISOString().slice(0, 10)}' and dispatch_date <= '${today}' limit 25000`);
+    return { rows: (j.rows || []).map(r => ({ lat: r.lat, lng: r.lng, cat: r.cat, date: r.d, street: r.street })), latest };
+  },
+  // CKAN datastore SQL (Boston). Coordinates are stored as text, so validate before casting.
+  async ckan(api, box) {
+    const q = async sql => { const j = await wfFetchRetry(`${api.url}?` + new URLSearchParams({ sql })); if (!j || !j.success) throw new Error('CKAN error'); return j.result.records; };
+    const T = `"${api.resource}"`;
+    const nowS = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    const mx = await q(`SELECT MAX("OCCURRED_ON_DATE") AS m FROM ${T} WHERE "OCCURRED_ON_DATE" <= '${nowS}'`);
+    const latest = mx[0] && mx[0].m ? new Date(String(mx[0].m).replace(' ', 'T').replace(/\+00$/, 'Z')) : new Date();
+    const cut = new Date(latest); cut.setDate(cut.getDate() - api.daysBack);
+    const recs = await q(`SELECT "Lat","Long","OFFENSE_DESCRIPTION","OCCURRED_ON_DATE","STREET" FROM ${T} WHERE "Lat" ~ '^-?[0-9]+\\.[0-9]+$' AND "Long" ~ '^-?[0-9]+\\.[0-9]+$' AND CAST("Lat" AS float) BETWEEN ${box.s} AND ${box.n} AND CAST("Long" AS float) BETWEEN ${box.w} AND ${box.e} AND "OCCURRED_ON_DATE" >= '${cut.toISOString().slice(0, 10)}' AND "OCCURRED_ON_DATE" <= '${nowS}' LIMIT 25000`);
+    return { rows: recs.filter(r => !(api.exclude && api.exclude.test(r.OFFENSE_DESCRIPTION || ''))).map(r => ({ lat: parseFloat(r.Lat), lng: parseFloat(r.Long), cat: r.OFFENSE_DESCRIPTION, date: String(r.OCCURRED_ON_DATE).replace(' ', 'T').replace(/\+00$/, 'Z'), street: r.STREET })), latest };
+  },
+};
+
+async function loadReaderUSCity(cityData, api, tok) {
+  const { lat, lng } = cityData;
+  const r = 0.05; // ~5 km box, same as the other US cities
+  const box = { s: lat - r, n: lat + r, w: lng - r, e: lng + r };
+  const { rows, latest } = await WF_US_READERS[api.type](api, box);
+  if (tok != null && wfUSStale(tok, cityData)) return;
+  const crimes = rows
+    .filter(x => Number.isFinite(+x.lat) && Number.isFinite(+x.lng) && +x.lat >= box.s && +x.lat <= box.n && +x.lng >= box.w && +x.lng <= box.e)
+    .map(x => ({ category: mapUSCategory(x.cat), location: { latitude: String(x.lat), longitude: String(x.lng), street: { name: x.street ? String(x.street).trim() : 'On or near street' } }, month: x.date ? new Date(x.date).toISOString().slice(0, 7) : '' }));
+  const fmt = d => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  const dates = rows.map(x => new Date(x.date)).filter(d => !isNaN(d) && d <= new Date()).sort((a, b) => a - b);
+  const spanDays = dates.length ? Math.max(1, (dates[dates.length - 1] - dates[0]) / 864e5) : api.daysBack;
+  const periodLabel = (dates.length ? `${fmt(dates[0])} – ${fmt(dates[dates.length - 1])}` : `${api.daysBack} days to ${fmt(latest || new Date())}`) + (api.partial ? ' · partial public data' : '');
+  const R_M = 1609, mLat = 110540, mLng = 111320 * Math.cos(lat * Math.PI / 180);
+  const near = crimes.filter(c => Math.hypot((parseFloat(c.location.latitude) - lat) * mLat, (parseFloat(c.location.longitude) - lng) * mLng) <= R_M);
+  const scale = spanDays < 28 ? 30 / spanDays : 1; // truncated windows are scaled up to a month
+  const ratingCrimes = scale === 1 ? near : Array.from({ length: Math.round(near.length * scale) }, (_, i) => near[i % Math.max(1, near.length)]).filter(Boolean);
+  renderUSCity(cityData, crimes, periodLabel, { ratingCrimes, nearCount: near.length, scaled: scale !== 1 });
+  const pill = document.getElementById('sourcePill');
+  if (pill) pill.innerHTML = `Data: <a href="${api.home}" target="_blank" rel="noopener">${api.label}</a> · Map © OpenStreetMap`;
 }
 
 // Houston (and any city whose police publish a monthly file instead of an API):
@@ -3510,6 +3627,7 @@ async function loadUSCity(cityData) {
 
   try {
     if (api.static) { await loadStaticUSCity(cityData, api, tok); return; }
+    if (api.type) { await loadReaderUSCity(cityData, api, tok); return; }
     // Open-data portals publish with a lag (NYPD: quarterly), so anchor the window
     // to the newest record in the dataset rather than today's date.
     let latest = new Date();

@@ -2,6 +2,29 @@
 
 All notable changes to the WF-mapping repo. Newest first. Dates are commit dates (UTC). Design and architecture notes live in `Wiley-Fox-Dev-Handoff-v1.md` (§20 covers September 2026).
 
+## 2026-11-09 (Eight more US cities)
+
+### Maps (`/new` and `/new/phase2`)
+- **feat:** Washington DC, Seattle, Philadelphia, Boston, Denver, Dallas, San Diego and Las Vegas added, with live street-level dots, hexes, the global score and click-anywhere by neighbourhood (e.g. "Georgetown, Washington DC", "Back Bay, Boston", "Lower Downtown, Denver"). US coverage goes from 5 to 13 cities.
+- **feat:** new `WF_US_READERS` (ArcGIS, Socrata with location/text coordinates, CARTO SQL, CKAN SQL) and `loadReaderUSCity()`; a city is now a config row in `US_CITY_APIS` with `type:`. Readers anchor the 30-day window to each portal's newest record (never future-dated rows) and filter on lat/lng columns where they exist (Denver: 1.8 s instead of ~60 s).
+- **fix:** `mapUSCategory` now catches shoplifting / retail theft before generic theft, and maps "mischief" / "destruction" to criminal damage.
+- **note:** Las Vegas is labelled "partial public data" on the card: LVMPD only publishes a subset of offences.
+
+### Data sources added
+| City | Source (endpoint) | Records used | Freshness (9 Nov) |
+|---|---|---|---|
+| Washington DC | DC MPD "Crime Incidents – Last 30 Days", `maps2.dcgis.dc.gov/.../FEEDS/MPD/MapServer/39` | All | 9 Nov 2026 |
+| Seattle | SPD Crime Data, `data.seattle.gov/resource/tazs-3rd5` | NIBRS Group A | 7 Nov 2026 |
+| Philadelphia | PPD incidents, `phl.carto.com` table `incidents_part1_part2` | Part I + II | 9 Nov 2026 |
+| Boston | BPD Crime Incident Reports, `data.boston.gov` resource `b973d8cb-…` | Non-crime service codes excluded; ~76% of rows have coordinates | 4 Nov 2026 |
+| Denver | Denver crime offenses, ArcGIS `ODC_CRIME_OFFENSES_P/FeatureServer/324` | `IS_CRIME=1` | 5 Nov 2026 |
+| Dallas | DPD Police Incidents, `dallasopendata.com/resource/qv6i-rri7` | NIBRS Group A, geocoded rows | 8 Nov 2026 |
+| San Diego | SDPD NIBRS offenses, `webmaps.sandiego.gov/.../SDPD_NIBRS_Crime_Offenses_Geo/FeatureServer/0` | Group A | Oct–Nov 2026 |
+| Las Vegas | LVMPD Reported NIBRS Crimes YTD, ArcGIS `services.arcgis.com/jjSk6t82vIntwDbs/...` | Group A, partial extract | 1 Nov 2026 |
+
+- **data:** homicide inputs for the global score = 2025 murders ÷ US Census Vintage 2024 city population (`sub-est2024.csv`): DC 127 → 18.1 per 100k; Seattle 32 → 4.1; Philadelphia 222 → 14.1; Boston 24 → 3.6; Denver 39 → 5.3; San Diego 41 → 2.9 (all counted from each city's own feed; Seattle and Denver match their police departments' published year-on-year falls). Dallas ≈ 120 → 9.0, **estimated** from DPD's reported 2025 fall (42 fewer homicides, −26%) because the open-data feed holds only 58 murder incidents. Las Vegas uses the US national rate: LVMPD's jurisdiction is wider than the city and its feed is partial.
+- **checked, not added:** Austin (no coordinates), Nashville (feed now needs a login), Baltimore (public file ends Dec 2024), Orlando, Miami, Atlanta, New Orleans (no public incident feed with coordinates).
+
 ## 2026-11-09 (Click anywhere in US cities)
 
 - **fix:** clicking anywhere in New York, Chicago, San Francisco, Los Angeles or Houston now loads crime data and the rating for that spot, named by neighbourhood (e.g. "Lincoln Park, Chicago", "Uptown, Houston"), like the UK. Previously any non-UK click snapped back to the nearest city centre. New `wfUSCityNear()` / `wfLoadUSPoint()`; Houston's Super Neighborhood card follows the clicked spot.

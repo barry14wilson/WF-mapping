@@ -2,7 +2,7 @@
 
 **Status:** Ready for dev kickoff
 **Scope:** UK England, Wales & Northern Ireland (Scotland deferred to v2)
-**Date:** 2026-04-29 · **Last updated:** 2026-10-16 (v1.7 — Phase 2 official area data, LA fix, §21)
+**Date:** 2026-04-29 · **Last updated:** 2026-11-09 (v1.8 — one global safety scale §5, Houston §23)
 **Owner:** Barry Wilson
 
 ---
@@ -10,6 +10,8 @@
 ## 0. Changelog
 
 The prototype was reworked in June 2026. The following changes supersede earlier descriptions in this document — read these before building:
+
+- **Nov 2026 — one global safety scale (supersedes the 70/30 blend below).** Every city now uses the same 0–100 score: 50% Numbeo Safety Index + 50% homicide sub-score, with live police or official area data moving it by at most ±10 points. See §5 (top) and §23. Houston added from HPD's monthly NIBRS file (§23).
 
 - **Unified Wiley Fox Safety Score (0–100 + 1–5 band).** The rating is no longer a single density-bucket score. It now blends live police data (70%) with Numbeo resident perception (30%), is population-adjusted, and outputs a 0–100 headline score with the 1–5 colour band derived from it. **Section 5 is fully rewritten.**
 - **Real Numbeo data + ONS population density** added as scoring inputs (Sections 5.1–5.2).
@@ -195,9 +197,23 @@ create index crimes_category_idx on crimes (category);
 
 ---
 
-## 5. Wiley Fox Safety Score (unified, June 2026)
+## 5. Wiley Fox Safety Score
 
-The score is a **0–100 headline (higher = safer)** with a **1–5 colour band** derived from it. It blends two independent signals and degrades gracefully when one is missing.
+> **Current method (Nov 2026): one global scale.** The June 2026 70/30 blend described below made cities incomparable: central London scored 18 (band 1, same as Cape Town) while Tokyo's band was typed in by hand. Every city now uses `wfGlobalScore()`:
+>
+> ```
+> Global baseline = 0.5 × N  (Numbeo Safety Index; country median if the city isn't listed)
+>                 + 0.5 × H  (homicide sub-score = 100·e^(−rate/6); city rate if known, else World Bank national)
+> Local adjustment = clamp(0.2 × (L − ref), −10, +10)
+>     L = live police sub-score P (ref 50)  — UK, US live cities, Houston
+>     L = official area sub-score O (ref 75 = national average) — Scotland, Ireland, Europe (§21)
+> Score = baseline + adjustment (1–99) → bandFromScore() → 1–5 band
+> ```
+>
+> Reference values (Nov 2026): Tokyo 86 (5) · London 54 (3) · Paris 56 (3) · New York 43 (3) · Houston 29 (2) · Cape Town 13 (1).
+> The rating circle always shows the 1–5 band; the 0–100 score is shown underneath with its inputs and benchmark cities. Hexes still use `policeSafetyScore()` and are **relative within the city** (no global inputs per hex). The sub-score definitions in §5.0–5.2 still apply as inputs.
+
+*Original June 2026 method (superseded, kept for reference):* the score is a **0–100 headline (higher = safer)** with a **1–5 colour band** derived from it. It blends two independent signals and degrades gracefully when one is missing.
 
 ```
 Unified Safety Score (0–100, higher = safer)
@@ -238,7 +254,7 @@ const bandFromScore = (s: number) =>
 - Source: **Numbeo Crime/Safety Index** (`numbeo.com/crime`). `N` = Numbeo **Safety Index** (0–100, higher = safer; Crime Index = 100 − Safety Index).
 - The prototype ships a hardcoded lookup table. **UK city values were refreshed from Numbeo's UK page on 17 Apr 2026.** Production should pull these via the Numbeo API (paid/licensed — see §9) or a periodic refresh job, not a static table.
 - City-name aliases are handled (e.g. `Newcastle` → `newcastle upon tyne`).
-- Numbeo is **perception data**, deliberately weighted at only 30% — it adjusts the score at the margin rather than driving it.
+- Numbeo is **perception data**. Under the Nov 2026 global scale it carries 50% of the baseline, balanced by the homicide rate (hard data), because it is the only source that covers every city on one scale.
 
 ### 5.2 Population adjustment (ONS density)
 
@@ -267,10 +283,10 @@ const adjustedDensity = weightedDensity / f;  // feed this into policeSafetyScor
 
 The hexagon overlay colours each hex by running its severity-weighted density through the **same** `policeSafetyScore()` → `bandFromScore()` and painting with the brand palette above (so "green hex" = "green rating"). Numbeo and population are city-level inputs and are **intentionally not applied per-hex** — the map shows raw live crime density. Hexes with < 3 incidents render as a neutral "Low incident count" state (`#9ED2B2`), making no safety claim.
 
-> **Single source of truth:** severity weights, the density→score curve, the band thresholds, and the 70/30 blend now drive the rating card, the hexes, the safety report and the travel guide. Keep them in one module (`lib/rating.ts`) so any tweak stays consistent everywhere. Strong candidate for a documented "WF scoring methodology" reference.
+> **Single source of truth:** severity weights, the density→score curve, the band thresholds, and the global scale (`wfGlobalScore`, Nov 2026; formerly the 70/30 blend) now drive the rating card, the hexes, the safety report and the travel guide. Keep them in one module (`lib/rating.ts`) so any tweak stays consistent everywhere. Strong candidate for a documented "WF scoring methodology" reference.
 
 ### Tuning notes for the dev team
-- The `exp(-d/250)` constant and the 70/30 blend are first-pass — **calibrate** against known-safe and known-busy areas.
+- The `exp(-d/250)` constant, the homicide curve `exp(-rate/6)` and the ±10 local cap are first-pass — **calibrate** against known-safe and known-busy areas.
 - **Replace the static Numbeo + population tables** with live/periodic data sources in production.
 - Consider **time-weighted decay** (recent months count more) once historic data is loaded.
 - Watch **low-data fallbacks**: Greater Manchester's thin feed makes some city-centre months drop below the 30-incident floor and fall back to 100% Numbeo — surface this state honestly in the UI.
@@ -945,7 +961,7 @@ Queue (1 Oct 2026): Nuremberg (done) → **Berlin (current focus)** → Munich (
 - Area index = severity-weighted rate per 100k residents: homicide 3 · assault 3 · robbery 3 · burglary 2 · theft 1 (same weights as `SEVERITY`).
 - Ratio = area index ÷ the same index for the country (Scotland for Scottish cities). **Compared within one country only** — countries record crime differently.
 - Official sub-score `O = 75 − 20·log2(ratio)`, clamped 5–95 (national average → 75, double → 55). Constants `OFFICIAL_BASE` / `OFFICIAL_SLOPE`.
-- Final = 70% O + 30% Numbeo Safety Index (O alone where Numbeo has no city, e.g. Venice, Inverness) → `bandFromScore`.
+- Final (Nov 2026): O is the local adjustment on the global scale — `clamp(0.2 × (O − 75), −10, +10)` added to the Numbeo + homicide baseline (§5). Previously 70% O + 30% Numbeo.
 
 ### 21.3 Sources
 
@@ -987,6 +1003,26 @@ The four Scottish cities draw data zones instead of hexes: SIMD 2020 crime indic
 | Shop | Live catalogue snapshot; basket only | Storefront API token or Buy Button for a real cart → checkout; replace the 8 draft travel products with supplier-backed listings |
 
 Open decisions: label print partner and unit costs; whether labels sell through Shopify or a dedicated personaliser; FCA route for insurance; when (if ever) travel documents leave the device.
+
+---
+
+## 23. One global scale + Houston (November 2026)
+
+### 23.1 Global safety scale
+See the box at the top of §5. Also shipped with it:
+- **Numbeo panel fix:** the UK panel was appended outside the cleared card area, so London's figures (55.3 / 44.7) appeared, often twice, on every city opened afterwards. `wfClearUKNumbeo()` now runs at the start of every city render.
+- Numbeo lookup normalises country names (USA → united states, UAE → united arab emirates) and the panel shows the city's global rank.
+- **gov.uk FCDO advice** (`renderFCDOPanel`) now appears on every city card; on UK cities it explains the FCDO doesn't advise on travel within the UK. US State Department levels were already shown.
+
+### 23.2 Houston
+| Piece | Source | Notes |
+|---|---|---|
+| Dots, hexes, rating | HPD monthly NIBRS file (`NIBRSPublicView<YEAR>.csv`) | No API or CORS, so `scripts/houston/build_hpd.py` pre-builds `new/data/houston/hpd_latest.json` (latest complete month, Group A only). Loaded by `loadStaticUSCity()` — reusable for any city that publishes files. **Refresh monthly, then redeploy.** |
+| Super Neighborhood card + map outline | City of Houston / HPD `HPD_Crime_Summary` ArcGIS layer (2020–2024) | Read live in the page; `HOU_SN_YEAR = 2024`. Counts aren't population-adjusted; the card says so. |
+| Reporting card | 911, Crime Stoppers of Houston (713-222-TIPS), Stop Houston Gangs, HPD data page | Stop Houston Gangs is a tip/awareness site with no data; it is linked, not scored. |
+| Pipeline | `connectors/us-houston-hpd.js`, `scheduled-us-houston` (20th, 06:00 UTC) | Ingests the newest 2 months present in the file (HPD lags ~4 months). Large December files may exceed the scheduled-function limit; fall back to `npm run connector:houston`. |
+
+Homicide input 11.4 per 100k = 272 murders in HPD's 2025 file ÷ 2,390,125 (US Census, July 2024). Full notes: `scripts/houston/README.md`.
 
 ---
 

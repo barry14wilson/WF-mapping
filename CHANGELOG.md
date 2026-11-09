@@ -11,19 +11,20 @@ All notable changes to the WF-mapping repo. Newest first. Dates are commit dates
 - **note:** Las Vegas is labelled "partial public data" on the card: LVMPD only publishes a subset of offences.
 
 ### Data sources added
-| City | Source (endpoint) | Records used | Freshness (9 Nov) |
+| City | Source | Records used | Freshness (9 Nov) |
 |---|---|---|---|
-| Washington DC | DC MPD "Crime Incidents – Last 30 Days", `maps2.dcgis.dc.gov/.../FEEDS/MPD/MapServer/39` | All | 9 Nov 2026 |
-| Seattle | SPD Crime Data, `data.seattle.gov/resource/tazs-3rd5` | NIBRS Group A | 7 Nov 2026 |
-| Philadelphia | PPD incidents, `phl.carto.com` table `incidents_part1_part2` | Part I + II | 9 Nov 2026 |
-| Boston | BPD Crime Incident Reports, `data.boston.gov` resource `b973d8cb-…` | Non-crime service codes excluded; ~76% of rows have coordinates | 4 Nov 2026 |
-| Denver | Denver crime offenses, ArcGIS `ODC_CRIME_OFFENSES_P/FeatureServer/324` | `IS_CRIME=1` | 5 Nov 2026 |
-| Dallas | DPD Police Incidents, `dallasopendata.com/resource/qv6i-rri7` | NIBRS Group A, geocoded rows | 8 Nov 2026 |
-| San Diego | SDPD NIBRS offenses, `webmaps.sandiego.gov/.../SDPD_NIBRS_Crime_Offenses_Geo/FeatureServer/0` | Group A | Oct–Nov 2026 |
-| Las Vegas | LVMPD Reported NIBRS Crimes YTD, ArcGIS `services.arcgis.com/jjSk6t82vIntwDbs/...` | Group A, partial extract | 1 Nov 2026 |
+| Washington DC | [DC MPD "Crime Incidents – Last 30 Days" (ArcGIS layer 39)](https://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/MPD/MapServer/39) | All | 9 Nov 2026 |
+| Seattle | [SPD Crime Data (Socrata `tazs-3rd5`)](https://data.seattle.gov/resource/tazs-3rd5.json) | NIBRS Group A | 7 Nov 2026 |
+| Philadelphia | [PPD incidents, CARTO table `incidents_part1_part2`](https://phl.carto.com/api/v2/sql?q=select%20max(dispatch_date)%20from%20incidents_part1_part2) | Part I + II | 9 Nov 2026 |
+| Boston | [BPD Crime Incident Reports (CKAN resource `b973d8cb-eeb2-4e7e-99da-c92938efc9c0`)](https://data.boston.gov/api/3/action/datastore_search?resource_id=b973d8cb-eeb2-4e7e-99da-c92938efc9c0&limit=1) | Non-crime service codes excluded; ~76% of rows have coordinates | 4 Nov 2026 |
+| Denver | [Denver crime offenses (ArcGIS `ODC_CRIME_OFFENSES_P/FeatureServer/324`)](https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_CRIME_OFFENSES_P/FeatureServer/324) | `IS_CRIME=1` | 5 Nov 2026 |
+| Dallas | [DPD Police Incidents (Socrata `qv6i-rri7`)](https://www.dallasopendata.com/resource/qv6i-rri7.json) | NIBRS Group A, geocoded rows | 8 Nov 2026 |
+| San Diego | [SDPD NIBRS offenses (ArcGIS)](https://webmaps.sandiego.gov/arcgis/rest/services/SDPD/SDPD_NIBRS_Crime_Offenses_Geo/FeatureServer/0) | Group A | Oct–Nov 2026 |
+| Las Vegas | [LVMPD Reported NIBRS Crimes YTD (ArcGIS)](https://services.arcgis.com/jjSk6t82vIntwDbs/arcgis/rest/services/LVMPD_Reported_NIBRS_Crimes_YTD/FeatureServer/0) | Group A, partial extract | 1 Nov 2026 |
 
 - **data:** homicide inputs for the global score = 2025 murders ÷ US Census Vintage 2024 city population (`sub-est2024.csv`): DC 127 → 18.1 per 100k; Seattle 32 → 4.1; Philadelphia 222 → 14.1; Boston 24 → 3.6; Denver 39 → 5.3; San Diego 41 → 2.9 (all counted from each city's own feed; Seattle and Denver match their police departments' published year-on-year falls). Dallas ≈ 120 → 9.0, **estimated** from DPD's reported 2025 fall (42 fewer homicides, −26%) because the open-data feed holds only 58 murder incidents. Las Vegas uses the US national rate: LVMPD's jurisdiction is wider than the city and its feed is partial.
-- **checked, not added:** Austin (no coordinates), Nashville (feed now needs a login), Baltimore (public file ends Dec 2024), Orlando, Miami, Atlanta, New Orleans (no public incident feed with coordinates).
+- **references** (homicide inputs): [US Census Vintage 2024 city population, `sub-est2024.csv`](https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/cities/totals/sub-est2024.csv) · Dallas: [Spectrum News, 6 Feb 2026](https://spectrumlocalnews.com/tx/south-texas-el-paso/news/2026/02/06/dallas-sees-drop-in-violent-crime) (−26%, 42 fewer), cross-checked with [FOX 4](https://www.fox4news.com/news/dallas-murder-rate-drops-12-2025) · Seattle: [KIRO 7](https://www.kiro7.com/news/local/seattle-pd-report-crime-rates-fell-by-18-homicides-fell-by-36-last-year/CGQSO5WYUVFEVBXWSTWBNUPOOM) (−36%) · Denver: [CBS News](https://www.cbsnews.com/colorado/news/denver-homicides-fall-48-percent-in-2025) (−48%).
+- **checked, not added (links):** [Austin crime reports](https://data.austintexas.gov/resource/fdj4-gpfu.json) (no coordinates) · Nashville MNPD incidents (ArcGIS feed now returns "Token Required") · [Baltimore Part 1 (Legacy)](https://services1.arcgis.com/UWYHeuuJISiGmgXx/arcgis/rest/services/Part1_Crime_Beta/FeatureServer) (ends Dec 2024) · Orlando, Miami, Atlanta, New Orleans (no public incident feed with coordinates found; [Atlanta PD crime maps](https://atlantapd.org/community/crime-statistics/crime-maps)).
 
 ## 2026-11-09 (Click anywhere in US cities)
 
@@ -38,6 +39,7 @@ All notable changes to the WF-mapping repo. Newest first. Dates are commit dates
 - **feat:** Houston city card adds a live "Super Neighborhood" panel (City of Houston / HPD ArcGIS, 2024 counts vs the median of 88 areas, outlined on the map) and a "Reporting a concern in Houston" panel (911, Crime Stoppers 713-222-TIPS, Stop Houston Gangs, HPD data).
 - **feat:** pipeline connector `connectors/us-houston-hpd.js` (`npm run connector:houston`), `categoriseNIBRS()` in `lib/normalise.js`, monthly scheduled function `scheduled-us-houston` (20th, 06:00 UTC), tests in `test/houston-hpd.test.js`.
 - **data:** Houston homicide input 11.4 per 100k (272 murders in HPD 2025 ÷ 2,390,125, Census 2024). Global score 29/100, band 2. Details in `scripts/houston/README.md`.
+- **sources:** [HPD Monthly Crime Data by Street and Police Beat](https://houstontx.gov/police/cs/Monthly_Crime_Data_by_Street_and_Police_Beat.htm) (`NIBRSPublicView<YEAR>.csv`) · [City of Houston / HPD Crime Summary by Super Neighborhood (ArcGIS)](https://services.arcgis.com/NummVBqZSIJKUeVR/ArcGIS/rest/services/HPD_Crime_Summary/FeatureServer) · [Crime Stoppers of Houston](https://crime-stoppers.org/crime-stoppers-anonymous-tips) · [Stop Houston Gangs](http://stophoustongangs.org/) · population: [US Census Vintage 2024](https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/cities/totals/sub-est2024.csv).
 
 ## 2026-11-06 (One global safety scale)
 

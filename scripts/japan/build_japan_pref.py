@@ -27,7 +27,8 @@ def kanji_num(n):
     return KANJI[n // 10] + '十' + (KANJI[n % 10] if n % 10 else '')
 def norm(s):
     s = (s or '').translate(str.maketrans('０１２３４５６７８９', '0123456789')).replace('ヶ', 'ケ').replace('　', '').replace(' ', '').strip()
-    return re.sub(r'(\d+)丁目', lambda m: kanji_num(m.group(1)) + '丁目', s)
+    # '北３条西４丁目' → '北三条西四丁目' (MLIT spelling; Sapporo's grid addresses use 条 as well as 丁目)
+    return re.sub(r'(\d+)(丁目|条)', lambda m: kanji_num(m.group(1)) + m.group(2), s)
 def read(path):
     b = open(path, 'rb').read()
     for enc in ('utf-8-sig', 'cp932'):
@@ -67,6 +68,9 @@ def main():
         if hit: return names[mm][hit], 'prefix'
         town = by_town.get(re.sub(r'[一二三四五六七八九十]+丁目$', '', mm + b2))
         if town: return (sum(x for x, _ in town) / len(town), sum(y for _, y in town) / len(town)), 'town'
+        # a district given without its block: '南郷通' → average of '南郷通一丁目南', '南郷通二丁目北', …
+        town = [names[mm][c] for c in cands if len(b2) >= 2 and c.startswith(b2)]
+        if town: return (sum(x for x, _ in town) / len(town), sum(y for _, y in town) / len(town)), 'district'
         return None, 'unplaced'
     agg = collections.Counter(); total = placed = 0; method = collections.Counter()
     for f in files:

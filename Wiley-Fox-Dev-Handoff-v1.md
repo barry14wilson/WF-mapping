@@ -2,7 +2,7 @@
 
 **Status:** Ready for dev kickoff
 **Scope:** UK England, Wales & Northern Ireland (Scotland deferred to v2)
-**Date:** 2026-04-29 · **Last updated:** 2026-11-09 (v2.2 — global scale §5, Houston §23, North America §24, Tokyo / Netherlands / Europe / Asia / Berlin / Japan §25)
+**Date:** 2026-04-29 · **Last updated:** 2026-11-09 (v2.3 — global scale §5, Houston §23, North America §24, Tokyo / Netherlands / Europe / Asia / Berlin / Japan / Australia / area layers §25)
 **Owner:** Barry Wilson
 
 ---
@@ -1046,7 +1046,9 @@ Sources, filters, freshness and the cities checked but not added are listed in `
 - **Europe:** 70 places in `OFFICIAL_AREA` (Eurostat NUTS 3 vs national, France SSMSI, Scotland, Ireland). To add a city: add it to `EU_CITIES` in `scripts/official-area/build_official.py` with its NUTS 3 code, run the script, paste `data/official_data.js` over `OFFICIAL_AREA` in both pages, and add a `GLOBAL_CITIES` row.
 - **Berlin** (`scripts/berlin/`, yearly) uses the police Kriminalitätsatlas by district region, spread across planning areas by area.
 - **Japan, other prefectures** (`scripts/japan/`, yearly): Osaka, Kyoto, Kobe, Nagoya, Fukuoka from the national seven-street-crime open data format. Entries set `baselineOnly: true` so theft-only data never lifts a city's rating; the card shows a "Partial data" note.
-- **Asia:** beyond Japan, no street-level open data was found among the places checked. Others are city-level cards (Numbeo + national homicide rate). Next candidates: Osaka 2025 annual data (7 street crimes), Berlin district atlas, Mexico City (point data).
+- **Asia:** beyond Japan, no street-level open data was found among the places checked.
+- **Area-count layers, batch 6** (all read by `loadAggregateCity`): Australia (`scripts/australia/`, suburb or QPS division counts spread across each area), Canada (`scripts/canada/`: Vancouver 100-block, Ottawa yearly points), US by area (`scripts/us-areas/`: Austin block groups, Phoenix and Louisville ZIP areas, Milwaukee addresses), more Japan (Saitama, Chiba, Sapporo, Sendai, Hiroshima). `partialNote` on a `US_CITY_APIS` entry sets the "partial: …" wording.
+- **Refresh:** `scripts/refresh/refresh_layers.py` rebuilds the monthly/quarterly layers; a monthly scheduled task runs it, updates CHANGELOG, commits, deploys and verifies. Yearly by hand: Berlin (spring), Japan prefectures (summer; Osaka and Saitama only download from the Mac), Ottawa picks up the new year automatically. Others are city-level cards (Numbeo + national homicide rate). Next candidates: Osaka 2025 annual data (7 street crimes), Berlin district atlas, Mexico City (point data).
 - Sources and the full checked-not-added list are in `CHANGELOG.md` (2026-11-09 batch 4).
 
 ---

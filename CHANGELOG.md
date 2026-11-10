@@ -2,6 +2,40 @@
 
 All notable changes to the WF-mapping repo. Newest first. Dates are commit dates (UTC). Design and architecture notes live in `Wiley-Fox-Dev-Handoff-v1.md` (§20 covers September 2026).
 
+## 2026-11-10 (Batch 6: Australia, Canada, more Japan, US cities by area; monthly refresh)
+
+### Maps (`/new` and `/new/phase2`)
+- **feat:** **Australia, click-anywhere by suburb:** Sydney, Melbourne and Adelaide (counts for every suburb), Brisbane, Gold Coast and Cairns (counts for every police division). Each area's count is spread across the area, and the card says so.
+- **feat:** **Canada:** Vancouver (every incident at its 100-block, last 12 months; offences against a person have no published location, so the card says "partial") and Ottawa (every offence at the nearest intersection, 2025).
+- **feat:** **Japan:** Saitama and Chiba get street-block layers; new cities **Sapporo, Sendai, Hiroshima** (street-block layers) and **Naha** (city-level). As with Osaka, these are seven street crimes only, so the rating stays on the city's global baseline and the card shows a "Partial data" note.
+- **feat:** **US by area:** Austin (census block groups, serious "Part I" offences only), Phoenix (ZIP codes, 2025), Louisville (ZIP codes, last 12 months), Milwaukee (every offence at its address, last 12 months).
+- **fix:** Japanese address matching now reads Sapporo's grid addresses (北３条西４丁目) and districts given without a block number; Hokkaido placement 44% → 99.4%. Other prefectures rebuilt with the same script (no material change).
+- **feat:** partial-data notes now say what is missing per city (`partialNote`), not always "street crimes only".
+- **ops:** `scripts/refresh/refresh_layers.py` rebuilds the 11 layers that update monthly or quarterly (Australia ×4, Vancouver, Ottawa, Austin, Louisville, Phoenix, Milwaukee, Netherlands); a monthly scheduled task runs it, deploys and adds a CHANGELOG entry.
+
+### Data sources added
+| Place | Source | Granularity | Period |
+|---|---|---|---|
+| Sydney | [BOCSAR — recorded criminal incidents by suburb (SuburbData.zip)](https://bocsar.nsw.gov.au/statistics-dashboards/open-datasets/criminal-offences-data.html) | suburb, monthly | Jul 2025 – Jun 2026 |
+| Melbourne | [Crime Statistics Agency Victoria — LGA data tables, Table 03 (suburb)](https://discover.data.vic.gov.au/dataset/data-tables-recorded-offences) | suburb | year ending Jun 2026 |
+| Adelaide | [SA Police crime statistics (data.sa.gov.au)](https://data.sa.gov.au/data/dataset/crime-statistics) | suburb, daily | Jul 2025 – Jun 2026 |
+| Brisbane, Gold Coast, Cairns | [QPS offence numbers by police division](https://www.data.qld.gov.au/dataset/offence-numbers-police-divisions-monthly-from-july-2001) + [QPS division boundaries](https://www.data.qld.gov.au/dataset/qps-divisions) | police division, monthly | Nov 2025 – Oct 2026 |
+| Australia (shapes) | [ABS ASGS 2021 Suburbs and Localities](https://geo.abs.gov.au/arcgis/rest/services/ASGS2021/SAL/MapServer/0) | — | 2021 |
+| Vancouver | [VPD GeoDASH crime data](https://geodash.vpd.ca/opendata/) | 100-block | Nov 2025 – Oct 2026 |
+| Ottawa | [Ottawa Police criminal offences](https://open.ottawa.ca/datasets/ottawa::criminal-offences-open-data) | intersection | 2025 |
+| Saitama | [Saitama Prefectural Police 犯罪オープンデータ 令和7年](https://www.police.pref.saitama.lg.jp/c0011/kurashi/0pendata2019/opendata2025.html) | street block, 7 street crimes | 2025 |
+| Chiba | [Chiba Prefectural Police crime open data](https://www.police.pref.chiba.jp/seisoka/safe-life_publicspace-statistics_00002.html) | street block, 7 street crimes | 2025 |
+| Sapporo | [Hokkaido Police 2025 犯罪オープンデータ (Hokkaido open data portal)](https://www.harp.lg.jp/opendata/dataset/2258.html) | street block, 7 street crimes | 2025 |
+| Sendai | [Miyagi Prefectural Police crime open data](https://www.police.pref.miyagi.jp/seian/opendata.html) | street block, 7 street crimes | 2025 |
+| Hiroshima | [Hiroshima Prefectural Police 犯罪発生情報 (Hiroshima open data portal)](https://hiroshima-opendata.dataeye.jp/datasets?keyword=%E7%8A%AF%E7%BD%AA) | street block, 7 street crimes | 2025 |
+| Japan (block centres) | [MLIT 位置参照情報](https://nlftp.mlit.go.jp/isj/) (prefectures 01, 04, 11, 12, 34) | — | 2024 points |
+| Austin | [Austin PD crime reports](https://data.austintexas.gov/Public-Safety/Crime-Reports/fdj4-gpfu) + [Census TIGERweb block groups](https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/10) | census block group, Part I | Nov 2025 – Oct 2026 |
+| Phoenix | [Phoenix PD crime data](https://www.phoenixopendata.com/dataset/crime-data) + [Census ZCTAs](https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/2) | ZIP code | 2025 |
+| Louisville | [LMPD crime data 2026](https://services1.arcgis.com/79kfd2K6fskCAkyg/arcgis/rest/services/crime_data_2026/FeatureServer/0) + [2025](https://services1.arcgis.com/79kfd2K6fskCAkyg/arcgis/rest/services/crime_data_2025/FeatureServer/0) | ZIP code | Nov 2025 – Oct 2026 |
+| Milwaukee | [Milwaukee PD WIBR crime data](https://data.milwaukee.gov/dataset/wibr) | address | Nov 2025 – Oct 2026 |
+
+- **checked, not added:** Perth ([WA Police](https://www.wa.gov.au/organisation/western-australia-police-force/crime-statistics) publish suburbs only in a Power BI dashboard; the download is by district) · Canberra, Hobart, Darwin (no suburb-level download) · Calgary ([open data](https://data.calgary.ca/) has social-disorder statistics only) · Edmonton, Winnipeg (dashboards, no download) · Naha ([Okinawa Police open data](https://www.police.pref.okinawa.jp/docs/2021053100019/) stops at 2020) · Portland ([Tableau download](https://www.portland.gov/police/open-data/reported-crime-data) no longer available) · San Antonio and the other US city-level cities (no open file with a usable location).
+
 ## 2026-11-09 (Batch 5: Berlin district regions; Osaka, Kyoto, Kobe, Nagoya, Fukuoka street crime)
 
 ### Maps (`/new` and `/new/phase2`)

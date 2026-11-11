@@ -27,6 +27,20 @@ const LOCAL_SEASON = { christmas: {
   nuremberg: ['Nuremberg Christkindlesmarkt', 'Christkindlesmarkt Nürnberg'], cologne: ['Cologne Cathedral Christmas market', 'Köln Weihnachtsmarkt'],
   munich: ['Munich Christkindlmarkt Marienplatz', 'München Weihnachtsmarkt'], berlin: ['Berlin Gendarmenmarkt Christmas market', 'Berlin Weihnachtsmarkt'],
   chicago: ['Chicago Christkindlmarket'] } };
+// Country-specific focus queries (US English spelling and the way Americans search for safety/areas).
+const REGION_QUERIES = { 'United States': ['{city} safe neighborhoods', '{city} neighborhoods to avoid', '{city} areas to avoid',
+  '{city} best area to stay', '{city} where to stay first time', '{city} is it safe', '{city} things not to do', '{city} mistakes to avoid',
+  '{city} tourist traps', '{city} public transportation', '{city} on a budget', '{city} things to do with kids', '{city} first time visitor tips',
+  '{city} downtown safety'] };
+// Hand-picked local searches for focus cities (landmarks, known scam/safety hotspots).
+const LOCAL_QUERIES = {
+  los_angeles: ['Hollywood Walk of Fame scams', 'Hollywood Boulevard safety', 'Santa Monica Venice Beach safety', 'Los Angeles Metro safety', 'LAX to Hollywood'],
+  san_francisco: ['San Francisco Tenderloin tourists', 'San Francisco car break ins tourists', 'San Francisco Muni guide'],
+  washington_dc: ['Washington DC Metro guide', 'Washington DC National Mall with kids'],
+  las_vegas: ['Las Vegas Strip scams', 'Fremont Street safety', 'Las Vegas resort fees'],
+  new_orleans: ['French Quarter safety', 'Bourbon Street scams', 'New Orleans where to stay first time'] };
+// Seasonal searches are skipped for these countries (US guides are year-round). Override with cfg.no_season_countries.
+const NO_SEASON_COUNTRIES = ['United States'];
 const ORDERS = ['relevance', 'viewCount', 'date'];
 const QUERIES = ['{city} travel guide', '{city} things to know before visiting']; // background rotation
 
@@ -89,10 +103,15 @@ export async function discover({ force = false } = {}) {
   const bgShare = Math.min(1, Math.max(0, +cfg.background_share || 0));
   let focusBudget = focus ? Math.round(total * (1 - bgShare)) : 0;
   if (focus) {
-    const seasonOn = cfg.season && (!cfg.season_until || new Date().toISOString().slice(0, 10) <= cfg.season_until);
-    const qs = [...(seasonOn ? (LOCAL_SEASON[cfg.season]?.[focus.slug] || []) : []),
+    const noSeason = Array.isArray(cfg.no_season_countries) ? cfg.no_season_countries : NO_SEASON_COUNTRIES;
+    const seasonOn = cfg.season && !noSeason.includes(focus.country)
+      && (!cfg.season_until || new Date().toISOString().slice(0, 10) <= cfg.season_until);
+    const extra = (cfg.extra_queries && cfg.extra_queries[focus.slug]) || []; // add searches from wf_config without a deploy
+    const qs = [...new Set([...(seasonOn ? (LOCAL_SEASON[cfg.season]?.[focus.slug] || []) : []),
       ...(seasonOn ? (SEASON_QUERIES[cfg.season] || []).map((q) => q.replace('{city}', focus.name)) : []),
-      ...BASE_QUERIES.map((q) => q.replace('{city}', focus.name))];
+      ...(LOCAL_QUERIES[focus.slug] || []), ...extra,
+      ...(REGION_QUERIES[focus.country] || []).map((q) => q.replace('{city}', focus.name)),
+      ...BASE_QUERIES.map((q) => q.replace('{city}', focus.name))])];
     const stateKey = `disc_state:${focus.slug}`;
     const st = ((await sql.query('select value from wf_config where key=$1', [stateKey]))[0] || {}).value || {};
     const combos = [];

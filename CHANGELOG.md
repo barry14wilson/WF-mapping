@@ -2,6 +2,10 @@
 
 All notable changes to the WF-mapping repo. Newest first. Dates are commit dates (UTC). Design and architecture notes live in `Wiley-Fox-Dev-Handoff-v1.md` (§20 covers September 2026).
 
+## 2026-11-11 (US discovery)
+
+- **feat:** YouTube discovery searches for US focus cities: US-English safety and area queries (`REGION_QUERIES['United States']`: safe neighborhoods, areas to avoid, best area to stay, tourist traps, public transportation…), hand-picked local searches for the first US focus cities (`LOCAL_QUERIES`: LA, San Francisco, Washington DC, Las Vegas, New Orleans), and `wf_config.discovery.extra_queries[<slug>]` to add searches without a deploy. Seasonal (Christmas) searches are skipped for countries in `no_season_countries` (default United States). Queue after Edinburgh: 37 US cities with live crime feeds on the `/new` map, Los Angeles first.
+
 ## 2026-11-10 (Batch 6: Australia, Canada, more Japan, US cities by area; monthly refresh)
 
 ### Maps (`/new` and `/new/phase2`)
